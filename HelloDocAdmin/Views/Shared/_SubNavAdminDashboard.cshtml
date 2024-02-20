@@ -1,0 +1,46 @@
+﻿@{
+    string path = Context.Request.Path;
+}
+@*<nav class="navbar p-0 pt-2  navbar-expand-lg bg-body shadow mb-5  rounded">
+    <div class="container-fluid">
+       
+        <!-- <a class="navbar-brand" href="#">Patient_</a> -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link  @(path.Equals("/AdminDashboard") ? "active" : "")px-3" aria-current="page" asp-action="Index" asp-controller="AdminDashboard">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link @(path.EndsWith("/ProviderLocation") ? "active" : "") px-3" asp-action="ProviderLocation" asp-controller="AdminDashboard">ProviderLocation</a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</nav>*@
+<nav class="navbar navbar-expand-lg bg-body shadow  rounded">
+    <div class="container-fluid ">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="nav navbar-nav nav-underline" id="nav-tab">
+                <li class="nav-item">
+                    <a class="nav-link   @(path.Equals("/") ? "active" : "")" asp-action="Index" asp-controller="Dashboard">
+                        Dashboard
+                    </a>
+            </li >
+                <li class="nav-item">
+                    <a class="nav-link @(path.EndsWith("/ProviderLocation") ? "active" : "")" asp-action="ProviderLocation" asp-controller="AdminDashboard">
+                        Profile
+                    </a>
+           </li>
+         
+        </ul>
+        </div>
+    </div>
+   
+</nav>

@@ -1,0 +1,21 @@
+﻿@{
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<div class="container-fluid p-4 ">
+    <partial name="_UpperTab.cshtml" />
+    <div id="SearchResult">
+    </div>
+</div>
+<script>
+    $(function () {
+        var val=1;
+        $("#hiddenfirst").val(val);
+        $("#filterForm").submit();
+    });
+
+    
+  
+ 
+    
+</script>

@@ -1,0 +1,14 @@
+D:\Projects\Hello Doc Admin\HelloDocAdmin.Entity\bin\Debug\net7.0\HelloDocAdmin.Entity.deps.json
+D:\Projects\Hello Doc Admin\HelloDocAdmin.Entity\bin\Debug\net7.0\HelloDocAdmin.Entity.runtimeconfig.json
+D:\Projects\Hello Doc Admin\HelloDocAdmin.Entity\bin\Debug\net7.0\HelloDocAdmin.Entity.dll
+D:\Projects\Hello Doc Admin\HelloDocAdmin.Entity\bin\Debug\net7.0\HelloDocAdmin.Entity.pdb
+D:\Projects\Hello Doc Admin\HelloDocAdmin.Entity\obj\Debug\net7.0\HelloDocAdmin.Entity.csproj.AssemblyReference.cache
+D:\Projects\Hello Doc Admin\HelloDocAdmin.Entity\obj\Debug\net7.0\HelloDocAdmin.Entity.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projects\Hello Doc Admin\HelloDocAdmin.Entity\obj\Debug\net7.0\HelloDocAdmin.Entity.AssemblyInfoInputs.cache
+D:\Projects\Hello Doc Admin\HelloDocAdmin.Entity\obj\Debug\net7.0\HelloDocAdmin.Entity.AssemblyInfo.cs
+D:\Projects\Hello Doc Admin\HelloDocAdmin.Entity\obj\Debug\net7.0\HelloDocAdmin.Entity.csproj.CoreCompileInputs.cache
+D:\Projects\Hello Doc Admin\HelloDocAdmin.Entity\obj\Debug\net7.0\HelloDocAdmin.Entity.dll
+D:\Projects\Hello Doc Admin\HelloDocAdmin.Entity\obj\Debug\net7.0\refint\HelloDocAdmin.Entity.dll
+D:\Projects\Hello Doc Admin\HelloDocAdmin.Entity\obj\Debug\net7.0\HelloDocAdmin.Entity.pdb
+D:\Projects\Hello Doc Admin\HelloDocAdmin.Entity\obj\Debug\net7.0\HelloDocAdmin.Entity.genruntimeconfig.cache
+D:\Projects\Hello Doc Admin\HelloDocAdmin.Entity\obj\Debug\net7.0\ref\HelloDocAdmin.Entity.dll
