@@ -1,5 +1,6 @@
 ﻿using HelloDocAdmin.Entity.Models;
 using HelloDocAdmin.Entity.ViewModels;
+using HelloDocAdmin.Entity.ViewModels.AdminSite;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,10 @@ namespace HelloDocAdmin.Repositories.Interface
     public interface IDashboardRepository
     {
         List<DashboardRequestModel> GetRequests(short status);
+
+        ViewCaseModel GetRequestForViewCase(int id);
         int GetRequestNumberByStatus(short status);
+        public bool EditCase(ViewCaseModel model);
+        public ViewNotesModel getNotesByID(int id);
     }
 }

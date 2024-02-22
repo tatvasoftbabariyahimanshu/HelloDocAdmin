@@ -73,6 +73,18 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\icons\\admin.svg",
+      "PackagePath": "staticwebassets\\icons\\admin.svg"
+    },
+    {
+      "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\icons\\doctor-svgrepo-com.svg",
+      "PackagePath": "staticwebassets\\icons\\doctor-svgrepo-com.svg"
+    },
+    {
+      "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\icons\\transfer-alt-svgrepo-com.svg",
+      "PackagePath": "staticwebassets\\icons\\transfer-alt-svgrepo-com.svg"
+    },
+    {
       "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\images\\11116016_415.jpg",
       "PackagePath": "staticwebassets\\images\\11116016_415.jpg"
     },

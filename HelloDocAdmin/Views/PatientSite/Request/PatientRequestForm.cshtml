@@ -1,0 +1,231 @@
+﻿@{
+    ViewData["Title"] = "Patient Request Form - Hello Doc";
+    Layout = "~/Views/Shared/PatientSite/_RequestLayout.cshtml";
+}
+@model HelloDocAdmin.Entity.ViewModels.PatientSite.ViewPatientRequest;
+<div class="container">
+    <div class="card bg-transparent border-0">
+        <div class="card-header  border-0  bg-transparent text-end mt-2">
+            <a asp-controller="Request" asp-action="Index"
+               class="btn btn-outline-info btn-back">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                     fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                          d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5" />
+                </svg></i>Back
+            </a>
+        </div>
+        <div class="card-body rounded shadow">
+
+            <form method="post" asp-action="Create" asp-controller="PatientRequest" enctype="multipart/form-data">
+                <h6 class="form-title mt-2">Patient Information</h6>
+             
+                <div class="col-md-12">
+                    <div class="inputs-control w-100 mt-2">
+                        <textarea placeholder=" " asp-for="Symptoms" class="input-outline w-100 " type="text"></textarea>
+
+                        <label class="inputs-lable inputs-lable-textarea">Symptoms</label>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-6">
+                        <div class=" mb-3">
+                        <div class="inputs-control ">
+                            <input placeholder=" " asp-for="FirstName" class="input-outline w-100 inp" type="text">
+                            <label class="inputs-lable">First name</label>
+                        </div>
+                            <span asp-validation-for="FirstName" class="err-msg"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <div class="inputs-control  ">
+                                <input placeholder=" " asp-for="LastName" class="input-outline w-100 inp" type="text">
+                                <label class="inputs-lable">Last name</label>
+                            </div>
+                            <span asp-validation-for="LastName" class="err-msg"></span>
+
+                       </div>
+                       
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <div class="inputs-control ">
+
+                                <input placeholder=" " asp-for="BirthDate" class="input-outline w-100 inp form-control-sm " type="date">
+                                <label class="inputs-lable-dob">Date of Birth</label>
+                            </div>
+                            <span asp-validation-for="BirthDate" class="err-msg"></span>
+
+                        </div>
+                      
+                    </div>
+                </div>
+                <h6 class="form-title mt-3">Patient Contact Information</h6>
+                <div class="row mt-2">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                        <div class="inputs-control">
+                            <input placeholder="" asp-for="Email" class="input-outline w-100 inp" type="text" id="Email">
+                            <label class="inputs-lable">Email</label>
+                        </div>
+                            <span asp-validation-for="Email" class="err-msg"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <div class="inputs-control  ">
+                                <input id="phone" asp-for="PhoneNumber" placeholder="Mobile" type="text" class=" telephone input-outline w-100 inp" style="font-size: .7rem;" />
+
+                            </div>
+                            <span asp-validation-for="PhoneNumber" class="err-msg"></span>
+                        </div>
+                     
+                    </div>
+                    <div class="col-md-6 password-hide">
+                        <div class="mb-3">
+                            <div class="inputs-control  ">
+                                <input placeholder=" " asp-for="Password" class="input-outline  w-100 inp" type="text" id="Password">
+                                <label class="inputs-lable">Password</label>
+                            </div>
+                        </div>
+                    
+                    </div>
+                    <div class="col-md-6 password-hide">
+                        <div class="inputs-control  mb-3">
+                            <input placeholder=" " class="input-outline w-100 inp" type="text" id="ConfirmPassword">
+                            <label class="inputs-lable">Confirm Password</label>
+                        </div>
+                    </div>
+
+                </div>
+                <h6 class="form-title mt-3">Patient Location</h6>
+                <div class="row mt-2 mb-2">
+                    <div class="col-md-6">
+                        <div class=" mb-3">
+                            <div class="inputs-control ">
+                                <input placeholder=" " asp-for="Street" class="input-outline  w-100 inp" type="text">
+                                <label class="inputs-lable">street</label>
+                            </div>
+                            <span asp-validation-for="Street" class="err-msg"></span>
+                        </div>
+                      
+                    </div>
+                    <div class="col-md-6">
+                        <div>
+                        <div class="inputs-control w-100 ">
+                            <input asp-for="State" placeholder=" " class="input-outline    w-100 inp" type="text">
+                               
+                            <label class="inputs-lable">State</label>
+
+                        </div>
+                            <span asp-validation-for="State" class="err-msg"></span>
+
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" asp-for="Userid" id="UserId" />
+                <div class="row mt-1">
+                    <div class="col-md-6 ">
+                        <div>
+                            <div class="inputs-control w-100 ">
+                                <input asp-for="City" placeholder=" " class="input-outline   w-100 inp" type="text">
+
+                                <label class="inputs-lable">City</label>
+                            </div>
+                            <span asp-validation-for="City" class="err-msg"></span>
+                        </div>
+                       
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                        <div class="inputs-control  ">
+                            <input placeholder=" "  asp-for="ZipCode" name="ZipCode"  class="input-outline  w-100 inp" type="text">
+                            <label class="inputs-lable">Zipper Code</label>
+                        </div>
+
+                            <span asp-validation-for="ZipCode" class="err-msg"></span>
+
+                        </div>
+                </div>
+                </div>
+                <div class="row mt-1">
+                    <div class="col-md-6">
+                        <div class="inputs-control  mb-3">
+                            <input placeholder=" " asp-for="RoomSite" class="input-outline  w-100 inp" type="text">
+                            <label class="inputs-lable">Room #/street (Optional)</label>
+                        </div>
+                    </div>
+                </div>
+                <h6 class="form-title mt-3">(optional) Upload Photo or Document</h6>
+
+                <div class="col-md-12 mt-2">
+                    <input type="file"  id="file" class="file file-uplode" asp-for="UploadFile">
+                    <div class="d-flex">
+                       <input placeholder=" "  class="input-outline w-100 inp" type="text"  id="file-name"
+                               readonly="readonly">
+
+                        <input type="button" class="btn btn-upl btn-info  btn-submit " value="uplode" style="color: white;">
+                    </>
+
+                </div>
+                <div class="card-footer border-0 bg-transparent text-end">
+                    <button type="submit" class="btn btn-outline-info btn-submit">
+                        submit
+                    </button>
+                    <a class="btn btn-outline-danger btn-cancel ">
+                        cancel
+                    </a>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+</div>
+
+@*---ajax---*@
+
+<script>
+
+    $(document).ready(function () {
+        $('.password-hide').hide();
+        $("#Email").focusout( function () {
+         
+            $.ajax({
+                url: 'https://localhost:44376/PatientRequest/CheckUserExist',
+                type: 'GET',
+                data: {
+                    Email: $('#Email').val()
+                },
+                success: function (result) {
+                    if (result.isvalid) {
+                        $('.password-hide').hide();
+                       
+                    } else {
+                        $('.password-hide').show();
+                    }
+                },
+                error: function () {
+                    alert("error");
+                }
+            });
+            return false;
+        });
+    });
+
+
+
+   </script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+<script>
+    const phoneInputField = document.querySelector("#phone");
+  
+    const phoneInput = window.intlTelInput(phoneInputField, {
+        utilsScript:
+            "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+    });
+</script>

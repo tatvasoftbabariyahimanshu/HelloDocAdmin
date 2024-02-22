@@ -1,0 +1,15 @@
+D:\Projects\Hello Doc Admin\HelloDocAdmin.PatientRepositories\bin\Debug\net7.0\HelloDocAdmin.PatientRepositories.deps.json
+D:\Projects\Hello Doc Admin\HelloDocAdmin.PatientRepositories\bin\Debug\net7.0\HelloDocAdmin.PatientRepositories.dll
+D:\Projects\Hello Doc Admin\HelloDocAdmin.PatientRepositories\bin\Debug\net7.0\HelloDocAdmin.PatientRepositories.pdb
+D:\Projects\Hello Doc Admin\HelloDocAdmin.PatientRepositories\bin\Debug\net7.0\HelloDocAdmin.Entity.dll
+D:\Projects\Hello Doc Admin\HelloDocAdmin.PatientRepositories\bin\Debug\net7.0\HelloDocAdmin.Entity.pdb
+D:\Projects\Hello Doc Admin\HelloDocAdmin.PatientRepositories\obj\Debug\net7.0\HelloDocAdmin.PatientRepositories.csproj.AssemblyReference.cache
+D:\Projects\Hello Doc Admin\HelloDocAdmin.PatientRepositories\obj\Debug\net7.0\HelloDocAdmin.PatientRepositories.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projects\Hello Doc Admin\HelloDocAdmin.PatientRepositories\obj\Debug\net7.0\HelloDocAdmin.PatientRepositories.AssemblyInfoInputs.cache
+D:\Projects\Hello Doc Admin\HelloDocAdmin.PatientRepositories\obj\Debug\net7.0\HelloDocAdmin.PatientRepositories.AssemblyInfo.cs
+D:\Projects\Hello Doc Admin\HelloDocAdmin.PatientRepositories\obj\Debug\net7.0\HelloDocAdmin.PatientRepositories.csproj.CoreCompileInputs.cache
+D:\Projects\Hello Doc Admin\HelloDocAdmin.PatientRepositories\obj\Debug\net7.0\HelloDocAdmin.PatientRepositories.csproj.CopyComplete
+D:\Projects\Hello Doc Admin\HelloDocAdmin.PatientRepositories\obj\Debug\net7.0\HelloDocAdmin.PatientRepositories.dll
+D:\Projects\Hello Doc Admin\HelloDocAdmin.PatientRepositories\obj\Debug\net7.0\refint\HelloDocAdmin.PatientRepositories.dll
+D:\Projects\Hello Doc Admin\HelloDocAdmin.PatientRepositories\obj\Debug\net7.0\HelloDocAdmin.PatientRepositories.pdb
+D:\Projects\Hello Doc Admin\HelloDocAdmin.PatientRepositories\obj\Debug\net7.0\ref\HelloDocAdmin.PatientRepositories.dll

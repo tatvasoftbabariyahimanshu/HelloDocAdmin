@@ -18,6 +18,12 @@
     --main-back: #3b3a3a;
     --header-color: #a1a0a0;
 }
+.act-btn{
+    cursor:pointer;
+}
+.dropdown-item {
+    font-size: .8rem;
+}
 
 .nav-link {
     color: #ADADAD;
@@ -279,6 +285,20 @@ body {
     border-radius: 5px;
     color: var(--primary);
 }
+.inputs-lable-ser {
+    position: absolute;
+    font-size: .7rem;
+    left: 0;
+    top: 40%;
+    transform: translateY(-48%);
+    font-family: 'Poppins', sans-serif;
+    color: #ADADAD;
+    padding: 0 0.3rem;
+    margin: 0 0.5rem;
+    transition: .1s ease-out;
+    transform-origin: left top;
+    pointer-events: none;
+}
 
 .inputs-lable-textarea {
     position: absolute;
@@ -307,6 +327,7 @@ body {
     background-color: transparent;
     transition: 0.1s ease-out;
 }
+
 .input-outline-search {
     font-size: .8rem;
     width: 100%;
@@ -810,19 +831,19 @@ th:nth-child(6) {
 }
 
 .bg-patient-row {
-    background-color: #5FBC61;
+    background-color: #5FBC61 !important;
 }
 
 .bg-concierge-row {
-    background-color: #007fc6;
+    background-color: #007fc6 !important;
 }
 
 .bg-business-row {
-    background-color: #E0627E;
+    background-color: #E0627E !important;
 }
 
 .bg-family-row {
-    background-color: #F4901F;
+    background-color: #F4901F !important;
 }
 
 .button-icon {
@@ -888,3 +909,21 @@ th:nth-child(6) {
         background-color: #E7E9EB !important;
         color:black;
     }
+
+.dataTables_length {
+    display: none;
+}
+.dataTables_filter {
+    display: none;
+}
+.mytable{
+    
+}
+.dataTables_wrapper {
+    overflow-y: visible;
+}
+.regiondrop{
+    position:absolute;
+    left:0;
+    top:50%;
+}

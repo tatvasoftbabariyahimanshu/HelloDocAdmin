@@ -1,0 +1,309 @@
+﻿@{
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+
+<style>
+    .input-outline:not(:placeholder-shown) + .inputs-lable, .input-outline:focus + .inputs-lable {
+        margin-top: -1.3rem;
+        margin-left: -.15rem;
+        font-size: .8rem;
+        border-radius: 5px;
+        transition: all 0.15s ease-out;
+        color: var(--primary);
+    }
+
+    .input-outline:not(:placeholder-shown) + .inputs-lable-textarea, .input-outline:focus + .inputs-lable-textarea {
+        margin-top: -.5rem;
+        margin-left: -.15rem;
+        font-size: .8rem;
+        border-radius: 5px;
+        transition: all 0.15s ease-out;
+        color: var(--primary);
+    }
+
+    .input-outline {
+        font-size: .9rem;
+        width: 100%;
+        outline: none;
+        border: 1px solid #ADADAD;
+        border-radius: 5px;
+        padding: 1rem 0.7rem;
+        font-family: 'Poppins', sans-serif;
+        color: black;
+        background-color: transparent;
+        transition: 0.1s ease-out;
+    }
+
+    .inputs-lable-number{
+        font-size:.8rem;
+        color: #ADADAD;
+
+    }
+
+    .inp{
+        height:3.8rem;
+        background-color: #e9ecef 
+    }
+
+    [data-bs-theme=dark] .inp {
+        background-color:transparent;
+    }
+    .telephone {
+        height: 4rem;
+    }
+
+</style>
+@using HelloDocAdmin.Entity.ViewModels.AdminSite
+@model ViewCaseModel
+<script>
+    $(document).ready(function () {
+
+        $(".edit-frm").prop("readonly", true);
+
+        $("input").css("background-color", "#e9ecef");
+        $("select").css("background-color", "#e9ecef");
+        $("#save").css("display", "none");
+        $("#cancel").css("display", "none");
+        $('#cancel').click(function () {
+            $("#save").css("display", "none");
+            $("#cancel").css("display", "none");
+            $(".inputs-control :input").prop("readonly", true);
+            $("select").prop("readonly", true);
+            $("input").css("background-color", "#e9ecef");
+            $("select").css("background-color", "#e9ecef");
+            $("#edit").css("display", "block");
+        });
+
+
+    });
+
+
+
+</script>
+<div class="container">
+    <div class="card bg-transparent border-0">
+        <div class="card-header  border-0  bg-transparent text-end mt-2">
+            <div class="text-start d-flex align-items-center">
+                <h4 class="form-title mt-3 mx-2">Patient Request</h4>
+                @if (Model.RequestTypeID == 1)
+                {
+                    <span class="badge text-white   bg-patient-row ">Patient</span>
+                   
+                   @* <div class="btn btn-sm text-white bg-patient-row">
+                        patient
+                    </div>*@
+                }
+                else if (Model.RequestTypeID == 2)
+                {
+                    <span class="badge text-white   bg-family-row ">Family/Friend</span>
+                   
+                }
+                else if (Model.RequestTypeID == 3)
+                {
+                    <span class="badge text-white   bg-concierge-row ">concierge</span>
+
+                    
+                }
+                else
+                {
+                    <span class="badge text-white   bg-business-row">business Partner</span>
+
+                   
+                }
+            </div>
+            <div class="text-end">
+                <a asp-controller="Dashboard" asp-action="Index"
+                   class="btn btn-outline-info btn-back">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                         fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                              d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5" />
+                    </svg></i>Back
+                </a>
+            </div>
+        </div>
+        <div class="card-body rounded shadow">
+
+       
+                <h4 class="form-title mt-2 mb-3">Patient Information</h4>
+
+
+            <form method="post" asp-action="EditCase" asp-controller="Action" enctype="multipart/form-data">
+                <div class="col-md-12 mt-3">
+                    <label class="inputs-lable-number">Confirmation Number</label>
+                    <h4 class="text-info ">@Model.ConfirmationNumber</h4>
+                    <div class="inputs-control w-100 mt-4">
+                        <textarea placeholder=" " rows="4" asp-for="PatientNotes" class="input-outline w-100 " type="text" readonly style="background-color: #e9ecef !important"></textarea>
+
+                        <label class="inputs-lable-textarea">Patient Notes</label>
+                    </div>
+                </div>
+          
+                <hr class="dashed-h" />
+                <div class="row mt-2">
+                    <div class="col-md-6 mt-2">
+                        <div class=" mb-3">
+                            <div class="inputs-control ">
+                                <input placeholder=" " asp-for="FirstName" class="input-outline w-100 inp edit-frm" type="text" readonly>
+                                <label class="inputs-lable">First name</label>
+                            </div>
+                            <span asp-validation-for="FirstName" class="err-msg"></span>
+                        </div>
+                    </div>
+                    <input type="hidden" asp-for="RequestID" value="@Model.RequestID" />
+                    <div class="col-md-6">
+                        <div class="mb-3 mt-2">
+                            <div class="inputs-control  ">
+                                <input placeholder=" " asp-for="LastName" class="input-outline w-100 inp edit-frm" type="text" readonly>
+                                <label class="inputs-lable">Last name</label>
+                            </div>
+                            <span asp-validation-for="LastName" class="err-msg"></span>
+                         
+
+                        </div>
+
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3 mt-2">
+                            <div class="inputs-control ">
+
+                                <input placeholder=" " asp-for="Dob" class="input-outline w-100 inp form-control-sm edit-frm" type="date" readonly>
+                                <label class="inputs-lable-dob">Date of Birth</label>
+
+                            </div>
+                            <span asp-validation-for="Dob" class="err-msg"></span>
+                          
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="mb-3 mt-2  d-flex">
+                            <div class="inputs-control w-100 ">
+                                <input id="phone" asp-for="PhoneNumber" placeholder="Mobile" type="text" readonly class=" telephone input-outline w-100 inp align-items-center edit-frm" style="font-size: .9rem;height:4rem" />
+                                <span asp-validation-for="PhoneNumber" class="err-msg"></span>
+                            </div>
+                          
+                            <button class="btn btn-outline-info mx-2 " style="height:4rem;width:4rem">
+                                <i class="bi bi-telephone-fill"></i>
+                            </button>
+                           
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class=" mb-3 mt-2">
+                            <div class="inputs-control ">
+                                <input placeholder=" " asp-for="Email" class="input-outline w-100 inp edit-frm" readonly type="text">
+                                <label class="inputs-lable">Email</label>
+                            </div>
+                            <span asp-validation-for="Email" class="err-msg"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=" mb-3  mt-2">
+                            <div class=" p-0  d-flex">
+                                <a onclick="enable_disable()" id="edit" class="btn btn-sm btn-outline-info btn-submit p-3" style="height:3.8rem;width:4rem">
+                                    Edit
+                                </a>
+                                <button type="submit" id="save" class="btn btn-sm btn-outline-info btn-submit mx-2 p-3">
+                                    save
+                                </button>
+                                <a id="cancel" asp-action="ViewCase" asp-controller="Action" class="btn btn-sm btn-outline-danger p-3">
+                                    cancel
+                                </a>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        
+                <h4 class="form-title mt-2">Location Information</h4>
+
+                <div class="row mt-2">
+                    <div class="col-md-6 mt-2">
+                        <div class=" mb-3">
+                            <div class="inputs-control ">
+                                <input placeholder=" " asp-for="Region" class="input-outline w-100 inp" readonly type="text">
+                                <label class="inputs-lable">Region</label>
+                            </div>
+                          
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mt-2 ">
+                        <div class="mb-3 d-flex">
+                            <div class="inputs-control w-100  ">
+                                <input placeholder=" " asp-for="Address" class="input-outline w-100 inp" readonly type="text">
+                                <label class="inputs-lable">Business/Address</label>
+                            </div>
+                            <button class="btn btn-outline-info mx-2 " style="height:4rem;width:4rem">
+                                <i class="bi bi-geo-alt-fill"></i>
+                            </button>
+
+                        </div>
+                        
+                         
+
+
+
+                    </div>
+                 
+
+               
+
+                    <div class="col-md-6 mt-2">
+                        <div class=" mb-3 ">
+                            <div class="inputs-control ">
+                                <input placeholder=" " asp-for="Room" class="input-outline w-100 inp" readonly type="text">
+                                <label class="inputs-lable">Room#</label>
+                            </div>
+                            <span asp-validation-for="FirstName" class="err-msg"></span>
+                        </div>
+                    </div>
+                </div>
+               
+                    <div class="card-footer border-0 bg-transparent text-end">
+                    <button type="submit" class="btn btn-info btn-submit">
+                        Assign
+                    </button>
+                        <button type="submit" class="btn btn-info btn-submit">
+                           View Notes
+                        </button>
+                        <a class="btn btn-danger btn-cancel ">
+                            cancel
+                        </a>
+                    </div>
+
+            </form>
+        </div>
+    </div>
+
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+<script>
+    const phoneInputField = document.querySelector("#phone");
+
+    const phoneInput = window.intlTelInput(phoneInputField, {
+        utilsScript:
+            "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+    });
+</script>
+<script>
+
+    function enable_disable() {
+        $(".edit-frm").prop("readonly", false);
+
+        $("#save").prop("readonly", false);
+        $("#cancel").prop("readonly", false);
+        $("#save").css("display", "block");
+        $("#cancel").css("display", "block");
+        $("#edit").css("display", "none");
+        $(".edit-frm").css("background-color", "transparent");
+       
+    }
+
+</script>

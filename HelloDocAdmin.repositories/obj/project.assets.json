@@ -2,6 +2,22 @@
   "version": 3,
   "targets": {
     "net7.0": {
+      "Microsoft.AspNetCore.Http.Features/2.2.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.Primitives": "2.2.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Microsoft.AspNetCore.Http.Features.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.AspNetCore.Http.Features.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "Microsoft.EntityFrameworkCore/7.0.0": {
         "type": "package",
         "dependencies": {
@@ -1607,6 +1623,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v7.0",
         "dependencies": {
+          "Microsoft.AspNetCore.Http.Features": "2.2.0",
           "Microsoft.EntityFrameworkCore": "7.0.0",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "7.0.0",
           "Npgsql.EntityFrameworkCore.PostgreSQL.Design": "1.1.0"
@@ -1621,6 +1638,19 @@
     }
   },
   "libraries": {
+    "Microsoft.AspNetCore.Http.Features/2.2.0": {
+      "sha512": "ziFz5zH8f33En4dX81LW84I6XrYXKf9jg6aM39cM+LffN9KJahViKZ61dGMSO2gd3e+qe5yBRwsesvyqlZaSMg==",
+      "type": "package",
+      "path": "microsoft.aspnetcore.http.features/2.2.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/netstandard2.0/Microsoft.AspNetCore.Http.Features.dll",
+        "lib/netstandard2.0/Microsoft.AspNetCore.Http.Features.xml",
+        "microsoft.aspnetcore.http.features.2.2.0.nupkg.sha512",
+        "microsoft.aspnetcore.http.features.nuspec"
+      ]
+    },
     "Microsoft.EntityFrameworkCore/7.0.0": {
       "sha512": "9W+IfmAzMrp2ZpKZLhgTlWljSBM9Erldis1us61DAGi+L7Q6vilTbe1G2zDxtYO8F2H0I0Qnupdx5Cp4s2xoZw==",
       "type": "package",
@@ -5353,9 +5383,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin.repositories\\HelloDocAdmin.repositories.csproj",
-      "projectName": "HelloDocAdmin.repositories",
-      "projectPath": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin.repositories\\HelloDocAdmin.repositories.csproj",
+      "projectUniqueName": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin.repositories\\HelloDocAdmin.Repositories.csproj",
+      "projectName": "HelloDocAdmin.Repositories",
+      "projectPath": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin.repositories\\HelloDocAdmin.Repositories.csproj",
       "packagesPath": "C:\\Users\\pci105\\.nuget\\packages\\",
       "outputPath": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin.repositories\\obj\\",
       "projectStyle": "PackageReference",

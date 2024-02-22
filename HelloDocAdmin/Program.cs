@@ -1,4 +1,6 @@
 using HelloDocAdmin.Entity.Data;
+using HelloDocAdmin.PatientRepositories;
+using HelloDocAdmin.PatientRepositories.Interface;
 using HelloDocAdmin.Repositories;
 using HelloDocAdmin.Repositories.Interface;
 
@@ -9,6 +11,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>();
 builder.Services.AddScoped<IDashboardRepository, DashboardRepository>();
+builder.Services.AddScoped<IPatientRepository, PatientRepository>();
+builder.Services.AddScoped<IAspnetuserRepository, AspnetuserPropsitory>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

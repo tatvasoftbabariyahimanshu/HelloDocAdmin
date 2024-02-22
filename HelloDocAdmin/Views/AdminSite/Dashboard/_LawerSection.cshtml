@@ -156,9 +156,6 @@
                 <tbody>
                     @foreach(var item in Model)
                     {
-
-                       
-                      
                             
                             if (item.RequestTypeID == 2)
                                 {
@@ -176,14 +173,7 @@
                         else
                         {
                             TempData["hb"] = "bg-patient-row";
-                        }
-
-
-                                   
-                               
-                     
-                           
-                        
+                        }   
                    <tr class="@TempData["hb"]">
                         <td scope="col">
                             <div class="text-end d-flex justify-content-between">
@@ -249,7 +239,20 @@
                                 </svg> Provider
                             </div>
                         </td>
-                        <td scope="col"><div class="border border-1 p-1 rounded-2 text-center w-75 py-1">Actions </div></td>
+                        <td scope="col"><div class="border border-1 p-1 rounded-2 text-center w-75 py-1">Actions </div>
+                            <button class="input-outline input-outline-search w-100  text-light-emphasis border dropdown-toggle " type="button">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                                </svg> <span style="font-size: .8rem;">
+                                    Actions
+                                </span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Action</a></li>
+                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
+                            </td>
                     </tr>
                     }
                

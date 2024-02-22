@@ -1,0 +1,31 @@
+﻿@{
+    ViewData["Title"] = "View";
+    Layout = "~/Views/Shared/_RequestLayout.cshtml";
+}
+
+<div class="card mt-3 container bg-transparent border-0 d-flex align-items-center">
+    <div class="d-flex justify-content-between  border-0 bg-transparent align-items-center w-75">
+        <div class="">
+        </div><h2 class=" hero-text-submit">i am a...</h2>
+        <a asp-controller="Login" asp-action="Index"  class="btn btn-outline-info btn-back text-end ">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5" />
+            </svg></i>Back
+        </a>
+    </div>
+</div>
+
+<div class="d-flex justify-content-center">
+
+    <div class="card border-0 mt-2 bg-transparent " style="width: 18rem;">
+        
+        <div class="d-grid ">
+            <h6 >@TempData["EmialApproved"]</h6>
+            <a asp-controller="PatientRequest" asp-action="Index" class="btn  btn-outline-primary-sbt-req-pat  btn-outline-primary submit-button" type="button"><span class="button-inner-text clr-primary">PATIENT</span></a>
+            <a asp-controller="FamilyFriendRequest" asp-action="Index" class="btn btn-outline-info-sbt-req-pat btn-outline-info mt-2 submit-button" type="button"><span class="button-inner-text clr-info">FAMILY/FRIEND</span></a>
+            <a asp-controller="ConciergeRequest" asp-action="Index" class="btn btn-outline-success-sbt-req-pat btn-outline-success mt-2 submit-button" type="button"><span class="button-inner-text clr-success">CONCIERGE</span></a>
+            <a asp-controller="BusinessPartnerRequest" asp-action="Index" class="btn btn-outline-danger-sbt-req-pat btn-outline-danger mt-2 submit-button" type="button"><span class="button-inner-text clr-pink">BUSINESS PARTNERS</span></a>
+        </div>
+
+    </div>
+</div>

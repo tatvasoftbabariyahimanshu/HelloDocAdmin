@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "kdgPVyrzmZSjxurRi3fY03pKMdks6KsKRBAFxrRJhjdDnP1F/qSFCd4vIiEK/CMpIz8+1qD2L0HEwwT/VPrPGA==",
+  "dgSpecHash": "IY1DSPXnGmSL1rTuQPzbXBi5ekM9vFEOrylX/GJvXaFZm81JnRVU9e6rscgNwEA7h+3tTyLPwotiZORTkSBlGQ==",
   "success": true,
   "projectFilePath": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin.repositories\\HelloDocAdmin.Repositories.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\pci105\\.nuget\\packages\\microsoft.aspnetcore.http.features\\2.2.0\\microsoft.aspnetcore.http.features.2.2.0.nupkg.sha512",
     "C:\\Users\\pci105\\.nuget\\packages\\microsoft.entityframeworkcore\\7.0.0\\microsoft.entityframeworkcore.7.0.0.nupkg.sha512",
     "C:\\Users\\pci105\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\7.0.0\\microsoft.entityframeworkcore.abstractions.7.0.0.nupkg.sha512",
     "C:\\Users\\pci105\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\7.0.0\\microsoft.entityframeworkcore.analyzers.7.0.0.nupkg.sha512",

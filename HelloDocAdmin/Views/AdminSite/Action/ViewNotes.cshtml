@@ -1,0 +1,130 @@
+﻿@{
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+
+@using HelloDocAdmin.Entity.ViewModels.AdminSite
+@model ViewNotesModel
+
+<div class="container">
+    <div class="card bg-transparent border-0">
+        <div class="card-header  border-0  bg-transparent text-end mt-2">
+            <div class=" d-flex align-items-center justify-content-between">
+              <div class="text-start">
+                    <h4 class="form-title mt-3 mx-2">Notes</h4>
+
+              </div>
+             
+           
+            <div class="text-end">
+                <a asp-controller="Dashboard" asp-action="Index"
+                   class="btn btn-outline-info btn-back">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                         fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                              d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5" />
+                    </svg></i>Back
+                </a>
+            </div>
+            </div>
+        </div>
+
+
+        <div class="row align-items-center justify-content-around p-1 mb-2 " style="cursor:pointer" >
+            <div class="col-md-5 mt-2 d-flex align-items-center border-1 shadow rounded p-2 " style="min-height:100px">
+                <img src="/icons/transfer-alt-svgrepo-com.svg" style="height:50px;width:50px" class="mx-3" />
+
+                    <div >
+                    <b>Transfer Notes</b>
+                    <p class="mt-2 ">
+                      -
+               
+                    </p>
+                    </div>
+                   
+             </div>
+            <div class="col-md-5 d-flex mt-2  align-items-center shadow rounded p-2 " style="min-height:100px">
+               <img src="/icons/doctor-svgrepo-com.svg" style="height:50px;width:50px" class="mx-3"  />
+                    <div>
+                    <b> Physician Notes</b>
+                    <div class="mt-2 ">
+                        <p class="mt-2 ">
+                            @Model.Physiciannotes
+                           
+                        </p>
+
+                    </div>
+                    </div>
+              
+                </div>
+           
+         </div>
+        <div class="row align-items-center justify-content-around p-1  ">
+            <div class="col-md-5 d-flex mt-2 align-items-center border-1 shadow rounded p-2 " style="min-height:100px">
+                <img src="/icons/admin.svg" style="height:50px;width:50px" class="mx-3" />
+
+                <div >
+                   <b>
+                        Admin Notes
+                   </b> 
+                    <p class="mt-2">
+                      @Model.Adminnotes
+                       
+
+                    </p>
+                </div>
+               
+            </div>
+            <div class="col-md-5 d-flex align-items-center border-1 p-2 ">
+                
+            </div>
+       
+            
+
+        </div>
+        <div class="row align-items-center justify-content-around justify-content-around mb-2 mt-3 " style="cursor:pointer">
+
+            <div class="col-md-11 shadow rounded  ">
+                <div class="card-body">
+                      <div class="inputs-control w-100 mt-2">
+                        <textarea placeholder=" " rows="5" class="input-outline w-100 " type="text"></textarea>
+
+                        <label class="inputs-lable inputs-lable-textarea">Symptoms</label>
+                    </div>
+                    <div class="text-end">
+                        <button class="btn btn-outline-info btn-sybmit">Save</button>
+                    </div>
+                </div>
+               
+            </div>
+       
+            </div>
+
+        
+    </div>
+
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+<script>
+    const phoneInputField = document.querySelector("#phone");
+
+    const phoneInput = window.intlTelInput(phoneInputField, {
+        utilsScript:
+            "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+    });
+</script>
+<script>
+
+    function enable_disable() {
+        $(".edit-frm").prop("readonly", false);
+
+        $("#save").prop("readonly", false);
+        $("#cancel").prop("readonly", false);
+        $("#save").css("display", "block");
+        $("#cancel").css("display", "block");
+        $("#edit").css("display", "none");
+        $(".edit-frm").css("background-color", "transparent");
+
+    }
+
+</script>

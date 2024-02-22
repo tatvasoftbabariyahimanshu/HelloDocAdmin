@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "py44m+R/FJ+DH7IHSY5e0IFhAwiuAELF55/gX44FgoCWZQ+vCuhE06s12XbtryZ3eLmJuLURYHGP0ZjlvsRCaw==",
+  "dgSpecHash": "D6cQKaRMUbpsRm3EFnV3+LyW4aHkKfywOGaQjwHedy10qCS0yJdYNt1Y7zINBGtCbIleTwbgZHMjUBEGlN1aeA==",
   "success": true,
   "projectFilePath": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin.Entity\\HelloDocAdmin.Entity.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\pci105\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
+    "C:\\Users\\pci105\\.nuget\\packages\\microsoft.aspnetcore.http.features\\2.2.0\\microsoft.aspnetcore.http.features.2.2.0.nupkg.sha512",
     "C:\\Users\\pci105\\.nuget\\packages\\microsoft.entityframeworkcore\\7.0.0\\microsoft.entityframeworkcore.7.0.0.nupkg.sha512",
     "C:\\Users\\pci105\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\7.0.0\\microsoft.entityframeworkcore.abstractions.7.0.0.nupkg.sha512",
     "C:\\Users\\pci105\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\7.0.0\\microsoft.entityframeworkcore.analyzers.7.0.0.nupkg.sha512",

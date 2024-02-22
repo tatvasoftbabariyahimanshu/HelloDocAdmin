@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33723.286
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloDocAdmin", "HelloDocAdmin.csproj", "{5F9E5817-E71B-4201-A521-27206521D420}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HelloDocAdmin", "HelloDocAdmin.csproj", "{5F9E5817-E71B-4201-A521-27206521D420}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloDocAdmin.Entity", "..\HelloDocAdmin.Entity\HelloDocAdmin.Entity.csproj", "{401EF1D2-1321-4AB1-8338-08EF45CA8453}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HelloDocAdmin.Entity", "..\HelloDocAdmin.Entity\HelloDocAdmin.Entity.csproj", "{401EF1D2-1321-4AB1-8338-08EF45CA8453}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloDocAdmin.Repositories", "..\HelloDocAdmin.repositories\HelloDocAdmin.Repositories.csproj", "{F6CDBC14-2727-4F2D-9028-6A3147A37347}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HelloDocAdmin.Repositories", "..\HelloDocAdmin.repositories\HelloDocAdmin.Repositories.csproj", "{F6CDBC14-2727-4F2D-9028-6A3147A37347}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloDocAdmin.PatientRepositories", "..\HelloDocAdmin.PatientRepositories\HelloDocAdmin.PatientRepositories.csproj", "{9C68900B-6084-43C0-8448-4CFC26A2234A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{F6CDBC14-2727-4F2D-9028-6A3147A37347}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F6CDBC14-2727-4F2D-9028-6A3147A37347}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F6CDBC14-2727-4F2D-9028-6A3147A37347}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C68900B-6084-43C0-8448-4CFC26A2234A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C68900B-6084-43C0-8448-4CFC26A2234A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C68900B-6084-43C0-8448-4CFC26A2234A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C68900B-6084-43C0-8448-4CFC26A2234A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

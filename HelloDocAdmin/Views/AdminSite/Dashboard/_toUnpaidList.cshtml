@@ -1,0 +1,309 @@
+﻿@using HelloDocAdmin.Entity.Models;
+@using HelloDocAdmin.Entity.ViewModels;
+@model List<DashboardRequestModel>
+
+
+
+
+
+<div class="card bg-transparent border-0 ">
+    <div class="card-header p-2  d-flex justify-content-between  border-0  bg-transparent  mt-2">
+        <div class="text-start   d-flex ">
+            <span class="fw-bold hero-heading"> Patients</span><span class="mx-2 fw-bold text-primary mt-2 hero-heading-active">(@TempData["CurrentStatus"])</span>
+        </div>
+        <div class="text-end ">
+            <div class="bd-example">
+                <a class="btn btn-info text-white btn-info-dsh " href="#" role="button">
+                    <svg xmlns="http://www.w3.org/2000/svg" a width="18" height="18" fill="currentColor" class="bi bi-send button-icon" viewBox="0 0 16 16">
+                        <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576zm6.787-8.201L1.591 6.602l4.339 2.76z" />
+                    </svg>  <span class="btn-text">
+                        Send Link
+                    </span>
+                </a>
+                <button class="btn btn-info text-white btn-info-dsh" type="submit">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-journal-text button-icon" viewBox="0 0 16 16">
+                        <path d="M5 10.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5m0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5" />
+                        <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2" />
+                        <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1z" />
+                    </svg>
+                    <span class="btn-text">
+                        Create Request
+                    </span>
+                </button>
+                <button class="btn btn-info btn-info-dsh text-white" type="submit">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-journal-text button-icon" viewBox="0 0 16 16">
+                        <path d="M5 10.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5m0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5" />
+                        <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2" />
+                        <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1z" />
+                    </svg>
+                    <span class="btn-text">
+                        Export
+                    </span>
+                </button>
+                <button class="btn btn-info text-white btn-info-dsh" type="submit">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-journal-text button-icon" viewBox="0 0 16 16">
+                        <path d="M5 10.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5m0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5" />
+                        <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2" />
+                        <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1z" />
+                    </svg>
+                    <span class="btn-text">
+                        Export All
+                    </span>
+                </button>
+                <button class="btn btn-info  text-white btn-info-dsh" type="submit">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-journal-text button-icon" viewBox="0 0 16 16">
+                        <path d="M5 10.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5m0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5" />
+                        <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2" />
+                        <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1z" />
+                    </svg>
+                    <span class="btn-text">
+                        Request DTy Support
+                    </span>
+                </button>
+            </div>
+
+        </div>
+    </div>
+    <div class="card-body rounded shadow-lg m-2 ">
+        <div class="row justify-content-between mb-2 ">
+            <div class="text-start col-md-4 ">
+                <div class=" row">
+
+                    <div class="col-md-6">
+
+                        <div class="inputs-control w-100 p-0 ">
+                            <input placeholder=" " class="input-outline input-outline-search " id="myInput" onkeyup="myFunction()" type="text">
+                            <label class="inputs-lable">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                                </svg> Search Patient
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="dropdown w-100    ">
+                            <div class="inputs-control w-100 p-0 ">
+                                <input class="  input-outline input-outline-search h-100 " type="button" data-bs-toggle="dropdown" aria-expanded="false" onfocus="false" />
+
+
+                                <label class="inputs-lable-ser ">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                                    </svg> All Region
+                                </label>
+
+
+
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Action</a></li>
+                                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+
+            <div class="text-start mt-2 col-md-4">
+                <div class="d-flex  text-start  justify-content-end ">
+                    <button class="btn  btn-outline-info btn-sm mx-2 cir-text">all </button>
+                    <div class="d-flex align-items-center ">
+                        <div class="cir-patient mx-2">
+                        </div>
+                        <span class="cir-text">
+                            Patient
+                        </span>
+                    </div>
+                    <div class="d-flex align-items-center ">
+                        <div class="cir-family mx-2">
+                        </div>
+                        <span class="cir-text">
+                            Family/Friend
+                        </span>
+                    </div>
+                    <div class="d-flex align-items-center ">
+                        <div class="cir-Business mx-2">
+                        </div>
+                        <span class="cir-text">
+                            Business
+                        </span>
+                    </div>
+                    <div class="d-flex align-items-center ">
+                        <div class="cir-Concierge mx-2">
+                        </div>
+                        <span class="cir-text">
+                            Concierge
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="table-responsive dashboard-tbl mt-3 ">
+            <table id="myTable" class="table table-responsive">
+                <thead class=" text-start tablehead">
+                    <tr>
+                        <th scope="col">Name</th>
+                     
+                      
+                        <th scope="col">Physician Name</th>
+                        <th scope="col">Date of Service</th>
+                        <th scope="col">Phone</th>
+                        <th scope="col">Address</th>
+                  
+                        <th scope="col">Chat With</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+
+                        if (item.RequestTypeID == 2)
+                        {
+                            TempData["hb"] = "bg-family-row";
+                        }
+                        else if (item.RequestTypeID == 4)
+                        {
+                            TempData["hb"] = "bg-business-row";
+                        }
+                        else if (item.RequestTypeID == 3)
+                        {
+                            TempData["hb"] = "bg-concierge-row";
+
+                        }
+                        else
+                        {
+                            TempData["hb"] = "bg-patient-row";
+                        }
+
+
+
+
+
+
+
+                        <tr class="@TempData["hb"]">
+                            <td scope="col">
+                                <div class="text-end d-flex justify-content-between">
+                                    <div class="text-start d-grid">
+                                        @item.PatientName
+                                    </div> <div class="text-end   border border-1 p-1 text-end rounded-1 py-0 btn text-white">
+                                        <a href="mailto:@item.Email" class="text-white">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
+                                                <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z" />
+                                            </svg>
+                                        </a>
+
+                                    </div>
+                                </div>
+                            </td>
+
+                       
+                            <td scope="col">@item.ProviderName</td>
+                            <td scope="col">@item.RequestedDate</td>
+                            <td scope="col">
+                                <a href=" tel:+@item.PhoneNumber" class="text-white">
+                                    <div class="border border-1 p-1 rounded-2 text-center  w-75 py-1"><i class="bi bi-telephone"></i> @item.PhoneNumber </div>
+
+                                </a>
+                                <span>
+                                    (Patient)
+                                </span>
+
+                                @{
+                                    if (item.RequestTypeID == 2)
+                                    {
+                                        <a href=" tel:+@item.PhoneNumber" class="text-white">
+                                            <div class="border border-1 p-1 rounded-2 text-center  w-75 py-1"><i class="bi bi-telephone"></i> @item.RequestorPhoneNumber </div>
+                                        </a>  <span>
+                                            (Family/Friend)
+                                        </span>
+                                    }
+                                    else if (item.RequestTypeID == 4)
+                                    {
+                                        <a href=" tel:+@item.PhoneNumber" class="text-white">
+                                            <div class="border border-1 p-1 rounded-2 text-center w-75 py-1"><i class="bi bi-telephone"></i> @item.RequestorPhoneNumber </div>
+                                        </a> <span>
+                                            (Concierge)
+                                        </span>
+                                    }
+                                    else if (item.RequestTypeID == 3)
+                                    {
+                                        <a href=" tel:+@item.PhoneNumber" class="text-white">
+                                            <div class="border border-1 p-1 rounded-2 text-center  w-75 py-1"><i class="bi bi-telephone"></i> @item.RequestorPhoneNumber </div>
+                                        </a> <span>
+                                            (Business Partner)
+                                        </span>
+                                    }
+                                }
+                            </td>
+                            <td scope="col">@item.Address</td>
+                         
+                            <td scope="col" style="flex:auto">
+                                <div class="border border-1 p-1 rounded-2 text-center w-75 py-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-workspace" viewBox="0 0 16 16">
+                                        <path d="M4 16s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1zm4-5.95a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5" />
+                                        <path d="M2 1a2 2 0 0 0-2 2v9.5A1.5 1.5 0 0 0 1.5 14h.653a5.4 5.4 0 0 1 1.066-2H1V3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v9h-2.219c.554.654.89 1.373 1.066 2h.653a1.5 1.5 0 0 0 1.5-1.5V3a2 2 0 0 0-2-2z" />
+                                    </svg> Provider
+                                </div>
+                                <div class="border border-1 p-1 rounded-2 text-center w-75 py-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+                                        <path d="M4 16s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1zm4-5.95a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5" />
+                                        <path d="M2 1a2 2 0 0 0-2 2v9.5A1.5 1.5 0 0 0 1.5 14h.653a5.4 5.4 0 0 1 1.066-2H1V3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v9h-2.219c.554.654.89 1.373 1.066 2h.653a1.5 1.5 0 0 0 1.5-1.5V3a2 2 0 0 0-2-2z" />
+                                    </svg> Patient
+                                </div>
+                            </td>
+                            <td scope="col">
+                                <div class="border act-btn  border-1 p-1 rounded-2 text-center  py-1" data-bs-toggle="dropdown" aria-expanded="false">Actions </div>
+
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item " asp-action="ViewCase" asp-controller="Action" asp-route-id="@item.RequestID"><i class="bi bi-file-earmark-fill  mx-1"></i>View Case</a></li>
+                                    <li><a class="dropdown-item " href="#"><i class="bi bi-file-earmark-zip mx-1"></i>View Uploads</a></li>
+                                    <li><a class="dropdown-item " href="#"><i class="bi bi-card-checklist mx-1"></i>View Notes</a></li>
+                                   
+                                </ul>
+                            </td>
+                        </tr>
+                    }
+
+
+                </tbody>
+            </table>
+        </div>
+
+
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#myTable").DataTable();
+    });
+    function myFunction() {
+        // Declare variables
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+
+        // Loop through all table rows, and hide those who don't match the search query
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>
