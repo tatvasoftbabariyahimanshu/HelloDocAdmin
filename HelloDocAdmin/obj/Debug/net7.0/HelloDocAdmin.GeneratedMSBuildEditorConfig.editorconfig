@@ -16,8 +16,24 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = D:\Projects\Hello Doc Admin\HelloDocAdmin
 build_property._RazorSourceGeneratorDebug = 
 
+[D:/Projects/Hello Doc Admin/HelloDocAdmin/Views/AdminSite/Action/Models/_SendLink.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5TaXRlXEFjdGlvblxNb2RlbHNcX1NlbmRMaW5rLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/Hello Doc Admin/HelloDocAdmin/Views/AdminSite/Action/Partialdash/DashboardButtons.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5TaXRlXEFjdGlvblxQYXJ0aWFsZGFzaFxEYXNoYm9hcmRCdXR0b25zLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/Hello Doc Admin/HelloDocAdmin/Views/AdminSite/Action/Partialdash/_allPartialAction.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5TaXRlXEFjdGlvblxQYXJ0aWFsZGFzaFxfYWxsUGFydGlhbEFjdGlvbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Projects/Hello Doc Admin/HelloDocAdmin/Views/AdminSite/Action/ViewCase.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5TaXRlXEFjdGlvblxWaWV3Q2FzZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/Hello Doc Admin/HelloDocAdmin/Views/AdminSite/Action/ViewDocuments.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5TaXRlXEFjdGlvblxWaWV3RG9jdW1lbnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Projects/Hello Doc Admin/HelloDocAdmin/Views/AdminSite/Action/ViewNotes.cshtml]

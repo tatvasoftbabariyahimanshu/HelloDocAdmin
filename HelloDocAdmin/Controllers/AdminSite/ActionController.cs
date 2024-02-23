@@ -1,4 +1,5 @@
-﻿using HelloDocAdmin.Entity.ViewModels.AdminSite;
+﻿using HelloDocAdmin.Entity.Models;
+using HelloDocAdmin.Entity.ViewModels.AdminSite;
 using HelloDocAdmin.Repositories.Interface;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,6 +26,19 @@ namespace HelloDocAdmin.Controllers.AdminSite
             ViewNotesModel sm = _dashboardrepo.getNotesByID(id);
             return View("../AdminSite/Action/ViewNotes",sm);
         }
+        public IActionResult ViewDocuments(int id)
+        {
+
+            ViewDocumentsModel sm = _dashboardrepo.ViewDocument(id);
+            return View("../AdminSite/Action/ViewDocuments", sm);
+        }
+        public IActionResult UploadDocuments(int id, IFormFile? UploadFile)
+        {
+
+           bool sm = _dashboardrepo.UploadDoc(id, UploadFile);
+           
+            return RedirectToAction("ViewDocuments", new { id });
+        }
 
 
         public IActionResult EditCase(ViewCaseModel sm)
@@ -40,6 +54,31 @@ namespace HelloDocAdmin.Controllers.AdminSite
                 return View("../AdminSite/Action/ViewCase", sm);
             }
             
+        }
+        [HttpPost]
+        public IActionResult ChangeNotes(int? RequestID,string? adminnotes,string? physiciannotes)
+        {
+            if(adminnotes!=null || physiciannotes!=null)
+            {
+                bool result = _dashboardrepo.EditViewNotes(adminnotes, physiciannotes, RequestID);
+                if (result)
+                {
+                    return RedirectToAction("ViewNotes", new { id = RequestID });
+                }
+                else
+                {
+                    return View("../AdminSite/Action/ViewNotes");
+                }
+            }
+            else
+            {
+                TempData["Errormassage"] = "Please Select one of the note!!";
+                return RedirectToAction("ViewNotes", new { id = RequestID });
+            }
+              
+
+        
+
         }
 
     }

@@ -1,0 +1,175 @@
+﻿@{
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+@using HelloDocAdmin.Entity.ViewModels.AdminSite
+@model ViewDocumentsModel
+<div class="container">
+    <div class="card bg-transparent border-0 p-2" style="border-radius: 15px;">
+        <div class="card-header d-flex justify-content-between  border-0  bg-transparent p-1  mt-3 mb-2">
+            <div class="text-start">
+                <h5 class="mt-2"> Document</h5>
+            </div>
+            <div class="text-end">
+                <a asp-action="Index" asp-controller="Dashboard" class="btn btn-outline-info btn-back text-end">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                         class="bi bi-arrow-left-short" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                              d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5" />
+                    </svg></i>Back
+                </a>
+            </div>
+        </div>
+        <div class="card-body m-1 shadow" style="border-radius: 15px;">
+            <div class="doc-text-card">Patient name</div>
+            <span class="d-flex align-items-center">
+               
+                    <div class="Patient-name">@Model.Firstanme @Model.Lastanme </div>
+                    <div class="doc-text-card mx-2 ">(@Model.ConfirmationNumber)</div>
+              
+            </span>
+
+            <div class="doc-text-card mt-2">
+                check here for any files that you or the
+                doctor of yours subsequents requestors have attached for yo to
+                review
+            </div>
+            <div class="col-md-12 mt-3">
+
+
+
+
+
+                <form method="post" asp-action="UploadDocuments" asp-controller="Action" enctype="multipart/form-data">
+                        <div class="d-flex">
+                        <button type="button" id="choosenfile" class="col btn upl-btn text-start text-secondary" onclick="document.getElementById('files').click()">
+                            Select File
+                        </button>
+                        <input id="files" type="file" class="d-none  form-control doc_uploder" name="UploadFile">
+                        <input name="id" value="@Model.RequestID" class="d-none" />
+                        <button type="submit" class="btn btn-info text-white py-2" value="Upload">
+                            <i class="fa fa-cloud-upload"></i>
+                            <span class="d-none d-sm-inline">Upload</span>
+                        </button>
+                           @* <input class="form-control doc_uploder" id="formFileSm" name="UploadFile" type="file">
+                            <input type="hidden" name="id" value="@Model.RequestID" />
+                            <input type="submit" class="btn btn-info   btn-submit" value="Uplode" style="color: white;">*@
+                        </div>
+                    </form>
+              <script>
+                    $("#files").change(function () {
+                        filename = this.files[0].name;
+                        console.log(filename);
+                        $("#choosenfile").text(filename);
+                    });
+                  </script>
+
+
+
+
+
+                <div class="card-header-2 mt-3 d-flex justify-content-between  border-0  bg-transparent ">
+                    <div class="mt-2">
+                        <h6> Document</h6>
+                    </div>
+                    <div class="text-end">
+                        <a class="btn btn-outline-info btn-sm btn-back text-end" onclick="Downlode_all()">Downlode all</a>
+                    </div>
+                </div>
+                <div class="table-responsive mt-3 ">
+                    <table class="table">
+                        <thead class="border-0">
+                            <tr class="table-secondary">
+                                <th scope="col" class="table-text-header px-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input " type="checkbox" id="selectall" onchange="select_Desectall()">
+                                    </div>
+                                </th>
+                                <th scope="col" class="table-text-header px-3"></th>
+
+                                <th scope="col" class="table-text-header  px-3">Uploder</th>
+                                <th scope="col" class="table-text-header   ">uplode date</th>
+                                <th scope="col" class="table-text-header   ">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item2 in Model.documentslist)
+                            {
+                                <tr>
+
+                                    <td class="table-text px-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input doc-checkbox" type="checkbox" value="" onclick="statusselectall()">
+                                        </div>
+                                    </td>
+                                    <td class="table-text   px-3">@item2.Filename</td>
+                                    <td class="table-text  px-3">@item2.Uploader</td>
+                                    <td class="table-text  px-3">@item2.Createddate</td>
+
+                                    <td class="table-text text-center ">
+
+                                        <a class="btn btn-sm download-link  btn-outline-info document-button" download href="/Upload/req_@Model.RequestID/@item2.Filename">
+
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor"
+                                                 class="bi bi-arrow-down-circle mx-1" viewBox="0 0 16 16">
+                                                <path fill-rule="evenodd"
+                                                      d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293z" />
+                                            </svg>
+                                        </a>
+
+                                    </td>
+                                </tr>
+                            }
+
+
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+<script>
+    function statusselectall() {
+        var selectAllCheckbox = document.getElementById('selectall');
+        var allCheckboxes = document.getElementsByClassName('doc-checkbox');
+        var temp = false;
+        var i = 0;
+        for (i = 0; i < allCheckboxes.length; i++) {
+            if (!allCheckboxes[i].checked) {
+                temp = true;
+                selectAllCheckbox.checked = false;
+                break;
+            }
+
+        }
+        if (i == allCheckboxes.length) {
+            selectAllCheckbox.checked = true;
+        }
+
+
+    }
+    function select_Desectall() {
+        var selectAllCheckbox = document.getElementById('selectall');
+        var allCheckboxes = document.getElementsByClassName('doc-checkbox');
+
+        for (var i = 0; i < allCheckboxes.length; i++) {
+            allCheckboxes[i].checked = selectAllCheckbox.checked;
+        }
+    }
+
+    function Downlode_all() {
+        var allcheckbox = document.getElementsByClassName('doc-checkbox');
+        var alllinks = document.getElementsByClassName('download-link');
+        console.log(alllinks.length);
+        console.log(allcheckbox.length);
+        for (var i = 0; i < allcheckbox.length; i++) { // Use < instead of <=
+            if (allcheckbox[i].checked) {
+                console.log(alllinks[i]);
+                alllinks[i].click();
+            }
+        }
+    }
+
+</script>

@@ -3,7 +3,10 @@ using HelloDocAdmin.Entity.Models;
 using HelloDocAdmin.Entity.ViewModels;
 using HelloDocAdmin.Entity.ViewModels.AdminSite;
 using HelloDocAdmin.Repositories.Interface;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -12,6 +15,7 @@ using System.Runtime.Intrinsics.Arm;
 using System.Text;
 using System.Threading.Tasks;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace HelloDocAdmin.Repositories
 {
@@ -65,29 +69,81 @@ namespace HelloDocAdmin.Repositories
                 string monthName = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(monthnum);
                 int date = model.Dob.Day;
                 int year = model.Dob.Year;
-                Requestclient client=_context.Requestclients.FirstOrDefault(E=>E.Requestid==model.RequestID);
+                Requestclient client = _context.Requestclients.FirstOrDefault(E => E.Requestid == model.RequestID);
 
-               if (client != null)
+                if (client != null)
                 {
 
                     client.Firstname = model.FirstName;
                     client.Lastname = model.LastName;
                     client.Phonenumber = model.PhoneNumber;
-                    client.Email=model.Email;
+                    client.Email = model.Email;
                     client.Intdate = date;
                     client.Intyear = year;
                     client.Strmonth = monthName;
-                    
 
-                  
+
+
                     _context.Requestclients.Update(client);
-                     _context.SaveChangesAsync();
+                    _context.SaveChangesAsync();
                     return true;
                 }
                 else
                 {
                     return false;
                 }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+        public bool EditViewNotes(string? adminnotes,string? physiciannotes,int? RequestID)
+        {
+            try
+
+            {
+                Requestnote notes = _context.Requestnotes.FirstOrDefault(E => E.Requestid == RequestID);
+                if (physiciannotes!=null)
+                {
+                    if (notes != null)
+                    {
+
+                        notes.Physiciannotes = physiciannotes;
+                        notes.Modifieddate = DateTime.Now;
+
+                        _context.Requestnotes.Update(notes);
+                        _context.SaveChangesAsync();
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else if (adminnotes!=null)
+                {
+                    if (notes != null)
+                    {
+
+                        notes.Adminnotes = adminnotes;
+                        notes.Modifieddate = DateTime.Now;
+
+                        _context.Requestnotes.Update(notes);
+                        _context.SaveChangesAsync();
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
+                }   
+               
+
             }
             catch (Exception ex)
             {
@@ -133,6 +189,7 @@ namespace HelloDocAdmin.Repositories
         }
         public ViewNotesModel getNotesByID(int id)
         {
+            var requestlog = _context.Requeststatuslogs.Where(E => E.Requestid == id && (E.Transtophysician != null)|| (E.Transtoadmin != null));
             var model = _context.Requestnotes.FirstOrDefault(E=>E.Requestid==id);
             ViewNotesModel allData = new ViewNotesModel {
              Requestid = id,
@@ -141,7 +198,103 @@ namespace HelloDocAdmin.Repositories
                 Administrativenotes = model.Administrativenotes,
                 Adminnotes= model.Adminnotes,
             };
+           List< TransfernotesModel> md=new List<TransfernotesModel>();
+            foreach (var e in requestlog)
+            {
+              md.Add(new TransfernotesModel
+                {
+                    Requestid = e.Requestid,
+                    Notes=e.Notes,
+                    Physicianid = e.Physicianid,
+                    Createddate = e.Createddate,
+                    Requeststatuslogid=e.Requeststatuslogid,
+                    Transtoadmin=e.Transtoadmin,
+                    Transtophysicianid=e.Transtophysicianid
+                });
+            }
+            allData.transfernotes = md;
             return allData;
+        }
+        public bool UploadDoc(int Requestid, IFormFile? UploadFile)
+        {
+            try
+            {
+                string UploadImage;
+                if (UploadFile != null)
+                {
+                    string FilePath = "wwwroot\\Upload\\req_" + Requestid;
+                    string path = Path.Combine(Directory.GetCurrentDirectory(), FilePath);
+                    if (!Directory.Exists(path))
+                        Directory.CreateDirectory(path);
+                    string fileNameWithPath = Path.Combine(path, UploadFile.FileName);
+                    UploadImage = "~" + FilePath.Replace("wwwroot\\", "/") + "/" + UploadFile.FileName;
+                    using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
+                    {
+                        UploadFile.CopyTo(stream)
+    ;
+                    }
+                    var requestwisefile = new Requestwisefile
+                    {
+                        Requestid = Requestid,
+                        Filename = UploadFile.FileName,
+                        Createddate = DateTime.Now,
+                    };
+                    _context.Requestwisefiles.Add(requestwisefile);
+                    _context.SaveChanges();
+                }
+
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+           
+
+           
+        }
+
+        public ViewDocumentsModel ViewDocument (int id)
+        {
+            ViewDocumentsModel alldata = new ViewDocumentsModel();
+
+            var result = from requestWiseFile in _context.Requestwisefiles
+                         join request in _context.Requests on requestWiseFile.Requestid equals request.Requestid
+                         join physician in _context.Physicians on request.Physicianid equals physician.Physicianid into physicianGroup
+                         from phys in physicianGroup.DefaultIfEmpty()
+                         join admin in _context.Admins on requestWiseFile.Adminid equals admin.Adminid into adminGroup
+                         from adm in adminGroup.DefaultIfEmpty()
+                         where request.Requestid == id
+                         select new 
+                         {
+
+                             Uploader = requestWiseFile.Physicianid != null ? phys.Firstname :
+                             (requestWiseFile.Adminid != null ? adm.Firstname : request.Firstname),
+                             requestWiseFile.Filename,
+                             requestWiseFile.Createddate
+                            
+                         };
+            List<Documents> doc=new List<Documents>();
+            foreach (var item in result)
+            {
+                doc.Add(new Documents
+                {
+                    Createddate= item.Createddate,
+                    Filename = item.Filename,
+                    Uploader = item.Uploader,
+                });
+                    
+            }
+            alldata.documentslist=doc;
+           var req = _context.Requests.FirstOrDefault(r => r.Requestid == id);
+
+            alldata.Firstanme = req.Firstname;
+            alldata.RequestID = req.Requestid;
+            alldata.ConfirmationNumber = req.Confirmationnumber;
+            alldata.Lastanme = req.Lastname;
+            return alldata;
+
         }
 
     }

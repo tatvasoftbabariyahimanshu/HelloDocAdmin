@@ -5,6 +5,12 @@
 
 @using HelloDocAdmin.Entity.ViewModels.AdminSite
 @model ViewNotesModel
+<style>
+    .notes{
+        font-size:.9rem;
+       
+    }
+</style>
 
 <div class="container">
     <div class="card bg-transparent border-0">
@@ -28,27 +34,30 @@
             </div>
             </div>
         </div>
+     
 
-
-        <div class="row align-items-center justify-content-around p-1 mb-2 " style="cursor:pointer" >
-            <div class="col-md-5 mt-2 d-flex align-items-center border-1 shadow rounded p-2 " style="min-height:100px">
-                <img src="/icons/transfer-alt-svgrepo-com.svg" style="height:50px;width:50px" class="mx-3" />
+        <div class="row container-fluid align-items-center justify-content-around  mb-2 " style="cursor:pointer" >
+            @foreach(var item in Model.transfernotes)
+            {
+                <div class="col-md-5 crd-notes m-2 d-flex align-items-center border-1 shadow rounded p-2 " style="min-height:100px">
+                <img src="/icons/transfer-alt-svgrepo-com.svg" style="height:50px;width:50px"  class="mx-3 icn-img" />
 
                     <div >
                     <b>Transfer Notes</b>
-                    <p class="mt-2 ">
-                      -
+                    <p class="mt-2 notes ">
+                     @item.Notes
                
                     </p>
                     </div>
                    
              </div>
-            <div class="col-md-5 d-flex mt-2  align-items-center shadow rounded p-2 " style="min-height:100px">
-               <img src="/icons/doctor-svgrepo-com.svg" style="height:50px;width:50px" class="mx-3"  />
+            }
+            <div class="col-md-5 crd-notes d-flex m-2  align-items-center shadow rounded p-2 " id="phynotes" style="min-height:100px;cursor:pointer">
+                <img src="/icons/doctor-svgrepo-com.svg" style="height:50px;width:50px" class="mx-3 icn-img" />
                     <div>
                     <b> Physician Notes</b>
-                    <div class="mt-2 ">
-                        <p class="mt-2 ">
+                    <div class="mt-2  ">
+                        <p id="phynotetext" class="mt-2 notes">
                             @Model.Physiciannotes
                            
                         </p>
@@ -59,15 +68,15 @@
                 </div>
            
          </div>
-        <div class="row align-items-center justify-content-around p-1  ">
-            <div class="col-md-5 d-flex mt-2 align-items-center border-1 shadow rounded p-2 " style="min-height:100px">
-                <img src="/icons/admin.svg" style="height:50px;width:50px" class="mx-3" />
+        <div class="row  container-fluid align-items-center justify-content-around  ">
+            <div class="col-md-5 crd-notes m-2 d-flex align-items-center border-1 shadow rounded p-2 " id="adminnotes" style="min-height:100px;cursor:pointer">
+                <img src="/icons/admin.svg" style="height:50px;width:50px" class="mx-3 icn-img" />
 
                 <div >
                    <b>
                         Admin Notes
                    </b> 
-                    <p class="mt-2">
+                    <p id="adminnotestext" class="mt-2 notes">
                       @Model.Adminnotes
                        
 
@@ -75,30 +84,42 @@
                 </div>
                
             </div>
-            <div class="col-md-5 d-flex align-items-center border-1 p-2 ">
+            <div class="col-md-5 m-2 d-flex align-items-center border-1  p-2 ">
                 
             </div>
        
             
 
         </div>
-        <div class="row align-items-center justify-content-around justify-content-around mb-2 mt-3 " style="cursor:pointer">
-
-            <div class="col-md-11 shadow rounded  ">
-                <div class="card-body">
-                      <div class="inputs-control w-100 mt-2">
-                        <textarea placeholder=" " rows="5" class="input-outline w-100 " type="text"></textarea>
-
-                        <label class="inputs-lable inputs-lable-textarea">Symptoms</label>
+        <form method="post" asp-action="ChangeNotes" asp-controller="Action">
+        <div class="row  align-items-center d-flex justify-content-around mb-2 mt-3 " style="cursor:pointer">
+            
+                <div class="col-md-11 shadow rounded  ">
+                    <div class="card-body">
+                        <div class="inputs-control w-100 mt-2">
+                            <textarea id="changenote" placeholder=" " rows="5" name="" class="input-outline w-100 fs-6 " type="text" ></textarea>
+                            
+                            <label class="inputs-lable inputs-lable-textarea fs-6" id="notedata" >Notes</label>
+                        </div>
+                        <input type="hidden" name="RequestID" value="@Model.Requestid"/>
+                        @if (TempData["Errormassage"] != null)
+                        {
+                            <div class="alert text-start alert-info alert-dismissible fade show" role="alert">
+                                <strong>Heyy</strong> @TempData["Errormassage"]
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        }
+                        <div class="text-end">
+                            <button type="submit" class="btn btn-info text-white mt-2">Save Changes</button>
+                        </div>
                     </div>
-                    <div class="text-end">
-                        <button class="btn btn-outline-info btn-sybmit">Save</button>
-                    </div>
+
                 </div>
-               
-            </div>
+          
+     
        
             </div>
+        </form>
 
         
     </div>
@@ -114,6 +135,25 @@
     });
 </script>
 <script>
+    $(document).ready(function () {
+   
+        $("#phynotes").click(function () {
+            var text = $('#phynotetext').html().trim();
+            console.log(text);
+            $("#changenote").val(text);
+           
+            $("#changenote").attr("name", "physiciannotes");
+            $("#notedata").html("Physician Note");
+        })
+        $("#adminnotes").click(function () {
+            var text = $('#adminnotestext').html().trim();
+            console.log(text);
+            $("#changenote").val(text);
+            $("#changenote").attr("name", "adminnotes");
+            $("#notedata").html("Admin Note");
+        })
+    });
+
 
     function enable_disable() {
         $(".edit-frm").prop("readonly", false);

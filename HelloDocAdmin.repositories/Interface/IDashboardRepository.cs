@@ -1,6 +1,7 @@
 ﻿using HelloDocAdmin.Entity.Models;
 using HelloDocAdmin.Entity.ViewModels;
 using HelloDocAdmin.Entity.ViewModels.AdminSite;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,5 +19,8 @@ namespace HelloDocAdmin.Repositories.Interface
         int GetRequestNumberByStatus(short status);
         public bool EditCase(ViewCaseModel model);
         public ViewNotesModel getNotesByID(int id);
+        public bool EditViewNotes(string? adminnotes, string? physiciannotes, int? RequestID);
+        public ViewDocumentsModel ViewDocument(int id);
+        public bool UploadDoc(int Requestid, IFormFile? UploadFile);
     }
 }

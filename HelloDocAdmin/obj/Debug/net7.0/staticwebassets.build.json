@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "BBlvUyQ+KaPAxVtFWx1z3cWQ0ojT0tRi0BYenJaqNtk=",
+  "Hash": "gEJWGVl+H4GcsZPRAHwNen0gWfCexUSy2pKLb+9Nqks=",
   "Source": "HelloDocAdmin",
   "BasePath": "_content/HelloDocAdmin",
   "Mode": "Default",
@@ -5644,6 +5644,23 @@
       "OriginalItemSpec": "wwwroot\\Upload\\RegisterNew.cshtml"
     },
     {
+      "Identity": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\req_0\\Screenshot (5).png",
+      "SourceId": "HelloDocAdmin",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\",
+      "BasePath": "_content/HelloDocAdmin",
+      "RelativePath": "Upload/req_0/Screenshot (5).png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Upload\\req_0\\Screenshot (5).png"
+    },
+    {
       "Identity": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\req_81\\Screenshot 2024-02-15 102048.png",
       "SourceId": "HelloDocAdmin",
       "SourceType": "Discovered",
@@ -5746,6 +5763,23 @@
       "OriginalItemSpec": "wwwroot\\Upload\\req_86\\Screenshot 2024-02-15 102048.png"
     },
     {
+      "Identity": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\req_87\\Screenshot (5).png",
+      "SourceId": "HelloDocAdmin",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\",
+      "BasePath": "_content/HelloDocAdmin",
+      "RelativePath": "Upload/req_87/Screenshot (5).png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Upload\\req_87\\Screenshot (5).png"
+    },
+    {
       "Identity": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\req_87\\Screenshot 2024-02-15 102048.png",
       "SourceId": "HelloDocAdmin",
       "SourceType": "Discovered",
@@ -5761,6 +5795,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Upload\\req_87\\Screenshot 2024-02-15 102048.png"
+    },
+    {
+      "Identity": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\req_88\\Screenshot (6).png",
+      "SourceId": "HelloDocAdmin",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\",
+      "BasePath": "_content/HelloDocAdmin",
+      "RelativePath": "Upload/req_88/Screenshot (6).png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Upload\\req_88\\Screenshot (6).png"
     },
     {
       "Identity": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\ResetPassword.cshtml",

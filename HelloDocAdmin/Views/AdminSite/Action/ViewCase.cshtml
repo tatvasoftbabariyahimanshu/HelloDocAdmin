@@ -240,12 +240,21 @@
                                 <input placeholder=" " asp-for="Address" class="input-outline w-100 inp" readonly type="text">
                                 <label class="inputs-lable">Business/Address</label>
                             </div>
-                            <button class="btn btn-outline-info mx-2 " style="height:4rem;width:4rem">
+                            <button class="btn btn-outline-info mx-2 map-btn " style="height:4rem;width:4rem">
                                 <i class="bi bi-geo-alt-fill"></i>
                             </button>
 
                         </div>
-                        
+                        <div id="myModal" class="modal">
+                            <div class="modal-content" style="width:49%;margin-top:201px;">
+                                <h5 style="text-align: center;">Your Location</h5>
+                                <div class="gmap_canvas" style="height:100%;width:100%">
+                                    <iframe id="gmap_canvas" style="height:95%;width:100%;border-radius:15px;" src="" frameborder="0" scrolling="no" marginheight="0" marginwidth="0">
+                                    </iframe>
+                                </div>
+                                <span class="close">Ok</span>
+                            </div>
+                        </div>
                          
 
 
@@ -291,6 +300,7 @@
         utilsScript:
             "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
     });
+
 </script>
 <script>
 
