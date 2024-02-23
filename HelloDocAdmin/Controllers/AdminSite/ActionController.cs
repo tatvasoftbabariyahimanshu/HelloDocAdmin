@@ -55,6 +55,15 @@ namespace HelloDocAdmin.Controllers.AdminSite
             }
             
         }
+        public IActionResult SendLink(string firstname, string lastname, string email, string phonenumber)
+        {
+            if (_dashboardrepo.SendLink(firstname, lastname, email, phonenumber))
+            {
+
+                TempData["Status"] = "Link Send In mail Successfully..!";
+            }
+            return RedirectToAction("Index", "Dashboard");
+        }
         [HttpPost]
         public IActionResult ChangeNotes(int? RequestID,string? adminnotes,string? physiciannotes)
         {

@@ -210,7 +210,7 @@
                                
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item " href="#"><i class="bi bi-journal-text mx-1"></i>Assign Case</a></li>
-                                    <li><a class="dropdown-item " href="#"><i class="bi bi-x-circle  mx-1"></i>Cancel Case</a></li>
+                                    <li><a class="dropdown-item " asp-action="" asp-controller="" data-bs-toggle="modal" data-bs-target="#Cancelcase" data-bs-requestid="@item.RequestID" data-bs-patientname="@item.PatientName"><i class="bi bi-x-circle  mx-1"></i>Cancel Case</a></li>
                                     <li><a class="dropdown-item " asp-action="ViewCase" asp-controller="Action" asp-route-id="@item.RequestID" ><i class="bi bi-file-earmark-fill  mx-1"></i>View Case</a></li>
                                     <li><a class="dropdown-item " asp-action="ViewNotes" asp-controller="Action" asp-route-id="@item.RequestID"><i class="bi bi-card-text  mx-1"></i>View Notes</a></li>
                                     <li><a class="dropdown-item " href="#"><i class="bi bi-ban  mx-1"></i>Block Patient</a></li>
@@ -234,6 +234,9 @@
     </script>
 
 <script>
+    <script>
+      
+</script>
     $(document).ready(function () {
         $("#myTable").DataTable();
     });

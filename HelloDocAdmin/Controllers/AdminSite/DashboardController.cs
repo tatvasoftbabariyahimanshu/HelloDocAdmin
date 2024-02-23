@@ -10,21 +10,24 @@ namespace HelloDocAdmin.Controllers.AdminSite
     public class DashboardController : Controller
     {
         private IDashboardRepository _dashboardrepo;
+        private ICombobox _combobox;
         private readonly ILogger<DashboardController> _logger;
-        public DashboardController(ILogger<DashboardController> logger, IDashboardRepository dashboardRepository)
+        public DashboardController(ILogger<DashboardController> logger, IDashboardRepository dashboardRepository,ICombobox combobox)
         {
             _logger = logger;
             _dashboardrepo = dashboardRepository;
+          _combobox= combobox;
         }
 
     
        
 
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-         
-           
+
+            ViewBag.RegionComboBox = await _combobox.RegionComboBox();
+            ViewBag.CaseReasonComboBox = await _combobox.CaseReasonComboBox();
             DashboardCardsModel model = new DashboardCardsModel();
             model.PandingRequests = _dashboardrepo.GetRequestNumberByStatus(2);
             model.NewRequests = _dashboardrepo.GetRequestNumberByStatus(1);
@@ -40,6 +43,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> _SearchResult(short Status)
         {
+         
             List<DashboardRequestModel> contacts = _dashboardrepo.GetRequests(Status);
             switch (Status)
             {

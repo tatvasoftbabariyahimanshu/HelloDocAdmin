@@ -1,4 +1,5 @@
-﻿using HelloDocAdmin.Entity.Data;
+﻿
+using HelloDocAdmin.Entity.Data;
 using HelloDocAdmin.Entity.Models;
 using HelloDocAdmin.Entity.ViewModels;
 using HelloDocAdmin.Entity.ViewModels.AdminSite;
@@ -23,11 +24,12 @@ namespace HelloDocAdmin.Repositories
     public class DashboardRepository:IDashboardRepository
     {
         private readonly ApplicationDbContext _context;
+        private readonly EmailConfiguration _email;
 
-
-        public DashboardRepository(ApplicationDbContext context)
+        public DashboardRepository(ApplicationDbContext context, EmailConfiguration email)
         {
             _context = context;
+            _email = email;
         }
 
         public int GetRequestNumberByStatus(short status)
@@ -214,6 +216,14 @@ namespace HelloDocAdmin.Repositories
             }
             allData.transfernotes = md;
             return allData;
+        }
+        public bool SendLink(string firstname, string lastname, string email, string phonenumber)
+        {
+            
+
+            _email.SendMail(email, "Add New Request", "HIMANSHU");
+
+            return true;
         }
         public bool UploadDoc(int Requestid, IFormFile? UploadFile)
         {

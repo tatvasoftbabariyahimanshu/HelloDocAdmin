@@ -5,24 +5,24 @@
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Send Mail To  Patient for Submitting request</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form asp-action="SendLink" asp-controller="ViewAction">
+            <form asp-action="SendLink" asp-controller="Action">
                 <div class="modal-body">
-                    <div class=" form-floating  my-2">
-                        <input class="form-control rounded" name="firstname" type="text" placeholder="First Name" autocomplete=off>
-                        <label class="" for="floatingInput">First Name </label>
+                    <div class="inputs-control ">
+                        <input placeholder=" " name="firstname" class="input-outline w-100 inp edit-frm" type="text" >
+                        <label class="inputs-lable">First name</label>
                     </div>
-                    <div class="form-floating my-2">
-                        <input class="form-control rounded" name="lastname" type="text" placeholder=Suchtext autocomplete=off>
-                        <label for="floatingInput">Last Name </label>
+                    <div class="inputs-control mt-2 ">
+                        <input placeholder=" " name="lastname" class="input-outline w-100 inp edit-frm" type="text" >
+                        <label class="inputs-lable">Last name</label>
                     </div>
-                    <div class=" form-floating my-2">
-                        <input id="phone"  placeholder="Mobile" type="tel" readonly class=" telephone input-outline w-100 inp align-items-center edit-frm" />
+                    <div class=" form-floating mt-2">
+                        <input id="phone" placeholder="Mobile" name="phone" type="tel"  class=" telephone input-outline w-100 inp align-items-center edit-frm" />
 
                        
                     </div>
-                    <div class=" form-floating my-2">
-                        <input class="form-control rounded" name="email" type="text" placeholder=Suchtext autocomplete=off>
-                        <label for="floatingInput">Email </label>
+                    <div class="inputs-control mt-2 ">
+                        <input placeholder=" " name="email" class="input-outline w-100 inp edit-frm" type="text" >
+                        <label class="inputs-lable">Email</label>
                     </div>
                 </div>
                 <div class="modal-footer">

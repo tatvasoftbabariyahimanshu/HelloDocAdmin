@@ -22,5 +22,6 @@ namespace HelloDocAdmin.Repositories.Interface
         public bool EditViewNotes(string? adminnotes, string? physiciannotes, int? RequestID);
         public ViewDocumentsModel ViewDocument(int id);
         public bool UploadDoc(int Requestid, IFormFile? UploadFile);
+        public bool SendLink(string firstname, string lastname, string email, string phonenumber);
     }
 }
