@@ -32,9 +32,12 @@ namespace HelloDocAdmin.Repositories
             _email = email;
         }
 
-        public int GetRequestNumberByStatus(short status)
+        public int GetRequestNumberByStatus(string status)
         {
-            int n= _context.Requests.Where(E=>E.Status== status).Count();
+            List<short> priceList = status.Split(',').Select(short.Parse).ToList();
+
+            int n = _context.Requests.Count(E => priceList.Contains((short)E.Status));
+
             return n;
         }
         public ViewCaseModel GetRequestForViewCase(int id)
@@ -153,10 +156,10 @@ namespace HelloDocAdmin.Repositories
             }
         }
 
-        public List<DashboardRequestModel> GetRequests(short Status)
+        public List<DashboardRequestModel> GetRequests(string Status)
         {
 
-
+            List<int> priceList = Status.Split(',').Select(int.Parse).ToList();
 
             List<DashboardRequestModel> allData = (from req in _context.Requests
                            join reqClient in _context.Requestclients
@@ -168,7 +171,8 @@ namespace HelloDocAdmin.Repositories
                            join reg in _context.Regions
                           on rc.Regionid equals reg.Regionid into RegGroup
                            from rg in RegGroup.DefaultIfEmpty()
-                           where req.Status == Status orderby req.Createddate descending
+                                                   where priceList.Contains(req.Status)
+                                                   orderby req.Createddate descending
                            select new DashboardRequestModel
                            {
                                RequestID=req.Requestid,
@@ -305,6 +309,39 @@ namespace HelloDocAdmin.Repositories
             alldata.Lastanme = req.Lastname;
             return alldata;
 
+        }
+
+
+        public bool CancelCase(int RequestID,string Note,string CaseTag)
+        {
+            try
+            {
+                var requestData=_context.Requests.FirstOrDefault(e=>e.Requestid==RequestID);
+                if (requestData!=null)
+                {
+                    requestData.Casetag=CaseTag;
+                    requestData.Status = 3;
+                   _context.Requests.Update(requestData);
+                    _context.SaveChanges();
+
+                    Requeststatuslog rsl = new Requeststatuslog
+                    {
+                        Requestid = RequestID,
+                        Notes = Note,
+                        Status = 3,
+                        Createddate = DateTime.Now
+                    };
+                    _context.Requeststatuslogs.Add(rsl);
+                    _context.SaveChanges();
+                    return true;
+                }
+                else { return false; }  
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+            
         }
 
     }

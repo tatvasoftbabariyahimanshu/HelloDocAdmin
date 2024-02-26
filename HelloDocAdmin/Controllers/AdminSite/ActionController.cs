@@ -90,5 +90,16 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
         }
 
+        #region _CancelCase
+        public IActionResult CancelCase(int RequestID,string Note,string CaseTag)
+        {
+
+
+            bool CancelCase=_dashboardrepo.CancelCase(RequestID, Note, CaseTag);
+
+            return RedirectToAction("Index", "Dashboard");
+
+        }
+        #endregion
     }
 }

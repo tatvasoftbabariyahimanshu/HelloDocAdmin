@@ -113,7 +113,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model)
+                    @foreach (var (item, i) in Model.Select((item, i) => (item, i)))
                     {
 
                         if (item.RequestTypeID == 2)
@@ -207,16 +207,17 @@
                             </td>
                             <td scope="col">
                                 <div class="border act-btn  border-1 p-1 rounded-2 text-center  py-1" data-bs-toggle="dropdown" aria-expanded="false">Actions </div>
-                               
+                              
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item " href="#"><i class="bi bi-journal-text mx-1"></i>Assign Case</a></li>
-                                    <li><a class="dropdown-item " asp-action="" asp-controller="" data-bs-toggle="modal" data-bs-target="#Cancelcase" data-bs-requestid="@item.RequestID" data-bs-patientname="@item.PatientName"><i class="bi bi-x-circle  mx-1"></i>Cancel Case</a></li>
+                                    <li><a class="dropdown-item " asp-action="" onclick="model_cancelCase(@i)" id="CancelCase_@item.RequestID" asp-controller="" data-bs-toggle="modal" data-bs-target="#Cancelcase" data-bs-requestid="@item.RequestID" data-bs-patientname="@item.PatientName"><i class="bi bi-x-circle  mx-1"></i>Cancel Case</a></li>
                                     <li><a class="dropdown-item " asp-action="ViewCase" asp-controller="Action" asp-route-id="@item.RequestID" ><i class="bi bi-file-earmark-fill  mx-1"></i>View Case</a></li>
                                     <li><a class="dropdown-item " asp-action="ViewNotes" asp-controller="Action" asp-route-id="@item.RequestID"><i class="bi bi-card-text  mx-1"></i>View Notes</a></li>
                                     <li><a class="dropdown-item " href="#"><i class="bi bi-ban  mx-1"></i>Block Patient</a></li>
                                    
-                                  
+                              
                                 </ul>
+                               
                             </td>
                         </tr>
                     }
@@ -229,14 +230,23 @@
 
     </div>
 </div>
- <script>
-    
+ 
+    <script>
+        function model_cancelCase(id) {
+        console.log(id);
+        var modeldata=@Html.Raw(Json.Serialize(Model))
+        console.log(modeldata[id])
+        document.getElementById('PatientName_ModelCancelCase').innerText=modeldata[id].patientName;
+        document.getElementById('RequestID_Input_ModelCancelCase').value = modeldata[id].requestID;
+        }
+
     </script>
 
-<script>
-    <script>
+
       
-</script>
+<script>
+
+  
     $(document).ready(function () {
         $("#myTable").DataTable();
     });

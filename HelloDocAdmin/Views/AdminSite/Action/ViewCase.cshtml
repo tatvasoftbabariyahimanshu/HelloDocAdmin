@@ -235,26 +235,34 @@
                     </div>
 
                     <div class="col-md-6 mt-2 ">
-                        <div class="mb-3 d-flex">
+                        <div class="mb-3 d-flex justify-content-around align-items-center">
                             <div class="inputs-control w-100  ">
-                                <input placeholder=" " asp-for="Address" class="input-outline w-100 inp" readonly type="text">
+                                <input placeholder=" " asp-for="Address" class="input-outline w-100 inp" readonly id="address" type="text">
                                 <label class="inputs-lable">Business/Address</label>
                             </div>
-                            <button class="btn btn-outline-info mx-2 map-btn " style="height:4rem;width:4rem">
-                                <i class="bi bi-geo-alt-fill"></i>
-                            </button>
+                            <a class="btn btn-outline-info mx-2 text-info map-btn p-2 " style="height:4rem;width:4rem" id="map-button">
+                                <i class="bi bi-geo-alt-fill mx-3"></i>
+                            </a>
 
                         </div>
-                        <div id="myModal" class="modal">
-                            <div class="modal-content" style="width:49%;margin-top:201px;">
-                                <h5 style="text-align: center;">Your Location</h5>
-                                <div class="gmap_canvas" style="height:100%;width:100%">
-                                    <iframe id="gmap_canvas" style="height:95%;width:100%;border-radius:15px;" src="" frameborder="0" scrolling="no" marginheight="0" marginwidth="0">
-                                    </iframe>
+                        <div class="modal" id="myModal" tabindex="-1">
+                            <div class="modal-dialog modal-xl">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Your Location</h5>
+                                        <button type="button" class="btn-close close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="gmap_canvas">
+                                            <iframe id="gmap_canvas" style="min-height:500px;width:100%;" src="" frameborder="0" scrolling="no" marginheight="0" marginwidth="0">
+                                            </iframe>
+                                        </div>
+                                    </div>
+
                                 </div>
-                                <span class="close">Ok</span>
                             </div>
                         </div>
+
                          
 
 
@@ -317,3 +325,44 @@
     }
 
 </script>
+<script>
+    var modal = document.getElementById("myModal");
+
+    var btn = document.getElementById("map-button");
+
+    var address = document.getElementById('address').value;
+
+    //var geocoder = new google.maps.Geocoder();
+    //geocoder.geocode({ address: address }, function (results, status) {
+    //    if (status == "OK") {
+    //        var latitude = results[0].geometry.location.lat();
+    //        var longitude = results[0].geometry.location.lng();
+    //        document.getElementById('lat').value = latitude;
+    //        document.getElementById('long').value = longitude;
+    //        console.log(document.getElementById('lat').value);
+    //        console.log(document.getElementById('long').value);
+    //    } else {
+    //        console.log("Geocoding failed: " + status);
+    //    }
+    //});
+    var spany = document.getElementsByClassName("close")[0];
+    var map;
+    btn.onclick = function () {
+
+        var address = document.getElementById('address').value;
+
+        var address1 = `https://maps.google.com/maps?q= + ${address} + &t=&z=13&ie=UTF8&iwloc=&output=embed`;
+        console.log(address1);
+        document.getElementById('gmap_canvas').src = address1;
+        modal.style.display = "block";
+    }
+    spany.onclick = function () {
+        modal.style.display = "none";
+    }
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>
+

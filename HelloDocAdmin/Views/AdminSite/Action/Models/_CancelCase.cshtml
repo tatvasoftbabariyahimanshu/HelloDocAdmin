@@ -1,29 +1,36 @@
-﻿﻿<div class="modal fade" id="Cancelcase" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+﻿
+﻿<div class="modal fade" id="Cancelcase" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header  bg-info text-white">
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Confirm Concellation</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+            <form asp-action="CancelCase" asp-controller="Action">
+            <input type="hidden" value="" id="RequestID_Input_ModelCancelCase" name="RequestId"/>
+
             <div class="modal-body">
-                <h3 class="modal-title fs-5" id="exampleModalLabel">Patient Name : <span class="text-info" id="patientname"> </span></h3>
-                <form asp-action="" asp-controller="">
+                <h3 class="modal-title fs-5" id="exampleModalLabel">Patient Name : <span class="text-info" id="PatientName_ModelCancelCase"> </span></h3>
+               
                     <input value="" type="hidden" name="requestid" id="requestid" />
-                    <div class="mb-4">
-                        <select class="form-select form-select-sm " data-allow-clear="true" tabindex="-1" id="Region" onchange="myFunction()" asp-items="@(new SelectList(ViewBag.CaseReasonComboBox,"CaseReasonId","CaseReasonName"))" data-control="select2" data-placeholder="Cancel Reason">
-                            <option>All Region</option>
+                    <div class="mb-4 mt-3">
+                        <div class="input-control w-100">
+                        <select name="CaseTag" class="input-outline input-outline-select " required data-allow-clear="true" tabindex="-1" id="Region" asp-items="@(new SelectList(ViewBag.CaseReasonComboBox,"CaseReasonId","CaseReasonName"))" data-control="select2" data-placeholder="Cancel Reason">
+                            <option>Cancel Reason</option>
                         </select>
+                        </div>
                     </div>
-                    <div class="mb-4 form-floating ">
-                        <textarea class="form-control rounded" name="notes" cols="50" type="text" rows="5" placeholder=Suchtext autocomplete=off></textarea>
-                        <label for="floatingInput">Symptoms </label>
+                    <div class="inputs-control w-100 mt-2">
+                        <textarea id="changenote" placeholder=" " name="Note" rows="5" class="input-outline w-100 fs-6 " type="text"></textarea>
+
+                        <label class="inputs-lable inputs-lable-textarea fs-6" id="notedata">Notes</label>
                     </div>
-                </form>
-            </div>
+                </div>
             <div class="modal-footer">
-                <button type="button" class=" btn btn-info text-white">Confirm</button>
-                <button type="button" class="btn btn-outline-info" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class=" btn btn-info text-white">Confirm</button>
+                <a  class="btn btn-outline-info" data-bs-dismiss="modal">Close</a>
             </div>
+            </form>
         </div>
     </div>
 </div>
