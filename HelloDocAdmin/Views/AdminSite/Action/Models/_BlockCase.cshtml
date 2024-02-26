@@ -1,0 +1,29 @@
+﻿﻿<div class="modal fade" id="BlockCase" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header  bg-info text-white">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Confirm Block</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form asp-action="BlockCase" asp-controller="Action">
+                <input type="hidden" value="" id="RequestID_Input_ModelBlockCase" name="RequestId" />
+
+                <div class="modal-body">
+                    <h3 class="modal-title fs-5" id="exampleModalLabel">Patient Name : <span class="text-info" id="PatientName_ModelBlockCase"> </span></h3>
+
+                    <input value="" type="hidden" name="requestid" id="requestid" />
+                
+                    <div class="inputs-control w-100 mt-2">
+                        <textarea id="changenote" placeholder=" " name="Note" rows="5" class="input-outline w-100  " type="text"></textarea>
+
+                        <label class="inputs-lable inputs-lable-textarea " id="notedata">Notes for Block</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class=" btn btn-info text-white">Confirm</button>
+                    <a class="btn btn-outline-info" data-bs-dismiss="modal">Close</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

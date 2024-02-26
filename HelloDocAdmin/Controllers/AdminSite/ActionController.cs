@@ -1,5 +1,6 @@
 ﻿using HelloDocAdmin.Entity.Models;
 using HelloDocAdmin.Entity.ViewModels.AdminSite;
+using HelloDocAdmin.Repositories;
 using HelloDocAdmin.Repositories.Interface;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,14 +9,18 @@ namespace HelloDocAdmin.Controllers.AdminSite
     public class ActionController : Controller
     {
         private IDashboardRepository _dashboardrepo;
+        private ICombobox _combobox;
         private readonly ILogger<DashboardController> _logger;
-        public ActionController(ILogger<DashboardController> logger, IDashboardRepository dashboardRepository)
+        public ActionController(ILogger<DashboardController> logger, IDashboardRepository dashboardRepository, ICombobox combobox)
         {
             _logger = logger;
+            _combobox = combobox;
             _dashboardrepo = dashboardRepository;
         }
-        public IActionResult ViewCase(int id)
+        public async Task<IActionResult> ViewCase(int id)
         {
+            ViewBag.RegionComboBox =await  _combobox.RegionComboBox();
+            ViewBag.CaseReasonComboBox =await  _combobox.CaseReasonComboBox();
             ViewCaseModel sm=_dashboardrepo.GetRequestForViewCase(id);
            
             return View("../AdminSite/Action/ViewCase",sm);
@@ -64,6 +69,17 @@ namespace HelloDocAdmin.Controllers.AdminSite
             }
             return RedirectToAction("Index", "Dashboard");
         }
+        #region AssignProvider
+        public async Task<IActionResult> AssignProvider(int requestid, int ProviderId, string Notes)
+        {
+            if (await _dashboardrepo.AssignProvider(requestid, ProviderId, Notes))
+            {
+                TempData["Status"] = "Assign Provider Successfully..!";
+            }
+
+            return RedirectToAction("Index", "Dashboard");
+        }
+        #endregion
         [HttpPost]
         public IActionResult ChangeNotes(int? RequestID,string? adminnotes,string? physiciannotes)
         {
@@ -96,6 +112,15 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
 
             bool CancelCase=_dashboardrepo.CancelCase(RequestID, Note, CaseTag);
+
+            return RedirectToAction("Index", "Dashboard");
+
+        }
+        public IActionResult BlockCase(int RequestID, string Note)
+        {
+
+
+            bool BlockCase = _dashboardrepo.BlockCase(RequestID, Note);
 
             return RedirectToAction("Index", "Dashboard");
 

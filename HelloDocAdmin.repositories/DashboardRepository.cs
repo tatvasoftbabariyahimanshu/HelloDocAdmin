@@ -20,8 +20,8 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace HelloDocAdmin.Repositories
 {
-   
-    public class DashboardRepository:IDashboardRepository
+
+    public class DashboardRepository : IDashboardRepository
     {
         private readonly ApplicationDbContext _context;
         private readonly EmailConfiguration _email;
@@ -42,7 +42,7 @@ namespace HelloDocAdmin.Repositories
         }
         public ViewCaseModel GetRequestForViewCase(int id)
         {
-            var  n = _context.Requests.FirstOrDefault(E => E.Requestid == id);
+            var n = _context.Requests.FirstOrDefault(E => E.Requestid == id);
 
             var l = _context.Requestclients.FirstOrDefault(E => E.Requestid == id);
 
@@ -51,16 +51,16 @@ namespace HelloDocAdmin.Repositories
             ViewCaseModel requestforviewcase = new ViewCaseModel
             {
                 RequestID = id,
-                Region=region.Name,
+                Region = region.Name,
                 FirstName = l.Firstname,
                 LastName = l.Lastname,
-                PhoneNumber=l.Phonenumber,
+                PhoneNumber = l.Phonenumber,
                 PatientNotes = l.Notes,
                 Email = l.Email,
-                RequestTypeID=n.Requesttypeid,
-                Address = l.Street+"," + l.City+"," + l.State,
-                Room=l.Address,
-                ConfirmationNumber=n.Confirmationnumber,
+                RequestTypeID = n.Requesttypeid,
+                Address = l.Street + "," + l.City + "," + l.State,
+                Room = l.Address,
+                ConfirmationNumber = n.Confirmationnumber,
                 Dob = new DateTime((int)l.Intyear, DateTime.ParseExact(l.Strmonth, "MMMM", new CultureInfo("en-US")).Month, (int)l.Intdate)
             };
             return requestforviewcase;
@@ -103,13 +103,13 @@ namespace HelloDocAdmin.Repositories
                 return false;
             }
         }
-        public bool EditViewNotes(string? adminnotes,string? physiciannotes,int? RequestID)
+        public bool EditViewNotes(string? adminnotes, string? physiciannotes, int? RequestID)
         {
             try
 
             {
                 Requestnote notes = _context.Requestnotes.FirstOrDefault(E => E.Requestid == RequestID);
-                if (physiciannotes!=null)
+                if (physiciannotes != null)
                 {
                     if (notes != null)
                     {
@@ -126,7 +126,7 @@ namespace HelloDocAdmin.Repositories
                         return false;
                     }
                 }
-                else if (adminnotes!=null)
+                else if (adminnotes != null)
                 {
                     if (notes != null)
                     {
@@ -146,8 +146,8 @@ namespace HelloDocAdmin.Repositories
                 else
                 {
                     return false;
-                }   
-               
+                }
+
 
             }
             catch (Exception ex)
@@ -162,60 +162,60 @@ namespace HelloDocAdmin.Repositories
             List<int> priceList = Status.Split(',').Select(int.Parse).ToList();
 
             List<DashboardRequestModel> allData = (from req in _context.Requests
-                           join reqClient in _context.Requestclients
-                           on req.Requestid equals reqClient.Requestid into reqClientGroup
-                           from rc in reqClientGroup.DefaultIfEmpty()
-                           join phys in _context.Physicians
-                           on req.Physicianid equals phys.Physicianid into physGroup
-                           from p in physGroup.DefaultIfEmpty()
-                           join reg in _context.Regions
-                          on rc.Regionid equals reg.Regionid into RegGroup
-                           from rg in RegGroup.DefaultIfEmpty()
+                                                   join reqClient in _context.Requestclients
+                                                   on req.Requestid equals reqClient.Requestid into reqClientGroup
+                                                   from rc in reqClientGroup.DefaultIfEmpty()
+                                                   join phys in _context.Physicians
+                                                   on req.Physicianid equals phys.Physicianid into physGroup
+                                                   from p in physGroup.DefaultIfEmpty()
+                                                   join reg in _context.Regions
+                                                  on rc.Regionid equals reg.Regionid into RegGroup
+                                                   from rg in RegGroup.DefaultIfEmpty()
                                                    where priceList.Contains(req.Status)
                                                    orderby req.Createddate descending
-                           select new DashboardRequestModel
-                           {
-                               RequestID=req.Requestid,
-                               RequestTypeID = req.Requesttypeid,
-                               Requestor = req.Firstname + " " + req.Lastname,
-                               PatientName = rc.Firstname + " " + rc.Lastname,
-                               Dob = new DateOnly((int)rc.Intyear, DateTime.ParseExact(rc.Strmonth, "MMMM", new CultureInfo("en-US")).Month, (int)rc.Intdate),
-                               RequestedDate = req.Createddate,
-                               Email = rc.Email,
+                                                   select new DashboardRequestModel
+                                                   {
+                                                       RequestID = req.Requestid,
+                                                       RequestTypeID = req.Requesttypeid,
+                                                       Requestor = req.Firstname + " " + req.Lastname,
+                                                       PatientName = rc.Firstname + " " + rc.Lastname,
+                                                       Dob = new DateOnly((int)rc.Intyear, DateTime.ParseExact(rc.Strmonth, "MMMM", new CultureInfo("en-US")).Month, (int)rc.Intdate),
+                                                       RequestedDate = req.Createddate,
+                                                       Email = rc.Email,
 
-                               Region = rg.Name,
-                               ProviderName = p.Firstname + " " + p.Lastname,
-                               PhoneNumber = rc.Phonenumber,
-                               Address = rc.Address + "," + rc.Street + "," + rc.City + "," + rc.State + "," + rc.Zipcode,
-                               Notes = rc.Notes,
-                               ProviderID = req.Physicianid,
-                               RequestorPhoneNumber = req.Phonenumber
-                           }).ToList();
+                                                       Region = rg.Name,
+                                                       ProviderName = p.Firstname + " " + p.Lastname,
+                                                       PhoneNumber = rc.Phonenumber,
+                                                       Address = rc.Address + "," + rc.Street + "," + rc.City + "," + rc.State + "," + rc.Zipcode,
+                                                       Notes = rc.Notes,
+                                                       ProviderID = req.Physicianid,
+                                                       RequestorPhoneNumber = req.Phonenumber
+                                                   }).ToList();
             return allData;
         }
         public ViewNotesModel getNotesByID(int id)
         {
-            var requestlog = _context.Requeststatuslogs.Where(E => E.Requestid == id && (E.Transtophysician != null)|| (E.Transtoadmin != null));
-            var model = _context.Requestnotes.FirstOrDefault(E=>E.Requestid==id);
+            var requestlog = _context.Requeststatuslogs.Where(E => E.Requestid == id && (E.Transtophysician != null) || (E.Transtoadmin != null));
+            var model = _context.Requestnotes.FirstOrDefault(E => E.Requestid == id);
             ViewNotesModel allData = new ViewNotesModel {
-             Requestid = id,
-                Requestnotesid=model.Requestnotesid,
+                Requestid = id,
+                Requestnotesid = model.Requestnotesid,
                 Physiciannotes = model.Physiciannotes,
                 Administrativenotes = model.Administrativenotes,
-                Adminnotes= model.Adminnotes,
+                Adminnotes = model.Adminnotes,
             };
-           List< TransfernotesModel> md=new List<TransfernotesModel>();
+            List<TransfernotesModel> md = new List<TransfernotesModel>();
             foreach (var e in requestlog)
             {
-              md.Add(new TransfernotesModel
+                md.Add(new TransfernotesModel
                 {
                     Requestid = e.Requestid,
-                    Notes=e.Notes,
+                    Notes = e.Notes,
                     Physicianid = e.Physicianid,
                     Createddate = e.Createddate,
-                    Requeststatuslogid=e.Requeststatuslogid,
-                    Transtoadmin=e.Transtoadmin,
-                    Transtophysicianid=e.Transtophysicianid
+                    Requeststatuslogid = e.Requeststatuslogid,
+                    Transtoadmin = e.Transtoadmin,
+                    Transtophysicianid = e.Transtophysicianid
                 });
             }
             allData.transfernotes = md;
@@ -223,12 +223,36 @@ namespace HelloDocAdmin.Repositories
         }
         public bool SendLink(string firstname, string lastname, string email, string phonenumber)
         {
-            
+
 
             _email.SendMail(email, "Add New Request", "HIMANSHU");
 
             return true;
         }
+        #region Assign_Provider
+        public async Task<bool> AssignProvider(int RequestId, int ProviderId, string notes)
+        {
+
+            var request = await _context.Requests.FirstOrDefaultAsync(req => req.Requestid == RequestId);
+            request.Physicianid = ProviderId;
+            request.Status = 2;
+            _context.Requests.Update(request);
+            _context.SaveChanges();
+
+            Requeststatuslog rsl = new Requeststatuslog();
+            rsl.Requestid = RequestId;
+            rsl.Physicianid = ProviderId;
+            rsl.Notes = notes;
+            rsl.Createddate = DateTime.Now;
+            rsl.Status = 2;
+            _context.Requeststatuslogs.Update(rsl);
+            _context.SaveChanges();
+
+            return true;
+
+
+        }
+        #endregion
         public bool UploadDoc(int Requestid, IFormFile? UploadFile)
         {
             try
@@ -264,12 +288,12 @@ namespace HelloDocAdmin.Repositories
             {
                 return false;
             }
-           
 
-           
+
+
         }
 
-        public ViewDocumentsModel ViewDocument (int id)
+        public ViewDocumentsModel ViewDocument(int id)
         {
             ViewDocumentsModel alldata = new ViewDocumentsModel();
 
@@ -280,28 +304,28 @@ namespace HelloDocAdmin.Repositories
                          join admin in _context.Admins on requestWiseFile.Adminid equals admin.Adminid into adminGroup
                          from adm in adminGroup.DefaultIfEmpty()
                          where request.Requestid == id
-                         select new 
+                         select new
                          {
 
                              Uploader = requestWiseFile.Physicianid != null ? phys.Firstname :
                              (requestWiseFile.Adminid != null ? adm.Firstname : request.Firstname),
                              requestWiseFile.Filename,
                              requestWiseFile.Createddate
-                            
+
                          };
-            List<Documents> doc=new List<Documents>();
+            List<Documents> doc = new List<Documents>();
             foreach (var item in result)
             {
                 doc.Add(new Documents
                 {
-                    Createddate= item.Createddate,
+                    Createddate = item.Createddate,
                     Filename = item.Filename,
                     Uploader = item.Uploader,
                 });
-                    
+
             }
-            alldata.documentslist=doc;
-           var req = _context.Requests.FirstOrDefault(r => r.Requestid == id);
+            alldata.documentslist = doc;
+            var req = _context.Requests.FirstOrDefault(r => r.Requestid == id);
 
             alldata.Firstanme = req.Firstname;
             alldata.RequestID = req.Requestid;
@@ -312,36 +336,75 @@ namespace HelloDocAdmin.Repositories
         }
 
 
-        public bool CancelCase(int RequestID,string Note,string CaseTag)
+        public bool CancelCase(int RequestID, string Note, string CaseTag)
         {
             try
             {
-                var requestData=_context.Requests.FirstOrDefault(e=>e.Requestid==RequestID);
-                if (requestData!=null)
+                var requestData = _context.Requests.FirstOrDefault(e => e.Requestid == RequestID);
+                if (requestData != null)
                 {
-                    requestData.Casetag=CaseTag;
-                    requestData.Status = 3;
-                   _context.Requests.Update(requestData);
+                    requestData.Casetag = CaseTag;
+                    requestData.Status = 8;
+                    _context.Requests.Update(requestData);
                     _context.SaveChanges();
 
                     Requeststatuslog rsl = new Requeststatuslog
                     {
                         Requestid = RequestID,
                         Notes = Note,
-                        Status = 3,
+                        Status = 8,
                         Createddate = DateTime.Now
                     };
                     _context.Requeststatuslogs.Add(rsl);
                     _context.SaveChanges();
                     return true;
                 }
-                else { return false; }  
+                else { return false; }
             }
             catch (Exception ex)
             {
                 return false;
             }
-            
+
+        }
+        public bool BlockCase(int RequestID, string Note){
+
+            try
+            {
+                var requestData = _context.Requests.FirstOrDefault(e => e.Requestid == RequestID);
+                if (requestData != null)
+                {
+
+                    requestData.Status = 11;
+                    _context.Requests.Update(requestData);
+                    _context.SaveChanges();
+                    Blockrequest blc = new Blockrequest
+                    {
+                        Requestid = requestData.Requestid.ToString(),
+                        Phonenumber = requestData.Phonenumber,
+                        Email = requestData.Email,
+                        Reason = Note,
+                        Createddate = DateTime.Now,
+                        Modifieddate = DateTime.Now
+
+
+                    };
+                    _context.Blockrequests.Add(blc);
+                    _context.SaveChanges();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            catch(Exception ex)
+            {
+                return false;
+            }
+           
+           
         }
 
     }

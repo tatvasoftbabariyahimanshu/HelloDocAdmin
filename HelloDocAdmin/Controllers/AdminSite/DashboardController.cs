@@ -38,6 +38,13 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
             return View("../AdminSite/Dashboard/Index",model);
         }
+        #region providerbyregion
+        public  IActionResult ProviderbyRegion(int? Regionid)
+        {
+            var v =  _combobox.ProviderbyRegion(Regionid);
+            return Json(v);
+        }
+        #endregion
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -50,7 +57,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
             }
 
             List<DashboardRequestModel> contacts = _dashboardrepo.GetRequests(Status);
-            
+            TempData["CurrentStatusinlist"] = Status;
 
             switch (Status)
             {

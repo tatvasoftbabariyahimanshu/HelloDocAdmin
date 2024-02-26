@@ -16,6 +16,14 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = D:\Projects\Hello Doc Admin\HelloDocAdmin
 build_property._RazorSourceGeneratorDebug = 
 
+[D:/Projects/Hello Doc Admin/HelloDocAdmin/Views/AdminSite/Action/Models/_AssignCase.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5TaXRlXEFjdGlvblxNb2RlbHNcX0Fzc2lnbkNhc2UuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/Hello Doc Admin/HelloDocAdmin/Views/AdminSite/Action/Models/_BlockCase.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5TaXRlXEFjdGlvblxNb2RlbHNcX0Jsb2NrQ2FzZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Projects/Hello Doc Admin/HelloDocAdmin/Views/AdminSite/Action/Models/_CancelCase.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5TaXRlXEFjdGlvblxNb2RlbHNcX0NhbmNlbENhc2UuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 

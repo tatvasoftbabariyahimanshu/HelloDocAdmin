@@ -1,5 +1,6 @@
 ﻿
 using HelloDocAdmin.Entity.Data;
+using HelloDocAdmin.Entity.Models;
 using HelloDocAdmin.Entity.ViewModel;
 using HelloDocAdmin.Repositories.Interface;
 using Microsoft.EntityFrameworkCore;
@@ -14,8 +15,7 @@ namespace HelloDocAdmin.Repositories
     public class Combobox : ICombobox
     {
         private readonly ApplicationDbContext _context;
-     
-
+      
         public Combobox(ApplicationDbContext context)
         {
             _context = context;
@@ -39,5 +39,17 @@ namespace HelloDocAdmin.Repositories
             })
                 .ToListAsync();
         }
+        #region Provider_By_Region
+        public  List<Physician> ProviderbyRegion(int? regionid)
+        {
+            var result =  _context.Physicians
+                        .Where(r => r.Regionid == regionid)
+                        .OrderByDescending(x => x.Createddate)
+                        .ToList();
+
+            return result;
+        }
+        #endregion
+
     }
 }

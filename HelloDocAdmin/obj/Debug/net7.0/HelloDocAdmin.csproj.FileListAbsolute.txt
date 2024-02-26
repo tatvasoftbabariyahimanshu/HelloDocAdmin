@@ -259,3 +259,10 @@ D:\Projects\Hello Doc Admin\HelloDocAdmin\bin\Debug\net7.0\Newtonsoft.Json.Bson.
 D:\Projects\Hello Doc Admin\HelloDocAdmin\bin\Debug\net7.0\HelloDocAdmin.PatientRepositories.dll
 D:\Projects\Hello Doc Admin\HelloDocAdmin\bin\Debug\net7.0\HelloDocAdmin.PatientRepositories.pdb
 D:\Projects\Hello Doc Admin\HelloDocAdmin\obj\Debug\net7.0\scopedcss\Views\Shared\PatientSite\_Layout.cshtml.rz.scp.css
+D:\Projects\Hello Doc Admin\HelloDocAdmin\bin\Debug\net7.0\ClosedXML.dll
+D:\Projects\Hello Doc Admin\HelloDocAdmin\bin\Debug\net7.0\DocumentFormat.OpenXml.dll
+D:\Projects\Hello Doc Admin\HelloDocAdmin\bin\Debug\net7.0\ExcelNumberFormat.dll
+D:\Projects\Hello Doc Admin\HelloDocAdmin\bin\Debug\net7.0\Irony.dll
+D:\Projects\Hello Doc Admin\HelloDocAdmin\bin\Debug\net7.0\SixLabors.Fonts.dll
+D:\Projects\Hello Doc Admin\HelloDocAdmin\bin\Debug\net7.0\System.IO.Packaging.dll
+D:\Projects\Hello Doc Admin\HelloDocAdmin\bin\Debug\net7.0\XLParser.dll

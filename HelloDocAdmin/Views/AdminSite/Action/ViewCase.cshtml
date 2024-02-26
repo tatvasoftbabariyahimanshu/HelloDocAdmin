@@ -90,20 +90,15 @@
                 {
                     <span class="badge text-white   bg-patient-row ">Patient</span>
                    
-                   @* <div class="btn btn-sm text-white bg-patient-row">
-                        patient
-                    </div>*@
+                 
                 }
                 else if (Model.RequestTypeID == 2)
                 {
-                    <span class="badge text-white   bg-family-row ">Family/Friend</span>
-                   
+                    <span class="badge text-white   bg-family-row ">Family/Friend</span>      
                 }
                 else if (Model.RequestTypeID == 3)
                 {
-                    <span class="badge text-white   bg-concierge-row ">concierge</span>
-
-                    
+                    <span class="badge text-white   bg-concierge-row ">concierge</span>     
                 }
                 else
                 {
@@ -262,16 +257,7 @@
                                 </div>
                             </div>
                         </div>
-
-                         
-
-
-
                     </div>
-                 
-
-               
-
                     <div class="col-md-6 mt-2">
                         <div class=" mb-3 ">
                             <div class="inputs-control ">
@@ -284,9 +270,7 @@
                 </div>
                
                     <div class="card-footer border-0 bg-transparent text-end">
-                    <button type="submit" class="btn btn-info btn-submit">
-                        Assign
-                    </button>
+                    <a class="btn btn-info text-white" asp-action="" onclick="model_Case()" asp-controller="" data-bs-toggle="modal" data-bs-target="#Assigncase">Assign Case</a>
                         <button type="submit" class="btn btn-info btn-submit">
                            View Notes
                         </button>
@@ -300,6 +284,16 @@
     </div>
 
 </div>
+<script>
+    function model_Case() {
+        console.log();
+        var modeldata = @Html.Raw(Json.Serialize(Model))
+            console.log(modeldata[id])
+        document.getElementById('RequestID_Input_ModelAssignCase').value = modeldata[0].requestID;
+    }
+
+</script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
 <script>
     const phoneInputField = document.querySelector("#phone");
@@ -327,24 +321,8 @@
 </script>
 <script>
     var modal = document.getElementById("myModal");
-
     var btn = document.getElementById("map-button");
-
     var address = document.getElementById('address').value;
-
-    //var geocoder = new google.maps.Geocoder();
-    //geocoder.geocode({ address: address }, function (results, status) {
-    //    if (status == "OK") {
-    //        var latitude = results[0].geometry.location.lat();
-    //        var longitude = results[0].geometry.location.lng();
-    //        document.getElementById('lat').value = latitude;
-    //        document.getElementById('long').value = longitude;
-    //        console.log(document.getElementById('lat').value);
-    //        console.log(document.getElementById('long').value);
-    //    } else {
-    //        console.log("Geocoding failed: " + status);
-    //    }
-    //});
     var spany = document.getElementsByClassName("close")[0];
     var map;
     btn.onclick = function () {
@@ -364,5 +342,77 @@
             modal.style.display = "none";
         }
     }
+</script>
+<div class="modal fade" id="Assigncase" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header  bg-info text-white">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Assign Physician </h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form asp-action="AssignProvider" asp-controller="Action">
+            <div class="modal-body">
+                <h6 class="modal-title">to assign  this request,select and search another physician.</h6>
+
+                    <input type="hidden" asp-for="RequestID" value="@Model.RequestID" />
+                <div class="mb-3">
+                    <div class="input-control w-100 mt-3">
+                        <select class="input-outline input-outline-select " required name="region" data-allow-clear="true" tabindex="-1" onchange="myFunction1()" id="region2" asp-items="@(new SelectList(ViewBag.RegionComboBox,"RegionId","RegionName"))" data-control="select2" data-placeholder="Select Level">
+                            <option>All Region</option>
+                        </select>
+                    </div>
+
+                </div>
+                <div class="mb-3">
+                    <div class="input-control w-100 mt-3">
+                        <select class="input-outline input-outline-select" required name="ProviderId" data-allow-clear="true" tabindex="-1" id="provider" data-control="select2" data-placeholder="Select Level">
+                            <option>All Provider</option>
+                        </select>
+                    </div>
+
+                </div>
+                <div class="inputs-control w-100 mt-2">
+                    <textarea id="changenote" placeholder="" name="Notes" rows="5" class="input-outline w-100 fs-6 " type="text"></textarea>
+
+                    <label class="inputs-lable inputs-lable-textarea fs-6" id="notedata">Notes</label>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <input type="submit" class=" btn btn-info text-white" value="Assign">
+                <button type="button" class="btn btn-outline-info" data-bs-dismiss="modal">Close</button>
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+
+
+<script type="text/javascript">
+
+    function myFunction1() {
+
+
+        var region = $("#region2").val();
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("ProviderbyRegion","Dashboard")?Regionid=' + region,
+            cache: false,
+            success: function (response) {
+
+                console.log(response);
+                var s = '<option value="-1">Please Select</option>';
+                for (var i = 0; i < response.length; i++) {
+                    s += '<option value="' + response[i].physicianid + '">' + response[i].firstname + ' ' + response[i].lastname + '</option>';
+                }
+                $("#provider").html(s);
+            },
+            error: function () {
+                alert("Error while checking email.");
+            }
+        });
+    }
+
 </script>
 

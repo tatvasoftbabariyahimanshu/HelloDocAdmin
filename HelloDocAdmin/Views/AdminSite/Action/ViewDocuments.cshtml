@@ -21,10 +21,9 @@
         </div>
         <div class="card-body m-1 shadow" style="border-radius: 15px;">
             <div class="doc-text-card">Patient name</div>
-            <span class="d-flex align-items-center">
-               
-                    <div class="Patient-name">@Model.Firstanme @Model.Lastanme </div>
-                    <div class="doc-text-card mx-2 ">(@Model.ConfirmationNumber)</div>
+            <span class="d-flex align-items-center ">
+                <span class="Patient-name fs-4"><b>@Model.Firstanme @Model.Lastanme </b></span>
+                    <span class="doc-text-card mx-1 fs-6 ">(@Model.ConfirmationNumber)</span>
               
             </span>
 
@@ -41,7 +40,7 @@
 
                 <form method="post" asp-action="UploadDocuments" asp-controller="Action" enctype="multipart/form-data">
                         <div class="d-flex">
-                        <button type="button" id="choosenfile" class="col btn upl-btn text-start text-secondary" onclick="document.getElementById('files').click()">
+                        <button type="button" id="choosenfile" class="col  btn upl-btn text-start text-secondary" onclick="document.getElementById('files').click()">
                             Select File
                         </button>
                         <input id="files" type="file" class="d-none  form-control doc_uploder" name="UploadFile">
@@ -50,9 +49,7 @@
                             <i class="fa fa-cloud-upload"></i>
                             <span class="d-none d-sm-inline">Upload</span>
                         </button>
-                           @* <input class="form-control doc_uploder" id="formFileSm" name="UploadFile" type="file">
-                            <input type="hidden" name="id" value="@Model.RequestID" />
-                            <input type="submit" class="btn btn-info   btn-submit" value="Uplode" style="color: white;">*@
+                       
                         </div>
                     </form>
               <script>

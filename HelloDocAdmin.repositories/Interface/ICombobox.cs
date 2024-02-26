@@ -1,4 +1,5 @@
-﻿using HelloDocAdmin.Entity.ViewModel;
+﻿using HelloDocAdmin.Entity.Models;
+using HelloDocAdmin.Entity.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +12,6 @@ namespace HelloDocAdmin.Repositories.Interface
     {
         Task<List<RegionComboBox>> RegionComboBox();
         Task<List<CaseReasonComboBox>> CaseReasonComboBox();
+        public  List<Physician> ProviderbyRegion(int? regionid);
     }
 }

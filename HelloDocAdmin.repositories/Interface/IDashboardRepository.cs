@@ -14,6 +14,7 @@ namespace HelloDocAdmin.Repositories.Interface
     public interface IDashboardRepository
     {
         List<DashboardRequestModel> GetRequests(string Status);
+        public  Task<bool> AssignProvider(int RequestId, int ProviderId, string notes);
 
         ViewCaseModel GetRequestForViewCase(int id);
         int GetRequestNumberByStatus(string Status);
@@ -24,6 +25,7 @@ namespace HelloDocAdmin.Repositories.Interface
         public bool UploadDoc(int Requestid, IFormFile? UploadFile);
         public bool SendLink(string firstname, string lastname, string email, string phonenumber);
         public bool CancelCase(int RequestID, string Note, string CaseTag);
+            public bool BlockCase(int RequestID, string Note);
 
     }
 }
