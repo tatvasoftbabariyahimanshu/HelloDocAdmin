@@ -1,12 +1,14 @@
 ﻿@using HelloDocAdmin.Entity.Models;
 @using HelloDocAdmin.Entity.ViewModels;
+@using HelloDocAdmin.Entity.ViewModels.AdminSite;
+@using static HelloDocAdmin.Entity.ViewModels.AdminSite.Constant;
 @model List<DashboardRequestModel>
 
 
 
 
 
-<div class="card bg-transparent border-0 ">
+<div class="card bg-transparent p-1 border-0 ">
     <div class="card-header p-2  d-flex justify-content-between  border-0  bg-transparent  mt-2">
         <div class="text-start   d-flex ">
             <span class="fw-bold hero-heading"> Patients</span><span class="mx-2 fw-bold text-primary mt-2 hero-heading-active">(@TempData["CurrentStatus"])</span>
@@ -17,87 +19,8 @@
         </div>
     </div>
     <div class="card-body rounded shadow-lg m-2 ">
-        <div class="row justify-content-between mb-2 ">
-            <div class="text-start col-md-4 ">
-                <div class=" row">
-
-                    <div class="col-md-6">
-
-                        <div class="inputs-control w-100 p-0 ">
-                            <input placeholder=" " class="input-outline input-outline-search " id="myInput" onkeyup="myFunction()" type="text">
-                            <label class="inputs-lable">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-                                </svg> Search Patient
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="dropdown w-100    " >
-                            <div class="inputs-control w-100 p-0 ">
-                                <input class="  input-outline input-outline-search h-100 " type="button" data-bs-toggle="dropdown" aria-expanded="false" onfocus="false" />
-                               
-                                    
-                              <label class="inputs-lable-ser ">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-                                        </svg> All Region
-                              </label>
-                                   
-                               
-                      
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Action</a></li>
-                                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                                    <li><a class="dropdown-item" href="#">Something else here</a></li>
-                                </ul>
-                            </div>
-                         
-                        </div>
-                    </div>
-                </div>
-
-
-
-            </div>
-
-            <div class="text-start mt-2 col-md-4">
-                <div class="d-flex  text-start  justify-content-end ">
-                    <button class="btn  btn-outline-info btn-sm mx-2 cir-text">all </button>
-                    <div class="d-flex align-items-center ">
-                        <div class="cir-patient mx-2">
-                        </div>
-                        <span class="cir-text">
-                            Patient
-                        </span>
-                    </div>
-                    <div class="d-flex align-items-center ">
-                        <div class="cir-family mx-2">
-                        </div>
-                        <span class="cir-text">
-                            Family/Friend
-                        </span>
-                    </div>
-                    <div class="d-flex align-items-center ">
-                        <div class="cir-Business mx-2">
-                        </div>
-                        <span class="cir-text">
-                            Business
-                        </span>
-                    </div>
-                    <div class="d-flex align-items-center ">
-                        <div class="cir-Concierge mx-2">
-                        </div>
-                        <span class="cir-text">
-                            Concierge
-                        </span>
-                    </div>
-                </div>
-            </div>
-
-
-        </div>
-        <div class="table-responsive dashboard-tbl mt-3 ">
+        <partial name="../Action/Partialdash/_SearchFilter.cshtml" />
+        <div class="table-responsive dashboard-tbl mt-3 " id="tbl">
             <table id="myTable" class="table table-responsive">
                 <thead class=" text-start tablehead">
                     <tr>
@@ -133,11 +56,6 @@
                         {
                             TempData["hb"] = "bg-patient-row";
                         }
-
-
-
-
-
 
 
                         <tr class="@TempData["hb"]">
@@ -213,11 +131,8 @@
                                     <li><a class="dropdown-item " asp-action="" onclick="model_Case(@i)" asp-controller="" data-bs-toggle="modal" data-bs-target="#Cancelcase" data-bs-requestid="@item.RequestID" data-bs-patientname="@item.PatientName"><i class="bi bi-x-circle  mx-1"></i>Cancel Case</a></li>
                                     <li><a class="dropdown-item " asp-action="ViewCase" asp-controller="Action" asp-route-id="@item.RequestID" ><i class="bi bi-file-earmark-fill  mx-1"></i>View Case</a></li>
                                     <li><a class="dropdown-item " asp-action="ViewNotes" asp-controller="Action" asp-route-id="@item.RequestID"><i class="bi bi-card-text  mx-1"></i>View Notes</a></li>
-                                    <li><a class="dropdown-item " asp-action="" onclick="model_Case(@i)" id="CancelCase_@item.RequestID" asp-controller="" data-bs-toggle="modal" data-bs-target="#BlockCase" data-bs-requestid="@item.RequestID" data-bs-patientname="@item.PatientName"><i class="bi bi-ban  mx-1"></i>Block Patient</a></li>
-                                   
-       
-                                </ul>
-                               
+                                    <li><a class="dropdown-item " asp-action="" onclick="model_Case(@i)" id="CancelCase_@item.RequestID" asp-controller="" data-bs-toggle="modal" data-bs-target="#BlockCase" data-bs-requestid="@item.RequestID" data-bs-patientname="@item.PatientName"><i class="bi bi-ban  mx-1"></i>Block Patient</a></li>     
+                                </ul>                              
                             </td>
                         </tr>
                     }
@@ -226,7 +141,98 @@
                 </tbody>
             </table>
         </div>
+        <div >
+    @foreach (var item in Model)
+    {
+        <div class="accordion-item text-secondary " id="Acordiantable">
+                    <h2 class="accordion-header btn-i " id="flush-heading-@item.RequestID">
+                <div class="p-3 collapsed border-bottom" type="button" data-bs-toggle="collapse" data-bs-target="#flush-@item.RequestID" aria-expanded="false" aria-controls="collapse_@item.RequestID">
+                            <div class="d-flex text-dark align-items-center justify-content-between w-100">
+                        <div class="text-start mb-3 h6">
+                            <small>@item.PatientName</small>
+                        </div>
+                        <div class="text-end mb-3 d-flex">
 
+                                    <small style="font-size:.8rem"><b>@Enum.GetName(typeof(RequestType), item.RequestTypeID)</b></small>
+                                    <div class="cir-@Enum.GetName(typeof(RequestType), item.RequestTypeID).ToLower()  mx-2 ">
+                                    </div>
+                
+                                   
+                        </div>
+                               
+                    
+                    </div>
+                            <div class="d-flex row  text-dark justify-content-between w-100 mb-3 ">
+                                <div class="text-start col-6 h6" >
+                                    <small>@item.Address</small>
+                                </div>
+                                <div class="col-6 text-end ">
+                                    <button class="btn btn-sm btn-white border-info text-info p-1 rounded-pill " style="margin-right:-1rem">
+                                        <small>Map Location</small>
+                                    </button>
+                                </div>
+                            </div>
+                </div>
+            </h2>
+                    <div id="flush-@item.RequestID" class="accordion-collapse text-dark  btn-i p-2 collapse mb-3 border-top" data-bs-parent="#accordionExample">
+                <div class="accordion-body container-fluid">
+                            <p> <i class="fa fa-calendar border border-info rounded-pill p-1 me-2" aria-hidden="true"></i><b>Date of Birth:</b> @item.Dob</p>
+                            <p> <i class="fa fa-envelope border border-info rounded-pill p-1 me-2"></i><b>Email :</b>  @item.Email</p>
+                            <p> <i class="fa fa-phone border  border-info rounded-pill p-1 me-2"></i><b> Patient : </b>@item.PhoneNumber</p>
+                            <p><i class="fa fa-sticky-note border border-info rounded-pill p-1 me-2"></i> <b>Transfer Notes :</b> @item.Notes</p>
+                            <p><i class="fa fa-calendar border border-info rounded-pill p-1 me-2"></i><b>Date of service :</b> @item.RequestedDate</p>
+                            <p><i class="fa fa-user border border-info rounded-pill p-1 me-2"></i><b>Requestor :</b> @item.Requestor</p>
+
+                    <div class="row">
+                        <div class="col-6 mb-3">
+                            <a class="btn btn-white text-white rounded-pill 2px w-100" style="background-color: #3ecc4e;">
+                                <small>View Notes</small>
+                            </a>
+                        </div>
+                        <div class="col-6 mb-3">
+                            <a class="btn btn-success text-white rounded-pill 2px w-100">
+                                <small>Doctors Note</small>
+                            </a>
+                        </div>
+
+                        <div class="col-6 mb-3">
+                            <a class="btn btn-white text-white rounded-pill 2px w-100" style="background-color: #3ecc4e;">
+                                <small>View Uploads</small>
+                            </a>
+                        </div>
+                        <div class="col-6 mb-3">
+                            <a class="btn btn-white text-white rounded-pill 2px w-100" style="background-color: #3ecc4e;">
+                                <small>Encounter</small>
+                            </a>
+                        </div>
+                        <div class="col-6 mb-3">
+                            <a class="btn btn-white text-white rounded-pill 2px w-100" style="background-color: #FFD43B;">
+                                <small>Orders</small>
+                            </a>
+                        </div>
+                        <div class="col-6 mb-3 ">
+                            <a class="btn btn-white text-white rounded-pill 2px w-100" style="background-color: #3ecc4e;">
+                                <small>Email</small>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="text-end d-md-flex justify-content-md-end">
+                        <span>Chat With:</span>
+                        <button class="btn btn-white border-info text-info me-md-2 mb-2" type="button">
+                                    <i class="fa-solid fa-user"></i>
+                            Patient
+                        </button>
+                        <button class="btn btn-white border-info text-info mb-2" type="button">
+                                    <i class="fa-solid fa-user-doctor"></i>
+                            Provider
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    }
+</div>
 
     </div>
 </div>

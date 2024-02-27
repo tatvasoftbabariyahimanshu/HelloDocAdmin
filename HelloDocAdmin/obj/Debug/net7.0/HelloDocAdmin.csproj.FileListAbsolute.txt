@@ -266,3 +266,6 @@ D:\Projects\Hello Doc Admin\HelloDocAdmin\bin\Debug\net7.0\Irony.dll
 D:\Projects\Hello Doc Admin\HelloDocAdmin\bin\Debug\net7.0\SixLabors.Fonts.dll
 D:\Projects\Hello Doc Admin\HelloDocAdmin\bin\Debug\net7.0\System.IO.Packaging.dll
 D:\Projects\Hello Doc Admin\HelloDocAdmin\bin\Debug\net7.0\XLParser.dll
+D:\Projects\Hello Doc Admin\HelloDocAdmin\bin\Debug\net7.0\AspNetCoreHero.ToastNotification.Views.dll
+D:\Projects\Hello Doc Admin\HelloDocAdmin\bin\Debug\net7.0\AspNetCoreHero.ToastNotification.dll
+D:\Projects\Hello Doc Admin\HelloDocAdmin\obj\Debug\net7.0\HelloDocAdmin.MvcApplicationPartsAssemblyInfo.cs

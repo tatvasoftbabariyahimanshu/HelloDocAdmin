@@ -1,4 +1,5 @@
-﻿using HelloDocAdmin.Entity.Models;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using HelloDocAdmin.Entity.Models;
 using HelloDocAdmin.Entity.ViewModels.AdminSite;
 using HelloDocAdmin.Repositories;
 using HelloDocAdmin.Repositories.Interface;
@@ -8,14 +9,18 @@ namespace HelloDocAdmin.Controllers.AdminSite
 {
     public class ActionController : Controller
     {
+        private IActionRepository _actionrepo;
         private IDashboardRepository _dashboardrepo;
         private ICombobox _combobox;
         private readonly ILogger<DashboardController> _logger;
-        public ActionController(ILogger<DashboardController> logger, IDashboardRepository dashboardRepository, ICombobox combobox)
+        private readonly INotyfService _notyf;
+        public ActionController(ILogger<DashboardController> logger, IDashboardRepository dashboardRepository, ICombobox combobox,IActionRepository actionrepo, INotyfService notyf)
         {
             _logger = logger;
             _combobox = combobox;
             _dashboardrepo = dashboardRepository;
+            _actionrepo = actionrepo;
+            _notyf = notyf;
         }
         public async Task<IActionResult> ViewCase(int id)
         {
@@ -41,7 +46,17 @@ namespace HelloDocAdmin.Controllers.AdminSite
         {
 
            bool sm = _dashboardrepo.UploadDoc(id, UploadFile);
-           
+            if(sm)
+            {
+
+                _notyf.Success("Document Uploaded Successfully");
+            }
+            else
+            {
+                _notyf.Error("Document not Uploaded");
+
+            }
+
             return RedirectToAction("ViewDocuments", new { id });
         }
 
@@ -52,10 +67,12 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
             if(result)
             {
+                _notyf.Success("Case Edited Successfully..");
                 return RedirectToAction("ViewCase",new {id=sm.RequestID});
             }
             else
             {
+                _notyf.Success("Case Not Edited...");
                 return View("../AdminSite/Action/ViewCase", sm);
             }
             
@@ -65,7 +82,11 @@ namespace HelloDocAdmin.Controllers.AdminSite
             if (_dashboardrepo.SendLink(firstname, lastname, email, phonenumber))
             {
 
-                TempData["Status"] = "Link Send In mail Successfully..!";
+                _notyf.Success("Email Sended to "+ firstname);
+            }
+            else
+            {
+                _notyf.Error("Email Not Sended");
             }
             return RedirectToAction("Index", "Dashboard");
         }
@@ -74,29 +95,52 @@ namespace HelloDocAdmin.Controllers.AdminSite
         {
             if (await _dashboardrepo.AssignProvider(requestid, ProviderId, Notes))
             {
-                TempData["Status"] = "Assign Provider Successfully..!";
+                _notyf.Success("Physician Assigned successfully...");
+            }
+            else
+            {
+                _notyf.Error("Physician Not Assigned...");
             }
 
             return RedirectToAction("Index", "Dashboard");
         }
         #endregion
+        #region TransferProvider
+        public async Task<IActionResult> TransferProvider(int requestid, int ProviderId, string Notes)
+        {
+            if (await _actionrepo.TransferProvider(requestid, ProviderId, Notes))
+            {
+                _notyf.Success("Physician Transfered successfully...");
+            }
+            else
+            {
+                _notyf.Error("Physician Not Transfered...");
+            }
+
+            return RedirectToAction("Index", "Dashboard");
+        }
+        #endregion
+
         [HttpPost]
-        public IActionResult ChangeNotes(int? RequestID,string? adminnotes,string? physiciannotes)
+        public IActionResult ChangeNotes(int RequestID,string? adminnotes,string? physiciannotes)
         {
             if(adminnotes!=null || physiciannotes!=null)
             {
                 bool result = _dashboardrepo.EditViewNotes(adminnotes, physiciannotes, RequestID);
                 if (result)
                 {
+                    _notyf.Success("Notes Updated successfully...");
                     return RedirectToAction("ViewNotes", new { id = RequestID });
                 }
                 else
                 {
+                    _notyf.Error("Notes Note Updated");
                     return View("../AdminSite/Action/ViewNotes");
                 }
             }
             else
             {
+                _notyf.Information("Please Select one of the note!!");
                 TempData["Errormassage"] = "Please Select one of the note!!";
                 return RedirectToAction("ViewNotes", new { id = RequestID });
             }
@@ -112,6 +156,16 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
 
             bool CancelCase=_dashboardrepo.CancelCase(RequestID, Note, CaseTag);
+            if (CancelCase)
+            {
+                _notyf.Success("Case Canceled Successfully");
+
+            }
+            else
+            {
+                _notyf.Error("Case Not Canceled");
+
+            }
 
             return RedirectToAction("Index", "Dashboard");
 
@@ -121,8 +175,37 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
 
             bool BlockCase = _dashboardrepo.BlockCase(RequestID, Note);
+             if (BlockCase)
+            {
+                _notyf.Success("Case Blocked Successfully");
+
+            }
+            else
+            {
+                _notyf.Error("Case Not Blocked");
+
+            }
 
             return RedirectToAction("Index", "Dashboard");
+
+        }
+        #endregion
+        #region Delete Doc
+        public IActionResult DeleteDoc(int RequestWiseFileID , int RequestID)
+        {
+
+
+            bool data = _actionrepo.DeleteDoc(RequestWiseFileID);
+           if(data)
+            {
+                _notyf.Success("Documet Deleted Successfully");
+            }
+            else
+            {
+                _notyf.Error("Documet Not Deleted");
+            }
+           
+            return RedirectToAction("ViewDocuments", new { id = RequestID });
 
         }
         #endregion

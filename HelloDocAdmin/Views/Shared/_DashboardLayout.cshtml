@@ -11,6 +11,7 @@
     <link rel="stylesheet"  href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet"  href="~/HELLO_DOC.styles.css" asp-append-version="true" />
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
@@ -29,38 +30,37 @@
 </style>
 </head>
 <body data-bs-theme="">
+   
     <nav class="navbar navbar-expand-lg">
        
         <div class="container-fluid">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+            <button class="btn navbar-toggler btn-outline-info" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fa-solid fa-bars"></i>
             </button>
-            <img src="~/images/Fig56. Patient site 1.jpg" class="img-fluid rounded-start mx-2 navbar-logo" alt="...">
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <img src="~/images/Fig56. Patient site 1.jpg" class="img-fluid rounded-start  navbar-logo" alt="...">
+            @*<div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class=" navbar-nav me-auto mb-2 mb-lg-0 ">
                     <li class="nav-item text-end">
 
                     </li>
                 </ul>
+            </div>*@
+            <div class="text-end">
+                <span class="username"> <b>Welcome!</b> @*  @CV.UserName()*@ himanshu babariya</span>
+                <a class="btn btn-sm btn-outline-info mx-2" asp-action="Logout" asp-controller="Login">
+                    <span class="addnewlg">
+                        Logout <i class="fa-solid fa-right-from-bracket"></i>
+                    </span>
+                    <span class="addnewsm">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                    </span>
+                </a>
+                <button class=" btn-outline-info btn btn-sm " onclick="mode()">
+                    <span id="thm"> <i class="fa-solid fa-sun"></i></span>
+                    <span id="thm2"> <i class="fa-solid fa-moon"></i></span>
+                </button>
             </div>
-            <span class="username"> <b>Welcome!</b> @*  @CV.UserName()*@ himanshu babariya</span>
-            <a class="btn btn-sm btn-outline-info mx-3" asp-action="Logout" asp-controller="Login" >
-                <span class="addnewlg">
-                    Logout
-                </span>
-                <span class="addnewsm">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-left" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0z" />
-                        <path fill-rule="evenodd" d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708z" />
-                    </svg>
-                </span>
-            </a>
-            <button class="theam-button btn-sm" onclick="mode()">
-                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" class="bi bi-moon p-2 moon"
-                     viewBox="0 0 16 16">
-                    <path d="M6 .278a.77.77 0 0 1 .08.858 7.2 7.2 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277q.792-.001 1.533-.16a.79.79 0 0 1 .81.316.73.73 0 0 1-.031.893A8.35 8.35 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.75.75 0 0 1 6 .278M4.858 1.311A7.27 7.27 0 0 0 1.025 7.71c0 4.02 3.279 7.276 7.319 7.276a7.32 7.32 0 0 0 5.205-2.162q-.506.063-1.029.063c-4.61 0-8.343-3.714-8.343-8.29 0-1.167.242-2.278.681-3.286" />
-                </svg>
-            </button>
+         
         </div>
     </nav>
 
@@ -89,7 +89,9 @@
     <script src="~/js/bootstrap.bundle.min.js" asp-append-version="true"></script>
     <script src="~/js/custom.js" asp-append-version="true"></script>
 
-    
+    <script src="~/js/site.js" asp-append-version="true"></script>
+ 
+    @await Component.InvokeAsync("Notyf")
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

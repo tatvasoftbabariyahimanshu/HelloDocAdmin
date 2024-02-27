@@ -1,5 +1,6 @@
 
-
+document.getElementById('thm').style.display = 'none';
+document.getElementById('thm2').style.display = 'none';
 function Toggle() {
   let temp = document.getElementById("pas1");
    
@@ -33,15 +34,30 @@ function Toggle_new2() {
 var body = document.body;
 var currentTheme=localStorage.getItem("Theme");
 body.setAttribute('data-bs-theme', currentTheme);
+if (currentTheme == 'dark') {
+    document.getElementById('thm').style.display = 'block';
+    document.getElementById('thm2').style.display = 'none';
+}
+else {
+    document.getElementById('thm2').style.display = 'block';
+    document.getElementById('thm').style.display = 'none';
+}
 function mode() {
 
    var body = document.body;
   // var currentTheme = body.getAttribute('data-bs-theme');
-  var currentTheme=localStorage.getItem("Theme");
-
+    var currentTheme = localStorage.getItem("Theme");
+    
   // Toggle between 'light' and 'dark'
   var newTheme = currentTheme === 'light' ? 'dark' : 'light';
-
+    if (newTheme == 'dark') {
+        document.getElementById('thm').style.display = 'block';
+        document.getElementById('thm2').style.display = 'none';
+    }
+    else {
+        document.getElementById('thm2').style.display = 'block';
+        document.getElementById('thm').style.display = 'none';
+    }
   // Update the data-bs-theme attribute
   body.setAttribute('data-bs-theme', newTheme);
   localStorage.setItem("Theme",newTheme);

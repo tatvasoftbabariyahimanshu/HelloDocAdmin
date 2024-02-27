@@ -1,4 +1,5 @@
-﻿using ClosedXML.Excel;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using ClosedXML.Excel;
 using HelloDocAdmin.Entity.Data;
 using HelloDocAdmin.Entity.Models;
 using HelloDocAdmin.Repositories.Interface;
@@ -13,10 +14,14 @@ namespace HelloDocAdmin.Controllers.AdminSite
     {
         private readonly ApplicationDbContext _context;
         private IDashboardRepository _dashboardrepo;
-        public ReportController(ApplicationDbContext context, IDashboardRepository dashboardrepo)
+        private readonly INotyfService _notyf;
+
+        public ReportController(ApplicationDbContext context, IDashboardRepository dashboardrepo, INotyfService notyf)
         {
             _context = context;
             _dashboardrepo = dashboardrepo;
+            _notyf = notyf;
+
         }
 
         public IActionResult Index()
@@ -66,10 +71,12 @@ namespace HelloDocAdmin.Controllers.AdminSite
                 var memoryStream = new MemoryStream();
                 workbook.SaveAs(memoryStream);
                 memoryStream.Seek(0, SeekOrigin.Begin);
+                _notyf.Success("data.xlsx file downloaded ...");
                 return File(memoryStream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "data.xlsx");
             }
             catch (Exception ex)
             {
+                _notyf.Warning( ex.Message);
                 Console.WriteLine($"Exception: {ex.Message}");
                 Console.WriteLine($"Stack Trace: {ex.StackTrace}");
                 throw;

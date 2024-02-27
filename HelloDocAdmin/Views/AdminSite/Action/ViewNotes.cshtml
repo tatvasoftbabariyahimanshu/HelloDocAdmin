@@ -36,7 +36,7 @@
         </div>
      
 
-        <div class="row container-fluid align-items-center justify-content-around  mb-2 " style="cursor:pointer" >
+        <div class="row container-fluid align-items-center justify-content-between  mb-2 " style="cursor:pointer" >
             @foreach(var item in Model.transfernotes)
             {
                 <div class="col-md-5 crd-notes m-2 d-flex align-items-center border-1 shadow rounded p-2 " style="min-height:100px">
@@ -66,36 +66,28 @@
                     </div>
               
                 </div>
-           
-         </div>
-        <div class="row  container-fluid align-items-center justify-content-around  ">
             <div class="col-md-5 crd-notes m-2 d-flex align-items-center border-1 shadow rounded p-2 " id="adminnotes" style="min-height:100px;cursor:pointer">
                 <img src="/icons/admin.svg" style="height:50px;width:50px" class="mx-3 icn-img" />
 
-                <div >
-                   <b>
+                <div>
+                    <b>
                         Admin Notes
-                   </b> 
+                    </b>
                     <p id="adminnotestext" class="mt-2 notes">
-                      @Model.Adminnotes
-                       
+                        @Model.Adminnotes
+
 
                     </p>
                 </div>
-               
-            </div>
-            <div class="col-md-5 m-2 d-flex align-items-center border-1  p-2 ">
-                
-            </div>
-       
-            
 
-        </div>
+            </div>
+         </div>
+      
         <form method="post" asp-action="ChangeNotes" asp-controller="Action">
-        <div class="row  align-items-center d-flex justify-content-around mb-2 mt-3 " style="cursor:pointer">
+        <div class="row  align-items-center d-flex justify-content-around mb-2 mt-3 px-3" style="cursor:pointer">
             
-                <div class="col-md-11 shadow rounded  ">
-                    <div class="card-body">
+                <div class="col-md-12 shadow rounded ">
+                    <div class="card-body ">
                         <div class="inputs-control w-100 mt-2">
                             <textarea id="changenote" placeholder=" " rows="5" name="" class="input-outline w-100 fs-6 " type="text" ></textarea>
                             
@@ -113,17 +105,10 @@
                             <button type="submit" class="btn btn-info text-white mt-2">Save Changes</button>
                         </div>
                     </div>
-
                 </div>
-          
-     
-       
             </div>
-        </form>
-
-        
+        </form>     
     </div>
-
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
 <script>

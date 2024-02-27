@@ -17,86 +17,7 @@
         </div>
     </div>
     <div class="card-body rounded shadow-lg m-2 ">
-        <div class="row justify-content-between mb-2 ">
-            <div class="text-start col-md-4 ">
-                <div class=" row">
-
-                    <div class="col-md-6">
-
-                        <div class="inputs-control w-100 p-0 ">
-                            <input placeholder=" " class="input-outline input-outline-search " id="myInput" onkeyup="myFunction()" type="text">
-                            <label class="inputs-lable">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-                                </svg> Search Patient
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="dropdown w-100    ">
-                            <div class="inputs-control w-100 p-0 ">
-                                <input class="  input-outline input-outline-search h-100 " type="button" data-bs-toggle="dropdown" aria-expanded="false" onfocus="false" />
-
-
-                                <label class="inputs-lable-ser ">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-                                    </svg> All Region
-                                </label>
-
-
-
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Action</a></li>
-                                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                                    <li><a class="dropdown-item" href="#">Something else here</a></li>
-                                </ul>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-
-
-
-            </div>
-
-            <div class="text-start mt-2 col-md-4">
-                <div class="d-flex  text-start  justify-content-end ">
-                    <button class="btn  btn-outline-info btn-sm mx-2 cir-text">all </button>
-                    <div class="d-flex align-items-center ">
-                        <div class="cir-patient mx-2">
-                        </div>
-                        <span class="cir-text">
-                            Patient
-                        </span>
-                    </div>
-                    <div class="d-flex align-items-center ">
-                        <div class="cir-family mx-2">
-                        </div>
-                        <span class="cir-text">
-                            Family/Friend
-                        </span>
-                    </div>
-                    <div class="d-flex align-items-center ">
-                        <div class="cir-Business mx-2">
-                        </div>
-                        <span class="cir-text">
-                            Business
-                        </span>
-                    </div>
-                    <div class="d-flex align-items-center ">
-                        <div class="cir-Concierge mx-2">
-                        </div>
-                        <span class="cir-text">
-                            Concierge
-                        </span>
-                    </div>
-                </div>
-            </div>
-
-
-        </div>
+        <partial name="../Action/Partialdash/_SearchFilter.cshtml" />
         <div class="table-responsive dashboard-tbl mt-3  ">
             <table id="myTable" class="table table-responsive">
                 <thead class=" text-start tablehead">
@@ -114,7 +35,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model)
+                    @foreach (var (item, i) in Model.Select((item, i) => (item, i)))
                     {
 
                         if (item.RequestTypeID == 2)
@@ -220,8 +141,9 @@
                                     <li><a class="dropdown-item " asp-action="ViewCase" asp-controller="Action" asp-route-id="@item.RequestID"><i class="bi bi-file-earmark-fill  mx-1"></i>View Case</a></li>
 
                                     <li><a class="dropdown-item " asp-action="ViewDocuments" asp-controller="Action" asp-route-id="@item.RequestID"><i class="bi bi-file-earmark-zip mx-1"></i>View Uploads</a></li>
-                                    <li><a class="dropdown-item " href="#"><i class="bi bi-card-checklist mx-1"></i>View Notes</a></li>
-                                    <li><a class="dropdown-item " href="#"><i class="bi bi-journal-text  mx-1"></i>Transfer</a></li>
+                                    <li><a class="dropdown-item " asp-action="ViewNotes" asp-controller="Action" asp-route-id="@item.RequestID"><i class="bi bi-card-text  mx-1"></i>View Notes</a></li>
+
+                                    <li><a class="dropdown-item " asp-action="" onclick="model_Case(@i)" asp-controller="" data-bs-toggle="modal" data-bs-target="#TransferCase" data-bs-requestid="@item.RequestID" data-bs-patientname="@item.PatientName"><i class="bi bi-journal-text  mx-1"></i>Transfer</a></li>
                                     <li><a class="dropdown-item " href="#"><i class="bi bi-x-circle  mx-1"></i>Cancel Case</a></li>
 
                                     <li><a class="dropdown-item " href="#"><i class="bi bi-sticky  mx-1"></i>Send Agreement </a></li>
@@ -238,6 +160,19 @@
 
     </div>
 </div>
+<script>
+    function model_Case(id) {
+        console.log(id);
+        var modeldata = @Html.Raw(Json.Serialize(Model))
+            console.log(modeldata[id])
+        document.getElementById('PatientName_ModelCancelCase').innerText = modeldata[id].patientName;
+        document.getElementById('RequestID_Input_ModelCancelCase').value = modeldata[id].requestID;
+        document.getElementById('RequestID_Input_ModelTransferCase').value = modeldata[id].requestID;
+        document.getElementById('RequestID_Input_ModelBlockCase').value = modeldata[id].requestID;
+        document.getElementById('PatientName_ModelBlockCase').innerText = modeldata[id].patientName;
+    }
+
+</script>
 <script>
     $(document).ready(function () {
         $("#myTable").DataTable();

@@ -22,12 +22,12 @@
     </div>
 </nav>*@
 <nav class="navbar navbar-expand-lg bg-body shadow  rounded">
-    <div class="container-fluid ">
+    <div class="container-fluid  p-2">
      
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="nav navbar-nav nav-underline" id="nav-tab">
                 <li class="nav-item">
-                    <a class="nav-link   @(path.Equals("/") ? "active" : "")" asp-action="Index" asp-controller="Dashboard">
+                    <a class="nav-link   @(path.Equals("/") || path.StartsWith("/Action")  ? "active" : "" )" asp-action="Index" asp-controller="Dashboard">
                         Dashboard
                     </a>
             </li >

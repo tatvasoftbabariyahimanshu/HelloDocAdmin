@@ -20,7 +20,7 @@ namespace HelloDocAdmin.Repositories.Interface
         int GetRequestNumberByStatus(string Status);
         public bool EditCase(ViewCaseModel model);
         public ViewNotesModel getNotesByID(int id);
-        public bool EditViewNotes(string? adminnotes, string? physiciannotes, int? RequestID);
+        public bool EditViewNotes(string? adminnotes, string? physiciannotes, int RequestID);
         public ViewDocumentsModel ViewDocument(int id);
         public bool UploadDoc(int Requestid, IFormFile? UploadFile);
         public bool SendLink(string firstname, string lastname, string email, string phonenumber);

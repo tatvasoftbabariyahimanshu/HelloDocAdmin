@@ -11,6 +11,7 @@ namespace HelloDocAdmin.Entity.ViewModels.AdminSite
          public string? Uploader { get; set; }
         public string? Filename { get; set; }
         public DateTime Createddate { get; set; }
+        public int RequestWiseFileID { get; set;}
      
     }
 }

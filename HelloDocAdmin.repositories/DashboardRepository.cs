@@ -103,52 +103,72 @@ namespace HelloDocAdmin.Repositories
                 return false;
             }
         }
-        public bool EditViewNotes(string? adminnotes, string? physiciannotes, int? RequestID)
+        public bool EditViewNotes(string? adminnotes, string? physiciannotes, int RequestID)
         {
             try
 
             {
                 Requestnote notes = _context.Requestnotes.FirstOrDefault(E => E.Requestid == RequestID);
-                if (physiciannotes != null)
+
+                if(notes != null)
                 {
-                    if (notes != null)
+                    if (physiciannotes != null)
                     {
+                        if (notes != null)
+                        {
 
-                        notes.Physiciannotes = physiciannotes;
-                        notes.Modifieddate = DateTime.Now;
+                            notes.Physiciannotes = physiciannotes;
+                            notes.Modifieddate = DateTime.Now;
 
-                        _context.Requestnotes.Update(notes);
-                        _context.SaveChangesAsync();
-                        return true;
+                            _context.Requestnotes.Update(notes);
+                            _context.SaveChangesAsync();
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                    else if (adminnotes != null)
+                    {
+                        if (notes != null)
+                        {
+
+                            notes.Adminnotes = adminnotes;
+                            notes.Modifieddate = DateTime.Now;
+
+                            _context.Requestnotes.Update(notes);
+                            _context.SaveChangesAsync();
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
                     }
                     else
                     {
                         return false;
                     }
-                }
-                else if (adminnotes != null)
-                {
-                    if (notes != null)
-                    {
 
-                        notes.Adminnotes = adminnotes;
-                        notes.Modifieddate = DateTime.Now;
-
-                        _context.Requestnotes.Update(notes);
-                        _context.SaveChangesAsync();
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
                 }
+
                 else
                 {
-                    return false;
+                    Requestnote rn = new Requestnote
+                    {
+                        Requestid = RequestID,
+                        Adminnotes = adminnotes,
+                        Physiciannotes = physiciannotes,
+                        Createddate = DateTime.Now,
+                        Createdby = "001e35a5 - cd12 - 4ec8 - a077 - 95db9d54da0f"
+
+
+                    };
+                    _context.Requestnotes.Add(rn);
+                    _context.SaveChangesAsync();
+                    return true;
                 }
-
-
             }
             catch (Exception ex)
             {
@@ -186,7 +206,7 @@ namespace HelloDocAdmin.Repositories
                                                        Region = rg.Name,
                                                        ProviderName = p.Firstname + " " + p.Lastname,
                                                        PhoneNumber = rc.Phonenumber,
-                                                       Address = rc.Address + "," + rc.Street + "," + rc.City + "," + rc.State + "," + rc.Zipcode,
+                                                       Address = rc.Address + ", " + rc.Street + ", " + rc.City + ", " + rc.State + ", " + rc.Zipcode,
                                                        Notes = rc.Notes,
                                                        ProviderID = req.Physicianid,
                                                        RequestorPhoneNumber = req.Phonenumber
@@ -197,13 +217,27 @@ namespace HelloDocAdmin.Repositories
         {
             var requestlog = _context.Requeststatuslogs.Where(E => E.Requestid == id && (E.Transtophysician != null) || (E.Transtoadmin != null));
             var model = _context.Requestnotes.FirstOrDefault(E => E.Requestid == id);
-            ViewNotesModel allData = new ViewNotesModel {
-                Requestid = id,
-                Requestnotesid = model.Requestnotesid,
-                Physiciannotes = model.Physiciannotes,
-                Administrativenotes = model.Administrativenotes,
-                Adminnotes = model.Adminnotes,
-            };
+            ViewNotesModel allData = new ViewNotesModel();
+             if (model == null)
+            {
+                allData.Requestid = id;
+                //allData.Requestnotesid = model.Requestnotesid;
+                allData.Physiciannotes = "-";
+                allData.Administrativenotes ="-";
+                allData.Adminnotes = "-";
+            }
+            else
+            {
+                allData.Requestid = id;
+                allData.Requestnotesid = model.Requestnotesid;
+                allData.Physiciannotes = model.Physiciannotes;
+                allData.Administrativenotes = model.Administrativenotes;
+                allData.Adminnotes = model.Adminnotes;
+            }
+          
+               
+           
+
             List<TransfernotesModel> md = new List<TransfernotesModel>();
             foreach (var e in requestlog)
             {
@@ -243,6 +277,7 @@ namespace HelloDocAdmin.Repositories
             rsl.Requestid = RequestId;
             rsl.Physicianid = ProviderId;
             rsl.Notes = notes;
+
             rsl.Createddate = DateTime.Now;
             rsl.Status = 2;
             _context.Requeststatuslogs.Update(rsl);
@@ -310,7 +345,8 @@ namespace HelloDocAdmin.Repositories
                              Uploader = requestWiseFile.Physicianid != null ? phys.Firstname :
                              (requestWiseFile.Adminid != null ? adm.Firstname : request.Firstname),
                              requestWiseFile.Filename,
-                             requestWiseFile.Createddate
+                             requestWiseFile.Createddate,
+                             requestWiseFile.Requestwisefileid
 
                          };
             List<Documents> doc = new List<Documents>();
@@ -321,6 +357,8 @@ namespace HelloDocAdmin.Repositories
                     Createddate = item.Createddate,
                     Filename = item.Filename,
                     Uploader = item.Uploader,
+                    RequestWiseFileID=item.Requestwisefileid
+                   
                 });
 
             }

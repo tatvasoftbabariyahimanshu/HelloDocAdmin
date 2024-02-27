@@ -83,28 +83,28 @@
 </script>
 <div class="container">
     <div class="card bg-transparent border-0">
-        <div class="card-header  border-0  bg-transparent text-end mt-2">
+        <div class="card-header d-flex justify-content-between  border-0  bg-transparent p-1  mt-3 mb-2">
             <div class="text-start d-flex align-items-center">
-                <h4 class="form-title mt-3 mx-2">Patient Request</h4>
+                <h5 class="mt-2"><b> Patient Request</b></h5>
                 @if (Model.RequestTypeID == 1)
                 {
-                    <span class="badge text-white   bg-patient-row ">Patient</span>
-                   
-                 
+                    <span class="badge text-white mx-2   bg-patient-row ">Patient</span>
+
+
                 }
                 else if (Model.RequestTypeID == 2)
                 {
-                    <span class="badge text-white   bg-family-row ">Family/Friend</span>      
+                    <span class="badge text-white mx-2    bg-family-row ">Family/Friend</span>
                 }
                 else if (Model.RequestTypeID == 3)
                 {
-                    <span class="badge text-white   bg-concierge-row ">concierge</span>     
+                    <span class="badge text-white mx-2    bg-concierge-row ">concierge</span>
                 }
                 else
                 {
-                    <span class="badge text-white   bg-business-row">business Partner</span>
+                    <span class="badge text-white  mx-2   bg-business-row">business Partner</span>
 
-                   
+
                 }
             </div>
             <div class="text-end">
@@ -118,10 +118,11 @@
                 </a>
             </div>
         </div>
+       
         <div class="card-body rounded shadow">
 
-       
-                <h4 class="form-title mt-2 mb-3">Patient Information</h4>
+
+            <h4 class="form-title mt-2 mb-3"><b>Patient Information</b></h4>
 
 
             <form method="post" asp-action="EditCase" asp-controller="Action" enctype="multipart/form-data">
@@ -271,9 +272,9 @@
                
                     <div class="card-footer border-0 bg-transparent text-end">
                     <a class="btn btn-info text-white" asp-action="" onclick="model_Case()" asp-controller="" data-bs-toggle="modal" data-bs-target="#Assigncase">Assign Case</a>
-                        <button type="submit" class="btn btn-info btn-submit">
+                    <a asp-action="ViewNotes" asp-controller="Action" asp-route-id="@Model.RequestID" type="submit" class="btn btn-info btn-submit">
                            View Notes
-                        </button>
+                        </a>
                         <a class="btn btn-danger btn-cancel ">
                             cancel
                         </a>

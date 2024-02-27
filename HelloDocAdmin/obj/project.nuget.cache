@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "X0LjgMqwi83k+dHwvi1DMWAq3DRJr05f+tDYdcSX1sR7JjXeXn77iuype1dBIFxG6nVAiZBBvntz1CKOmvve+A==",
+  "dgSpecHash": "X7m8PA8VYpZHVZL4+y61V0JyDl836KoedI6VwLw1hGUHb/71gJNqkF9RNej3ByHoYWJY9wH+bS6mQ+rgb0cqTw==",
   "success": true,
   "projectFilePath": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\HelloDocAdmin.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\pci105\\.nuget\\packages\\aspnetcorehero.toastnotification\\1.1.0\\aspnetcorehero.toastnotification.1.1.0.nupkg.sha512",
     "C:\\Users\\pci105\\.nuget\\packages\\closedxml\\0.102.2\\closedxml.0.102.2.nupkg.sha512",
     "C:\\Users\\pci105\\.nuget\\packages\\documentformat.openxml\\2.16.0\\documentformat.openxml.2.16.0.nupkg.sha512",
     "C:\\Users\\pci105\\.nuget\\packages\\excelnumberformat\\1.1.0\\excelnumberformat.1.1.0.nupkg.sha512",

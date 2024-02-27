@@ -7,7 +7,7 @@
     <div class="card bg-transparent border-0 p-2" style="border-radius: 15px;">
         <div class="card-header d-flex justify-content-between  border-0  bg-transparent p-1  mt-3 mb-2">
             <div class="text-start">
-                <h5 class="mt-2"> Document</h5>
+                <h5 class="mt-2"><b> Document</b></h5>
             </div>
             <div class="text-end">
                 <a asp-action="Index" asp-controller="Dashboard" class="btn btn-outline-info btn-back text-end">
@@ -23,14 +23,16 @@
             <div class="doc-text-card">Patient name</div>
             <span class="d-flex align-items-center ">
                 <span class="Patient-name fs-4"><b>@Model.Firstanme @Model.Lastanme </b></span>
-                    <span class="doc-text-card mx-1 fs-6 ">(@Model.ConfirmationNumber)</span>
+                <span class="doc-text-card mx-2 mt-1 "><b>(@Model.ConfirmationNumber)</b></span>
               
             </span>
 
             <div class="doc-text-card mt-2">
-                check here for any files that you or the
-                doctor of yours subsequents requestors have attached for yo to
-                review
+             
+                    check here for any files that you or the
+                    doctor of yours subsequents requestors have attached for yo to
+                    review
+              
             </div>
             <div class="col-md-12 mt-3">
 
@@ -51,6 +53,7 @@
                         </button>
                        
                         </div>
+                    <span class="err-msg" id="error-file"></span>
                     </form>
               <script>
                     $("#files").change(function () {
@@ -58,6 +61,16 @@
                         console.log(filename);
                         $("#choosenfile").text(filename);
                     });
+                    document.querySelector('form').addEventListener('submit', function (event) {
+                        var fileInput = document.getElementById('files');
+                        var fileName = fileInput.value;
+                        var allowedExtensions = /(\.pdf|\.doc|\.docx|\.jpg|\.jpeg|\.png|\.jped|\.webp)$/i;
+                        if (!allowedExtensions.exec(fileName)) {
+                            document.getElementById('error-file').innerText='Only PDF, DOC, JPG, JPEG, PNG, JPED, and WEBP files are allowed.';
+                            event.preventDefault(); 
+                        }
+                    });
+
                   </script>
 
 
@@ -69,7 +82,7 @@
                         <h6> Document</h6>
                     </div>
                     <div class="text-end">
-                        <a class="btn btn-outline-info btn-sm btn-back text-end" onclick="Downlode_all()">Downlode all</a>
+                        <a class="btn btn-outline-info btn-sm btn-back text-end" onclick="Downlode_all()"> <i class="fa-solid fa-download"></i> <span class="btn-text"> Downlode all</span></a>
                     </div>
                 </div>
                 <div class="table-responsive mt-3 ">
@@ -98,11 +111,16 @@
                                             <input class="form-check-input doc-checkbox" type="checkbox" value="" onclick="statusselectall()">
                                         </div>
                                     </td>
-                                    <td class="table-text   px-3">@item2.Filename</td>
+                                    <td class="table-text   px-3 flnamae">
+                                        
+                                        
+                                        <span class="mx-2">
+                                            @item2.Filename
+                                        </span></td>
                                     <td class="table-text  px-3">@item2.Uploader</td>
                                     <td class="table-text  px-3">@item2.Createddate</td>
 
-                                    <td class="table-text text-center ">
+                                    <td class="table-text  ">
 
                                         <a class="btn btn-sm download-link  btn-outline-info document-button" download href="/Upload/req_@Model.RequestID/@item2.Filename">
 
@@ -112,7 +130,14 @@
                                                       d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293z" />
                                             </svg>
                                         </a>
+                                        <a class="btn btn-sm   btn-outline-info " target="_blank"  href="/Upload/req_@Model.RequestID/@item2.Filename">
 
+                                            <i class="fa-solid fa-eye"></i>
+                                        </a>
+                                        <a class="btn btn-sm   btn-outline-info " target="_blank" asp-action="DeleteDoc" asp-controller="Action" asp-route-RequestWiseFileID="@item2.RequestWiseFileID" asp-route-RequestID="@Model.RequestID" >
+
+                                            <i class="fa-solid fa-trash"></i>
+                                        </a>
                                     </td>
                                 </tr>
                             }
@@ -128,6 +153,22 @@
     </div>
 </div>
 <script>
+    $(document).ready(function () {
+        $('.flnamae').each(function () {
+            var fileName = $(this).text().trim();
+            if (fileName.endsWith('.pdf')) {
+                $(this).prepend('<i class="fa-solid fa-file-pdf" style="color: #be2323;font-size:1rem"></i> ');
+            } else if (fileName.endsWith('.doc') || fileName.endsWith('.docx')) {
+                $(this).prepend('<i class="fa-solid fa-file-doc" style="color: #74C0FC;font-size:1rem"></i> ');
+            } else if (fileName.endsWith('.jpg') || fileName.endsWith('.jpeg') || fileName.endsWith('.png') || fileName.endsWith('.gif')) {
+                $(this).prepend('<i class="fa-solid fa-images" style="color: #B197FC;font-size:1rem"></i> ');
+            }
+        });
+    });
+
+
+
+
     function statusselectall() {
         var selectAllCheckbox = document.getElementById('selectall');
         var allCheckboxes = document.getElementsByClassName('doc-checkbox');
