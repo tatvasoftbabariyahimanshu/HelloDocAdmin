@@ -36,7 +36,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model)
+                    @foreach (var (item, i) in Model.Select((item, i) => (item, i)))
                     {
 
                         if (item.RequestTypeID == 2)
@@ -143,11 +143,12 @@
                                     <li><a class="dropdown-item " asp-action="ViewCase" asp-controller="Action" asp-route-id="@item.RequestID"><i class="bi bi-file-earmark-fill  mx-1"></i>View Case</a></li>
 
                                     <li><a class="dropdown-item " href="#"><i class="bi bi-file-earmark-zip mx-1"></i>View Uploads</a></li>
-                                    <li><a class="dropdown-item " href="#"><i class="bi bi-card-checklist mx-1"></i>View Notes</a></li>
+                                    <li><a class="dropdown-item " asp-action="ViewNotes" asp-controller="Action" asp-route-id="@item.RequestID"><i class="bi bi-card-text  mx-1"></i>View Notes</a></li>
+
                                     <li><a class="dropdown-item " href="#"><i class="bi bi-journal-text  mx-1"></i>Orders</a></li>
                                     <li><a class="dropdown-item " href="#"><i class="bi bi-x-circle  mx-1"></i>Close Case</a></li>
                                     <li><a class="dropdown-item " href="#"><i class="bi bi-journal-text  mx-1"></i>Doctor Notes</a></li>
-                                    <li><a class="dropdown-item " href="#"><i class="bi bi-x-circle  mx-1"></i>Clear Case</a></li>
+                                    <li><a onclick="deleteLink(@i)" class="dropdown-item" ><i class="bi bi-x-circle  mx-1"></i>Clear Case</a></li>
                                     <li><a class="dropdown-item " href="#"><i class="bi bi-card-checklist  mx-1"></i>Encounter</a></li>
                                 </ul>
                             </td>
@@ -162,6 +163,37 @@
 
     </div>
 </div>
+
+
+<script>
+    function deleteLink(id) {
+        console.log(id);
+        var dltdata = @Html.Raw(Json.Serialize(Model))
+            event.preventDefault(); // Prevent the default action
+        console.log(dltdata);
+        // Show a SweetAlert confirmation
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'You are about to clear the case. This action cannot be undone!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, clear it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // If confirmed, construct the URL and navigate to it
+                var controller = 'Action'; // Replace 'Action' with your controller name
+                var action = 'ClearCase'; // Replace 'ClearCase' with your action name
+                var RequestID = dltdata[id].requestID;
+                var url = '/' + controller + '/' + action + '?RequestID=' + RequestID;
+                window.location.href = url;
+            }
+        });
+    }
+
+</script>
+
 <script>
     $(document).ready(function () {
         $("#myTable").DataTable();

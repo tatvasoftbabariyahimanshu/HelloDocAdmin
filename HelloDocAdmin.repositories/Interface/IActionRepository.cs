@@ -1,4 +1,5 @@
-﻿using HelloDocAdmin.Entity.ViewModels.AdminSite;
+﻿using HelloDocAdmin.Entity.Models;
+using HelloDocAdmin.Entity.ViewModels.AdminSite;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +12,8 @@ namespace HelloDocAdmin.Repositories.Interface
     {
         public bool DeleteDoc(int RequestWiseFileID);
         public  Task<bool> TransferProvider(int RequestId, int ProviderId, string notes);
+        public Healthprofessional SelectProfessionlByID(int VendorID);
+        public bool SendOrder(ViewSendOrderModel data);
+        public bool ClearCase(int RequestID);
     }
 }

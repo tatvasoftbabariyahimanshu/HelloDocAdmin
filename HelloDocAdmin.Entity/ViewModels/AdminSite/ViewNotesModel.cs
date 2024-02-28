@@ -45,10 +45,11 @@ namespace HelloDocAdmin.Entity.ViewModels.AdminSite
       
         public DateTime? Modifieddate { get; set; }
 
+        public short Status { get; set; }
         
         public string? Ip { get; set; }
 
-        
+         
         public string? Administrativenotes { get; set; }
 
         
@@ -56,5 +57,6 @@ namespace HelloDocAdmin.Entity.ViewModels.AdminSite
 
 
         public List<TransfernotesModel> transfernotes { get; set; } = null!;
+             public List<TransfernotesModel> cancelnotes { get; set; } = null!;
     }
 }

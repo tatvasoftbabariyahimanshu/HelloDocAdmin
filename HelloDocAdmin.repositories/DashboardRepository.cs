@@ -215,19 +215,22 @@ namespace HelloDocAdmin.Repositories
         }
         public ViewNotesModel getNotesByID(int id)
         {
-            var requestlog = _context.Requeststatuslogs.Where(E => E.Requestid == id && (E.Transtophysician != null) || (E.Transtoadmin != null));
+            var req=_context.Requests.FirstOrDefault(W=>W.Requestid == id);
+            var requestlog = _context.Requeststatuslogs.Where(E => E.Requestid == id &&( (E.Transtophysician != null) || (E.Transtoadmin != null)));
+            var cancelnotes = _context.Requeststatuslogs.Where(E => E.Requestid == id && ( (E.Status == 3) || (E.Status == 7)));
             var model = _context.Requestnotes.FirstOrDefault(E => E.Requestid == id);
             ViewNotesModel allData = new ViewNotesModel();
              if (model == null)
             {
                 allData.Requestid = id;
-                //allData.Requestnotesid = model.Requestnotesid;
+              
                 allData.Physiciannotes = "-";
                 allData.Administrativenotes ="-";
                 allData.Adminnotes = "-";
             }
             else
             {
+                allData.Status = req.Status;
                 allData.Requestid = id;
                 allData.Requestnotesid = model.Requestnotesid;
                 allData.Physiciannotes = model.Physiciannotes;
@@ -235,16 +238,33 @@ namespace HelloDocAdmin.Repositories
                 allData.Adminnotes = model.Adminnotes;
             }
           
-               
-           
+            List<TransfernotesModel> list = new List<TransfernotesModel>();
+            foreach (var e in cancelnotes)
+            {
+                list.Add(new TransfernotesModel
+                {
+
+                    Requestid = e.Requestid,
+                    Notes = e.Notes,
+                    Status=e.Status,
+                    Physicianid = e.Physicianid,
+                    Createddate = e.Createddate,
+                    Requeststatuslogid = e.Requeststatuslogid,
+                    Transtoadmin = e.Transtoadmin,
+                    Transtophysicianid = e.Transtophysicianid
+                });
+            }
+            allData.cancelnotes = list;
 
             List<TransfernotesModel> md = new List<TransfernotesModel>();
             foreach (var e in requestlog)
             {
                 md.Add(new TransfernotesModel
                 {
+
                     Requestid = e.Requestid,
                     Notes = e.Notes,
+                    Status = e.Status,
                     Physicianid = e.Physicianid,
                     Createddate = e.Createddate,
                     Requeststatuslogid = e.Requeststatuslogid,
@@ -382,7 +402,7 @@ namespace HelloDocAdmin.Repositories
                 if (requestData != null)
                 {
                     requestData.Casetag = CaseTag;
-                    requestData.Status = 8;
+                    requestData.Status = 3;
                     _context.Requests.Update(requestData);
                     _context.SaveChanges();
 
@@ -390,7 +410,7 @@ namespace HelloDocAdmin.Repositories
                     {
                         Requestid = RequestID,
                         Notes = Note,
-                        Status = 8,
+                        Status = 3,
                         Createddate = DateTime.Now
                     };
                     _context.Requeststatuslogs.Add(rsl);

@@ -16,6 +16,7 @@ namespace HelloDocAdmin.Entity.ViewModels.AdminSite
         public int? Transtophysicianid { get; set; }
         public DateTime Createddate { get; set; }
         public string? Notes { get; set; }
+        public short Status {get; set; }
         public BitArray? Transtoadmin { get; set; }
 
 

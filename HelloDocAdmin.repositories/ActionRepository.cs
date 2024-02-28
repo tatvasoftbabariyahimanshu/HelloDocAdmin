@@ -1,5 +1,6 @@
 ﻿using HelloDocAdmin.Entity.Data;
 using HelloDocAdmin.Entity.Models;
+using HelloDocAdmin.Entity.ViewModels.AdminSite;
 using HelloDocAdmin.Repositories.Interface;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -36,6 +37,73 @@ namespace HelloDocAdmin.Repositories
             }
           
         }
+        public bool ClearCase(int RequestID)
+        {
+            try
+            {
+                var requestData = _context.Requests.FirstOrDefault(e => e.Requestid == RequestID);
+                if (requestData != null)
+                {
+                   
+                    requestData.Status = 10;
+                    _context.Requests.Update(requestData);
+                    _context.SaveChanges();
+
+                    Requeststatuslog rsl = new Requeststatuslog
+                    {
+                        Requestid = RequestID,
+                      
+
+                        Status = 10,
+                        Createddate = DateTime.Now
+                    };
+                    _context.Requeststatuslogs.Add(rsl);
+                    _context.SaveChanges();
+                    return true;
+                }
+                else { return false; }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+
+        }
+        public Healthprofessional SelectProfessionlByID(int VendorID)
+        {
+            return  _context.Healthprofessionals.FirstOrDefault(e => e.Vendorid == VendorID);
+        }
+        public bool SendOrder(ViewSendOrderModel data)
+        {
+            try
+            {
+                Orderdetail od = new Orderdetail
+                {
+                    Requestid = data.RequestID,
+                    Vendorid = data.VendorID,
+                    Faxnumber = data.FaxNumber,
+                    Email = data.Email,
+                    Businesscontact = data.BusinessContact,
+                    Prescription = data.Prescription,
+                    Noofrefill = data.NoOFRefill,
+                    Createddate = DateTime.Now,
+                    Createdby = "001e35a5 - cd12 - 4ec8 - a077 - 95db9d54da0f"
+
+
+                };
+                _context.Orderdetails.Add(od);
+                _context.SaveChanges(true);
+                var req = _context.Requests.FirstOrDefault(e => e.Requestid == data.RequestID);
+                _email.SendMail(data.Email, "New Order arrived", data.Prescription + "Request name"+ req.Firstname);
+                return true;
+            }
+         catch (Exception ex)
+            {
+                return false;
+            }
+
+           
+        }
         #region Transfer_Provider
         public async Task<bool> TransferProvider(int RequestId, int ProviderId, string notes)
         {
@@ -54,7 +122,7 @@ namespace HelloDocAdmin.Repositories
                 rsl.Createddate = DateTime.Now;
                 rsl.Transtophysicianid = ProviderId;
                 rsl.Status = 2;
-                _context.Requeststatuslogs.Update(rsl);
+                _context.Requeststatuslogs.Add(rsl);
                 _context.SaveChanges();
 
                 return true;

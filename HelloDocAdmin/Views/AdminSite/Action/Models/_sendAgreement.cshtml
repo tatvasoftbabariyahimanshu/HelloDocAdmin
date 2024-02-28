@@ -1,0 +1,44 @@
+﻿@using static HelloDocAdmin.Entity.ViewModels.AdminSite.Constant;
+﻿<div class="modal fade" id="SendAgreement" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header  bg-info text-white">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">send agreement</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+           
+               @* <small style="font-size:.8rem" ><b id="tintin"></b></small>*@
+              @*  <div class="cir-@Enum.GetName(typeof(RequestType), item.RequestTypeID).ToLower()  mx-2 ">
+                </div>*@
+            
+            <form asp-action="SendAgreement" asp-controller="SendAgreement">
+                <div class="modal-body">
+                  
+
+                    <input id="RequestID_sendAgreement" placeholder=" "  name="requestid" type="hidden">
+                    <div class="inputs-control mt-2 ">
+                        <input id="Phonenumber_sendAgreement" placeholder=" " name="phonenumber" class="input-outline w-100 inp edit-frm" type="text">
+                        <label class="inputs-lable">Phone Number</label>
+                    </div>
+                    <div class="inputs-control mt-2 ">
+                        <input id="Email_sendAgreement"  placeholder=" " name="email" class="input-outline w-100 inp edit-frm" type="email">
+                        <label class="inputs-lable">Email</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class=" btn btn-info text-white">Send</button>
+                    <button type="button" class="btn btn-outline-info" data-bs-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div><script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+<script>
+    const phoneInputField = document.querySelector("#phone");
+
+    const phoneInput = window.intlTelInput(phoneInputField, {
+        utilsScript:
+            "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+    });
+
+</script>

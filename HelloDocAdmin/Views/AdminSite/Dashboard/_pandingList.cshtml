@@ -146,7 +146,7 @@
                                     <li><a class="dropdown-item " asp-action="" onclick="model_Case(@i)" asp-controller="" data-bs-toggle="modal" data-bs-target="#TransferCase" data-bs-requestid="@item.RequestID" data-bs-patientname="@item.PatientName"><i class="bi bi-journal-text  mx-1"></i>Transfer</a></li>
                                     <li><a class="dropdown-item " href="#"><i class="bi bi-x-circle  mx-1"></i>Cancel Case</a></li>
 
-                                    <li><a class="dropdown-item " href="#"><i class="bi bi-sticky  mx-1"></i>Send Agreement </a></li>
+                                    <li><a class="dropdown-item " onclick="model_Case(@i)" data-bs-toggle="modal" data-bs-target="#SendAgreement"><i class="bi bi-sticky  mx-1"></i>Send Agreement </a></li>
                                 </ul>
                             </td>
                         </tr>
@@ -168,8 +168,14 @@
         document.getElementById('PatientName_ModelCancelCase').innerText = modeldata[id].patientName;
         document.getElementById('RequestID_Input_ModelCancelCase').value = modeldata[id].requestID;
         document.getElementById('RequestID_Input_ModelTransferCase').value = modeldata[id].requestID;
+        document.getElementById("RequestID_sendAgreement").value = modeldata[id].requestID;
+        document.getElementById("Phonenumber_sendAgreement").value = modeldata[id].phoneNumber;
+        document.getElementById("Email_sendAgreement").value = modeldata[id].email;
         document.getElementById('RequestID_Input_ModelBlockCase').value = modeldata[id].requestID;
         document.getElementById('PatientName_ModelBlockCase').innerText = modeldata[id].patientName;
+  
+        //document.getElementById('tintin').innerText = 'Enum.GetName(typeof(RequestType), '+modeldata[id].requestTypeID+')';
+
     }
 
 </script>

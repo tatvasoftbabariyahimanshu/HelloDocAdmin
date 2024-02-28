@@ -1,0 +1,179 @@
+﻿@{
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+@using HelloDocAdmin.Entity.ViewModels.AdminSite
+@model ViewSendOrderModel
+<style>
+    .input-outline:not(:placeholder-shown) + .inputs-lable-textarea, .input-outline:focus + .inputs-lable-textarea {
+        margin-top: -.4rem;
+        margin-left: 1rem !important; 
+        font-size: .7rem;
+        border-radius: 5px;
+        transition: all 0.15s ease-out;
+        color: var(--primary);
+    }
+
+</style>
+<div class="container">
+    <div class="card bg-transparent border-0">
+        <div class="card-header d-flex justify-content-between  border-0  bg-transparent p-1  mt-3 mb-2">
+            <div class="text-start d-flex align-items-center">
+                <h5 class="mt-2"><b> Send Order</b></h5>
+              
+            </div>
+            <div class="text-end">
+                <a asp-controller="Dashboard" asp-action="Index"
+                   class="btn btn-outline-info btn-back">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                         fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                              d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5" />
+                    </svg></i>Back
+                </a>
+            </div>
+        </div>
+
+        <div class="card-body rounded shadow">
+
+
+          
+
+
+            <form method="post" asp-action="SendOrder" asp-controller="Action" enctype="multipart/form-data">
+               <input type="hidden" asp-for="RequestID"/>
+                <div class="row mt-2">
+                    <div class="col-md-6 mt-2">
+                        <div class=" mb-3">
+                            <div class="input-control w-100 mt-3">
+                                <select class="input-outline input-outline-select inp  " required name="ProfessionType" data-allow-clear="true" tabindex="-1" onchange="myFunction_prof()" id="ProfessionType" asp-items="@(new SelectList(ViewBag.ProfessionType,"HealthprofessionalID","ProfessionName"))" data-control="select2" data-placeholder="Select Level">
+                                    <option>All Region</option>
+                                </select>
+                            </div>
+                          
+
+                          
+                        </div>
+                        </div>
+                        <div class="col-md-6 mt-2">
+                            <div class=" mb-3">
+                                <div class="input-control w-100 mt-3">
+                                <select class="input-outline input-outline-select inp " required asp-for="VendorID" onchange="GetData()" data-allow-clear="true" tabindex="-1" id="Vendor" data-control="select2" data-placeholder="Select Level">
+                                        <option>All Provider</option>
+                                    </select>
+
+                            </div>
+                            <span asp-validation-for="VendorID" class="err-msg"></span>
+
+                            </div>
+                    </div>
+                    <div class="col-md-6 mt-2">
+                        <div class=" mb-3">
+                            <div class="inputs-control ">
+                                <input placeholder=" " id="BusinessContact" asp-for="BusinessContact" class="input-outline w-100 inp " type="text">
+                                <label class="inputs-lable">Business Contact</label>
+                            </div>
+                            <span asp-validation-for="BusinessContact" class="err-msg"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mt-2">
+                        <div class=" mb-3">
+                            <div class="inputs-control ">
+                                <input placeholder=" " id="Email" asp-for="Email" class="input-outline w-100 inp " type="text">
+                                <label class="inputs-lable">Email</label>
+                            </div>
+                            <span asp-validation-for="Email" class="err-msg"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mt-2">
+                        <div class=" mb-3">
+                            <div class="inputs-control ">
+                                <input placeholder=" " id="FaxNumber" asp-for="FaxNumber" class="input-outline w-100 inp " type="text">
+                                <label class="inputs-lable">FaxNumber</label>
+                            </div>
+                            <span asp-validation-for="FaxNumber" class="err-msg"></span>
+                        </div>
+                    </div>
+                    </div>
+                <div class="row mt-2">
+                    <div class="inputs-control w-100 mt-4">
+                        <textarea placeholder=" " rows="4"  asp-for="Prescription" class="input-outline w-100 " type="text"></textarea>
+
+                        <label class="inputs-lable-textarea">Prescription For Order Details</label>
+                    </div>
+                    <span asp-validation-for="Prescription" class="err-msg"></span>
+
+                    </div>
+                <div class="row mt-2">
+                    <div class="col-md-6 mt-2">
+                        <div class=" mb-3">
+                            <div class="inputs-control ">
+                                <input placeholder=" " asp-for="NoOFRefill" class="input-outline w-100 inp " type="text">
+                                <label class="inputs-lable">Number of Refill</label>
+                            </div>
+                            <span asp-validation-for="NoOFRefill" class="err-msg"></span>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="card-footer border-0 bg-transparent text-end">
+                    <button type="submit" class="btn btn-info text-white">Send</button>
+                  
+                    <a class="btn btn-danger btn-cancel ">
+                        cancel
+                    </a>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+</div>
+<script type="text/javascript">
+
+    function myFunction_prof() {
+
+
+        var id = $("#ProfessionType").val();
+        var vendorid;
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("ProfessionalByType","Action")?HealthprofessionalID=' + id,
+            cache: false,
+            success: function (response) {
+                console.log(response);
+                var s = '<option value="-1">Please Select</option>';
+                for (var i = 0; i < response.length; i++) {
+                    s += '<option value="' + response[i].vendorID + '">' + response[i].vendorName + '</option>';
+                }
+                $("#Vendor").html(s);
+            },
+            error: function () {
+                alert("Error while checking email.");
+            }
+        });
+    }
+    function GetData() {
+
+
+        var id = $("#Vendor").val();
+        var vendorid;
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("SelectProfessionalByID","Action")?VendorID=' + id,
+            cache: false,
+            success: function (response) {
+                console.log(response);
+                $("#Email").val(response.email);
+                $("#FaxNumber").val(response.faxnumber);
+                $("#BusinessContact").val(response.businesscontact);
+                 
+
+            },
+            error: function () {
+                alert("Error while checking email.");
+            }
+        });
+    }
+
+</script>

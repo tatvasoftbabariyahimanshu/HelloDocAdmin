@@ -2,6 +2,7 @@
 using HelloDocAdmin.Entity.Data;
 using HelloDocAdmin.Entity.Models;
 using HelloDocAdmin.Entity.ViewModel;
+using HelloDocAdmin.Entity.ViewModels;
 using HelloDocAdmin.Repositories.Interface;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -20,6 +21,24 @@ namespace HelloDocAdmin.Repositories
         {
             _context = context;
             
+        }
+        public async Task< List<HealthprofessionaltypeCombobox>> healthprofessionaltype()
+        {
+            return await _context.Healthprofessionaltypes.Select(req => new HealthprofessionaltypeCombobox()
+            {
+                HealthprofessionalID = req.Healthprofessionalid,
+                ProfessionName = req.Professionname
+            })
+               .ToListAsync();
+        }
+        public async Task<List<HealthprofessionalCombobox>> healthprofessionals()
+        {
+            return await _context.Healthprofessionals.Select(req => new HealthprofessionalCombobox()
+            {
+                VendorID = req.Vendorid,
+                VendorName = req.Vendorname
+            })
+               .ToListAsync();
         }
         public async Task<List<RegionComboBox>> RegionComboBox()
         {
@@ -50,6 +69,20 @@ namespace HelloDocAdmin.Repositories
             return result;
         }
         #endregion
+
+        public List<HealthprofessionalCombobox> ProfessionalByType(int? HealthprofessionalID)
+        {
+            var result = _context.Healthprofessionals
+                        .Where(r => r.Profession == HealthprofessionalID)
+       
+                        .Select(req => new HealthprofessionalCombobox()
+                        {
+                            VendorID = req.Vendorid,
+                            VendorName = req.Vendorname
+                        }).ToList();
+
+            return result;
+        }
 
     }
 }

@@ -39,18 +39,55 @@
         <div class="row container-fluid align-items-center justify-content-between  mb-2 " style="cursor:pointer" >
             @foreach(var item in Model.transfernotes)
             {
+              
                 <div class="col-md-5 crd-notes m-2 d-flex align-items-center border-1 shadow rounded p-2 " style="min-height:100px">
-                <img src="/icons/transfer-alt-svgrepo-com.svg" style="height:50px;width:50px"  class="mx-3 icn-img" />
+                    <img src="/icons/transfer-alt-svgrepo-com.svg" style="height:50px;width:50px" class="mx-3 icn-img" />
 
-                    <div >
-                    <b>Transfer Notes</b>
-                    <p class="mt-2 notes ">
-                     @item.Notes
-               
-                    </p>
+                    <div>
+                        <b>Transfer Notes</b>
+                        <p class="mt-2 notes ">
+                            @item.Notes
+
+                        </p>
                     </div>
-                   
-             </div>
+
+                </div>
+               
+            }
+            @foreach (var item2 in Model.cancelnotes)
+            {
+
+                if (item2.Status == 3)
+                {
+                    <div class="col-md-5 crd-notes m-2 d-flex align-items-center border-1 shadow rounded p-2 " style="min-height:100px">
+                        <img src="/icons/transfer-alt-svgrepo-com.svg" style="height:50px;width:50px" class="mx-3 icn-img" />
+
+                        <div>
+                            <b>Cancel Notes</b>
+                            <p class="mt-2 notes ">
+                                @item2.Notes
+
+                            </p>
+                        </div>
+
+                    </div>
+                }
+                if (item2.Status == 7)
+                {
+                    <div class="col-md-5 crd-notes m-2 d-flex align-items-center border-1 shadow rounded p-2 " style="min-height:100px">
+                        <img src="/icons/transfer-alt-svgrepo-com.svg" style="height:50px;width:50px" class="mx-3 icn-img" />
+
+                        <div>
+                            <b>Patient Cancel Notes</b>
+                            <p class="mt-2 notes ">
+                                @item2.Notes
+
+                            </p>
+                        </div>
+
+                    </div>
+                }
+
             }
             <div class="col-md-5 crd-notes d-flex m-2  align-items-center shadow rounded p-2 " id="phynotes" style="min-height:100px;cursor:pointer">
                 <img src="/icons/doctor-svgrepo-com.svg" style="height:50px;width:50px" class="mx-3 icn-img" />
