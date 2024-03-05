@@ -18,5 +18,6 @@ namespace HelloDocAdmin.Repositories.Interface
         public Task<List<HealthprofessionalCombobox>> healthprofessionals();
         public List<HealthprofessionalCombobox> ProfessionalByType(int? HealthprofessionalID);
         public Task<List<HealthprofessionaltypeCombobox>> healthprofessionaltype();
+        public Task<List<UserRoleCombobox>> UserRole();
     }
 }

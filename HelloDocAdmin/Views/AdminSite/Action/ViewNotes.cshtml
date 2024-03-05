@@ -37,8 +37,7 @@
      
 
         <div class="row container-fluid align-items-center justify-content-between  mb-2 " style="cursor:pointer" >
-            @foreach(var item in Model.transfernotes)
-            {
+          
               
                 <div class="col-md-5 crd-notes m-2 d-flex align-items-center border-1 shadow rounded p-2 " style="min-height:100px">
                     <img src="/icons/transfer-alt-svgrepo-com.svg" style="height:50px;width:50px" class="mx-3 icn-img" />
@@ -46,14 +45,24 @@
                     <div>
                         <b>Transfer Notes</b>
                         <p class="mt-2 notes ">
-                            @item.Notes
-
+                        @{
+                            int i = 1;
+                        }
+                        @foreach (var item in Model.transfernotes)
+                        {
+                            <span>
+                                ( @i )
+                            </span>  @Html.Raw(System.Web.HttpUtility.HtmlDecode(item.TransferNotes))
+                            <br/>
+                            i = i + 1;
+                        }
+                        
                         </p>
                     </div>
 
                 </div>
                
-            }
+        
             @foreach (var item2 in Model.cancelnotes)
             {
 

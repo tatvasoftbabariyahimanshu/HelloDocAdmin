@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -213,8 +214,32 @@ namespace HelloDocAdmin.Repositories
                                                    }).ToList();
             return allData;
         }
-        public ViewNotesModel getNotesByID(int id)
+        public  ViewNotesModel getNotesByID(int id)
         {
+            var rsa = (from rs in _context.Requeststatuslogs
+                       join py in _context.Physicians on rs.Physicianid equals py.Physicianid into pyGroup
+                       from py in pyGroup.DefaultIfEmpty()
+                       join p in _context.Physicians on rs.Transtophysicianid equals p.Physicianid into pGroup
+                       from p in pGroup.DefaultIfEmpty()
+                       join a in _context.Admins on rs.Adminid equals a.Adminid into aGroup
+                       from a in aGroup.DefaultIfEmpty()
+                       where rs.Requestid == id
+                       select new TransfernotesModel
+                       {
+                           TransPhysician = p.Firstname,
+                           Admin = a.Firstname,
+                           Physician = py.Firstname,
+                           Requestid = rs.Requestid,
+                           Notes = rs.Notes,
+                           Status = rs.Status,
+                           Physicianid = rs.Physicianid,
+                           Createddate = rs.Createddate,
+                           Requeststatuslogid = rs.Requeststatuslogid,
+                           Transtoadmin = rs.Transtoadmin,
+                           Transtophysicianid = rs.Transtophysicianid
+
+                       }).ToList();
+
             var req=_context.Requests.FirstOrDefault(W=>W.Requestid == id);
             var requestlog = _context.Requeststatuslogs.Where(E => E.Requestid == id &&( (E.Transtophysician != null) || (E.Transtoadmin != null)));
             var cancelnotes = _context.Requeststatuslogs.Where(E => E.Requestid == id && ( (E.Status == 3) || (E.Status == 7)));
@@ -241,27 +266,32 @@ namespace HelloDocAdmin.Repositories
             List<TransfernotesModel> list = new List<TransfernotesModel>();
             foreach (var e in cancelnotes)
             {
+              
                 list.Add(new TransfernotesModel
                 {
 
                     Requestid = e.Requestid,
                     Notes = e.Notes,
-                    Status=e.Status,
+                    Status = e.Status,
                     Physicianid = e.Physicianid,
                     Createddate = e.Createddate,
                     Requeststatuslogid = e.Requeststatuslogid,
                     Transtoadmin = e.Transtoadmin,
-                    Transtophysicianid = e.Transtophysicianid
-                });
+                    Transtophysicianid = e.Transtophysicianid,
+                  
+
+                }) ;
             }
             allData.cancelnotes = list;
 
             List<TransfernotesModel> md = new List<TransfernotesModel>();
-            foreach (var e in requestlog)
+            foreach (var e in rsa)
             {
                 md.Add(new TransfernotesModel
                 {
-
+                    TransPhysician = e.TransPhysician,
+                    Admin = e.Admin,
+                    Physician = e.Physician,
                     Requestid = e.Requestid,
                     Notes = e.Notes,
                     Status = e.Status,
@@ -310,6 +340,8 @@ namespace HelloDocAdmin.Repositories
         #endregion
         public bool UploadDoc(int Requestid, IFormFile? UploadFile)
         {
+            BitArray bt = new BitArray(1);
+            bt.Set(0, false);
             try
             {
                 string UploadImage;
@@ -330,6 +362,7 @@ namespace HelloDocAdmin.Repositories
                     {
                         Requestid = Requestid,
                         Filename = UploadFile.FileName,
+                        Isdeleted= bt,
                         Createddate = DateTime.Now,
                     };
                     _context.Requestwisefiles.Add(requestwisefile);
@@ -350,6 +383,9 @@ namespace HelloDocAdmin.Repositories
 
         public ViewDocumentsModel ViewDocument(int id)
         {
+          
+            BitArray bt = new BitArray(1);
+            bt.Set(0, false);
             ViewDocumentsModel alldata = new ViewDocumentsModel();
 
             var result = from requestWiseFile in _context.Requestwisefiles
@@ -358,7 +394,7 @@ namespace HelloDocAdmin.Repositories
                          from phys in physicianGroup.DefaultIfEmpty()
                          join admin in _context.Admins on requestWiseFile.Adminid equals admin.Adminid into adminGroup
                          from adm in adminGroup.DefaultIfEmpty()
-                         where request.Requestid == id
+                         where request.Requestid == id && requestWiseFile.Isdeleted==bt
                          select new
                          {
 

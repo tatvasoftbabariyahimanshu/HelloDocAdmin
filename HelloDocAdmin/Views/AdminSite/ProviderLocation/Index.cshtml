@@ -1,0 +1,79 @@
+﻿@using HelloDocAdmin.Entity.ViewModels.AdminSite;
+@{
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+@model List<AllProviderLocation>
+﻿
+<link rel='stylesheet' type='text/css' href='https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.15.0/maps/maps.css'>
+
+<style>
+    #mapAreash {
+        height: 70vh;
+        width: 50vw;
+        margin: 4rem auto;
+    }
+</style>
+
+<div id="mapAreash"></div>
+
+<script src="https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.15.0/maps/maps-web.min.js"></script>
+<script src="https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.15.0/services/services-web.min.js"></script>
+<script>
+    const APIKey = "bmULYKyU2sYwUF1NFjiJ6Fdc3OrqHyWo";
+
+    var Lagos = { lat: 20.5937, lng: 78.9629 };
+
+    var map = tt.map({
+        key: APIKey,
+        container: "mapAreash",
+        center: Lagos,
+        zoom: 5
+    });
+
+
+
+    var sourcearray = null;
+
+
+
+
+    var sites = [
+    ];
+   
+        @foreach (var location in Model)
+        {
+            <text>
+                console.log(sites);
+            sites.push({
+                lat: @location.Latitude,
+                lng: @location.Longitude,
+                name: '@location.Name'
+            });
+            </text>
+        }
+    
+        sites.forEach(function (site) {
+            var marker = new tt.Marker().setLngLat([site.lng, site.lat]).addTo(map);
+            var popup = new tt.Popup({ anchor: 'top' }).setHTML("<b>" + site.name + "</b>");
+            marker.setPopup(popup).togglePopup();
+        });
+
+    function moveMapTo(newLoc) {
+        map.flyTo({
+            center: newLoc,
+            zoom: 15
+        });
+    }
+
+    async function fetchshreyansLoc() {
+        const response = await tt.services.fuzzySearch({
+            key: APIKey,
+            query: document.querySelector("#query").value
+        });
+
+        if (response.results) {
+            moveMapTo(response.results[0].position);
+        }
+    }
+
+</script>

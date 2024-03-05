@@ -6,15 +6,16 @@
                 <h1 class="modal-title fs-5" id="exampleModalLabel">send agreement</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+
            
-               @* <small style="font-size:.8rem" ><b id="tintin"></b></small>*@
-              @*  <div class="cir-@Enum.GetName(typeof(RequestType), item.RequestTypeID).ToLower()  mx-2 ">
-                </div>*@
             
             <form asp-action="SendAgreement" asp-controller="SendAgreement">
                 <div class="modal-body">
-                  
-
+                    <div class="" id="typediv">
+                    </div>
+                    <p class="p-1" style="font-size:.7rem">
+                        To Send Agreement please make sure you are updating Correct Contact. the Information below for the responsible party.
+                    </p>
                     <input id="RequestID_sendAgreement" placeholder=" "  name="requestid" type="hidden">
                     <div class="inputs-control mt-2 ">
                         <input id="Phonenumber_sendAgreement" placeholder=" " name="phonenumber" class="input-outline w-100 inp edit-frm" type="text">

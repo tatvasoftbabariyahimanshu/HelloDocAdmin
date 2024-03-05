@@ -1,0 +1,238 @@
+﻿@{
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+@using HelloDocAdmin.Entity.ViewModels.AdminSite
+@model ViewCloseCaseModel
+<script>
+    $(document).ready(function () {
+
+        $(".edit-frm").prop("readonly", true);
+
+        $("input").css("background-color", "#e9ecef");
+        $("select").css("background-color", "#e9ecef");
+        $("#save").css("display", "none");
+        $("#cancel").css("display", "none");
+        $('#cancel').click(function () {
+            $("#save").css("display", "none");
+            $("#cancel").css("display", "none");
+            $(".inputs-control :input").prop("readonly", true);
+            $("select").prop("readonly", true);
+            $("input").css("background-color", "#e9ecef");
+            $("select").css("background-color", "#e9ecef");
+            $("#edit").css("display", "");
+            $("#CloseCase").css("display", "");
+        });
+
+
+    });
+
+
+
+</script>
+<div class="container">
+    <div class="card bg-transparent border-0">
+        <div class="card-header d-flex justify-content-between  border-0  bg-transparent p-1  mt-3 mb-2">
+            <div class="text-start d-flex align-items-center">
+                <h5 class="mt-2"><b>Close Case</b></h5>
+
+            </div>
+            <div class="text-end">
+                <a asp-controller="Dashboard" asp-action="Index"
+                   class="btn btn-outline-info btn-back">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                         fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                              d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5" />
+                    </svg></i>Back
+                </a>
+            </div>
+        </div>
+
+        <div class="card-body rounded shadow">
+            <div class="doc-text-card">Patient name</div>
+            <span class="d-flex align-items-center ">
+                <span class="Patient-name fs-4"><b>@Model.Firstname @Model.Lastname</b></span>
+                <span class="doc-text-card mx-2 mt-1 "><b>(@Model.ConfirmationNumber)</b></span>
+
+            </span>
+            <div class="mt-4">
+                <h6> <b>Document</b></h6>
+            </div>
+            <div class="table-responsive mt-3 ">
+                <table class="table">
+                    <thead class="border-0">
+                        <tr class="table-secondary">
+                            
+                            <th scope="col" class="table-text-header px-3"></th>
+
+             
+                            <th scope="col" class="table-text-header   ">uplode date</th>
+                            <th scope="col" class="table-text-header   ">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                       @foreach (var item2 in Model.documentslist)
+                        {
+                            <tr>
+
+                              
+                                <td class="table-text   px-3 flnamae">
+
+
+                                    <span class="mx-2">
+                                        @item2.Filename
+                                    </span>
+                                </td>
+                     
+                                <td class="table-text  px-3">@item2.Createddate</td>
+
+                                <td class="table-text  ">
+
+                                    <a class="btn btn-sm download-link  btn-outline-info document-button" download href="/Upload/req_@Model.RequestID/@item2.Filename">
+
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor"
+                                             class="bi bi-arrow-down-circle mx-1" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd"
+                                                  d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293z" />
+                                        </svg>
+                                    </a>
+                                    <a class="btn btn-sm   btn-outline-info " target="_blank" href="/Upload/req_@Model.RequestID/@item2.Filename">
+
+                                        <i class="fa-solid fa-eye"></i>
+                                    </a>
+                                    <a class="btn btn-sm   btn-outline-info " target="_blank" asp-action="DeleteDocCloseCase" asp-controller="Action" asp-route-RequestWiseFileID="@item2.RequestWiseFileID" asp-route-RequestID="@Model.RequestID">
+
+                                        <i class="fa-solid fa-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+
+
+                    </tbody>
+                  
+
+                </table>
+            </div>
+            <div class="mt-4">
+                <h6> <b>Patient Information</b></h6>
+            </div>
+             <form method="post" asp-action="EditForCloseCase" asp-controller="Action" enctype="multipart/form-data">
+            <div class="row mt-2">
+                <input asp-for="RequestID" type="hidden"/>
+                <div class="col-md-6 mt-2">
+                    <div class=" mb-3">
+                        <div class="inputs-control ">
+                            <input placeholder=" "  asp-for="RC_FirstName" class="input-outline w-100 inp " type="text" readonly>
+                            <label class="inputs-lable">First name</label>
+                        </div>
+                        <span  class="err-msg"></span>
+                    </div>
+                </div>
+              
+                <div class="col-md-6">
+                    <div class="mb-3 mt-2">
+                        <div class="inputs-control  ">
+                            <input placeholder=" " asp-for="Lastname" class="input-outline w-100 inp " type="text" readonly>
+                            <label class="inputs-lable">Last name</label>
+                        </div>
+                        <span  class="err-msg"></span>
+
+
+                    </div>
+
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3 mt-2">
+                        <div class="inputs-control ">
+
+                            <input placeholder=" " asp-for="RC_Dob"  class="input-outline w-100 inp form-control-sm " type="date" readonly>
+                            <label class="inputs-lable-dob">Date of Birth</label>
+
+                        </div>
+                        <span  class="err-msg"></span>
+
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-6">
+                    <div class="mb-3 mt-2  d-flex">
+                        <div class="inputs-control w-100 ">
+                            <input id="phone" asp-for="RC_PhoneNumber"  placeholder="Mobile" type="text" readonly class=" telephone input-outline w-100 inp align-items-center edit-frm"  />
+                            <span  class="err-msg"></span>
+                        </div>
+
+                        <button class="btn btn-outline-info mx-2 " >
+                            <i class="bi bi-telephone-fill"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-6">
+                    <div class=" mb-3 mt-2">
+                        <div class="inputs-control ">
+                            <input placeholder=" " asp-for="RC_Email"  class="input-outline w-100 inp edit-frm" readonly type="text">
+                            <label class="inputs-lable">Email</label>
+                        </div>
+                        <span  class="err-msg"></span>
+                    </div>
+                </div>
+               
+            </div>
+            <div class="card-footer border-0 bg-transparent d-flex justify-content-between">
+            <div class="text-start">
+
+            </div>
+                    <div class=" p-0   text-end">
+                        <a onclick="enable_disable()" id="edit" class="btn  btn-outline-info btn-submit mx-2" >
+                            Edit
+                        </a>
+                        <a id="cancel" asp-action="ViewCase" asp-controller="Action" class="btn  btn-outline-danger ">
+                            cancel
+                        </a>
+                        <button type="submit" id="save" class="btn btn-outline-info btn-submit mx-2 ">
+                            save
+                        </button>
+                        <a id="CloseCase" asp-action="CloseCaseUnpaid" asp-controller="Action" asp-route-RequestID="@Model.RequestID" class="btn  btn-outline-info btn-submit  ">
+                           Close Case
+                        </a>
+
+                    </div>
+               
+            </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+<script type="text/javascript">
+    function enable_disable() {
+        $(".edit-frm").prop("readonly", false);
+        $("#CloseCase").css("display", "none");
+        $("#save").prop("readonly", false);
+        $("#cancel").prop("readonly", false);
+        $("#save").css("display", "");
+        $("#cancel").css("display", "");
+        $("#edit").css("display", "none");
+        $(".edit-frm").css("background-color", "transparent");
+
+    }
+</script>
+<script>
+    $(document).ready(function () {
+        $('.flnamae').each(function () {
+            var fileName = $(this).text().trim();
+            if (fileName.endsWith('.pdf')) {
+                $(this).prepend('<i class="fa-solid fa-file-pdf" style="color: #be2323;font-size:1rem"></i> ');
+            } else if (fileName.endsWith('.doc') || fileName.endsWith('.docx')) {
+                $(this).prepend('<i class="fa-solid fa-file-doc" style="color: #74C0FC;font-size:1rem"></i> ');
+            } else if (fileName.endsWith('.jpg') || fileName.endsWith('.jpeg') || fileName.endsWith('.png') || fileName.endsWith('.gif')) {
+                $(this).prepend('<i class="fa-solid fa-images" style="color: #B197FC;font-size:1rem"></i> ');
+            }
+        });
+    });
+</script>

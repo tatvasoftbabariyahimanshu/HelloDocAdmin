@@ -1,5 +1,7 @@
 ﻿using AspNetCore;
 using AspNetCoreHero.ToastNotification.Abstractions;
+using DocumentFormat.OpenXml.Drawing;
+using HelloDocAdmin.Entity.Data;
 using HelloDocAdmin.Entity.Models;
 using HelloDocAdmin.Entity.ViewModels;
 using HelloDocAdmin.Entity.ViewModels.AdminSite;
@@ -17,13 +19,15 @@ namespace HelloDocAdmin.Controllers.AdminSite
         private ICombobox _combobox;
         private readonly ILogger<DashboardController> _logger;
         private readonly INotyfService _notyf;
-        public ActionController(ILogger<DashboardController> logger, IDashboardRepository dashboardRepository, ICombobox combobox, IActionRepository actionrepo, INotyfService notyf)
+        private readonly EmailConfiguration _email;
+        public ActionController(ILogger<DashboardController> logger, IDashboardRepository dashboardRepository, ICombobox combobox, IActionRepository actionrepo, INotyfService notyf, EmailConfiguration email)
         {
             _logger = logger;
             _combobox = combobox;
             _dashboardrepo = dashboardRepository;
             _actionrepo = actionrepo;
             _notyf = notyf;
+            _email = email;
         }
         public async Task<IActionResult> ViewCase(int id)
         {
@@ -41,7 +45,11 @@ namespace HelloDocAdmin.Controllers.AdminSite
         }
         public IActionResult ViewDocuments(int id)
         {
-
+            if(TempData["Mail"]!=null)
+            {
+                _notyf.Success(TempData["Mail"].ToString());
+            }
+          
             ViewDocumentsModel sm = _dashboardrepo.ViewDocument(id);
             return View("../AdminSite/Action/ViewDocuments", sm);
         }
@@ -77,6 +85,23 @@ namespace HelloDocAdmin.Controllers.AdminSite
             {
                 _notyf.Success("Case Not Edited...");
                 return View("../AdminSite/Action/ViewCase", sm);
+            }
+
+        }
+
+        public IActionResult EditForCloseCase(ViewCloseCaseModel sm)
+        {
+            bool result = _actionrepo.EditForCloseCase(sm);
+
+            if (result)
+            {
+                _notyf.Success("Case Edited Successfully..");
+                return RedirectToAction("CloseCase", new { sm.RequestID });
+            }
+            else
+            {
+                _notyf.Error("Case Not Edited...");
+                return RedirectToAction("CloseCase", new { sm.RequestID });
             }
 
         }
@@ -194,7 +219,97 @@ namespace HelloDocAdmin.Controllers.AdminSite
         }
         #endregion
         #region Delete Doc
-        public IActionResult DeleteDoc(int RequestWiseFileID, int RequestID)
+
+        public IActionResult DeleteallDoc(string path,int RequestID)
+        {
+
+
+
+            List<int> pathList = path.Split(',').Select(int.Parse).ToList();
+            for(var i=0;i<pathList.Count;i++)
+            {
+              
+                bool data = _actionrepo.DeleteDoc(pathList[i]);
+           
+
+
+                if (data)
+                {
+       
+                    _notyf.Success("File deleted successfully.");
+                }
+                else
+                {
+                  
+                    _notyf.Error("File does not exist.");
+                    return RedirectToAction("ViewDocuments", new { id = RequestID });
+                }
+            }
+
+      
+
+                _notyf.Success("Documet Deleted Successfully");
+           
+
+            return RedirectToAction("ViewDocuments", new { id = RequestID });
+
+        }
+        public IActionResult SendMailDoc(string path, int RequestID)
+        {
+
+
+
+           
+
+                bool data = _actionrepo.SendAllMailDoc(path,RequestID);
+
+
+
+                if (data)
+                {
+
+                    _notyf.Success("mail Sended with Document successfully.");
+                }
+                else
+                {
+
+                    _notyf.Error("mail not sended.");
+                    return RedirectToAction("ViewDocuments", new { id = RequestID });
+                }
+            
+
+
+
+            _notyf.Success("Documet Deleted Successfully");
+
+
+            return RedirectToAction("ViewDocuments", new { id = RequestID });
+
+        }
+
+        public IActionResult DeleteDoc(int RequestWiseFileID, int RequestID,string path)
+        {
+
+
+            
+            bool data = _actionrepo.DeleteDoc(RequestWiseFileID);
+            if (data)
+            {
+               
+            
+                _notyf.Success("Documet Deleted Successfully");
+            }
+            else
+            {
+                _notyf.Error("Documet Not Deleted");
+            }
+
+            return RedirectToAction("ViewDocuments", new { id = RequestID });
+
+        }
+        #endregion
+        #region Delete Doc CloseCase
+        public IActionResult DeleteDocCloseCase(int RequestWiseFileID, int RequestID)
         {
 
 
@@ -208,7 +323,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
                 _notyf.Error("Documet Not Deleted");
             }
 
-            return RedirectToAction("ViewDocuments", new { id = RequestID });
+            return RedirectToAction("CloseCase", new { RequestID = RequestID });
 
         }
         #endregion
@@ -291,7 +406,33 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
 
 
-     
+        #region Close Case
+
+
+        public IActionResult CloseCase(int RequestID)
+        {
+
+            ViewCloseCaseModel vc=_actionrepo.CloseCaseData(RequestID);
+            return View("../AdminSite/Action/CloseCase",vc);
+        }
+        public IActionResult CloseCaseUnpaid(int RequestID)
+        {
+            bool sm = _actionrepo.CloseCase(RequestID);
+            if (sm)
+            {
+                _notyf.Success("Case Closed...");
+                     _notyf.Information("You can see Closed case in unpaid State...");
+
+            }
+            else
+            {
+                _notyf.Error("there is some error in deletion...");
+            }
+            return RedirectToAction("Index", "Dashboard", new { Status = "3,7,8" });
+        }
+
+
+        #endregion
 
 
     }

@@ -1,0 +1,27 @@
+﻿﻿<div class="modal fade" id="RequestSupport" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header  bg-info text-white">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Request Support</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form asp-action="RequestSupport" asp-controller="Action">
+              
+                <div class="modal-body">
+                    <p class="p-1" style="font-size:.8rem">
+                       To all unscheduled Physicians: We are short on coverage and needs additional support On Call to respond to Requests
+                    </p>
+                    <div class="inputs-control w-100 mt-2">
+                        <textarea id="changenote" placeholder=" " name="Note" rows="5" class="input-outline w-100  " type="text"></textarea>
+
+                        <label class="inputs-lable inputs-lable-textarea " id="notedata">Massage</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class=" btn btn-info text-white">Request</button>
+                    <a class="btn btn-outline-info" data-bs-dismiss="modal">Close</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

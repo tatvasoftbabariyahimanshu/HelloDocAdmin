@@ -16,6 +16,14 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = D:\Projects\Hello Doc Admin\HelloDocAdmin
 build_property._RazorSourceGeneratorDebug = 
 
+[D:/Projects/Hello Doc Admin/HelloDocAdmin/Views/AdminSite/Action/CloseCase.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5TaXRlXEFjdGlvblxDbG9zZUNhc2UuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/Hello Doc Admin/HelloDocAdmin/Views/AdminSite/Action/CreateNewRequest.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5TaXRlXEFjdGlvblxDcmVhdGVOZXdSZXF1ZXN0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Projects/Hello Doc Admin/HelloDocAdmin/Views/AdminSite/Action/Models/_AssignCase.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5TaXRlXEFjdGlvblxNb2RlbHNcX0Fzc2lnbkNhc2UuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -30,6 +38,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/Projects/Hello Doc Admin/HelloDocAdmin/Views/AdminSite/Action/Models/_ClearCaseConfirm.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5TaXRlXEFjdGlvblxNb2RlbHNcX0NsZWFyQ2FzZUNvbmZpcm0uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/Hello Doc Admin/HelloDocAdmin/Views/AdminSite/Action/Models/_RequestSupport.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5TaXRlXEFjdGlvblxNb2RlbHNcX1JlcXVlc3RTdXBwb3J0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Projects/Hello Doc Admin/HelloDocAdmin/Views/AdminSite/Action/Models/_sendAgreement.cshtml]
@@ -106,6 +118,14 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/Projects/Hello Doc Admin/HelloDocAdmin/Views/AdminSite/Dashboard/_UpperTab.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5TaXRlXERhc2hib2FyZFxfVXBwZXJUYWIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/Hello Doc Admin/HelloDocAdmin/Views/AdminSite/MyProfile/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5TaXRlXE15UHJvZmlsZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/Hello Doc Admin/HelloDocAdmin/Views/AdminSite/ProviderLocation/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5TaXRlXFByb3ZpZGVyTG9jYXRpb25cSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Projects/Hello Doc Admin/HelloDocAdmin/Views/Home/Index.cshtml]

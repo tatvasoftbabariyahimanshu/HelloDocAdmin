@@ -45,31 +45,34 @@
     <div class="text-start mt-2 col-md-4">
         <div class="d-flex  text-start  justify-content-end ">
           @*  <button class="btn  btn-outline-info btn-sm mx-2 cir-text">all </button>*@
-            <div class="d-flex align-items-center ">
+            <div type="button" class="d-flex align-items-center " onclick="filterSelection('all')">
+                <div type="button" class="btn btn-outline-info ">All</div>
+            </div>
+            <div type="button" class="d-flex align-items-center " onclick="filterSelection('bg-patient-row')">
                 <div class="cir-patient mx-2">
                 </div>
                 <span class="cir-text">
                     Patient
                 </span>
             </div>
-            <div class="d-flex align-items-center ">
+            <div type="button" class="d-flex align-items-center " onclick="filterSelection('bg-family-row')">
                 <div class="cir-family mx-2">
                 </div>
-                <span class="cir-text">
+                <span class="cir-text" >
                     Family/Friend
                 </span>
             </div>
-            <div class="d-flex align-items-center ">
+            <div type="button"  class="d-flex align-items-center " onclick="filterSelection('bg-business-row')">
                 <div class="cir-Business mx-2">
                 </div>
-                <span class="cir-text">
+                <span class="cir-text" >
                     Business
                 </span>
             </div>
-            <div class="d-flex align-items-center ">
+            <div type="button"  class="d-flex align-items-center " onclick="filterSelection('bg-concierge-row')">
                 <div class="cir-Concierge mx-2">
                 </div>
-                <span class="cir-text">
+                <span class="cir-text" >
                     Concierge
                 </span>
             </div>

@@ -55,7 +55,7 @@ namespace HelloDocAdmin.Entity.ViewModels.AdminSite
         
         public virtual Request Request { get; set; } = null!;
 
-
+       
         public List<TransfernotesModel> transfernotes { get; set; } = null!;
              public List<TransfernotesModel> cancelnotes { get; set; } = null!;
     }

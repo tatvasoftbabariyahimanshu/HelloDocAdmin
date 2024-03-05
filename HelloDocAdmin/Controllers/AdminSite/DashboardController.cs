@@ -25,6 +25,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
         public async Task<IActionResult> Index()
         {
+           
 
             ViewBag.RegionComboBox = await _combobox.RegionComboBox();
             ViewBag.CaseReasonComboBox = await _combobox.CaseReasonComboBox();

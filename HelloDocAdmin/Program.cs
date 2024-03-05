@@ -17,6 +17,8 @@ builder.Services.AddScoped<IDashboardRepository, DashboardRepository>();
 builder.Services.AddScoped<IActionRepository, ActionRepository>();
 builder.Services.AddScoped<ICombobox, Combobox>();
 builder.Services.AddScoped<IPatientRepository, PatientRepository>();
+builder.Services.AddScoped<IProviderLocation, ProviderLocation>();
+builder.Services.AddScoped<IAdminProfile, AdminProfile>();
 builder.Services.AddScoped<IAspnetuserRepository, AspnetuserPropsitory>();
 builder.Services.AddNotyf(config => { config.DurationInSeconds = 10; config.IsDismissable = true; config.Position = NotyfPosition.TopRight; });
 var emailConfig = builder.Configuration

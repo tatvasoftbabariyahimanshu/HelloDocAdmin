@@ -35,11 +35,6 @@
               
             </div>
             <div class="col-md-12 mt-3">
-
-
-
-
-
                 <form method="post" asp-action="UploadDocuments" asp-controller="Action" enctype="multipart/form-data">
                         <div class="d-flex">
                         <button type="button" id="choosenfile" class="col  btn upl-btn text-start text-secondary" onclick="document.getElementById('files').click()">
@@ -73,16 +68,15 @@
 
                   </script>
 
-
-
-
-
                 <div class="card-header-2 mt-3 d-flex justify-content-between  border-0  bg-transparent ">
                     <div class="mt-2">
                         <h6> Document</h6>
                     </div>
                     <div class="text-end">
                         <a class="btn btn-outline-info btn-sm btn-back text-end" onclick="Downlode_all()"> <i class="fa-solid fa-download"></i> <span class="btn-text"> Downlode all</span></a>
+                        <a class="btn btn-outline-info btn-sm btn-back text-end" onclick="Delete_all()"> <i class="fa-solid fa-trash"></i> <span class="btn-text"> Delete all</span></a>
+                        <a class="btn btn-outline-info btn-sm btn-back text-end" onclick="SendMail_all()"> <i class="fa-solid fa-send"></i> <span class="btn-text">Mail all</span></a>
+
                     </div>
                 </div>
                 <div class="table-responsive mt-3 ">
@@ -134,7 +128,7 @@
 
                                             <i class="fa-solid fa-eye"></i>
                                         </a>
-                                        <a class="btn btn-sm   btn-outline-info " target="_blank" asp-action="DeleteDoc" asp-controller="Action" asp-route-RequestWiseFileID="@item2.RequestWiseFileID" asp-route-RequestID="@Model.RequestID" >
+                                        <a class="btn btn-sm dlt-link  btn-outline-info " data="@item2.RequestWiseFileID" target="_blank" asp-action="DeleteDoc" asp-controller="Action" asp-route-path="/Upload/req_@Model.RequestID/@item2.Filename" asp-route-RequestWiseFileID="@item2.RequestWiseFileID" asp-route-RequestID="@Model.RequestID">
 
                                             <i class="fa-solid fa-trash"></i>
                                         </a>
@@ -165,10 +159,6 @@
             }
         });
     });
-
-
-
-
     function statusselectall() {
         var selectAllCheckbox = document.getElementById('selectall');
         var allCheckboxes = document.getElementsByClassName('doc-checkbox');
@@ -209,5 +199,102 @@
             }
         }
     }
+    function Delete_all() {
+        var dtr_alldelete = "";
+        var allcheckbox = document.getElementsByClassName('doc-checkbox');
+        var alllinks = document.getElementsByClassName('dlt-link');
+        console.log(allcheckbox.length);
+        var length1=0;
+        for (var i = 0; i < allcheckbox.length; i++) {
+            if (allcheckbox[i].checked)
+        {
+            length1+=1;
+        }
+        }
+        console.log(length1);
+        for (var i = 0; i < allcheckbox.length; i++) { // Use < instead of <=
+            if (allcheckbox[i].checked && length1 > 0) {
+ 
+         
+                if (length1 > 1) {
+                    dtr_alldelete += alllinks[i].getAttribute("data") + "," ;
+                }
+                else  {
+                    dtr_alldelete = dtr_alldelete+alllinks[i].getAttribute("data");
+                }
+                length1 -= 1;
+                console.log(dtr_alldelete);
+            }
+        }
+
+        console.log(dtr_alldelete);
+
+        $.ajax({
+            // base address/controller/Action
+            url: '/Action/DeleteallDoc',
+            type: 'post',
+            data: {
+                RequestID: '@Model.RequestID',
+                path: dtr_alldelete
+            },
+            success: function (result) {
+             
+                window.location.href = '/Action/ViewDocuments/'+@Model.RequestID;
+            },
+            error: function () {
+                alert("error");
+            }
+        });
+    }
+
+
+
+    function SendMail_all() {
+        var dtr_alldelete = "";
+        var allcheckbox = document.getElementsByClassName('doc-checkbox');
+        var alllinks = document.getElementsByClassName('dlt-link');
+        console.log(allcheckbox.length);
+        var length1 = 0;
+        for (var i = 0; i < allcheckbox.length; i++) {
+            if (allcheckbox[i].checked) {
+                length1 += 1;
+            }
+        }
+        console.log(length1);
+        for (var i = 0; i < allcheckbox.length; i++) { // Use < instead of <=
+            if (allcheckbox[i].checked && length1 > 0) {
+
+
+                if (length1 > 1) {
+                    dtr_alldelete += alllinks[i].getAttribute("data") + ",";
+                }
+                else {
+                    dtr_alldelete = dtr_alldelete + alllinks[i].getAttribute("data");
+                }
+                length1 -= 1;
+                console.log(dtr_alldelete);
+            }
+        }
+
+        console.log(dtr_alldelete);
+
+        $.ajax({
+            // base address/controller/Action
+            url: '/Action/SendMailDoc',
+            type: 'post',
+            data: {
+                RequestID: '@Model.RequestID',
+                path: dtr_alldelete
+            },
+            success: function (result) {
+  
+                    window.location.href = '/Action/ViewDocuments/' + @Model.RequestID;
+            },
+            error: function () {
+                alert("error");
+            }
+        });
+    }
+
 
 </script>

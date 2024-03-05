@@ -58,7 +58,7 @@
                         }
 
 
-                        <tr class="@TempData["hb"]">
+                        <tr class="@TempData["hb"] filterDiv">
                             <td scope="col">
                                 <div class="text-end d-flex justify-content-between">
                                     <div class="text-start d-grid">
@@ -142,7 +142,7 @@
             </table>
         </div>
         <div >
-    @foreach (var item in Model)
+            @foreach (var (item, i) in Model.Select((item, i) => (item, i)))
     {
         <div class="accordion-item text-secondary " id="Acordiantable">
                     <h2 class="accordion-header btn-i " id="flush-heading-@item.RequestID">
@@ -167,67 +167,103 @@
                                     <small>@item.Address</small>
                                 </div>
                                 <div class="col-6 text-end ">
-                                    <button class="btn btn-sm btn-white border-info text-info p-1 rounded-pill " style="margin-right:-1rem">
+                                    <a class="btn btn-sm btn-white border-info text-info p-1 rounded-pill " style="margin-right:-1rem" id="map-button">
                                         <small>Map Location</small>
-                                    </button>
+                                    </a>
                                 </div>
                             </div>
+                            <div class="modal" id="myModal" tabindex="-1">
+                                <div class="modal-dialog modal-xl">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Your Location</h5>
+                                            <button type="button" class="btn-close close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="gmap_canvas">
+                                                <iframe id="gmap_canvas" style="min-height:500px;width:100%;" src="" frameborder="0" scrolling="no" marginheight="0" marginwidth="0">
+                                                </iframe>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <script>
+                                var modal = document.getElementById("myModal");
+                                var btn = document.getElementById("map-button");
+                            
+                                var spany = document.getElementsByClassName("close")[0];
+                                var map;
+                                btn.onclick = function () {
+
+                                 
+
+                                    var address1 = `https://maps.google.com/maps?q= + ${@item.Address} + &t=&z=13&ie=UTF8&iwloc=&output=embed`;
+                                
+                                    document.getElementById('gmap_canvas').src = address1;
+                                    modal.style.display = "block";
+                                }
+                                spany.onclick = function () {
+                                    modal.style.display = "none";
+                                }
+                                window.onclick = function (event) {
+                                    if (event.target == modal) {
+                                        modal.style.display = "none";
+                                    }
+                                }
+                            </script>
                 </div>
             </h2>
-                    <div id="flush-@item.RequestID" class="accordion-collapse text-dark  btn-i p-2 collapse mb-3 border-top" data-bs-parent="#accordionExample">
+                    <div id="flush-@item.RequestID" class="accordion-collapse text-dark  position-relative btn-i p-2 collapse mb-3 border-top" data-bs-parent="#accordionExample">
+                        <a asp-action="ViewCase" asp-controller="Action" asp-route-id="@item.RequestID" class="btn btn-outline-primary rounded-4 p-1 fs-6 px-3 bg-light my-2 position-absolute" style="top:-20px!important;right:15px !important ">
+                            View Case
+                        </a>
                 <div class="accordion-body container-fluid">
+                           
                             <p> <i class="fa fa-calendar border border-info rounded-pill p-1 me-2" aria-hidden="true"></i><b>Date of Birth:</b> @item.Dob</p>
                             <p> <i class="fa fa-envelope border border-info rounded-pill p-1 me-2"></i><b>Email :</b>  @item.Email</p>
                             <p> <i class="fa fa-phone border  border-info rounded-pill p-1 me-2"></i><b> Patient : </b>@item.PhoneNumber</p>
                             <p><i class="fa fa-sticky-note border border-info rounded-pill p-1 me-2"></i> <b>Transfer Notes :</b> @item.Notes</p>
                             <p><i class="fa fa-calendar border border-info rounded-pill p-1 me-2"></i><b>Date of service :</b> @item.RequestedDate</p>
                             <p><i class="fa fa-user border border-info rounded-pill p-1 me-2"></i><b>Requestor :</b> @item.Requestor</p>
-
+                          
                     <div class="row">
                         <div class="col-6 mb-3">
-                            <a class="btn btn-white text-white rounded-pill 2px w-100" style="background-color: #3ecc4e;">
+                                    <a class="btn btn-white text-white rounded-pill 2px w-100" style="background-color: #3ecc4e;" asp-action="ViewNotes" asp-controller="Action" asp-route-id="@item.RequestID">
                                 <small>View Notes</small>
                             </a>
                         </div>
                         <div class="col-6 mb-3">
-                            <a class="btn btn-success text-white rounded-pill 2px w-100">
-                                <small>Doctors Note</small>
+                                    <a asp-action="" onclick="model_Case(@i)" asp-controller="" data-bs-toggle="modal" data-bs-target="#Assigncase" data-bs-requestid="@item.RequestID" data-bs-patientname="@item.PatientName" class="btn btn-warning text-white rounded-pill 2px w-100">
+                                <small>Assign Case</small>
                             </a>
                         </div>
 
-                        <div class="col-6 mb-3">
+                       @* <div class="col-6 mb-3">
                             <a class="btn btn-white text-white rounded-pill 2px w-100" style="background-color: #3ecc4e;">
                                 <small>View Uploads</small>
                             </a>
-                        </div>
+                        </div>*@
                         <div class="col-6 mb-3">
-                            <a class="btn btn-white text-white rounded-pill 2px w-100" style="background-color: #3ecc4e;">
-                                <small>Encounter</small>
+                                    <a asp-action="" onclick="model_Case(@i)" asp-controller="" data-bs-toggle="modal" data-bs-target="#Cancelcase" data-bs-requestid="@item.RequestID" data-bs-patientname="@item.PatientName" class="btn btn-danger text-white rounded-pill 2px w-100">
+                                <small>Cancel Case</small>
                             </a>
                         </div>
                         <div class="col-6 mb-3">
-                            <a class="btn btn-white text-white rounded-pill 2px w-100" style="background-color: #FFD43B;">
-                                <small>Orders</small>
+                                    <a asp-action="" onclick="model_Case(@i)" id="CancelCase_@item.RequestID" asp-controller="" data-bs-toggle="modal" data-bs-target="#BlockCase" data-bs-requestid="@item.RequestID" data-bs-patientname="@item.PatientName" class="btn btn-danger text-white rounded-pill 2px w-100" >
+                                <small>Block Case</small>
                             </a>
                         </div>
                         <div class="col-6 mb-3 ">
-                            <a class="btn btn-white text-white rounded-pill 2px w-100" style="background-color: #3ecc4e;">
+                                    <a href="mailto:@item.Email" class="btn btn-white text-white rounded-pill 2px w-100" style="background-color: #3ecc4e;">
                                 <small>Email</small>
                             </a>
                         </div>
                     </div>
-                    <div class="text-end d-md-flex justify-content-md-end">
-                        <span>Chat With:</span>
-                        <button class="btn btn-white border-info text-info me-md-2 mb-2" type="button">
-                                    <i class="fa-solid fa-user"></i>
-                            Patient
-                        </button>
-                        <button class="btn btn-white border-info text-info mb-2" type="button">
-                                    <i class="fa-solid fa-user-doctor"></i>
-                            Provider
-                        </button>
-                    </div>
+                   
                 </div>
+                       
             </div>
             
         </div>
@@ -236,7 +272,6 @@
 
     </div>
 </div>
- 
     <script>
         function model_Case(id) {
         console.log(id);
@@ -247,15 +282,14 @@
         document.getElementById('RequestID_Input_ModelAssignCase').value = modeldata[id].requestID;
         document.getElementById('RequestID_Input_ModelBlockCase').value = modeldata[id].requestID;
         document.getElementById('PatientName_ModelBlockCase').innerText = modeldata[id].patientName;
-        }
+      
 
     </script>
 
 
       
 <script>
-
-  
+   
     $(document).ready(function () {
         $("#myTable").DataTable();
     });
@@ -280,4 +314,42 @@
             }
         }
     }
+    filterSelection("all")
+    function filterSelection(c) {
+        
+        var x, i;
+        x = document.getElementsByClassName("filterDiv");
+        if (c == "all") c = "";
+        for (i = 0; i < x.length; i++) {
+            w3AddClass(x[i], "unshow");
+          
+            if (x[i].className.indexOf(c) > -1) 
+            {
+              
+            w3RemoveClass(x[i], "unshow");
+            }
+        }
+    }
+
+    function w3AddClass(element, name) {
+        var i, arr1, arr2;
+        arr1 = element.className.split(" ");
+        arr2 = name.split(" ");
+        for (i = 0; i < arr2.length; i++) {
+            if (arr1.indexOf(arr2[i]) == -1) { element.className += " " + arr2[i]; }
+        }
+    }
+
+    function w3RemoveClass(element, name) {
+        var i, arr1, arr2;
+        arr1 = element.className.split(" ");
+        arr2 = name.split(" ");
+        for (i = 0; i < arr2.length; i++) {
+            while (arr1.indexOf(arr2[i]) > -1) {
+                arr1.splice(arr1.indexOf(arr2[i]), 1);
+            }
+        }
+        element.className = arr1.join(" ");
+    }
+
 </script>

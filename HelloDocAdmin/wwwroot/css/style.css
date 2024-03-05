@@ -427,6 +427,13 @@ nav {
 .iti input {
     height: calc(2.5rem + calc(var(--bs-border-width) * 2));
 }
+.show {
+    display: block !important;
+}
+
+.unshow {
+    display: none !important;
+}
 
 .footer-req {
     position: fixed;
@@ -840,7 +847,7 @@ th:nth-child(6) {
     }
 
     .cir-text {
-        font-size: .5rem !important;
+        font-size: .6rem !important;
     }
 
     .top-icon {

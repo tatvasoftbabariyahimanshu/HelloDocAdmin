@@ -10,10 +10,10 @@ namespace HelloDocAdmin.Entity.ViewModels.AdminSite
     {
         public enum RequestType
         {
-            Business = 1,
-            Patient,
-            Family,
-            Concierge
+            Business = 4,
+            Patient=1,
+            Family=2,
+            Concierge=3
         }
         public enum AdminDashStatus
         {

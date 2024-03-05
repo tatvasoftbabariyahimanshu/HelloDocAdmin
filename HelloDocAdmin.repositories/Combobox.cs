@@ -49,6 +49,15 @@ namespace HelloDocAdmin.Repositories
             })
                 .ToListAsync();
         }
+        public async Task<List<UserRoleCombobox>> UserRole()
+        {
+            return await _context.Aspnetroles.Select(req => new UserRoleCombobox()
+            {
+                RoleId = req.Id,
+                RoleName = req.Name
+            })
+                .ToListAsync();
+        }
         public async Task<List<CaseReasonComboBox>> CaseReasonComboBox()
         {
             return await _context.Casetags.Select(req => new CaseReasonComboBox()

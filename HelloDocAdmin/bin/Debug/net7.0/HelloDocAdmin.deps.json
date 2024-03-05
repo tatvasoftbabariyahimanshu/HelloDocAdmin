@@ -2902,7 +2902,8 @@
       },
       "HelloDocAdmin.Repositories/1.0.0": {
         "dependencies": {
-          "HelloDocAdmin.Entity": "1.0.0"
+          "HelloDocAdmin.Entity": "1.0.0",
+          "Microsoft.Extensions.Identity.Core": "8.0.2"
         },
         "runtime": {
           "HelloDocAdmin.Repositories.dll": {}
