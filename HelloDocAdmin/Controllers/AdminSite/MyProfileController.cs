@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HelloDocAdmin.Controllers.AdminSite
 {
+    [CustomAuthorization("Admin")]
     public class MyProfileController : Controller
     {
         private IDashboardRepository _dashboardrepo;

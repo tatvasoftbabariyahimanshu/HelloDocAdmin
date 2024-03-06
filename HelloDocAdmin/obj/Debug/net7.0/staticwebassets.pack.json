@@ -113,8 +113,16 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\icons\\AccessDenide.png",
+      "PackagePath": "staticwebassets\\icons\\AccessDenide.png"
+    },
+    {
       "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\icons\\admin.svg",
       "PackagePath": "staticwebassets\\icons\\admin.svg"
+    },
+    {
+      "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\icons\\bwink_bld_03_single_03.jpg",
+      "PackagePath": "staticwebassets\\icons\\bwink_bld_03_single_03.jpg"
     },
     {
       "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\icons\\doctor-svgrepo-com.svg",

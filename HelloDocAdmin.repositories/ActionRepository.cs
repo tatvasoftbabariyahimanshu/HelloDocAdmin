@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace HelloDocAdmin.Repositories
 {
-    public class ActionRepository:IActionRepository
+    public class ActionRepository : IActionRepository
     {
 
         private readonly ApplicationDbContext _context;
@@ -71,7 +71,7 @@ namespace HelloDocAdmin.Repositories
                 };
                 foreach (var item in requestWiseFile)
                 {
-                    string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Upload/req_" +item.Requestid+ "/"+item.Filename);
+                    string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Upload/req_" + item.Requestid + "/" + item.Filename);
                     Attachment attachment = new Attachment(filePath);
                     mailMessage.Attachments.Add(attachment);
                 }
@@ -92,7 +92,7 @@ namespace HelloDocAdmin.Repositories
             if (data != null)
             {
 
-             
+
                 return data.Filename;
             }
             else
@@ -103,10 +103,10 @@ namespace HelloDocAdmin.Repositories
         }
         public bool DeleteDoc(int RequestWiseFileID)
         {
-            var data=_context.Requestwisefiles.FirstOrDefault(e=>e.Requestwisefileid==RequestWiseFileID);
-            if(data!=null)
+            var data = _context.Requestwisefiles.FirstOrDefault(e => e.Requestwisefileid == RequestWiseFileID);
+            if (data != null)
             {
-                BitArray bt=new BitArray(1);
+                BitArray bt = new BitArray(1);
                 bt.Set(0, true);
                 data.Isdeleted = bt;
                 _context.Requestwisefiles.Update(data);
@@ -117,7 +117,7 @@ namespace HelloDocAdmin.Repositories
             {
                 return false;
             }
-          
+
         }
         public bool ClearCase(int RequestID)
         {
@@ -126,7 +126,7 @@ namespace HelloDocAdmin.Repositories
                 var requestData = _context.Requests.FirstOrDefault(e => e.Requestid == RequestID);
                 if (requestData != null)
                 {
-                   
+
                     requestData.Status = 10;
                     _context.Requests.Update(requestData);
                     _context.SaveChanges();
@@ -134,7 +134,7 @@ namespace HelloDocAdmin.Repositories
                     Requeststatuslog rsl = new Requeststatuslog
                     {
                         Requestid = RequestID,
-                      
+
 
                         Status = 10,
                         Createddate = DateTime.Now
@@ -153,7 +153,7 @@ namespace HelloDocAdmin.Repositories
         }
         public Healthprofessional SelectProfessionlByID(int VendorID)
         {
-            return  _context.Healthprofessionals.FirstOrDefault(e => e.Vendorid == VendorID);
+            return _context.Healthprofessionals.FirstOrDefault(e => e.Vendorid == VendorID);
         }
         public bool SendOrder(ViewSendOrderModel data)
         {
@@ -176,40 +176,40 @@ namespace HelloDocAdmin.Repositories
                 _context.Orderdetails.Add(od);
                 _context.SaveChanges(true);
                 var req = _context.Requests.FirstOrDefault(e => e.Requestid == data.RequestID);
-                _email.SendMail(data.Email, "New Order arrived", data.Prescription + "Request name"+ req.Firstname);
+                _email.SendMail(data.Email, "New Order arrived", data.Prescription + "Request name" + req.Firstname);
                 return true;
             }
-         catch (Exception ex)
+            catch (Exception ex)
             {
                 return false;
             }
 
-           
+
         }
         #region Transfer_Provider
         public async Task<bool> TransferProvider(int RequestId, int ProviderId, string notes)
         {
-          
-                var request = await _context.Requests.FirstOrDefaultAsync(req => req.Requestid == RequestId);
-                request.Physicianid = ProviderId;
-                request.Status = 2;
-                _context.Requests.Update(request);
-                _context.SaveChanges();
 
-                Requeststatuslog rsl = new Requeststatuslog();
-                rsl.Requestid = RequestId;
-                rsl.Physicianid = ProviderId;
-                rsl.Notes = notes;
+            var request = await _context.Requests.FirstOrDefaultAsync(req => req.Requestid == RequestId);
+            request.Physicianid = ProviderId;
+            request.Status = 2;
+            _context.Requests.Update(request);
+            _context.SaveChanges();
 
-                rsl.Createddate = DateTime.Now;
-                rsl.Transtophysicianid = ProviderId;
-                rsl.Status = 2;
-                _context.Requeststatuslogs.Add(rsl);
-                _context.SaveChanges();
+            Requeststatuslog rsl = new Requeststatuslog();
+            rsl.Requestid = RequestId;
+            rsl.Physicianid = ProviderId;
+            rsl.Notes = notes;
 
-                return true;
+            rsl.Createddate = DateTime.Now;
+            rsl.Transtophysicianid = ProviderId;
+            rsl.Status = 2;
+            _context.Requeststatuslogs.Add(rsl);
+            _context.SaveChanges();
 
-          
+            return true;
+
+
 
 
 
@@ -258,7 +258,7 @@ namespace HelloDocAdmin.Repositories
             alldata.ConfirmationNumber = req.Confirmationnumber;
             alldata.Lastname = req.Lastname;
 
-            var reqcl=_context.Requestclients.FirstOrDefault(e=>e.Requestid == RequestID);
+            var reqcl = _context.Requestclients.FirstOrDefault(e => e.Requestid == RequestID);
 
             alldata.RC_Email = reqcl.Email;
             alldata.RC_Dob = new DateTime((int)reqcl.Intyear, DateTime.ParseExact(reqcl.Strmonth, "MMMM", new CultureInfo("en-US")).Month, (int)reqcl.Intdate);
@@ -272,7 +272,7 @@ namespace HelloDocAdmin.Repositories
             try
 
             {
-              
+
                 Requestclient client = _context.Requestclients.FirstOrDefault(E => E.Requestid == model.RequestID);
 
                 if (client != null)
@@ -305,7 +305,7 @@ namespace HelloDocAdmin.Repositories
 
                     requestData.Status = 9;
                     requestData.Modifieddate = DateTime.Now;
-      
+
                     _context.Requests.Update(requestData);
                     _context.SaveChanges();
 
@@ -316,7 +316,7 @@ namespace HelloDocAdmin.Repositories
 
                         Status = 9,
                         Createddate = DateTime.Now
-             
+
                     };
                     _context.Requeststatuslogs.Add(rsl);
                     _context.SaveChanges();

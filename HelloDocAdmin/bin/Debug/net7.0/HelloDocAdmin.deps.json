@@ -1686,6 +1686,47 @@
           "System.Text.Encodings.Web": "7.0.0"
         }
       },
+      "Microsoft.IdentityModel.Abstractions/7.4.0": {
+        "runtime": {
+          "lib/net6.0/Microsoft.IdentityModel.Abstractions.dll": {
+            "assemblyVersion": "7.4.0.0",
+            "fileVersion": "7.4.0.50226"
+          }
+        }
+      },
+      "Microsoft.IdentityModel.JsonWebTokens/7.4.0": {
+        "dependencies": {
+          "Microsoft.IdentityModel.Tokens": "7.4.0"
+        },
+        "runtime": {
+          "lib/net6.0/Microsoft.IdentityModel.JsonWebTokens.dll": {
+            "assemblyVersion": "7.4.0.0",
+            "fileVersion": "7.4.0.50226"
+          }
+        }
+      },
+      "Microsoft.IdentityModel.Logging/7.4.0": {
+        "dependencies": {
+          "Microsoft.IdentityModel.Abstractions": "7.4.0"
+        },
+        "runtime": {
+          "lib/net6.0/Microsoft.IdentityModel.Logging.dll": {
+            "assemblyVersion": "7.4.0.0",
+            "fileVersion": "7.4.0.50226"
+          }
+        }
+      },
+      "Microsoft.IdentityModel.Tokens/7.4.0": {
+        "dependencies": {
+          "Microsoft.IdentityModel.Logging": "7.4.0"
+        },
+        "runtime": {
+          "lib/net6.0/Microsoft.IdentityModel.Tokens.dll": {
+            "assemblyVersion": "7.4.0.0",
+            "fileVersion": "7.4.0.50226"
+          }
+        }
+      },
       "Microsoft.Net.Http.Headers/2.2.0": {
         "dependencies": {
           "Microsoft.Extensions.Primitives": "8.0.0",
@@ -2319,6 +2360,18 @@
           "System.Runtime.InteropServices": "4.3.0"
         }
       },
+      "System.IdentityModel.Tokens.Jwt/7.4.0": {
+        "dependencies": {
+          "Microsoft.IdentityModel.JsonWebTokens": "7.4.0",
+          "Microsoft.IdentityModel.Tokens": "7.4.0"
+        },
+        "runtime": {
+          "lib/net6.0/System.IdentityModel.Tokens.Jwt.dll": {
+            "assemblyVersion": "7.4.0.0",
+            "fileVersion": "7.4.0.50226"
+          }
+        }
+      },
       "System.IO/4.3.0": {
         "dependencies": {
           "Microsoft.NETCore.Platforms": "1.1.1",
@@ -2880,6 +2933,7 @@
       },
       "HelloDocAdmin.Entity/1.0.0": {
         "dependencies": {
+          "Microsoft.AspNetCore.Http": "2.2.0",
           "Microsoft.AspNetCore.Http.Features": "2.2.0",
           "Microsoft.EntityFrameworkCore": "7.0.0",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "7.0.0",
@@ -2903,7 +2957,8 @@
       "HelloDocAdmin.Repositories/1.0.0": {
         "dependencies": {
           "HelloDocAdmin.Entity": "1.0.0",
-          "Microsoft.Extensions.Identity.Core": "8.0.2"
+          "Microsoft.Extensions.Identity.Core": "8.0.2",
+          "System.IdentityModel.Tokens.Jwt": "7.4.0"
         },
         "runtime": {
           "HelloDocAdmin.Repositories.dll": {}
@@ -3918,6 +3973,34 @@
       "path": "microsoft.extensions.webencoders/2.2.0",
       "hashPath": "microsoft.extensions.webencoders.2.2.0.nupkg.sha512"
     },
+    "Microsoft.IdentityModel.Abstractions/7.4.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Y5wvSoKT6G9gi94FmTwyMCRDjMBVwCnDTXT9yyy95jS3lq3IRXJ/Fh+tqmsluA181RzAtXgK5SsvGGkcWm2n0g==",
+      "path": "microsoft.identitymodel.abstractions/7.4.0",
+      "hashPath": "microsoft.identitymodel.abstractions.7.4.0.nupkg.sha512"
+    },
+    "Microsoft.IdentityModel.JsonWebTokens/7.4.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-8Gxy/KSjzEXg4hEyMvR0EsuLpaYLERoX1grIxechhoS8ugUyVvX9zxhMUg0EC/Oi3slhQ+rWrvN6M/M26RnRLQ==",
+      "path": "microsoft.identitymodel.jsonwebtokens/7.4.0",
+      "hashPath": "microsoft.identitymodel.jsonwebtokens.7.4.0.nupkg.sha512"
+    },
+    "Microsoft.IdentityModel.Logging/7.4.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-TuCWnlQprih0PieviKAdvHtjuVLUjEBymEUlBqAe8BUBWlMjB7eHaZ1pi5mkPR5bbrVWLYu8/qiMVc0+neE6dQ==",
+      "path": "microsoft.identitymodel.logging/7.4.0",
+      "hashPath": "microsoft.identitymodel.logging.7.4.0.nupkg.sha512"
+    },
+    "Microsoft.IdentityModel.Tokens/7.4.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-2GXnFtFNv51QaIFw7pC3+OSRG+wDxj53MY6o6DRFFp/wAsTUTeasN+7Gkc6zSuI4cbrU9KXSVzs2cnW6EQ5szg==",
+      "path": "microsoft.identitymodel.tokens/7.4.0",
+      "hashPath": "microsoft.identitymodel.tokens.7.4.0.nupkg.sha512"
+    },
     "Microsoft.Net.Http.Headers/2.2.0": {
       "type": "package",
       "serviceable": true,
@@ -4435,6 +4518,13 @@
       "sha512": "sha512-FhKmdR6MPG+pxow6wGtNAWdZh7noIOpdD5TwQ3CprzgIE1bBBoim0vbR1+AWsWjQmU7zXHgQo4TWSP6lCeiWcQ==",
       "path": "system.globalization.extensions/4.3.0",
       "hashPath": "system.globalization.extensions.4.3.0.nupkg.sha512"
+    },
+    "System.IdentityModel.Tokens.Jwt/7.4.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-9XayJBAY+Bs7+ISFJ6BXJuCf6q9DyP8rsn/D1uNaKHDLyADjeKLRDa5YbFRfSBo/+8cuMzlD2VIUR4VuAPoK7w==",
+      "path": "system.identitymodel.tokens.jwt/7.4.0",
+      "hashPath": "system.identitymodel.tokens.jwt.7.4.0.nupkg.sha512"
     },
     "System.IO/4.3.0": {
       "type": "package",

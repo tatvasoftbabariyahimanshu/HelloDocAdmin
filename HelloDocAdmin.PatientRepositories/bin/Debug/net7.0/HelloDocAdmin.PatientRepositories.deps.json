@@ -1872,6 +1872,7 @@
       },
       "HelloDocAdmin.Entity/1.0.0": {
         "dependencies": {
+          "Microsoft.AspNetCore.Http": "2.2.0",
           "Microsoft.AspNetCore.Http.Features": "2.2.0",
           "Microsoft.EntityFrameworkCore": "7.0.0",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "7.0.0",

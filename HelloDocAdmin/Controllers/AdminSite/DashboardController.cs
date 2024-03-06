@@ -7,6 +7,7 @@ using System.Collections.Generic;
 
 namespace HelloDocAdmin.Controllers.AdminSite
 {
+    [CustomAuthorization("Admin")]
     public class DashboardController : Controller
     {
         private IDashboardRepository _dashboardrepo;

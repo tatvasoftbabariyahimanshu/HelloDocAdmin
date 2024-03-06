@@ -1,4 +1,4 @@
-﻿@using HelloDocAdmin.Controllers
+﻿@using HelloDocAdmin.Controllers.AdminSite
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 <!DOCTYPE html>
 <html lang="en">
@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
-    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" />
     <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyARrk6kY-nnnSpReeWotnQxCAo_MoI4qbU"></script>
@@ -40,15 +40,9 @@
                 <i class="fa-solid fa-bars"></i>
             </button>
             <img src="~/images/Fig56. Patient site 1.jpg" class="img-fluid rounded-start  navbar-logo" alt="...">
-            @*<div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class=" navbar-nav me-auto mb-2 mb-lg-0 ">
-                    <li class="nav-item text-end">
-
-                    </li>
-                </ul>
-            </div>*@
+          
             <div class="text-end">
-                <span class="username"> <b>Welcome!</b> @*  @CV.UserName()*@ himanshu babariya</span>
+                <span class="username"> <b>Welcome!</b> @CV.LoggedUserName() </span>
                 <a class="btn btn-sm btn-outline-info mx-2" asp-action="Logout" asp-controller="Login">
                     <span class="addnewlg">
                         Logout <i class="fa-solid fa-right-from-bracket"></i>

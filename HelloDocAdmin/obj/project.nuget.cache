@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "kkAWVzrUbRcVHajJxVVFA8phucXUBsZD78JHY3euLkfNry4WCwUcc+oihIdVzwfufwozGHyA6nziZEPCWH/QOA==",
+  "dgSpecHash": "e4iA9S+Gbs7+jBAa/NxnFYa9A7qFFBWmtqCqq6173v9mqpN3CT2/qolguHPFFn90e/IoEFFiSIjJLQR+Z/vgPQ==",
   "success": true,
   "projectFilePath": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\HelloDocAdmin.csproj",
   "expectedPackageFiles": [
@@ -147,6 +147,10 @@
     "C:\\Users\\pci105\\.nuget\\packages\\microsoft.extensions.options\\8.0.2\\microsoft.extensions.options.8.0.2.nupkg.sha512",
     "C:\\Users\\pci105\\.nuget\\packages\\microsoft.extensions.primitives\\8.0.0\\microsoft.extensions.primitives.8.0.0.nupkg.sha512",
     "C:\\Users\\pci105\\.nuget\\packages\\microsoft.extensions.webencoders\\2.2.0\\microsoft.extensions.webencoders.2.2.0.nupkg.sha512",
+    "C:\\Users\\pci105\\.nuget\\packages\\microsoft.identitymodel.abstractions\\7.4.0\\microsoft.identitymodel.abstractions.7.4.0.nupkg.sha512",
+    "C:\\Users\\pci105\\.nuget\\packages\\microsoft.identitymodel.jsonwebtokens\\7.4.0\\microsoft.identitymodel.jsonwebtokens.7.4.0.nupkg.sha512",
+    "C:\\Users\\pci105\\.nuget\\packages\\microsoft.identitymodel.logging\\7.4.0\\microsoft.identitymodel.logging.7.4.0.nupkg.sha512",
+    "C:\\Users\\pci105\\.nuget\\packages\\microsoft.identitymodel.tokens\\7.4.0\\microsoft.identitymodel.tokens.7.4.0.nupkg.sha512",
     "C:\\Users\\pci105\\.nuget\\packages\\microsoft.net.http.headers\\2.2.0\\microsoft.net.http.headers.2.2.0.nupkg.sha512",
     "C:\\Users\\pci105\\.nuget\\packages\\microsoft.net.stringtools\\17.3.2\\microsoft.net.stringtools.17.3.2.nupkg.sha512",
     "C:\\Users\\pci105\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.1\\microsoft.netcore.platforms.1.1.1.nupkg.sha512",
@@ -221,6 +225,7 @@
     "C:\\Users\\pci105\\.nuget\\packages\\system.globalization\\4.3.0\\system.globalization.4.3.0.nupkg.sha512",
     "C:\\Users\\pci105\\.nuget\\packages\\system.globalization.calendars\\4.3.0\\system.globalization.calendars.4.3.0.nupkg.sha512",
     "C:\\Users\\pci105\\.nuget\\packages\\system.globalization.extensions\\4.3.0\\system.globalization.extensions.4.3.0.nupkg.sha512",
+    "C:\\Users\\pci105\\.nuget\\packages\\system.identitymodel.tokens.jwt\\7.4.0\\system.identitymodel.tokens.jwt.7.4.0.nupkg.sha512",
     "C:\\Users\\pci105\\.nuget\\packages\\system.io\\4.3.0\\system.io.4.3.0.nupkg.sha512",
     "C:\\Users\\pci105\\.nuget\\packages\\system.io.compression\\4.3.0\\system.io.compression.4.3.0.nupkg.sha512",
     "C:\\Users\\pci105\\.nuget\\packages\\system.io.compression.zipfile\\4.3.0\\system.io.compression.zipfile.4.3.0.nupkg.sha512",

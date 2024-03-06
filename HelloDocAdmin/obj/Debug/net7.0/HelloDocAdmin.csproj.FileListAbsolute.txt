@@ -269,3 +269,8 @@ D:\Projects\Hello Doc Admin\HelloDocAdmin\bin\Debug\net7.0\XLParser.dll
 D:\Projects\Hello Doc Admin\HelloDocAdmin\bin\Debug\net7.0\AspNetCoreHero.ToastNotification.Views.dll
 D:\Projects\Hello Doc Admin\HelloDocAdmin\bin\Debug\net7.0\AspNetCoreHero.ToastNotification.dll
 D:\Projects\Hello Doc Admin\HelloDocAdmin\obj\Debug\net7.0\HelloDocAdmin.MvcApplicationPartsAssemblyInfo.cs
+D:\Projects\Hello Doc Admin\HelloDocAdmin\bin\Debug\net7.0\Microsoft.IdentityModel.Abstractions.dll
+D:\Projects\Hello Doc Admin\HelloDocAdmin\bin\Debug\net7.0\Microsoft.IdentityModel.JsonWebTokens.dll
+D:\Projects\Hello Doc Admin\HelloDocAdmin\bin\Debug\net7.0\Microsoft.IdentityModel.Logging.dll
+D:\Projects\Hello Doc Admin\HelloDocAdmin\bin\Debug\net7.0\Microsoft.IdentityModel.Tokens.dll
+D:\Projects\Hello Doc Admin\HelloDocAdmin\bin\Debug\net7.0\System.IdentityModel.Tokens.Jwt.dll

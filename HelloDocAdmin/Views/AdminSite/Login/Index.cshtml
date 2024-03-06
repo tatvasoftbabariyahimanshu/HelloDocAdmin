@@ -1,0 +1,55 @@
+﻿@{
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+@model HelloDocAdmin.Entity.ViewModels.Authentication.LoginViewModel
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <div class="bg-image-dash"></div>
+    <img src="~/images/Fig56. Patient site 1.jpg" class="img-fluid rounded-start mt-3 py-4 logo" alt="...">
+<form class="bg-transparent" asp-action="CheckAccessLogin" asp-controller="Login" method="post">
+
+        <h4 class="px-4 login-hero-text">Login To Your Account</h4>
+        <div class="mb-3 mt-3">
+        <div class="inputs-control w-100  ">
+
+            <input placeholder=" " asp-for="Email" class="input-outline w-100 inp" type="text">
+            <label class="inputs-lable">Email</label>
+            <i class="far fa-user icon-input"></i>
+
+
+
+         
+        </div>
+        <span asp-validation-for="Email" class="err-msg"></span>
+        </div>
+      
+    <div class="mb-3">
+        <div class="inputs-control w-100 mt-3 mb-3">
+            <input placeholder=" " asp-for="Password" class="input-outline  w-100 inp" type="password" id="pas1">
+            <label class="inputs-lable">Password</label>
+            <a onclick="Toggle()"><i class="far fa-eye icon-input bg-transparent" id="togglePassword"></i></a>
+        </div>
+        <span asp-validation-for="Password" class="err-msg"></span>
+    </div>
+        <div class="d-grid mb-3">
+        <button class="btn button-login btn-primary border-0" type="submit" >Log in</button>
+
+        </div>
+        <a href="#" class="px-2 forgot-text">forgot password?</a>
+
+    </form>
+<script>
+    function Toggle() {
+        var pas = document.getElementById('pas1');
+        var toggle = document.getElementById('togglePassword');
+
+        if (pas.type === "password") {
+            pas.type = "text";
+            toggle.classList.remove('fa-eye');
+            toggle.classList.add('fa-eye-slash');
+        } else {
+            pas.type = "password";
+            toggle.classList.remove('fa-eye-slash');
+            toggle.classList.add('fa-eye');
+        }
+    }
+</script>

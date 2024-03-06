@@ -120,6 +120,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5TaXRlXERhc2hib2FyZFxfVXBwZXJUYWIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Projects/Hello Doc Admin/HelloDocAdmin/Views/AdminSite/Login/AccessDenide.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5TaXRlXExvZ2luXEFjY2Vzc0RlbmlkZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/Hello Doc Admin/HelloDocAdmin/Views/AdminSite/Login/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5TaXRlXExvZ2luXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Projects/Hello Doc Admin/HelloDocAdmin/Views/AdminSite/MyProfile/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5TaXRlXE15UHJvZmlsZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -166,6 +174,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/Projects/Hello Doc Admin/HelloDocAdmin/Views/Shared/_DashboardLayout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9EYXNoYm9hcmRMYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/Hello Doc Admin/HelloDocAdmin/Views/Shared/_LoginLayout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Mb2dpbkxheW91dC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Projects/Hello Doc Admin/HelloDocAdmin/Views/Shared/_SubNavAdminDashboard.cshtml]

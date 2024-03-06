@@ -9,7 +9,8 @@ using HelloDocAdmin.Repositories.Interface;
 
 
 var builder = WebApplication.CreateBuilder(args);
-
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddSession();
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>();
@@ -18,6 +19,8 @@ builder.Services.AddScoped<IActionRepository, ActionRepository>();
 builder.Services.AddScoped<ICombobox, Combobox>();
 builder.Services.AddScoped<IPatientRepository, PatientRepository>();
 builder.Services.AddScoped<IProviderLocation, ProviderLocation>();
+builder.Services.AddScoped<ILoginRepository, LoginRepository>();
+builder.Services.AddScoped<IJWTService, JWTService>();
 builder.Services.AddScoped<IAdminProfile, AdminProfile>();
 builder.Services.AddScoped<IAspnetuserRepository, AspnetuserPropsitory>();
 builder.Services.AddNotyf(config => { config.DurationInSeconds = 10; config.IsDismissable = true; config.Position = NotyfPosition.TopRight; });
@@ -38,7 +41,7 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
+app.UseSession();
 app.UseRouting();
 app.UseNotyf();
 app.UseAuthorization();

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HelloDocAdmin.Controllers.AdminSite
 {
+    [CustomAuthorization("Admin")]
     public class ProviderLocationController : Controller
     {
         private readonly ApplicationDbContext _context;
