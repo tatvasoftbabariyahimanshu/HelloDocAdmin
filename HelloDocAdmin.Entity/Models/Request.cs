@@ -62,6 +62,8 @@ public partial class Request
 
     public int? Createduserid { get; set; }
 
+    public virtual ICollection<Encounterform> Encounterforms { get; } = new List<Encounterform>();
+
     public virtual Physician? Physician { get; set; }
 
     public virtual ICollection<Requestbusiness> Requestbusinesses { get; } = new List<Requestbusiness>();

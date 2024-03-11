@@ -1,0 +1,221 @@
+﻿@{
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+@model List<HelloDocAdmin.Entity.ViewModels.PhysiciansViewModel>
+
+<div class="container">
+    <div class="card bg-transparent border-0">
+        <div class="card-header d-flex justify-content-between  border-0  bg-transparent p-1  mt-3 mb-2">
+            <div class="text-start d-flex align-items-center">
+                <h5 class="mt-2"><b> Provider Information</b></h5>
+
+            </div>
+            <div class="text-end">
+                <a asp-controller="Dashboard" asp-action="Index"
+                   class="btn btn-outline-info btn-back">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                         fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                              d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5" />
+                    </svg>Back
+                </a>
+            </div>
+        </div>
+
+        <div class="card-body rounded shadow">
+            <div class="d-flex justify-content-between">
+                <div class="dropdown text-start ">
+
+                    <select class="input-outline input-outline-select " name="region" data-allow-clear="true" tabindex="-1" onchange="myFunction()" id="Region" asp-items="@(new SelectList(ViewBag.RegionComboBox,"RegionId","RegionName"))" data-control="select2" data-placeholder="Select Level">
+                        <option >All Region</option>
+                    </select>
+                </div>
+                <div class="text-end">
+                    <button class="btn btn-info text-white"> 
+                    <span class="addnewlg">
+                        Create Provider Account
+                    </span>
+                    <span class="addnewsm">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2" />
+                        </svg>
+                    </span>
+                    </button>
+                </div>
+            </div>
+            <div class="table-responsive  dashboard-tbl mt-3 " >
+                <table id="myTable" class="table table-responsive">
+                    <thead class=" text-start tablehead">
+                        <tr>
+                            <th scope="col">Stop Notification</th>
+                            <th scope="col">Provider Name</th>
+                            <th scope="col">Role</th>
+                            <th scope="col">On Call Status</th>
+                            <th scope="col">Status</th>
+                          
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="">
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="table-text px-3 text-center justify-content-center" align="center" scope="row" data-label="Created Date">
+
+                                    @{
+                                        var check = item.notification[0];
+                                        <input class="form-check-input form-check-inputs" id="@item.notificationid" type="checkbox" value="" @(check ? "checked" : "")>
+                                    }
+
+                                    <input class="RequestwisefilesId" type="hidden" value="@item.Physicianid">
+                                </td>
+                                <td scope="row" class="table-text" >@item.Firstname  @item.Lastname</td>
+                                <td scope="row" class="table-text" >@item.role</td>
+                                <td scope="row" class="table-text">@item.Isnondisclosuredoc</td>
+                                <td scope="row" class="table-text" >@item.Status</td>
+                                <td class=" d-flex" data-label="Document">
+
+                                    <button data-bs-toggle="modal" data-bs-id="@item.Physicianid" data-bs-email="@item.Email" data-bs-target="#myModal" class="btn btn-outline-info btn-sm document-button mx-1">
+                                        Contact
+
+                                    </button>
+                                    <a asp-action="PhysicianProfile" asp-controller="Physician" asp-route-id="@item.Physicianid" class="btn btn-outline-info btn-sm document-button mx-1">
+                                        Edit
+
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                         
+
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header  bg-info text-white">
+                <h1 class="modal-title fs-5" id="exampleModalLabel"> Contact Your Provide </h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form asp-action="SendMessage" asp-controller="Physician">
+                <div class="modal-body">
+                    <h5 class="modal-title " id="exampleModalLabel"> Select communicatio Way  <span class="text-info" id="patientname"> </span></h5>
+                    <input type="hidden" name="email" id="email" />
+                    <input type="hidden" name="id" id="id" />
+                    <div class="mb-4 mx-3">
+                        <div class="form-check p-2 ">
+                            <input class="form-check-input" value="1" type="radio" name="way" id="flexRadioDefault1">
+                            <label class="form-check-label" for="flexRadioDefault1">
+                                Sms
+                            </label>
+                        </div>
+                        <div class="form-check p-2">
+                            <input class="form-check-input" value="2" type="radio" name="way" id="flexRadioDefault2" checked>
+                            <label class="form-check-label" for="flexRadioDefault2">
+                                Email
+                            </label>
+                        </div>
+                        <div class="form-check p-2 ">
+                            <input class="form-check-input" value="3" type="radio" name="way" id="flexRadioDefault3">
+                            <label class="form-check-label" for="flexRadioDefault2">
+                                Both
+                            </label>
+                        </div>
+                    </div>
+                    <div class="mb-4 form-floating ">
+                
+                        <div class="inputs-control w-100 mt-2">
+                            <textarea id="changenote" placeholder=" " name="msg" rows="5" class="input-outline w-100  " type="text"></textarea>
+
+                            <label class="inputs-lable inputs-lable-textarea " id="notedata">Message</label>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" class=" btn btn-info text-white" value="Send" style="display:block !important">
+                    <button type="button" class="btn btn-outline-info" data-bs-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    const exampleModal = document.getElementById('myModal')
+    if (exampleModal) {
+        exampleModal.addEventListener('show.bs.modal', event => {
+            // Button that triggered the modal
+            const button = event.relatedTarget
+            // Extract info from data-bs-* attributes
+            const id = button.getAttribute('data-bs-id')
+            const email = button.getAttribute('data-bs-email')
+            // If necessary, you could initiate an Ajax request here
+            // and then do the updating in a callback.
+
+            // Update the modal's content.
+            const modalTitle = exampleModal.querySelector('#id')
+            const modalBodyInput = exampleModal.querySelector('#email')
+
+            modalBodyInput.value = email
+            modalTitle.value = id
+        })
+    }
+    function myFunction() {
+        var email = $("#Region").val();
+        if (email == '-1') {
+            email = null;
+            location.reload();
+        }
+        console.log(email);
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("Index","Physician")?region=' + email,
+            cache: false,
+            success: function (response) {
+
+                console.log(response);
+                $('table tbody').empty();
+                // Assuming response is an array of objects, iterate through each object
+                response.forEach(function (item) {
+                    // Create a new row for each object
+                    var newRow = $('<tr>');
+
+                    // Add the checkbox cell
+                    var checkboxCell = $('<td class="table-text px-3  justify-content-center" scope="row"  align="center" data-label="Created Date">');
+                    var checkboxInput = $('<input class="form-check-input form-check-inputs" type="checkbox" value="" id="flexCheckDefault">');
+                    if (item.notification[0]) {
+                        checkboxInput.prop('checked', true);
+                    }
+                    checkboxCell.append(checkboxInput);
+                    checkboxCell.append('<input class="RequestwisefilesId" type="hidden" value="' + item.physicianid + '">');
+                    newRow.append(checkboxCell);
+
+                    // Add other cells
+                    newRow.append('<td scope="row" class="table-text">' + item.firstname + ' ' + item.lastname + '</td>');
+                    newRow.append('<td scope="row" class="table-text">' + item.role + '</td>');
+                    newRow.append('<td scope="row" class="table-text">' + item.isnondisclosuredoc + '</td>');
+                    newRow.append('<td scope="row" class="table-text">' + item.status + '</td>');
+
+                    // Add action buttons cell
+                    var actionButtonsCell = $('<td class="d-flex" data-label="Document">');
+                    actionButtonsCell.append('<a asp-action="Index" asp-controller="Documentsinfo" asp-route-id="' + item.physicianid + '" class="btn btn-outline-info btn-sm document-button mx-1">Contact</a>');
+                    actionButtonsCell.append('<a asp-action="Index" asp-controller="Documentsinfo" asp-route-id="' + item.physicianid + '" class="btn btn-outline-info btn-sm document-button mx-1">Edit</a>');
+                    newRow.append(actionButtonsCell);
+
+                    // Append the new row to the table
+                    $('table tbody').append(newRow);
+                });
+
+            },
+            error: function () {
+                alert("Error while checking email.");
+            }
+        });
+    }
+</script>

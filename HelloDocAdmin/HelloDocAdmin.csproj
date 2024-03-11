@@ -23,12 +23,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\HelloDocAdmin.Entity\HelloDocAdmin.Entity.csproj" />
-    <ProjectReference Include="..\HelloDocAdmin.PatientRepositories\HelloDocAdmin.PatientRepositories.csproj" />
     <ProjectReference Include="..\HelloDocAdmin.repositories\HelloDocAdmin.Repositories.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\PatientSite\" />
     <Folder Include="Data\" />
     <Folder Include="Models\" />
     <Folder Include="wwwroot\images\Hallo Doc - Mobile - Screenshots\Admin-Provider Site\Search Records\" />

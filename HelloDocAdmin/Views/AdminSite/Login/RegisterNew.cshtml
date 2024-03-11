@@ -1,0 +1,94 @@
+﻿@{
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+<style>
+    form {
+        height: 300px;
+    }
+</style>
+@model HelloDocAdmin.Entity.ViewModels.Authentication.NewRegistration
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<div class="bg-image-dash"></div>
+<img src="~/images/Fig56. Patient site 1.png" class="img-fluid rounded-start mt-3 py-4 logo" alt="...">
+<form class="bg-transparent d-flex flex-column align-content-between col-md-6 col-11 " asp-action="SaveUser" asp-controller="Login" method="post">
+
+    <h4 class="px-4 login-hero-text">Create Account!!!</h4>
+    <div class="mb-2 mt-3">
+        <div class="inputs-control w-100  ">
+
+            <input placeholder=" " asp-for="Email" class="input-outline w-100 inp" type="text" >
+            <label class="inputs-lable">Email</label>
+            <i class="far fa-user icon-input"></i>
+
+
+
+
+        </div>
+        <span asp-validation-for="Email" class="err-msg"></span>
+    </div>
+
+    <div class="inputs-control w-100 mt-3 mb-2">
+        <input placeholder=" " asp-for="Password" class="input-outline w-100 inp" id="pas2" type="password">
+        <label class="inputs-lable">Password</label>
+        <a onclick="Toggle0()"><i class="far fa-eye  icon-input bg-transparent" id="togglePassword1"></i></a>
+    </div>
+    <div class="mb-3">
+        <div class="inputs-control w-100 mt-2 ">
+            <input placeholder=" " asp-for="ConfirmPassword" class="input-outline w-100 inp" id="pas3" type="password">
+            <label class="inputs-lable">Confirm Password</label>
+            <a onclick="Toggle2()"><i class="far fa-eye  icon-input bg-transparent" id="togglePassword2"></i></a>
+
+        </div>
+        <span id="errorContainer" class="text-danger"></span>
+    </div>
+    <div class="d-grid mb-3">
+        <button class="btn button-login btn-primary border-0" type="submit">Sign Up</button>
+
+    </div>
+  
+
+</form>
+<script>
+    function Toggle0() {
+        var pas = document.getElementById('pas2');
+        var toggle = document.getElementById('togglePassword1');
+
+        if (pas.type === "password") {
+            pas.type = "text";
+            toggle.classList.remove('fa-eye');
+            toggle.classList.add('fa-eye-slash');
+        } else {
+            pas.type = "password";
+            toggle.classList.remove('fa-eye-slash');
+            toggle.classList.add('fa-eye');
+        }
+    }
+    function Toggle2() {
+        var pas = document.getElementById('pas3');
+        var toggle = document.getElementById('togglePassword2');
+
+        if (pas.type === "password") {
+            pas.type = "text";
+            toggle.classList.remove('fa-eye');
+            toggle.classList.add('fa-eye-slash');
+        } else {
+            pas.type = "password";
+            toggle.classList.remove('fa-eye-slash');
+            toggle.classList.add('fa-eye');
+        }
+    }
+</script>
+<script>
+    $('#pas3').on('input', function () {
+        var password = $('#pas2').val();
+        var confirmPassword = $(this).val(); // Get value of confirm password field
+
+        if (password !== confirmPassword) {
+            $('#errorContainer').text('Password and confirm password do not match');
+            $('#changePasswordBtn').prop('disabled', true); // Disable submit button
+        } else {
+            $('#errorContainer').text(''); // Clear error message if passwords match
+            $('#changePasswordBtn').prop('disabled', false); // Enable submit button
+        }
+    });
+</script>

@@ -30,11 +30,11 @@ public partial class Requestclient
 
     public string? Email { get; set; }
 
-    public string? Strmonth { get; set; }
+    public string Strmonth { get; set; }
 
-    public int? Intyear { get; set; }
+    public int Intyear { get; set; }
 
-    public int? Intdate { get; set; }
+    public int Intdate { get; set; }
 
     public BitArray? Ismobile { get; set; }
 

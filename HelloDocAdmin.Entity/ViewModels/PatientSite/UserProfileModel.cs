@@ -1,7 +1,6 @@
-﻿using HelloDocAdmin.Entity.Models;
-using System.Collections;
+﻿using System.Collections;
 
-namespace HELLO_DOC.Models
+namespace HelloDocAdmin.Entity.Models
 {
     public class UserProfileModel
     {

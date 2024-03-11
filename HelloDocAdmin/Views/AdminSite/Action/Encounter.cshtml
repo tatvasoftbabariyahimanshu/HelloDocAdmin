@@ -1,0 +1,483 @@
+﻿@{
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+@using HelloDocAdmin.Entity.ViewModels.AdminSite
+@model EncounterViewModel
+<style>
+    .input-outline:not(:placeholder-shown) + .inputs-lable-textarea, .input-outline:focus + .inputs-lable-textarea {
+        margin-top: -.4rem;
+        margin-left: .5rem !important;
+        font-size: .7rem;
+        border-radius: 5px;
+        transition: all 0.15s ease-out;
+        color: var(--primary);
+    }
+
+</style>
+<div class="container">
+    <div class="card bg-transparent border-0">
+        <div class="card-header d-flex justify-content-between  border-0  bg-transparent p-1  mt-3 mb-2">
+            <div class="text-start d-flex align-items-center">
+                <h5 class="mt-2"><b> Encounter Form</b></h5>
+
+            </div>
+            <div class="text-end">
+                <a asp-controller="Dashboard" asp-action="Index"
+                   class="btn btn-outline-info btn-back">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                         fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                              d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5" />
+                    </svg></i>Back
+                </a>
+            </div>
+        </div>
+
+        <div class="card-body rounded shadow">
+
+
+
+
+
+            <form method="post" asp-action="EncounterEdit" asp-controller="Action" enctype="multipart/form-data">
+                <input type="hidden" asp-for="Requesid" />
+                <input type="hidden" asp-for="EncounterID" />
+                <div class="text-center text-info ">
+                    <h2 class="fw-bolder my-2">Medical Report - Confidential</h2>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-6 mt-2">
+                        <div class=" mb-3">
+                            <div class="inputs-control ">
+                                <input placeholder=" " asp-for="FirstName" class="input-outline w-100 inp edit-frm" type="text" >
+                                <label class="inputs-lable">First name</label>
+                            </div>
+                            <span asp-validation-for="FirstName" class="err-msg"></span>
+                        </div>
+                    </div>
+                 
+                    <div class="col-md-6">
+                        <div class="mb-3 mt-2">
+                            <div class="inputs-control  ">
+                                <input placeholder=" " asp-for="LastName" class="input-outline w-100 inp edit-frm" type="text" >
+                                <label class="inputs-lable">Last name</label>
+                            </div>
+                            <span asp-validation-for="LastName" class="err-msg"></span>
+
+
+                        </div>
+
+                    </div>
+                   
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-12">
+                        <div class=" mb-2">
+                            <div class="inputs-control ">
+                                <input placeholder=" " asp-for="Location" class="input-outline w-100 inp edit-frm" type="text" >
+                                <label class="inputs-lable">Location</label>
+                            </div>
+                            <span asp-validation-for="Location" class="err-msg"></span>
+                        </div>
+                    </div>
+
+                   
+
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-6 mt-2">
+                        <div class=" mb-3">
+                            <div class="inputs-control ">
+
+                                <input placeholder=" " asp-for="DOB" class="input-outline w-100 inp form-control-sm edit-frm " type="date" >
+                                <label class="inputs-lable-dob">Date of Birth</label>
+
+                            </div>
+                            <span asp-validation-for="DOB" class="err-msg"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="mb-3 mt-2">
+                            <div class="inputs-control ">
+
+                                <input placeholder=" " asp-for="Date" class="input-outline w-100 inp form-control-sm edit-frm" type="date" >
+                                <label class="inputs-lable-dob">Date</label>
+
+                            </div>
+                            <span asp-validation-for="Date" class="err-msg"></span>
+
+
+                        </div>
+
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3 mt-2">
+                            <div class="inputs-control w-100 ">
+                                <input id="phone" asp-for="PhoneNumber" placeholder="Mobile" type="text"  class=" telephone input-outline w-100 inp align-items-center edit-frm "  />
+                                <span asp-validation-for="PhoneNumber" class="err-msg"></span>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3 mt-2">
+                            <div class="inputs-control ">
+                                <input placeholder=" " asp-for="Email" class="input-outline w-100 inp edit-frm" type="text">
+                                <label class="inputs-lable">Email</label>
+                            </div>
+                            <span asp-validation-for="Email" class="err-msg"></span>
+
+
+                        </div>
+
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3 mt-2">
+                            <div class="inputs-control w-100 ">
+                                <textarea placeholder=" " rows="2" asp-for="HistoryOfP" class="input-outline w-100 " type="text" ></textarea>
+
+                                <label class="inputs-lable-textarea">History Of Patient illness or injury</label>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3 mt-2">
+                            <div class="inputs-control w-100">
+                                <textarea placeholder=" " rows="2" asp-for="HistoryOfMedical" class="input-outline w-100 " type="text"></textarea>
+
+                                <label class="inputs-lable-textarea">Medical Hostory</label>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3 mt-2">
+                            <div class="inputs-control w-100 ">
+                                <textarea placeholder=" " rows="2" asp-for="Medications" class="input-outline w-100 " type="text"></textarea>
+
+                                <label class="inputs-lable-textarea">Medication</label>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3 mt-2">
+                            <div class="inputs-control w-100 ">
+                                <textarea placeholder=" " rows="2" asp-for="Allergies" class="input-outline w-100 " type="text"></textarea>
+
+                                <label class="inputs-lable-textarea">Allergies</label>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="row mt-2">
+                    <div class="col-md-4 mt-2">
+                        <div class=" mb-3">
+                            <div class="inputs-control ">
+                                <input placeholder=" " asp-for="Temp" class="input-outline w-100 inp edit-frm" type="text" >
+                                <label class="inputs-lable">Temp</label>
+                            </div>
+                            <span asp-validation-for="Temp" class="err-msg"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="mb-3 mt-2">
+                            <div class="inputs-control  ">
+                                <input placeholder=" " asp-for="Hr" class="input-outline w-100 inp edit-frm" type="text" >
+                                <label class="inputs-lable">Hr</label>
+                            </div>
+                            <span asp-validation-for="Hr" class="err-msg"></span>
+
+
+                        </div>
+
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-3 mt-2">
+                            <div class="inputs-control  ">
+                                <input placeholder=" " asp-for="Rr" class="input-outline w-100 inp edit-frm" type="text" >
+                                <label class="inputs-lable">Rr</label>
+                            </div>
+                            <span asp-validation-for="Rr" class="err-msg"></span>
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-2 mt-2">
+                        <div class=" mb-3">
+                            <div class="inputs-control ">
+                                <input placeholder=" " asp-for="BloodPressureS" class="input-outline w-100 inp edit-frm" type="text">
+                                <label class="inputs-lable">BloodPressureS</label>
+                            </div>
+                            <span asp-validation-for="BloodPressureS" class="err-msg"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mt-2">
+                        <div class=" mb-3">
+                            <div class="inputs-control ">
+                                <input placeholder=" " asp-for="BloodPressureD" class="input-outline w-100 inp edit-frm" type="text">
+                                <label class="inputs-lable">BloodPressureD</label>
+                            </div>
+                            <span asp-validation-for="BloodPressureD" class="err-msg"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="mb-3 mt-2">
+                            <div class="inputs-control  ">
+                                <input placeholder=" " asp-for="O2" class="input-outline w-100 inp edit-frm" type="text">
+                                <label class="inputs-lable">o2</label>
+                            </div>
+                            <span asp-validation-for="O2" class="err-msg"></span>
+
+
+                        </div>
+
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-3 mt-2">
+                            <div class="inputs-control  ">
+                                <input placeholder=" " asp-for="Pain" class="input-outline w-100 inp edit-frm" type="text">
+                                <label class="inputs-lable">pain</label>
+                            </div>
+                            <span asp-validation-for="Pain" class="err-msg"></span>
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-6 mt-2">
+                        <div class=" mb-3">
+                            <div class="inputs-control ">
+                                <textarea placeholder=" " rows="2" asp-for="Heent" class="input-outline w-100 " type="text"></textarea>
+
+                                <label class="inputs-lable-textarea">Heent</label>
+                               
+                            </div>
+                            <span asp-validation-for="Heent" class="err-msg"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="mb-3 mt-2">
+                            <div class="inputs-control  ">
+                                <textarea placeholder=" " rows="2" asp-for="CV" class="input-outline w-100 " type="text"></textarea>
+
+                                <label class="inputs-lable-textarea">CV</label>
+                              
+                            </div>
+                            <span asp-validation-for="CV" class="err-msg"></span>
+
+
+                        </div>
+
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3 mt-2">
+                            <div class="inputs-control  ">
+                             
+                                <textarea placeholder=" " rows="2" asp-for="Chest" class="input-outline w-100 " type="text"></textarea>
+
+                                <label class="inputs-lable-textarea">Chest</label>
+                            </div>
+                            <span asp-validation-for="Chest" class="err-msg"></span>
+
+
+                        </div>
+
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3 mt-2">
+                            <div class="inputs-control  ">
+                              
+                                <textarea placeholder=" " rows="2" asp-for="ABD" class="input-outline w-100 " type="text"></textarea>
+
+                                <label class="inputs-lable-textarea">ABD</label>
+                            </div>
+                            <span asp-validation-for="ABD" class="err-msg"></span>
+
+
+                        </div>
+
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3 mt-2">
+                            <div class="inputs-control  ">
+                                <textarea placeholder=" " rows="2" asp-for="Extr" class="input-outline w-100 " type="text"></textarea>
+
+                                <label class="inputs-lable-textarea">Extr</label>
+                               
+                            </div>
+                            <span asp-validation-for="Extr" class="err-msg"></span>
+
+
+                        </div>
+
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3 mt-2">
+                            <div class="inputs-control w-100">
+                                <textarea placeholder=" " rows="2" asp-for="Skin" class="input-outline w-100 " type="text"></textarea>
+
+                                <label class="inputs-lable-textarea">Skin</label>
+                            </div>
+                            <span asp-validation-for="Skin" class="err-msg"></span>
+
+
+                        </div>
+
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3 mt-2">
+                            <div class="inputs-control w-100">
+                                <textarea placeholder=" " rows="2" asp-for="Neuro" class="input-outline w-100 " type="text"></textarea>
+
+                                <label class="inputs-lable-textarea">Neuro</label>
+                            </div>
+                            <span asp-validation-for="Neuro" class="err-msg"></span>
+
+
+                        </div>
+
+                    </div>  
+                    <div class="col-md-6">
+                        <div class="mb-3 mt-2">
+                            <div class="inputs-control w-100">
+                                <textarea placeholder=" " rows="2" asp-for="Other" class="input-outline w-100 " type="text"></textarea>
+
+                                <label class="inputs-lable-textarea">Other</label>
+                            </div>
+                            <span asp-validation-for="Other" class="err-msg"></span>
+
+
+                        </div>
+
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3 mt-2">
+                            <div class="inputs-control w-100">
+                                <textarea placeholder=" " rows="2" asp-for="Diagnosis" class="input-outline w-100 " type="text"></textarea>
+
+                                <label class="inputs-lable-textarea">Diagnosis</label>
+                            </div>
+                            <span asp-validation-for="Diagnosis" class="err-msg"></span>
+
+
+                        </div>
+
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3 mt-2">
+                            <div class="inputs-control w-100">
+                                <textarea placeholder=" " rows="2" asp-for="Treatment" class="input-outline w-100 " type="text"></textarea>
+
+                                <label class="inputs-lable-textarea">Treatment</label>
+                            </div>
+                            <span asp-validation-for="Treatment" class="err-msg"></span>
+
+
+                        </div>
+
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3 mt-2">
+                            <div class="inputs-control w-100">
+                                <textarea placeholder=" " rows="2" asp-for="MedicationsDispensed" class="input-outline w-100 " type="text"></textarea>
+
+                                <label class="inputs-lable-textarea">MedicationsDispensed</label>
+                            </div>
+                            <span asp-validation-for="MedicationsDispensed" class="err-msg"></span>
+
+
+                        </div>
+
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3 mt-2">
+                            <div class="inputs-control w-100">
+                                <textarea placeholder=" " rows="2" asp-for="Procedures" class="input-outline w-100 " type="text"></textarea>
+
+                                <label class="inputs-lable-textarea">Procedures</label>
+                            </div>
+                            <span asp-validation-for="Procedures" class="err-msg"></span>
+
+
+                        </div>
+
+                    </div>
+
+
+
+
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-12">
+                        <div class=" mb-2">
+                            <div class="inputs-control ">
+                              
+                                <textarea placeholder=" " rows="2" asp-for="Followup" class="input-outline w-100 " type="text"></textarea>
+
+                                <label class="inputs-lable-textarea">Followup</label>
+                            </div>
+                            <span asp-validation-for="Followup" class="err-msg"></span>
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+                <div class="card-footer border-0 bg-transparent text-end">
+                    <button type="submit" class="btn btn-outline-info">Save Changes</button>
+
+                    @{
+                        if (!Model.Isfinalize)
+                        {
+                            <button type="submit" asp-action="Finalize" asp-controller="Action" asp class="btn btn-danger btn-cancel ">Finalize</button>
+                        }
+                    
+                    }
+                      
+                   
+                    <a class="btn btn-outline-info btn-cancel " asp-action="Index" asp-controller="Dashbaord" asp-route-Status="4,5">
+                        cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+<script>
+    const phoneInputField3 = document.querySelector("#phone");
+
+    const phoneInput2 = window.intlTelInput(phoneInputField3, {
+        utilsScript:
+            "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+    });
+
+</script>

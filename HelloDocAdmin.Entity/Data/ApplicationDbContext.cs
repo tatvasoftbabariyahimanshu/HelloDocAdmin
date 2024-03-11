@@ -36,6 +36,8 @@ public partial class ApplicationDbContext : DbContext
 
     public virtual DbSet<Emaillog> Emaillogs { get; set; }
 
+    public virtual DbSet<Encounterform> Encounterforms { get; set; }
+
     public virtual DbSet<Healthprofessional> Healthprofessionals { get; set; }
 
     public virtual DbSet<Healthprofessionaltype> Healthprofessionaltypes { get; set; }
@@ -416,6 +418,55 @@ public partial class ApplicationDbContext : DbContext
             entity.Property(e => e.Subjectname)
                 .HasMaxLength(200)
                 .HasColumnName("subjectname");
+        });
+
+        modelBuilder.Entity<Encounterform>(entity =>
+        {
+            entity.HasKey(e => e.Encounterformid).HasName("encounterform_pkey");
+
+            entity.ToTable("encounterform");
+
+            entity.Property(e => e.Encounterformid).HasColumnName("encounterformid");
+            entity.Property(e => e.Abd).HasColumnName("abd");
+            entity.Property(e => e.Adminid).HasColumnName("adminid");
+            entity.Property(e => e.Allergies).HasColumnName("allergies");
+            entity.Property(e => e.Bloodpressurediastolic).HasColumnName("bloodpressurediastolic");
+            entity.Property(e => e.Bloodpressuresystolic).HasColumnName("bloodpressuresystolic");
+            entity.Property(e => e.Chest).HasColumnName("chest");
+            entity.Property(e => e.Cv).HasColumnName("cv");
+            entity.Property(e => e.Diagnosis).HasColumnName("diagnosis");
+            entity.Property(e => e.Extremities).HasColumnName("extremities");
+            entity.Property(e => e.Followup).HasColumnName("followup");
+            entity.Property(e => e.Heent).HasColumnName("heent");
+            entity.Property(e => e.Historyofpresentillnessorinjury).HasColumnName("historyofpresentillnessorinjury");
+            entity.Property(e => e.Hr).HasColumnName("hr");
+            entity.Property(e => e.Isfinalize).HasColumnName("isfinalize");
+            entity.Property(e => e.Medicaldispensed).HasColumnName("medicaldispensed");
+            entity.Property(e => e.Medicalhistory).HasColumnName("medicalhistory");
+            entity.Property(e => e.Medications).HasColumnName("medications");
+            entity.Property(e => e.Neuro).HasColumnName("neuro");
+            entity.Property(e => e.O2).HasColumnName("o2");
+            entity.Property(e => e.Other).HasColumnName("other");
+            entity.Property(e => e.Pain).HasColumnName("pain");
+            entity.Property(e => e.Physicianid).HasColumnName("physicianid");
+            entity.Property(e => e.Procedures).HasColumnName("procedures");
+            entity.Property(e => e.Requestid).HasColumnName("requestid");
+            entity.Property(e => e.Rr).HasColumnName("rr");
+            entity.Property(e => e.Skin).HasColumnName("skin");
+            entity.Property(e => e.Temp).HasColumnName("temp");
+            entity.Property(e => e.TreatmentPlan).HasColumnName("treatment_plan");
+
+            entity.HasOne(d => d.Admin).WithMany(p => p.Encounterforms)
+                .HasForeignKey(d => d.Adminid)
+                .HasConstraintName("encounterform_adminid_fkey");
+
+            entity.HasOne(d => d.Physician).WithMany(p => p.Encounterforms)
+                .HasForeignKey(d => d.Physicianid)
+                .HasConstraintName("encounterform_physicianid_fkey");
+
+            entity.HasOne(d => d.Request).WithMany(p => p.Encounterforms)
+                .HasForeignKey(d => d.Requestid)
+                .HasConstraintName("encounterform_requestid_fkey");
         });
 
         modelBuilder.Entity<Healthprofessional>(entity =>

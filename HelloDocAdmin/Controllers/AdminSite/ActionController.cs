@@ -1,6 +1,7 @@
 ﻿using AspNetCore;
 using AspNetCoreHero.ToastNotification.Abstractions;
 using DocumentFormat.OpenXml.Drawing;
+using HelloDocAdmin.Controllers.Authenticate;
 using HelloDocAdmin.Entity.Data;
 using HelloDocAdmin.Entity.Models;
 using HelloDocAdmin.Entity.ViewModels;
@@ -148,7 +149,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
             return RedirectToAction("Index", "Dashboard");
         }
         #endregion
-
+        #region ChangeNotes
         [HttpPost]
         public IActionResult ChangeNotes(int RequestID, string? adminnotes, string? physiciannotes)
         {
@@ -177,6 +178,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
 
         }
+        #endregion
 
         #region _CancelCase
         public IActionResult CancelCase(int RequestID, string Note, string CaseTag)
@@ -433,6 +435,72 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
 
         #endregion
+
+
+
+
+        #region Encounter
+
+        #region ACTION-ENCOUNTER VIEW
+        public async Task<IActionResult> EncounterView(int RequestID)
+        {
+
+            EncounterViewModel model = _actionrepo.GetEncounterDetailsByRequestID(RequestID);
+
+            return View("../AdminSite/Action/Encounter",model);
+        }
+        #endregion
+        public IActionResult EncounterEdit(EncounterViewModel model)
+        {
+
+
+
+            bool data = _actionrepo.EditEncounterDetails(model,CV.LoggedUserID());
+            if (data)
+            {
+
+
+                _notyf.Success("Encounter Changes Saved..");
+            }
+            else
+            {
+                _notyf.Error("Encounter Changes Not Saved");
+            }
+
+            return RedirectToAction("EncounterView", new { RequestID=model.Requesid });
+
+        }
+
+        #region ACTION-FINALIZE
+        public IActionResult Finalize(EncounterViewModel model)
+        {
+            bool data = _actionrepo.EditEncounterDetails(model, CV.LoggedUserID());
+            if(data)
+            {
+              bool final=_actionrepo.CaseFinalized(model,CV.LoggedUserID());
+                if(final)
+                {
+                    _notyf.Success("Case Is Finalized");
+                    return RedirectToAction("Index", "Dashboard", new { Status = "6" });
+                }
+                else
+                {
+                    _notyf.Success("Case Is not Finalized");
+                return View("../AdminSite/Action/Encounter", model);
+                }
+          
+            }
+            else
+            {
+                _notyf.Success("Case Is not Finalized");
+                return View("../AdminSite/Action/Encounter", model);
+            }
+           
+        }
+        #endregion
+
+        #endregion
+
 
 
     }

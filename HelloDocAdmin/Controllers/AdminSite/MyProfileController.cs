@@ -3,6 +3,7 @@ using AspNetCoreHero.ToastNotification.Abstractions;
 using HelloDocAdmin.Entity.ViewModels.AdminSite;
 using HelloDocAdmin.Repositories.Interface;
 using Microsoft.AspNetCore.Mvc;
+using HelloDocAdmin.Controllers.Authenticate;
 
 namespace HelloDocAdmin.Controllers.AdminSite
 {
@@ -27,7 +28,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
         {
             ViewBag.userrolecombobox = await _combobox.UserRole();
             ViewBag.RegionComboBox = await _combobox.RegionComboBox();
-            ViewAdminProfileModel vm =  _adminProfile.GetDetailsForAdminProfile();
+            ViewAdminProfileModel vm =  _adminProfile.GetDetailsForAdminProfile(CV.LoggedUserID());
             return View("../AdminSite/MyProfile/Index",vm);
         }
         [HttpPost]
@@ -36,7 +37,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
           
             vm.AdminReqionList = Request.Form["SelectedRegions"].Select(int.Parse).ToList();
-            bool data= _adminProfile.Edit_Admin_Profile(vm);
+            bool data= _adminProfile.Edit_Admin_Profile(vm, CV.LoggedUserID());
             if (data)
             {
                 _notyf.Success("Administration Information Changed...");
@@ -53,7 +54,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
 
           
-            bool data = _adminProfile.Edit_Billing_Info(vm);
+            bool data = _adminProfile.Edit_Billing_Info(vm, CV.LoggedUserID());
             if (data)
             {
                 _notyf.Success("Billing Information Changed...");
@@ -71,7 +72,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
 
         
-            bool data = _adminProfile.ChangePassword(password);
+            bool data = _adminProfile.ChangePassword(password, CV.LoggedUserID());
             if (data)
             {
                 _notyf.Success("Password changed Successfully...");

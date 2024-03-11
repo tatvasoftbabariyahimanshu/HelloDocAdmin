@@ -93,79 +93,6 @@
         }
       }
     },
-    "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin.PatientRepositories\\HelloDocAdmin.PatientRepositories.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin.PatientRepositories\\HelloDocAdmin.PatientRepositories.csproj",
-        "projectName": "HelloDocAdmin.PatientRepositories",
-        "projectPath": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin.PatientRepositories\\HelloDocAdmin.PatientRepositories.csproj",
-        "packagesPath": "C:\\Users\\pci105\\.nuget\\packages\\",
-        "outputPath": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin.PatientRepositories\\obj\\",
-        "projectStyle": "PackageReference",
-        "configFilePaths": [
-          "C:\\Users\\pci105\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
-        ],
-        "originalTargetFrameworks": [
-          "net7.0"
-        ],
-        "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
-        },
-        "frameworks": {
-          "net7.0": {
-            "targetAlias": "net7.0",
-            "projectReferences": {
-              "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin.Entity\\HelloDocAdmin.Entity.csproj": {
-                "projectPath": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin.Entity\\HelloDocAdmin.Entity.csproj"
-              }
-            }
-          }
-        },
-        "warningProperties": {
-          "warnAsError": [
-            "NU1605"
-          ]
-        }
-      },
-      "frameworks": {
-        "net7.0": {
-          "targetAlias": "net7.0",
-          "dependencies": {
-            "Microsoft.AspNet.Mvc": {
-              "target": "Package",
-              "version": "[5.3.0, )"
-            },
-            "Microsoft.AspNetCore.Mvc": {
-              "target": "Package",
-              "version": "[2.2.0, )"
-            },
-            "Microsoft.Extensions.Identity.Core": {
-              "target": "Package",
-              "version": "[8.0.2, )"
-            }
-          },
-          "imports": [
-            "net461",
-            "net462",
-            "net47",
-            "net471",
-            "net472",
-            "net48",
-            "net481"
-          ],
-          "assetTargetFallback": true,
-          "warn": true,
-          "frameworkReferences": {
-            "Microsoft.NETCore.App": {
-              "privateAssets": "all"
-            }
-          },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.302\\RuntimeIdentifierGraph.json"
-        }
-      }
-    },
     "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin.repositories\\HelloDocAdmin.Repositories.csproj": {
       "version": "1.0.0",
       "restore": {
@@ -262,9 +189,6 @@
             "projectReferences": {
               "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin.Entity\\HelloDocAdmin.Entity.csproj": {
                 "projectPath": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin.Entity\\HelloDocAdmin.Entity.csproj"
-              },
-              "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin.PatientRepositories\\HelloDocAdmin.PatientRepositories.csproj": {
-                "projectPath": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin.PatientRepositories\\HelloDocAdmin.PatientRepositories.csproj"
               },
               "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin.repositories\\HelloDocAdmin.Repositories.csproj": {
                 "projectPath": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin.repositories\\HelloDocAdmin.Repositories.csproj"

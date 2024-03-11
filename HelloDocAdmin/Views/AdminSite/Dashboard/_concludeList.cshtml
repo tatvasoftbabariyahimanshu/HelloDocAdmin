@@ -146,9 +146,9 @@
                                     <li><a class="dropdown-item " asp-action="ViewNotes" asp-controller="Action" asp-route-id="@item.RequestID"><i class="bi bi-card-text  mx-1"></i>View Notes</a></li>
 
                                     <li><a class="dropdown-item " asp-action="Order" asp-controller="Action" asp-route-id="@item.RequestID"><i class="bi bi-journal-text  mx-1"></i>Order</a></li>
-                                    <li><a class="dropdown-item " href="#"><i class="bi bi-journal-text  mx-1"></i>Doctor Notes</a></li>
+                                  
 
-                                    <li><a class="dropdown-item " href="#"><i class="bi bi-card-checklist  mx-1"></i>Encounter</a></li>
+                                    <li><a class="dropdown-item " asp-action="EncounterView" asp-controller="Action" asp-route-RequestID="@item.RequestID"><i class="bi bi-card-checklist  mx-1"></i>Encounter</a></li>
                                 </ul>
                             </td>
                         </tr>
@@ -205,30 +205,7 @@
                                 </div>
                             </div>
                         </div>
-                        <script>
-                            var modal = document.getElementById("myModal");
-                            var btn = document.getElementById("map-button");
-
-                            var spany = document.getElementsByClassName("close")[0];
-                            var map;
-                            btn.onclick = function () {
-
-
-
-                                var address1 = `https://maps.google.com/maps?q= + ${@item.Address} + &t=&z=13&ie=UTF8&iwloc=&output=embed`;
-
-                                document.getElementById('gmap_canvas').src = address1;
-                                modal.style.display = "block";
-                            }
-                            spany.onclick = function () {
-                                modal.style.display = "none";
-                            }
-                            window.onclick = function (event) {
-                                if (event.target == modal) {
-                                    modal.style.display = "none";
-                                }
-                            }
-                        </script>
+                   
                     </div>
                 </h2>
                 <div id="flush-@item.RequestID" class="accordion-collapse text-dark  position-relative  btn-i p-2 collapse mb-3 border-top" data-bs-parent="#accordionExample">

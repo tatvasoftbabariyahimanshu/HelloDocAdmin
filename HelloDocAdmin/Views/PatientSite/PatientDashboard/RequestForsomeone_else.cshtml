@@ -1,0 +1,357 @@
+﻿@{
+    ViewData["Title"] = "View";
+    Layout = "~/Views/Shared/PatientSite/_dashboardLayout.cshtml";
+}
+@using HelloDocAdmin.Entity.ViewModel.PatientSite
+@model ViewFamilyFriendRequest
+<div class="container">
+    <div class="card  bg-transparent border-0">
+        <div class="card-header  border-0  bg-transparent text-end mt-2">
+            <a asp-controller="PatientDashboard" asp-action="Index"
+               class="btn btn-outline-info btn-back">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                     fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                          d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5" />
+                </svg></i>Back
+            </a>
+        </div>
+        <div class="card-body">
+
+            <form method="post" asp-action="CreateForSomeOneElse" asp-controller="RequestForMEOrElse" enctype="multipart/form-data">
+                <h6 class="form-title mt-3">Family/Friend Information</h6>
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <div class=" mb-3">
+                            <div class="inputs-control">
+                                <input placeholder=" " asp-for="FF_FirstName" class="input-outline w-100 inp" type="text">
+                                <label class="inputs-lable">Your First name</label>
+                            </div>
+                            <span asp-validation-for="FF_FirstName" class="err-msg"></span>
+                        </div>
+                       
+                    </div>
+                    <div class="col-md-6">
+                        <div class=" mb-3">
+                            <div class="inputs-control">
+                                <input placeholder=" " asp-for="FF_LastName" class="input-outline w-100 inp" type="text">
+                                <label class="inputs-lable">Your Last name</label>
+                            </div>
+                            <span asp-validation-for="FF_LastName" class="err-msg"></span>
+
+                        </div>
+                     
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <div class="inputs-control">
+                                <input id="phone" type="tel" asp-for="FF_PhoneNumber" placeholder="Mobile" class=" telephone input-outline w-100 inp" />
+                            </div>
+                            <span asp-validation-for="FF_PhoneNumber" class="err-msg"></span>
+
+                        </div>
+                       
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <div class="inputs-control">
+                                <input placeholder=" " asp-for="FF_Email" class="input-outline w-100 inp" type="text">
+                                <label class="inputs-lable">Your Email</label>
+                            </div>
+                            <span asp-validation-for="FF_Email" class="err-msg"></span>
+
+                        </div>
+                      
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <div class="inputs-control">
+                                <input placeholder=" " asp-for="FF_RelationWithPatient" class="input-outline w-100 inp" type="text">
+                                <label class="inputs-lable">Relation With Patient</label>
+                            </div>
+                            <span asp-validation-for="FF_RelationWithPatient" class="err-msg"></span>
+
+                        </div>
+                        
+                    </div>
+                </div>
+                <h6 class="form-title mt-3">Patient Information</h6>
+                <div class="col-md-12">
+
+                    <div class="inputs-control w-100 mt-2">
+                        <textarea placeholder=" " asp-for="Symptoms" class="input-outline w-100 " type="text"></textarea>
+                        <label class="inputs-lable-textarea">Symptoms</label>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-6">
+                        <div class=" mb-3">
+                            <div class="inputs-control ">
+                                <input placeholder=" " asp-for="FirstName" class="input-outline w-100 inp" type="text">
+                                <label class="inputs-lable">First name</label>
+                            </div>
+                            <span asp-validation-for="FirstName" class="err-msg"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <div class="inputs-control  ">
+                                <input placeholder=" " asp-for="LastName" class="input-outline w-100 inp" type="text">
+                                <label class="inputs-lable">Last name</label>
+                            </div>
+                            <span asp-validation-for="LastName" class="err-msg"></span>
+
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <div class="inputs-control ">
+
+                                <input placeholder=" " asp-for="BirthDate" class="input-outline w-100 inp form-control-sm " type="date">
+                                <label class="inputs-lable-dob">Date of Birth</label>
+                            </div>
+                            <span asp-validation-for="BirthDate" class="err-msg"></span>
+
+                        </div>
+
+                    </div>
+                </div>
+                <h6 class="form-title mt-3">Patient Contact Information</h6>
+                <div class="row mt-2">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <div class="inputs-control">
+                                <input placeholder=" " asp-for="Email" class="input-outline w-100 inp" type="text">
+                                <label class="inputs-lable">Email</label>
+                            </div>
+                            <span asp-validation-for="Email" class="err-msg"></span>
+
+                        </div>
+                      
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <div class="inputs-control  ">
+                                <input id="phone2" placeholder="Mobile" asp-for="PhoneNumber" type="tel" class=" telephone input-outline w-100 inp" />
+                            </div>
+                            <span asp-validation-for="PhoneNumber" class="err-msg"></span>
+                        </div>
+                       
+                    </div>
+
+                </div>
+                <h6 class="form-title mt-3">Patient Location</h6>
+                <div class="row mt-2">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <div class="inputs-control">
+                                <input placeholder=" " asp-for="Street" id="street" class="input-outline  w-100 inp" type="text">
+                                <label class="inputs-lable">street</label>
+                            </div>
+                            <span asp-validation-for="Street" class="err-msg"></span>
+
+                        </div>
+                      
+                    </div>
+                    <div class="col-md-6">
+                        <div>
+                            <div class="inputs-control w-100 ">
+                                <input placeholder=" " asp-for="State" id="state" class="input-outline   w-100 inp" type="text">
+                                <label class="inputs-lable ">State</label>
+                            </div>
+                            <span asp-validation-for="State" class="err-msg"></span>
+
+
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="row mt-1 mb-2">
+                    <div class="col-md-6 ">
+                        <div class="">
+                            <div class="inputs-control w-100 ">
+                                <input placeholder=" " asp-for="City" id="city" class="input-outline    w-100 inp" type="text">
+                                <label class="inputs-lable">City</label>
+                            </div>
+                            <span asp-validation-for="City" class="err-msg"></span>
+
+                        </div>
+                       
+                    </div>
+                    <div class="col-md-6 d-flex justify-content-around align-items-center">
+                       
+                            <div class="inputs-control w-100 ">
+                                <input placeholder=" " asp-for="ZipCode" id="zipcode" class="input-outline  w-100 inp" type="text">
+                                <label class="inputs-lable">Zipper Code</label>
+                            </div>
+                            <a class="btn btn-outline-info mx-2 text-info map-btn " id="map-button">
+                                <i class="bi bi-geo-alt-fill"></i>
+                            </a>
+                            <span asp-validation-for="ZipCode" class="err-msg"></span>
+
+                        
+                        
+                    </div>
+                </div>
+                <div class="row mt-1">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <div class="inputs-control  ">
+                                <input placeholder=" " asp-for="RoomSite" class="input-outline  w-100 inp" type="text">
+                                <label class="inputs-lable">Room #/street (Optional)</label>
+                            </div>
+                            <span asp-validation-for="RoomSite" class="err-msg"></span>
+
+                        </div>
+                       
+                    </div>
+                </div>
+                <h6 class="form-title mt-3">(optional) Upload Photo or Document</h6>
+
+                <div class="col-md-12 mt-2">
+                    
+                        <input type="file" id="file" class="file file-uplode" asp-for="UploadFile">
+                        <div class="d-flex">
+                            <input placeholder=" " class="input-outline w-100 inp" type="text" id="file-name"
+                                   readonly="readonly">
+
+                            <input type="button" class="btn btn-upl btn-info  btn-submit " value="uplode" style="color: white;">
+                          
+
+                        </div>
+
+                </div>
+                <div class="card-footer border-0 bg-transparent text-end">
+                    <button type="submit" class="btn btn-outline-info btn-submit">
+                        submit
+                    </button>
+                    <button type="button"  data-bs-toggle="modal" data-bs-target="#staticBackdrop" id="infobutton">
+                        
+                    </button>
+  
+                    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content modal-dialog-centered">
+
+                                <div class="modal-body border-0 text-center">
+                                    <div class="text-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16" style="color: rgb(219, 219, 10);">
+                                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+                                            <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
+                                        </svg>
+                                    </div>
+                                    <div class="mt-3 fs-4">
+                                        Information
+                                    </div>
+                                    <p class="doc-text-card mt-2">
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia doloremque laboriosam architecto numquam reprehenderit earum accusantium accusamus repellendus quo nostrum sit pariatur, molestias quasi inventore dicta ab iusto ratione adipisci!
+                                    </p>
+                                </div>
+                                <div class="modal-footer ">
+                                    <button type="button" class="btn btn-info" data-bs-dismiss="modal">ok</button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-outline-danger btn-cancel " type="reset">
+                        cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal" id="myModal" tabindex="-1">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Your Location</h5>
+                <button type="button" class="btn-close close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="gmap_canvas">
+                    <iframe id="gmap_canvas" style="min-height:500px;width:100%;" src="" frameborder="0" scrolling="no" marginheight="0" marginwidth="0">
+                    </iframe>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#infobutton").trigger("click");
+        $("#infobutton").hide();
+
+    });
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+<script>
+    const phoneInputField = document.querySelector("#phone");
+    const phoneInput = window.intlTelInput(phoneInputField, {
+        utilsScript:
+        
+            "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+    });
+    const phoneInputField2 = document.querySelector("#phone2");
+    const phoneInput2 = window.intlTelInput(phoneInputField2, {
+        utilsScript:
+            "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+    });
+</script>
+<script>
+    var modal = document.getElementById("myModal");
+
+    var btn = document.getElementById("map-button");
+    var Street = document.getElementById('street').value;
+    var City = document.getElementById('city').value;
+    var State = document.getElementById('state').value;
+    var ZipCode = document.getElementById('zipcode').value;
+    var address = Street + City + State + ZipCode;
+    //console.log(address1);
+    //document.getElementById('gmap_canvas').src = address1;
+    var geocoder = new google.maps.Geocoder();
+    geocoder.geocode({ address: address }, function (results, status) {
+        if (status == "OK") {
+            var latitude = results[0].geometry.location.lat();
+            var longitude = results[0].geometry.location.lng();
+            document.getElementById('lat').value = latitude;
+            document.getElementById('long').value = longitude;
+            console.log(document.getElementById('lat').value);
+            console.log(document.getElementById('long').value);
+        } else {
+            console.log("Geocoding failed: " + status);
+        }
+    });
+    var spany = document.getElementsByClassName("close")[0];
+    var map;
+    btn.onclick = function () {
+
+        var Street = document.getElementById('street').value;
+        var City = document.getElementById('city').value;
+        var State = document.getElementById('state').value;
+        var ZipCode = document.getElementById('zipcode').value;
+        var address = Street + City + State + ZipCode;
+        var address1 = `https://maps.google.com/maps?q= + ${Street} + ${City} + ${State} + ${ZipCode} + &t=&z=13&ie=UTF8&iwloc=&output=embed`;
+        console.log(address1);
+        document.getElementById('gmap_canvas').src = address1;
+        modal.style.display = "block";
+    }
+    spany.onclick = function () {
+        modal.style.display = "none";
+    }
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>
+
+

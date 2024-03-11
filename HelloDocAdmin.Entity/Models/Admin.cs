@@ -46,6 +46,8 @@ public partial class Admin
 
     public virtual ICollection<Adminregion> Adminregions { get; } = new List<Adminregion>();
 
+    public virtual ICollection<Encounterform> Encounterforms { get; } = new List<Encounterform>();
+
     public virtual ICollection<Requeststatuslog> Requeststatuslogs { get; } = new List<Requeststatuslog>();
 
     public virtual ICollection<Requestwisefile> Requestwisefiles { get; } = new List<Requestwisefile>();

@@ -1,0 +1,261 @@
+﻿@using HelloDocAdmin.Entity.ViewModels.PatientSite
+@model ViewDashboardDataModel
+<script>
+    $(document).ready(function (){
+
+        $(".inputs-control :input").prop("readonly", true);
+
+        $("select").prop("readonly", true);
+            $("input").css("background-color", "#e9ecef");
+        $("select").css("background-color", "#e9ecef");
+        $("#save").css("display", "none");
+        $("#cancel").css("display", "none");
+        $('#cancel').click(function () {
+            $("#save").css("display", "none");
+            $("#cancel").css("display", "none");
+            $(".inputs-control :input").prop("readonly", true);
+            $("select").prop("readonly", true);
+            $("input").css("background-color", "#e9ecef");
+            $("select").css("background-color", "#e9ecef");
+            $("#edit").css("display", "block");
+        });
+     
+    
+    });
+   
+  
+      
+    </script>
+   
+
+    @{
+
+    }
+<div class="container">
+    <div class="card bg-transparent border-0">
+        <div class="card-headerd d-flex  justify-content-between  border-0  bg-transparent   mb-3 p-1">
+          
+            <div class="text-start">
+                <h4 class="form-title mt-3">User Profile</h4>
+            </div>
+            <div class=" text-end">
+                <a asp-controller="PatientDashboard" asp-action="Index"
+                   class="btn btn-outline-info btn-back">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                         fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                              d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5" />
+                    </svg></i>Back
+                </a>
+            </div>
+           
+        </div>
+        <div class="card-body rounded shadow">
+           
+            <form method="post" id="GFG" asp-action="EditProfile" asp-controller="PatientDashboard" enctype="multipart/form-data">
+                <h6 class="form-title mt-3">General Information</h6>
+                <input type="hidden" asp-for="Userid"/>
+                <div class="row mt-2">
+                    <div class="col-md-6">
+                        <div class="inputs-control   mb-3">
+                            <input placeholder=" " asp-for="Firstname" class="input-outline w-100 inp " type="text">
+                            <label class="inputs-lable">First name</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="inputs-control  mb-3">
+                            <input placeholder=" " asp-for="Lastname" class="input-outline w-100 inp" type="text">
+                            <label class="inputs-lable">Last name</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="inputs-control  mb-3">
+                             
+                            <input placeholder=" " asp-for="BirthDate" class="input-outline w-100 inp " type="date">
+                            <label class="inputs-lable-dob">Date of Birth</label>
+                        </div>
+                    </div>
+                </div>
+                <h6 class="form-title mt-3">Contact Information</h6>
+                <div class="row mt-4">
+                    <div class="col-md-2">
+                        <div class="inputs-control w-100 ">
+                            <select class="input-outline input-outline-select select-container w-100 inp">
+                                <option>Mobile</option>
+                                <option>Phone</option>
+                                <option>Landline</option>
+                               
+                            </select>
+                            <label class="inputs-lable">Type</label>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="inputs-control  mb-3">
+                            <input id="phone" placeholder="Mobile" asp-for="Mobile" type="tel" class=" telephone input-outline w-100 inp" style="font-size: .7rem;" />
+
+                        </div>
+                    </div>
+                    <div class="col-md-5 password-hide">
+                        <div class="inputs-control  mb-3">
+                            <input placeholder=" " asp-for="Email" class="input-outline w-100 inp" type="text" id="Email">
+                            <label class="inputs-lable">Email</label>
+                        </div>
+                    </div>
+                    
+
+                </div>
+                <h6 class="form-title mt-3">Patient Location</h6>
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <div class="inputs-control  mb-3">
+                            <input placeholder=" " asp-for="Street" id="street" class="input-outline  w-100 inp" type="text">
+                            <label class="inputs-lable">street</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="inputs-control w-100 ">
+                            <input placeholder=" " asp-for="State" id="state" class="input-outline    w-100 inp" type="text">
+
+                            <label class="inputs-lable">State</label>
+                          
+
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden"  id="UserId" />
+                <div class="row mt-1">
+                    <div class="col-md-6 ">
+                        <div class="inputs-control w-100 ">
+                            <input placeholder=" " asp-for="City" id="city" class="input-outline   w-100 inp" type="text">
+
+                            <label class="inputs-lable">City</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 d-flex justify-content-around align-items-center">
+                        <div class="inputs-control w-100 ">
+                            <input placeholder=" " asp-for="Zipcode" id="zipcode" class="input-outline  w-100 inp" type="text">
+                            <label class="inputs-lable">Zipper Code</label>
+                        </div>
+                        <a class="btn btn-outline-info mx-2 text-info map-btn " id="map-button" >
+                            <i class="bi bi-geo-alt-fill"></i>
+                        </a>
+                      
+                    </div>
+                </div>
+                <div class="modal" id="myModal" tabindex="-1">
+                    <div class="modal-dialog modal-xl">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Your Location</h5>
+                                <button type="button" class="btn-close close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="gmap_canvas">
+                                    <iframe id="gmap_canvas" style="min-height:500px;width:100%;" src="" frameborder="0" scrolling="no" marginheight="0" marginwidth="0">
+                                    </iframe>
+                                </div>
+                            </div>
+                           
+                        </div>
+                    </div>
+                </div>
+                
+            
+              
+               
+
+          
+                    <div class="card-footer border-0 bg-transparent text-end d-flex mt-3  justify-content-end">
+                    <button type="submit" id="save" class="btn btn-sm btn-outline-info btn-submit mx-2">
+                            save
+                        </button>
+                    <a  id="cancel" class="btn btn-sm btn-outline-danger">
+                        cancel
+                    </a>
+                    <a onclick="enable_disable()" id="edit" class="btn btn-sm btn-outline-info btn-submit">
+                        Edit
+                    </a>
+                       
+                    </div>
+             
+             
+            </form>
+      
+
+        </div>
+    </div>
+
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+<script>
+
+    function enable_disable() {
+        $(".inputs-control :input").prop("readonly", false);
+      
+        $("#save").prop("readonly", false);
+        $("#cancel").prop("readonly", false);
+        $("#save").css("display", "block");
+        $("#cancel").css("display", "block");
+        $("#edit").css("display", "none");
+        $("input").css("background-color", "transparent");
+        $("select").css("background-color", "transparent");
+    }
+    const phoneInputField = document.querySelector("#phone");
+    const phoneInput = window.intlTelInput(phoneInputField, {
+        utilsScript:
+
+            "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+    });
+    const phoneInputField2 = document.querySelector("#phone2");
+    const phoneInput2 = window.intlTelInput(phoneInputField2, {
+        utilsScript:
+            "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+    });
+</script>
+<script>
+    var modal = document.getElementById("myModal");
+
+        var btn = document.getElementById("map-button");
+        var Street = document.getElementById('street').value;
+        var City = document.getElementById('city').value;
+        var State = document.getElementById('state').value;
+        var ZipCode = document.getElementById('zipcode').value;
+        var address = Street + City + State + ZipCode;
+        //console.log(address1);
+        //document.getElementById('gmap_canvas').src = address1;
+        var geocoder = new google.maps.Geocoder();
+        geocoder.geocode({ address: address }, function (results, status) {
+            if (status == "OK") {
+                var latitude = results[0].geometry.location.lat();
+                var longitude = results[0].geometry.location.lng();
+                document.getElementById('lat').value = latitude;
+                document.getElementById('long').value = longitude;
+                console.log(document.getElementById('lat').value);
+                console.log(document.getElementById('long').value);
+            } else {
+                console.log("Geocoding failed: " + status);
+            }
+        });
+        var spany = document.getElementsByClassName("close")[0];
+        var map;
+        btn.onclick = function () {
+            
+            var Street = document.getElementById('street').value;
+            var City = document.getElementById('city').value;
+            var State = document.getElementById('state').value;
+            var ZipCode = document.getElementById('zipcode').value;
+            var address = Street + City + State + ZipCode;
+            var address1 = `https://maps.google.com/maps?q= + ${Street} + ${City} + ${State} + ${ZipCode} + &t=&z=13&ie=UTF8&iwloc=&output=embed`;
+            console.log(address1);
+            document.getElementById('gmap_canvas').src = address1;
+            modal.style.display = "block";
+        }
+        spany.onclick = function () {
+            modal.style.display = "none";
+        }
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+</script>

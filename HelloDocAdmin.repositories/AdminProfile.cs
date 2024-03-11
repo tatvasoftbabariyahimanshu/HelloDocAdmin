@@ -25,17 +25,17 @@ namespace HelloDocAdmin.Repositories
         }
 
 
-        public ViewAdminProfileModel GetDetailsForAdminProfile()
+        public ViewAdminProfileModel GetDetailsForAdminProfile(string id)
         {
             
-            var aspnetuserdata=_context.Aspnetusers.FirstOrDefault(e=>e.Id== "001e35a5-cd12-4ec8-a077-95db9d54da0f");
+            var aspnetuserdata=_context.Aspnetusers.FirstOrDefault(e=>e.Id== "787a81c3-1917-41d9-abc6-2e3536b8906c");
             ViewAdminProfileModel model = new ViewAdminProfileModel
             {
                 ASP_UserName=aspnetuserdata.Username,
                 ASP_Password=aspnetuserdata.Passwordhash
                 
             };
-            var admindata = _context.Admins.FirstOrDefault(e => e.Aspnetuserid == "001e35a5-cd12-4ec8-a077-95db9d54da0f");
+            var admindata = _context.Admins.FirstOrDefault(e => e.Aspnetuserid == "787a81c3-1917-41d9-abc6-2e3536b8906c");
 
             model.ASP_Status = admindata.Status;
             model.ASP_RoleID=admindata.Roleid;
@@ -65,7 +65,7 @@ namespace HelloDocAdmin.Repositories
         }
 
         
-        public  bool Edit_Admin_Profile(ViewAdminProfileModel vm)
+        public  bool Edit_Admin_Profile(ViewAdminProfileModel vm,string id)
         {
             try
             {
@@ -76,7 +76,7 @@ namespace HelloDocAdmin.Repositories
                 else
                 {
 
-                    Admin DataForChange = _context.Admins.FirstOrDefault(e => e.Aspnetuserid == "001e35a5-cd12-4ec8-a077-95db9d54da0f");
+                    Admin DataForChange = _context.Admins.FirstOrDefault(e => e.Aspnetuserid == "787a81c3-1917-41d9-abc6-2e3536b8906c");
 
                     if (DataForChange != null)
                     {
@@ -124,7 +124,7 @@ namespace HelloDocAdmin.Repositories
             }
 
         }
-        public bool Edit_Billing_Info(ViewAdminProfileModel vm)
+        public bool Edit_Billing_Info(ViewAdminProfileModel vm,string id)
         {
             try
             {
@@ -135,7 +135,7 @@ namespace HelloDocAdmin.Repositories
                 else
                 {
 
-                    Admin DataForChange = _context.Admins.FirstOrDefault(e => e.Aspnetuserid == "001e35a5-cd12-4ec8-a077-95db9d54da0f");
+                    Admin DataForChange = _context.Admins.FirstOrDefault(e => e.Aspnetuserid == "787a81c3-1917-41d9-abc6-2e3536b8906c");
 
                     if (DataForChange != null)
                     {
@@ -167,13 +167,14 @@ namespace HelloDocAdmin.Repositories
 
 
 
-        public bool ChangePassword(string password)
+        public bool ChangePassword(string password,string id)
         {
             var hasher = new PasswordHasher<string>();
 
             string hashedPassword = hasher.HashPassword(null, password);
 
-           var aspnetuser=_context.Aspnetusers.FirstOrDefault(e=>e.Id== "001e35a5-cd12-4ec8-a077-95db9d54da0f");
+            var aspnetuser = _context.Aspnetusers.FirstOrDefault(e => e.Id == "787a81c3-1917-41d9-abc6-2e3536b8906c");
+
             if (aspnetuser != null)
             {
                 aspnetuser.Passwordhash = hashedPassword;

@@ -78,6 +78,8 @@ public partial class Physician
 
     public virtual Aspnetuser CreatedbyNavigation { get; set; } = null!;
 
+    public virtual ICollection<Encounterform> Encounterforms { get; } = new List<Encounterform>();
+
     public virtual Aspnetuser? ModifiedbyNavigation { get; set; }
 
     public virtual ICollection<Physicianlocation> Physicianlocations { get; } = new List<Physicianlocation>();

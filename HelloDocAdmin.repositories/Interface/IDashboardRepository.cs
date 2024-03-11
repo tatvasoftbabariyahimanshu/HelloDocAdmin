@@ -26,7 +26,7 @@ namespace HelloDocAdmin.Repositories.Interface
         public bool UploadDoc(int Requestid, IFormFile? UploadFile);
         public bool SendLink(string firstname, string lastname, string email, string phonenumber);
         public bool CancelCase(int RequestID, string Note, string CaseTag);
-            public bool BlockCase(int RequestID, string Note);
+        public bool BlockCase(int RequestID, string Note);
 
     }
 }

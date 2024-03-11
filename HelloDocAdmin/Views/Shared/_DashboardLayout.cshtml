@@ -1,4 +1,4 @@
-﻿@using HelloDocAdmin.Controllers.AdminSite
+﻿@using HelloDocAdmin.Controllers.Authenticate
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 <!DOCTYPE html>
 <html lang="en">
@@ -39,9 +39,12 @@
             <button class="btn navbar-toggler btn-outline-info" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <i class="fa-solid fa-bars"></i>
             </button>
-            <img src="~/images/Fig56. Patient site 1.jpg" class="img-fluid rounded-start  navbar-logo" alt="...">
+            <img src="~/images/Fig56. Patient site 1.png" class="img-fluid rounded-start  navbar-logo" alt="...">
           
             <div class="text-end">
+                @{
+                    
+                }
                 <span class="username"> <b>Welcome!</b> @CV.LoggedUserName() </span>
                 <a class="btn btn-sm btn-outline-info mx-2" asp-action="Logout" asp-controller="Login">
                     <span class="addnewlg">

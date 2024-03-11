@@ -12,6 +12,10 @@ using System.Net.Mail;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using HelloDocAdmin.Repositories.PatientInterface;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Security.Claims;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace HelloDocAdmin.Repositories
 {
@@ -330,5 +334,235 @@ namespace HelloDocAdmin.Repositories
             }
 
         }
+
+
+
+
+        #region Encounter
+        public EncounterViewModel GetEncounterDetailsByRequestID(int RequestID)
+        {
+            var datareq=_context.Requestclients.FirstOrDefault(e=>e.Requestid == RequestID);
+            var Data=_context.Encounterforms.FirstOrDefault(e=>e.Requestid == RequestID);
+
+            if (Data != null)
+            {
+                EncounterViewModel enc = new EncounterViewModel
+                {
+                    ABD = Data.Abd,
+                    EncounterID=Data.Encounterformid,
+                    Allergies = Data.Allergies,
+                    BloodPressureD = Data.Bloodpressurediastolic,
+                    BloodPressureS = Data.Bloodpressurediastolic,
+                    Chest = Data.Chest,
+                    CV = Data.Cv,
+                    DOB = new DateTime((int)datareq.Intyear, DateTime.ParseExact(datareq.Strmonth, "MMMM", new CultureInfo("en-US")).Month, (int)datareq.Intdate),
+                    Date = DateTime.Now,
+                    Diagnosis = Data.Diagnosis,
+                    Hr = Data.Hr,
+                    HistoryOfMedical = Data.Medicalhistory,
+                    Heent = Data.Heent,
+                    Extr = Data.Extremities,
+                    PhoneNumber = datareq.Phonenumber,
+                    Email = datareq.Email,
+                    HistoryOfP = Data.Historyofpresentillnessorinjury,
+                    FirstName = datareq.Firstname,
+                    LastName = datareq.Lastname,
+                    Followup = Data.Followup,
+                    Location = datareq.Location,
+                    Medications = Data.Medications,
+                    MedicationsDispensed = Data.Medicaldispensed,
+                    Neuro = Data.Neuro,
+                    O2 = Data.O2,
+                    Other = Data.Other,
+                    Pain = Data.Pain,
+                    Procedures = Data.Procedures,
+                   Isfinalize=Data.Isfinalize,
+                    Requesid = RequestID,
+                    Rr = Data.Rr,
+                    Skin = Data.Skin,
+                    Temp = Data.Temp,
+                    Treatment = Data.TreatmentPlan
+
+
+
+
+
+                };
+                return enc;
+            }
+            else
+            {
+                if(datareq!=null)
+                {
+                    EncounterViewModel enc = new EncounterViewModel
+                    {
+                        FirstName = datareq.Firstname,
+                        PhoneNumber = datareq.Phonenumber,
+                        LastName = datareq.Lastname,
+                        Location = datareq.Location,
+                        DOB = new DateTime((int)datareq.Intyear, DateTime.ParseExact(datareq.Strmonth, "MMMM", new CultureInfo("en-US")).Month, (int)datareq.Intdate),
+                        Date = DateTime.Now,
+                        Requesid = RequestID,
+
+                        Email = datareq.Email,
+                    };
+                    return enc;
+                }
+                else
+                {
+                    return new EncounterViewModel();
+                }
+               
+              
+            }
+           
+           
+           
+        }
+
+
+
+        public bool EditEncounterDetails(EncounterViewModel Data,string id)
+        {
+            //try
+            //{
+                var admindata=_context.Admins.FirstOrDefault(e=>e.Aspnetuserid == id);
+                if(Data.EncounterID==0)
+                {
+                    Encounterform enc = new Encounterform
+                    {
+                        Abd = Data.ABD,
+                        Encounterformid = Data.EncounterID,
+                        Allergies = Data.Allergies,
+                        Bloodpressurediastolic = Data.BloodPressureD,
+                        Bloodpressuresystolic = Data.BloodPressureS,
+                        Chest = Data.Chest,
+                        Cv = Data.CV,
+                        Diagnosis = Data.Diagnosis,
+                        Hr = Data.Hr,
+                        Medicalhistory = Data.HistoryOfMedical,
+                        Heent = Data.Heent,
+                        Extremities = Data.Extr,
+                        Historyofpresentillnessorinjury = Data.HistoryOfP,
+                        Followup = Data.Followup,                     
+                        Medications = Data.Medications,
+                        Medicaldispensed = Data.MedicationsDispensed,
+                        Neuro = Data.Neuro,
+                        O2 = Data.O2,
+                        Other = Data.Other,
+                        Pain = Data.Pain,
+                        Procedures = Data.Procedures,                      
+                        Requestid = Data.Requesid,
+                        Rr = Data.Rr,
+                        Skin = Data.Skin,
+                        Temp = Data.Temp,
+                        TreatmentPlan = Data.Treatment,
+                        Adminid=admindata.Adminid,
+                        Created=DateTime.Now,
+                        Modified=DateTime.Now,  
+                      
+
+                    };
+                    _context.Encounterforms.Add(enc);
+                    _context.SaveChanges();
+                   
+                    return true;
+
+                }
+                else
+                {
+                    var encdetails = _context.Encounterforms.FirstOrDefault(e => e.Encounterformid == Data.EncounterID);
+                    if (encdetails != null)
+                    {
+                        encdetails.Abd = Data.ABD;
+                        encdetails.Encounterformid = Data.EncounterID;
+                        encdetails.Allergies = Data.Allergies;
+                        encdetails.Bloodpressurediastolic = Data.BloodPressureD;
+                        encdetails.Bloodpressuresystolic = Data.BloodPressureS;
+                        encdetails.Chest = Data.Chest;
+                        encdetails.Cv = Data.CV;
+                        encdetails.Diagnosis = Data.Diagnosis;
+                        encdetails.Hr = Data.Hr;
+                        encdetails.Medicalhistory = Data.HistoryOfMedical;
+                        encdetails.Heent = Data.Heent;
+                        encdetails.Extremities = Data.Extr;
+                        encdetails.Historyofpresentillnessorinjury = Data.HistoryOfP;
+                        encdetails.Followup = Data.Followup;
+                        encdetails.Medications = Data.Medications;
+                        encdetails.Medicaldispensed = Data.MedicationsDispensed;
+                        encdetails.Neuro = Data.Neuro;
+                        encdetails.O2 = Data.O2;
+                        encdetails.Other = Data.Other;
+                        encdetails.Pain = Data.Pain;
+                        encdetails.Procedures = Data.Procedures;
+                        encdetails.Requestid = Data.Requesid;
+                        encdetails.Rr = Data.Rr;
+                        encdetails.Skin = Data.Skin;
+                        encdetails.Temp = Data.Temp;
+                        encdetails.TreatmentPlan = Data.Treatment;
+                        encdetails.Adminid = admindata.Adminid;
+                        encdetails.Modified = DateTime.Now;
+                        _context.Encounterforms.Update(encdetails);
+                        _context.SaveChanges();
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+
+
+                return true;
+            //}
+            //catch (Exception ex)
+            //{
+            //    return false;
+            //}
+          
+        }
+
+
+        public bool CaseFinalized(EncounterViewModel model, string id)
+        {
+            try
+            {
+                var data = _context.Encounterforms.FirstOrDefault(e => e.Encounterformid == model.EncounterID);
+                data.Modified = DateTime.Now;
+                data.Isfinalize = true;
+                _context.Encounterforms.Update(data);
+                _context.SaveChanges();
+
+
+                var final = _context.Requests.FirstOrDefault(e => e.Requestid == model.Requesid);
+                final.Modifieddate = DateTime.Now;
+                final.Status = 6;
+                _context.Requests.Update(final);
+                _context.SaveChanges();
+
+                var admindata = _context.Admins.FirstOrDefault(e => e.Aspnetuserid == id);
+                Requeststatuslog rs = new Requeststatuslog
+                {
+                    Requestid = final.Requestid,
+                    Status = 6,
+                    Createddate = DateTime.Now,
+                    Adminid= admindata.Adminid
+
+
+                };
+                _context.Requeststatuslogs.Add(rs);
+                _context.SaveChanges();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+          
+           
+        }
+
+        #endregion
     }
 }

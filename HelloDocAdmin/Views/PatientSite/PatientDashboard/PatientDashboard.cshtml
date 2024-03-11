@@ -1,0 +1,88 @@
+﻿@using HelloDocAdmin.Entity.ViewModels.PatientSite
+@model ViewDashboardDataModel
+
+@{
+    ViewData["Title"] = "View";
+    Layout = "~/Views/Shared/PatientSite/_dashboardLayout.cshtml";
+}
+
+<nav class="container-fluid pt-2">
+    <div class="nav  nav-underline" id="nav-tab" role="tablist">
+        <button class="nav-link mx-2 active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home"
+                type="button" role="tab" aria-controls="nav-home" aria-selected="true">
+            Dashboard
+        </button>
+        <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button"
+                role="tab" aria-controls="nav-profile" aria-selected="false" tabindex="-1">
+            Profile
+        </button>
+
+    </div>
+</nav>
+<div class="tab-content mt-5 " id="nav-tabContent">
+    <div class="tab-pane fade show  active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+        <partial name="_DashboardRequest.cshtml" />
+    </div>
+    <div class="tab-pane fade  " id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+        <partial name="_Profiledashboard.cshtml" />
+    </div>
+
+</div>
+
+
+
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Create New Request
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Here, I want to create a new request for...
+                <div class="text-center mt-3">
+                    <a href="#" id="meButton" class="btn btn-outline-info btn-submit">
+                        ME
+                    </a>
+                    <a href="#" id="someoneElseButton" class="btn btn-outline-info btn-submit">
+                        Someone Else
+                    </a>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-info btn-submit" id="continueButton">Continue</button>
+                <button type="button" class="btn btn-outline-danger btn-cancel" data-bs-dismiss="modal" aria-label="Close">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#meButton').click(function () {
+            $('#meButton').addClass('active');
+            $('#someoneElseButton').removeClass('active');
+        });
+        $('#someoneElseButton').click(function () {
+            $('#someoneElseButton').addClass('active');
+            $('#meButton').removeClass('active');
+        });
+        $('#continueButton').click(function () {
+            if ($('#meButton').hasClass('active')) {
+                window.location.href = '/RequestForMEOrElse/RequestForME';
+            } else if ($('#someoneElseButton').hasClass('active')) {
+                window.location.href = '/RequestForMEOrElse/RequestForSomeOneElse';
+            } else {
+                alert('Please select an option.');
+            }
+        });
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+

@@ -14,4 +14,25 @@ namespace HelloDocAdmin.Entity.ViewModels.Authentication
        
         public string Password { get; set; }
     }
+    public class ChangePassModel
+    {
+        public string Email { get; set; }
+        public string Password { get; set; }
+
+        public string ConfirmPassword { get; set; }
+    }
+
+    public class ForgotPassword
+    {
+        [EmailAddress]
+        public string Email { get; set; }
+    }
+    public class NewRegistration
+    {
+        [EmailAddress]
+        public string Email { get; set; }
+        public string Password { get; set; }
+
+        public string ConfirmPassword { get; set; }
+    }
 }

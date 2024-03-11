@@ -1,0 +1,251 @@
+﻿@{
+    Layout = "~/Views/Shared/PatientSite/_dashboardLayout.cshtml";
+}
+@using HelloDocAdmin.Entity.ViewModels.AdminSite
+@model ViewDocumentsModel
+<div class="container">
+    <div class="card bg-transparent border-0 p-2" style="border-radius: 15px;">
+        <div class="card-header d-flex justify-content-between  border-0  bg-transparent p-1  mt-3 mb-2">
+            <div class="text-start">
+                <h5 class="mt-2"><b> Document</b></h5>
+            </div>
+            <div class="text-end">
+                <a asp-action="Index" asp-controller="PatientDashboard" class="btn btn-outline-info btn-back text-end">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                         class="bi bi-arrow-left-short" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                              d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5" />
+                    </svg></i>Back
+                </a>
+            </div>
+        </div>
+        <div class="card-body m-1 shadow" style="border-radius: 15px;">
+            <div class="doc-text-card">Patient name</div>
+            <span class="d-flex align-items-center ">
+                <span class="Patient-name fs-4"><b>@Model.Firstanme @Model.Lastanme </b></span>
+                <span class="doc-text-card mx-2 mt-1 "><b>(@Model.ConfirmationNumber)</b></span>
+
+            </span>
+
+            <div class="doc-text-card mt-2">
+
+                check here for any files that you or the
+                doctor of yours subsequents requestors have attached for yo to
+                review
+
+            </div>
+            <div class="col-md-12 mt-3">
+                <form method="post" asp-action="UploadDocuments" asp-controller="PatientDashboard" enctype="multipart/form-data">
+                    <div class="d-flex">
+                        <button type="button" id="choosenfile" class="col  btn upl-btn text-start text-secondary" onclick="document.getElementById('files').click()">
+                            Select File
+                        </button>
+                        <input id="files" type="file" class="d-none  form-control doc_uploder" name="UploadFile">
+                        <input name="RequestID" value="@Model.RequestID" class="d-none" />
+                        <button type="submit" class="btn btn-info text-white py-2" value="Upload">
+                            <i class="fa fa-cloud-upload"></i>
+                            <span class="d-none d-sm-inline">Upload</span>
+                        </button>
+
+                    </div>
+                    <span class="err-msg" id="error-file"></span>
+                </form>
+                <script>
+                    $("#files").change(function () {
+                        filename = this.files[0].name;
+                        console.log(filename);
+                        $("#choosenfile").text(filename);
+                    });
+                    document.querySelector('form').addEventListener('submit', function (event) {
+                        var fileInput = document.getElementById('files');
+                        var fileName = fileInput.value;
+                        var allowedExtensions = /(\.pdf|\.doc|\.docx|\.jpg|\.jpeg|\.png|\.jped|\.webp)$/i;
+                        if (!allowedExtensions.exec(fileName)) {
+                            document.getElementById('error-file').innerText = 'Only PDF, DOC, JPG, JPEG, PNG, JPED, and WEBP files are allowed.';
+                            event.preventDefault();
+                        }
+                    });
+
+                </script>
+
+                <div class="card-header-2 mt-3 d-flex justify-content-between  border-0  bg-transparent ">
+                    <div class="mt-2">
+                        <h6> Document</h6>
+                    </div>
+                    <div class="text-end">
+                        <a class="btn btn-outline-info btn-sm btn-back text-end" onclick="Downlode_all()"> <i class="fa-solid fa-download"></i> <span class="btn-text"> Downlode all</span></a>
+                        <a class="btn btn-outline-info btn-sm btn-back text-end" onclick="Delete_all()"> <i class="fa-solid fa-trash"></i> <span class="btn-text"> Delete all</span></a>
+                      
+
+                    </div>
+                </div>
+                <div class="table-responsive mt-3 ">
+                    <table class="table">
+                        <thead class="border-0">
+                            <tr class="table-secondary">
+                                <th scope="col" class="table-text-header px-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input " type="checkbox" id="selectall" onchange="select_Desectall()">
+                                    </div>
+                                </th>
+                                <th scope="col" class="table-text-header px-3"></th>
+
+                                <th scope="col" class="table-text-header  px-3">Uploder</th>
+                                <th scope="col" class="table-text-header   ">uplode date</th>
+                                <th scope="col" class="table-text-header   ">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item2 in Model.documentslist)
+                            {
+                                <tr>
+
+                                    <td class="table-text px-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input doc-checkbox" type="checkbox" value="" onclick="statusselectall()">
+                                        </div>
+                                    </td>
+                                    <td class="table-text   px-3 flnamae">
+
+
+                                        <span class="mx-2">
+                                            @item2.Filename
+                                        </span>
+                                    </td>
+                                    <td class="table-text  px-3">@item2.Uploader</td>
+                                    <td class="table-text  px-3">@item2.Createddate</td>
+
+                                    <td class="table-text  ">
+
+                                        <a class="btn btn-sm download-link  btn-outline-info " download href="/Upload/req_@Model.RequestID/@item2.Filename">
+
+                                            <i class="fa fa-download" aria-hidden="true"></i>
+                                        </a>
+                                        <a class="btn btn-sm   btn-outline-info " target="_blank" href="/Upload/req_@Model.RequestID/@item2.Filename">
+
+                                            <i class="fa-solid fa-eye"></i>
+                                        </a>
+                                        <a class="btn btn-sm dlt-link  btn-outline-info " data="@item2.RequestWiseFileID"  asp-action="DeleteDoc" asp-controller="PatientDashboard"  asp-route-RequestWiseFileID="@item2.RequestWiseFileID" asp-route-RequestID="@Model.RequestID">
+
+                                            <i class="fa-solid fa-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+
+
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('.flnamae').each(function () {
+            var fileName = $(this).text().trim();
+            if (fileName.endsWith('.pdf')) {
+                $(this).prepend('<i class="fa-solid fa-file-pdf" style="color: #be2323;font-size:1rem"></i> ');
+            } else if (fileName.endsWith('.doc') || fileName.endsWith('.docx')) {
+                $(this).prepend('<i class="fa-solid fa-file-doc" style="color: #74C0FC;font-size:1rem"></i> ');
+            } else if (fileName.endsWith('.jpg') || fileName.endsWith('.jpeg') || fileName.endsWith('.png') || fileName.endsWith('.gif')) {
+                $(this).prepend('<i class="fa-solid fa-images" style="color: #B197FC;font-size:1rem"></i> ');
+            }
+        });
+    });
+    function statusselectall() {
+        var selectAllCheckbox = document.getElementById('selectall');
+        var allCheckboxes = document.getElementsByClassName('doc-checkbox');
+        var temp = false;
+        var i = 0;
+        for (i = 0; i < allCheckboxes.length; i++) {
+            if (!allCheckboxes[i].checked) {
+                temp = true;
+                selectAllCheckbox.checked = false;
+                break;
+            }
+
+        }
+        if (i == allCheckboxes.length) {
+            selectAllCheckbox.checked = true;
+        }
+
+
+    }
+    function select_Desectall() {
+        var selectAllCheckbox = document.getElementById('selectall');
+        var allCheckboxes = document.getElementsByClassName('doc-checkbox');
+
+        for (var i = 0; i < allCheckboxes.length; i++) {
+            allCheckboxes[i].checked = selectAllCheckbox.checked;
+        }
+    }
+
+    function Downlode_all() {
+        var allcheckbox = document.getElementsByClassName('doc-checkbox');
+        var alllinks = document.getElementsByClassName('download-link');
+        console.log(alllinks.length);
+        console.log(allcheckbox.length);
+        for (var i = 0; i < allcheckbox.length; i++) { // Use < instead of <=
+            if (allcheckbox[i].checked) {
+                console.log(alllinks[i]);
+                alllinks[i].click();
+            }
+        }
+    }
+    function Delete_all() {
+        var dtr_alldelete = "";
+        var allcheckbox = document.getElementsByClassName('doc-checkbox');
+        var alllinks = document.getElementsByClassName('dlt-link');
+        console.log(allcheckbox.length);
+        var length1 = 0;
+        for (var i = 0; i < allcheckbox.length; i++) {
+            if (allcheckbox[i].checked) {
+                length1 += 1;
+            }
+        }
+        console.log(length1);
+        for (var i = 0; i < allcheckbox.length; i++) { // Use < instead of <=
+            if (allcheckbox[i].checked && length1 > 0) {
+
+
+                if (length1 > 1) {
+                    dtr_alldelete += alllinks[i].getAttribute("data") + ",";
+                }
+                else {
+                    dtr_alldelete = dtr_alldelete + alllinks[i].getAttribute("data");
+                }
+                length1 -= 1;
+                console.log(dtr_alldelete);
+            }
+        }
+
+        console.log(dtr_alldelete);
+
+        $.ajax({
+            // base address/controller/Action
+            url: '/PatientDashboard/DeleteallDoc',
+            type: 'post',
+            data: {
+                RequestID: '@Model.RequestID',
+                path: dtr_alldelete
+            },
+            success: function (result) {
+
+                window.location.reload();
+            },
+            error: function () {
+                alert("error");
+            }
+        });
+    }
+
+
+
+   
+
+
+</script>

@@ -1,6 +1,11 @@
 ﻿@{
     string path = Context.Request.Path;
 }
+<style>
+    .dropdown-item.active{
+        background-color: #01BCE9;
+    }
+</style>
 @*<nav class="navbar p-0 pt-2  navbar-expand-lg bg-body shadow mb-5  rounded">
     <div class="container-fluid">
        
@@ -27,7 +32,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="nav navbar-nav nav-underline" id="nav-tab">
                 <li class="nav-item">
-                    <a class="nav-link   @(path.Equals("/") || path.StartsWith("/Action")  ? "active" : "" )" asp-action="Index" asp-controller="Dashboard">
+                    <a class="nav-link   @(path.Equals("/Dashboard") || path.StartsWith("/Action")  ? "active" : "" )" asp-action="Index" asp-controller="Dashboard">
                         Dashboard
                     </a>
             </li >
@@ -41,10 +46,13 @@
                        My Profile
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link " asp-action="" asp-controller="AdminDashboard">
-                       Providers
-                    </a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link  dropdown-toggle @(path.EndsWith("/Physician") ? "active" : "") " data-bs-toggle="dropdown" style="cursor:pointer" aria-expanded="false">Provider</a>
+                    <ul class="dropdown-menu border-0">
+                        <li><a class="dropdown-item @(path.EndsWith("/Physician") ? "active" : "") " asp-action="Index" asp-controller="Physician"> Provider </a></li>
+                        <li><a class="dropdown-item " href="#">Scheduling</a></li>
+                        <li><a class="dropdown-item " href="#">Invoicing</a></li>
+                    </ul>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" asp-action="ProviderLocation" asp-controller="AdminDashboard">

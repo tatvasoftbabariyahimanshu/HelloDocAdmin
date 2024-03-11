@@ -8,7 +8,7 @@ namespace HelloDocAdmin.Controllers
     {
         public static UserInfo GetLogginUser(ISession session)
         {
-            UserInfo userInfo = null;
+            UserInfo userInfo = new UserInfo();
             if (!string.IsNullOrEmpty(session.GetString("UserId")))
             {
                 userInfo = new UserInfo();

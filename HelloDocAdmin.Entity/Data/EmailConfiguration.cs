@@ -11,12 +11,12 @@ namespace HelloDocAdmin.Entity.Data
         public string UserName { get; set; }
         public string Password { get; set; }
         #region SendMail
-        public Boolean SendMail(String To, String Subject, String Body)
+        public Boolean SendMail(string To, string Subject, string Body)
         {
             ServicePointManager.ServerCertificateValidationCallback =
                 (sender, certificate, chain, sslPolicyErrors) => true;
 
-            //send mail
+            
             MailMessage message = new MailMessage();
             message.From = new MailAddress(From);
             message.Subject = Subject;

@@ -20,5 +20,10 @@ namespace HelloDocAdmin.Repositories.Interface
         public ViewCloseCaseModel CloseCaseData(int RequestID);
         public bool EditForCloseCase(ViewCloseCaseModel model);
         public bool SendAllMailDoc(string path, int RequestID);
+
+
+        public EncounterViewModel GetEncounterDetailsByRequestID(int RequestID);
+        public bool EditEncounterDetails(EncounterViewModel Data, string id);
+        public bool CaseFinalized(EncounterViewModel model, string id);
     }
 }

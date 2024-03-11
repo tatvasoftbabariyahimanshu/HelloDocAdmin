@@ -15,7 +15,7 @@
                     <input value="" type="hidden" name="requestid" id="requestid" />
                     <div class="mb-4 mt-3">
                         <div class="input-control w-100">
-                            <select name="CaseTag" class="input-outline input-outline-select " required data-allow-clear="true" tabindex="-1" id="Region" multiple asp-items="@(new SelectList(ViewBag.CaseReasonComboBox,"CaseReasonId","CaseReasonName"))" data-control="select2" data-placeholder="Cancel Reason">
+                            <select name="CaseTag" class="input-outline input-outline-select " required data-allow-clear="true" tabindex="-1" id="Region"  asp-items="@(new SelectList(ViewBag.CaseReasonComboBox,"CaseReasonId","CaseReasonName"))" data-control="select2" data-placeholder="Cancel Reason">
                             <option>Cancel Reason</option>
                         </select>
                         </div>

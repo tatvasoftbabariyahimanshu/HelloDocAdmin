@@ -27,15 +27,23 @@ namespace HelloDocAdmin.Controllers.AdminSite
             return View();
         }
 
-        public IActionResult SendAgreement(int requestid)
+        public IActionResult SendAgreement(int requestid,string email)
         {
             var res=_context.Requests.FirstOrDefault(e=>e.Requestid == requestid);
 
             var agreementUrl = Url.Action("Agreement", "SendAgreement", new { area = "", RequestID = requestid }, Request.Scheme);
 
-            _email.SendMail(res.Email, "Agreement for your request", $"<a href='{agreementUrl}'>Agree/Disagree</a>");
-            _notyf.Success("Agreement Sent to patient...");
-            return RedirectToAction("Index", "Dashboard");
+            if(_email.SendMail(email, "Agreement for your request", $"<a href='{agreementUrl}'>Agree/Disagree</a>"))
+            {
+                _notyf.Success("Agreement Sent to patient...");
+                return RedirectToAction("Index", "Dashboard");
+            }
+            else
+            {
+                _notyf.Error("Check Valid Data for send Agreement...");
+                return RedirectToAction("Index", "Dashboard");
+            }
+            
 
 
          

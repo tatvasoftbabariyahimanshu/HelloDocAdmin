@@ -98,6 +98,7 @@ body {
 
 .bg-image-dash {
     opacity: 0;
+    display:none;
 }
 
 .bg-image {
@@ -144,6 +145,7 @@ body {
         opacity: .4;
         width: 100%;
         position: absolute;
+        display:block;
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;

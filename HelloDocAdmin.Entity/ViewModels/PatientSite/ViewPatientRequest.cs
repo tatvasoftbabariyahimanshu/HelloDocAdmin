@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 
-namespace HelloDocAdmin.Entity.ViewModels.PatientSite
+namespace HelloDocAdmin.Entity.ViewModel.PatientSite
 {
     public class ViewPatientRequest
     {
