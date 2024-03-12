@@ -99,5 +99,41 @@ namespace HelloDocAdmin.Repositories
 
         }
         #endregion
+        #region Change_Notification_Physician
+
+        public async Task<bool> ChangeNotificationPhysician(Dictionary<int, bool> changedValuesDict)
+        {
+            try
+            {
+                if (changedValuesDict == null)
+                {
+                    return false;
+                }
+                else
+                {
+
+
+                    foreach (var item in changedValuesDict)
+                    {
+                        var ar = _context.Physiciannotifications.Find(item.Key);
+                        if (ar != null)
+                        {
+                            ar.Isnotificationstopped[0] = item.Value;
+                            _context.Physiciannotifications.Update(ar);
+                            _context.SaveChanges();
+                        }
+                    }
+
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+
+        }
+
+        #endregion
     }
 }

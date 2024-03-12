@@ -12,5 +12,6 @@ namespace HelloDocAdmin.Repositories.Interface
     {
         Task<List<PhysiciansViewModel>> PhysicianAll();
         Task<List<PhysiciansViewModel>> PhysicianByRegion(int? region);
+          Task<bool> ChangeNotificationPhysician(Dictionary<int, bool> changedValuesDict);
     }
 }

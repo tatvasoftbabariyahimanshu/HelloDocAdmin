@@ -30,9 +30,13 @@
                         <option >All Region</option>
                     </select>
                 </div>
-                <div class="text-end">
-                    <button class="btn btn-info text-white"> 
-                    <span class="addnewlg">
+                <div class="text-end d-flex">
+                    <form asp-action="ChangeNotificationPhysician" class="mx-2" id="saveChangesForm" asp-controller="Physician">
+                        <input type="hidden" id="changedValuesInput" name="changedValues">
+                        <button class="btn btn-outline-info " style="display:none;" type="submit" id="saveChangesButton"> Save Changes </button>
+                    </form>
+                    <a class="btn btn-info text-white" asp-action="PhysicianProfile" asp-controller="Physician">
+                        <span class="addnewlg">
                         Create Provider Account
                     </span>
                     <span class="addnewsm">
@@ -40,7 +44,7 @@
                             <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2" />
                         </svg>
                     </span>
-                    </button>
+                    </a>
                 </div>
             </div>
             <div class="table-responsive  dashboard-tbl mt-3 " >
@@ -105,7 +109,7 @@
             </div>
             <form asp-action="SendMessage" asp-controller="Physician">
                 <div class="modal-body">
-                    <h5 class="modal-title " id="exampleModalLabel"> Select communicatio Way  <span class="text-info" id="patientname"> </span></h5>
+                    <h5 class="modal-title " id="exampleModalLabel"> Select communication Way  <span class="text-info" id="patientname"> </span></h5>
                     <input type="hidden" name="email" id="email" />
                     <input type="hidden" name="id" id="id" />
                     <div class="mb-4 mx-3">
@@ -147,6 +151,45 @@
     </div>
 </div>
 <script>
+    $(document).ready(function () {
+
+        $('#saveChangesButton').click(function () {
+            $('#saveChangesForm').submit();
+        });
+
+        // Initialize an object to track the initial state of each checkbox
+        var initialState = {};
+
+        // Store the initial state of each checkbox when the page loads
+        $('.form-check-inputs').each(function () {
+            initialState[this.id] = this.checked;
+           
+        });
+
+        $('.form-check-inputs').change(function () {
+            var changedValues = {};
+
+            // Check each checkbox for changes
+            $('.form-check-inputs').each(function () {
+                if (this.checked !== initialState[this.id]) {
+                    changedValues[this.id] = this.checked;
+                }
+            });
+
+            // Update the hidden input with the changed values
+            $('#changedValuesInput').val(JSON.stringify(changedValues));
+            console.log(changedValues);
+            // Show or hide the "Save Changes" button based on whether there are any changes
+            if (Object.keys(changedValues).length > 0) {
+                $('#saveChangesButton').show();
+            } else {
+                $('#saveChangesButton').hide();
+            }
+        });
+
+
+    });
+
     const exampleModal = document.getElementById('myModal')
     if (exampleModal) {
         exampleModal.addEventListener('show.bs.modal', event => {

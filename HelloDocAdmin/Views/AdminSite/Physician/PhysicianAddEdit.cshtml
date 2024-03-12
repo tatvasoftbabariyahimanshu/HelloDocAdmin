@@ -1,0 +1,385 @@
+﻿@{
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+@model HelloDocAdmin.Entity.ViewModels.PhysiciansViewModel
+<div class="container">
+    <div class="card bg-transparent border-0">
+        <div class="card-header d-flex justify-content-between  border-0  bg-transparent p-1  mt-3 mb-2">
+            <div class="text-start d-flex align-items-center">
+                <h5 class="mt-2"><b> @ViewData["PhysicianAccount"] Physician Account</b></h5>
+
+            </div>
+            <div class="text-end">
+                <a asp-controller="Dashboard" asp-action="Index"
+                   class="btn btn-outline-info btn-back">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                         fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                              d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5" />
+                    </svg>Back
+                </a>
+            </div>
+        </div>
+
+        <div class="card-body rounded shadow">
+            <div class="mt-4">
+                <h6> <b>Account Information</b></h6>
+            </div>
+            <form asp-action="ResetPassAdmin" asp-controller="MyProfile">
+                <div class="row">
+
+                    <div class="col-md-6 mt-2">
+                        <div class=" mb-2">
+                            <div class="inputs-control ">
+                                <input placeholder=" " asp-for="UserName" class="input-outline w-100 inp " readonly type="text">
+                                <label class="inputs-lable">UserName</label>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-md-6 mt-2">
+                        <div class=" mb-2">
+                            <div class="inputs-control ">
+                                <input placeholder=" " name="Password" class="input-outline w-100 inp " type="text">
+                                <label class="inputs-lable">password</label>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-md-6 mt-2">
+                        <div class=" mb-2">
+                            <div class="input-control w-100 mt-3">
+                                <select class="input-outline input-outline-select inp  " asp-for="Status" required readonly data-allow-clear="true" tabindex="-1" onchange="myFunction_prof()" id="ProfessionType" data-control="select2" data-placeholder="Select Level">
+                                    <option>Status</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mt-2">
+                        <div class=" mb-2">
+                            <div class="input-control w-100 mt-3">
+                                <select class="input-outline input-outline-select inp  " asp-for="Roleid" required disabled data-allow-clear="true" tabindex="-1" onchange="myFunction_prof()" id="ProfessionType" asp-items="@(new SelectList(ViewBag.userrolecombobox,"RoleId","RoleName"))" data-control="select2" data-placeholder="Select Level">
+                                    <option>Role</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-end ">
+                    <button class="text-end btn btn-info text-white " type="submit">Edit</button>
+                    <button class="text-end btn btn-outline-info " type="submit">Reset Password</button>
+                </div>
+            </form>
+            <div class="mt-2">
+                <h6> <b>Administration Information</b></h6>
+            </div>
+            <form asp-action="SaveAdministrationinfo" asp-controller="MyProfile" method="post">
+                <div class="row">
+
+                    <div class="col-md-6 mt-2">
+                        <div class=" mb-3">
+                            <div class="inputs-control ">
+                                <input placeholder=" " asp-for="Firstname" class="input-outline w-100 inp admin-input " type="text">
+                                <label class="inputs-lable">FirstName</label>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mt-2">
+                        <div class=" mb-3">
+                            <div class="inputs-control ">
+                                <input placeholder=" " asp-for="Lastname" class="input-outline w-100 inp admin-input " type="text">
+                                <label class="inputs-lable">LastName</label>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-md-6 mt-2">
+                        <div class=" mb-3">
+                            <div class="inputs-control ">
+                                <input placeholder=" " asp-for="Email" class="input-outline w-100 inp admin-input " type="text">
+                                <label class="inputs-lable">Email</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mt-2">
+                        <div class=" mb-3">
+                            <div class="inputs-control ">
+                                <input placeholder=" "  class="input-outline w-100 inp  admin-input" type="text">
+                                <label class="inputs-lable">ConfirmEmail</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mt-2">
+                        <div class=" mb-3">
+                            <div class="inputs-control w-100 ">
+                                <input id="phone" asp-for="Mobile" placeholder="Mobile" type="text" class=" telephone input-outline admin-input w-100 inp align-items-center " />
+                                <span class="err-msg"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mt-2 d-flex justify-content-around flex-wrap">
+                        <input asp-for="Regionsid" type="hidden" id="regionids" />
+                      
+
+                            @foreach (var cb in ViewBag.RegionComboBox)
+                            {
+
+                                @if (Model != null && Model.Regionids.Count > 0)
+                                {
+                                    <div class="form-check mx-2">
+                                        <input class="form-check-input" value="@cb.RegionId" type="checkbox" name="Region" id="flexCheckDefault" checked>
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            @cb.RegionName
+                                        </label>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="form-check mx-2">
+                                        <input class="form-check-input" value="@cb.RegionId" type="checkbox" name="Region" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            @cb.RegionName
+                                        </label>
+                                    </div>
+                                }
+
+                            }
+                        
+                    </div>
+                </div>
+                <div class="text-end">
+                    <a class="btn btn-info text-white">
+                        Enter Payrate
+                    </a>
+                    <a onclick="enable_disable_administration()" id="edit" class="btn  btn-info text-white btn-submit ">
+                        Edit
+                    </a>
+                    <button type="submit" id="save1"  class="btn   btn-outline-info btn-submit mx-2 ">
+                        save
+                    </button>
+                    <button id="cancel1" @*asp-action="Index" asp-controller="MyProfile"*@ class="btn  btn-outline-danger ">
+                        cancel
+                    </button>
+                    
+                </div>
+            </form>
+            <div class="mt-2">
+                <h6> <b>Mailing and billing Information</b></h6>
+            </div>
+            <form asp-action="EditBillingInfo" asp-controller="MyProfile" method="post">
+                <div class="row">
+                    <div class="col-md-6 mt-2">
+                        <div class=" mb-3">
+                            <div class="inputs-control ">
+                                <input placeholder=" " asp-for="Address1" class="input-outline w-100 inp mail-billing-imp " type="text">
+                                <label class="inputs-lable">Address1</label>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mt-2">
+                        <div class=" mb-3">
+                            <div class="inputs-control  ">
+                                <input placeholder=" " asp-for="Address2" class="input-outline w-100 inp  mail-billing-imp" type="text">
+                                <label class="inputs-lable">Address2</label>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-md-6 mt-2">
+                        <div class=" mb-3">
+                            <div class="inputs-control ">
+                                <input placeholder=" " asp-for="City" class="input-outline w-100 inp  mail-billing-imp" type="text">
+                                <label class="inputs-lable">City</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mt-2">
+                        <div class=" mb-3">
+                            <div class="inputs-control ">
+                                <input placeholder=" " class="input-outline w-100 inp  mail-billing-imp" type="text">
+                                <label class="inputs-lable">State</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mt-2">
+                        <div class=" mb-3">
+                            <div class="inputs-control ">
+                                <input placeholder=" " asp-for="Zip" class="input-outline w-100 inp  mail-billing-imp" type="text">
+                                <label class="inputs-lable">Zip</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mt-2">
+                        <div class=" mb-3">
+                            <div class="inputs-control w-100 ">
+                                <input id="phone2" asp-for="Mobile" placeholder="Mobile" type="tel" class=" telephone input-outline mail-billing-imp w-100 inp align-items-center " />
+                                <span class="err-msg"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-end">
+                    <a onclick="enable_disable_mailBilling()" id="edit1" class="btn  btn-outline-info btn-submit ">
+                        Edit
+                    </a>
+                    <button type="submit" id="save1" class="btn  btn-outline-info btn-submit mx-2 ">
+                        save
+                    </button>
+                    <button id="cancel1" @*asp-action="Index" asp-controller="MyProfile"*@ class="btn  btn-outline-danger ">
+                        cancel
+                    </button>
+                </div>
+            </form>
+            <div class="mt-2">
+                <h6> <b>Provider Profile</b></h6>
+            </div>
+            <form asp-action="EditBillingInfo" asp-controller="MyProfile" method="post">
+                <div class="row">
+                    <div class="col-md-6 mt-2">
+                        <div class=" mb-3">
+                            <div class="inputs-control ">
+                                <input placeholder=" " asp-for="Businessname" class="input-outline w-100 inp mail-billing-imp " type="text">
+                                <label class="inputs-lable">Businessname</label>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mt-2">
+                        <div class=" mb-3">
+                            <div class="inputs-control  ">
+                                <input placeholder=" " asp-for="Businesswebsite" class="input-outline w-100 inp  mail-billing-imp" type="text">
+                                <label class="inputs-lable">Businesswebsite</label>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-md-6 mt-2">
+                        <div class="d-flex">
+                            <button type="button" id="choosenfile" class="col  btn upl-btn text-start text-secondary" onclick="document.getElementById('files').click()">
+                                Select File
+                            </button>
+                            <input id="files" type="file" class="d-none  form-control doc_uploder" name="UploadFile">
+                            <input name="id" value="" class="d-none" />
+                            <button type="submit" class="btn btn-info text-white py-2" value="Upload">
+                                <i class="fa fa-cloud-upload"></i>
+                                <span class="d-none d-sm-inline">Upload</span>
+                            </button>
+
+                        </div>
+                        <span class="err-msg" id="error-file"></span>
+                    </div>
+                    <div class="col-md-6 mt-2">
+                        <div class="d-flex">
+                            <div class="d-flex w-100">
+                                <button type="button" id="choosenfile" class="col  btn upl-btn text-start text-secondary" onclick="document.getElementById('files').click()">
+                                    Select File
+                                </button>
+                                <input id="files" type="file" class="d-none  form-control doc_uploder" name="UploadFile">
+                                <input name="id" value="" class="d-none" />
+                                <button type="submit" class="btn btn-info text-white py-2" value="Upload">
+                                    <i class="fa fa-cloud-upload"></i>
+                                    <span class="d-none d-sm-inline">Upload</span>
+                                </button>
+
+                            </div>
+                            <button class="btn btn-info mx-2 text-white">Create</button>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 mt-2">
+                        <div class="inputs-control w-100 mt-2">
+                            <textarea id="changenote" placeholder=" " asp-for="Adminnotes" rows="5" class="input-outline w-100  " type="text"></textarea>
+
+                            <label class="inputs-lable inputs-lable-textarea " id="notedata">Adminnotes</label>
+                        </div>
+</div>
+                  
+                </div>
+                <div class="text-end mt-2">
+                    <a onclick="enable_disable_mailBilling()" id="edit1" class="btn  btn-outline-info btn-submit ">
+                        Edit
+                    </a>
+                    <button type="submit" id="save1" class="btn  btn-outline-info btn-submit mx-2 ">
+                        save
+                    </button>
+                    <button id="cancel1" @*asp-action="Index" asp-controller="MyProfile"*@ class="btn  btn-outline-danger ">
+                        cancel
+                    </button>
+                </div>
+               
+            </form>
+            <hr /> 
+            <div class="mt-2">
+                <h6> <b>Onboarding</b></h6>
+
+            </div>
+
+            <table>
+                <tr>
+                    <td > <input class="form-check-input form-check-inputs"  type="checkbox" ></td>
+                    <td class="p-3  table-text fs-6">Independent Contractor Agreement</td>
+                    <td class="p-3 "><button class="btn btn-info text-white">Upload</button></td>
+                    <td class="p-3 "><button class="btn btn-info  text-white">View</button></td>
+                </tr>
+                <tr>
+                    <td> <input class="form-check-input form-check-inputs" type="checkbox"></td>
+                    <td class="p-3  table-text fs-6">Background check</td>
+                    <td class="p-3 "><button class="btn btn-info text-white">Upload</button></td>
+                    <td class="p-3 "><button class="btn btn-info  text-white">View</button></td>
+                </tr>
+                <tr>
+                    <td> <input class="form-check-input form-check-inputs" type="checkbox"></td>
+                    <td class="p-3  table-text fs-6">HIPAA Compliance</td>
+                    <td class="p-3 "><button class="btn btn-info text-white">Upload</button></td>
+                    <td class="p-3 "><button class="btn btn-info  text-white">View</button></td>
+                </tr>
+                <tr>
+                    <td> <input class="form-check-input form-check-inputs" type="checkbox"></td>
+                    <td class="p-3  table-text fs-6">NON-Disclosure Agreement</td>
+                    <td class="p-3 "><button class="btn btn-info text-white">Upload</button></td>
+                    <td class="p-3 "></td>
+                </tr>
+                <tr>
+                    <td> <input class="form-check-input form-check-inputs" type="checkbox"></td>
+                    <td class="p-3  table-text fs-6">License Document</td>
+                    <td class="p-3 "><button class="btn btn-info text-white">Upload</button></td>
+                    <td class="p-3 "></td>
+                </tr>
+            </table>
+
+            <hr/>
+            <div class="text-end mt-2">
+               
+                <button type="submit" id="save1" class="btn text-white btn-info btn-submit mx-2 ">
+                    save
+                </button>
+                <a id="cancel1" @*asp-action="Index" asp-controller="MyProfile"*@ class="btn  btn-danger ">
+                    Delete Account
+                </a>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script>
+    $("#files").change(function () {
+        filename = this.files[0].name;
+        console.log(filename);
+        $("#choosenfile").text(filename);
+    });
+    document.querySelector('form').addEventListener('submit', function (event) {
+        var fileInput = document.getElementById('files');
+        var fileName = fileInput.value;
+        var allowedExtensions = /(\.pdf|\.doc|\.docx|\.jpg|\.jpeg|\.png|\.jped|\.webp)$/i;
+        if (!allowedExtensions.exec(fileName)) {
+            document.getElementById('error-file').innerText = 'Only PDF, DOC, JPG, JPEG, PNG, JPED, and WEBP files are allowed.';
+            event.preventDefault();
+        }
+    });
+
+</script>
