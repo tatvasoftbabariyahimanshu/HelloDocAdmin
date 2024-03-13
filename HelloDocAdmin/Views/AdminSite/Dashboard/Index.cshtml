@@ -2,6 +2,11 @@
     Layout = "~/Views/Shared/_DashboardLayout.cshtml";
 }
 
+<div class="loding-div">
+    <div class="bro" id="BRO" style="height:100%;width:100%;position:absolute;background-color:black;opacity:0.2;z-index:1">
+    </div>
+    <div class="loading" id="Loading"></div>
+</div>
 
 <div class="container-fluid p-4 ">
     <partial name="_UpperTab.cshtml" />
@@ -14,8 +19,11 @@
 <script>
  
     $(function () {
- 
+        $(".loding-div").show();
+        
         $("#filterForm").submit();
+        $(".loding-div").hide();
+      
     });
 
 

@@ -2,6 +2,13 @@
     Layout = "~/Views/Shared/_DashboardLayout.cshtml";
 }
 @model HelloDocAdmin.Entity.ViewModels.PhysiciansViewModel
+<style>
+    canvas#signature {
+        border: 2px solid black;
+    }
+
+   
+</style>
 <div class="container">
     <div class="card bg-transparent border-0">
         <div class="card-header d-flex justify-content-between  border-0  bg-transparent p-1  mt-3 mb-2">
@@ -22,10 +29,11 @@
         </div>
 
         <div class="card-body rounded shadow">
+                 <form id="addedit" class="row g-3" asp-action="PhysicianAddEdit" asp-controller="Physician" enctype="multipart/form-data" >
             <div class="mt-4">
                 <h6> <b>Account Information</b></h6>
             </div>
-            <form asp-action="ResetPassAdmin" asp-controller="MyProfile">
+          
                 <div class="row">
 
                     <div class="col-md-6 mt-2">
@@ -69,11 +77,11 @@
                     <button class="text-end btn btn-info text-white " type="submit">Edit</button>
                     <button class="text-end btn btn-outline-info " type="submit">Reset Password</button>
                 </div>
-            </form>
+         
             <div class="mt-2">
                 <h6> <b>Administration Information</b></h6>
             </div>
-            <form asp-action="SaveAdministrationinfo" asp-controller="MyProfile" method="post">
+           
                 <div class="row">
 
                     <div class="col-md-6 mt-2">
@@ -164,11 +172,11 @@
                     </button>
                     
                 </div>
-            </form>
+          
             <div class="mt-2">
                 <h6> <b>Mailing and billing Information</b></h6>
             </div>
-            <form asp-action="EditBillingInfo" asp-controller="MyProfile" method="post">
+           
                 <div class="row">
                     <div class="col-md-6 mt-2">
                         <div class=" mb-3">
@@ -233,11 +241,11 @@
                         cancel
                     </button>
                 </div>
-            </form>
+          
             <div class="mt-2">
                 <h6> <b>Provider Profile</b></h6>
             </div>
-            <form asp-action="EditBillingInfo" asp-controller="MyProfile" method="post">
+          
                 <div class="row">
                     <div class="col-md-6 mt-2">
                         <div class=" mb-3">
@@ -286,8 +294,19 @@
                                     <span class="d-none d-sm-inline">Upload</span>
                                 </button>
 
+
                             </div>
                             <button class="btn btn-info mx-2 text-white">Create</button>
+                        </div>
+                        <canvas id="signature-pad" class="border-2" width="400" height="200"></canvas>
+
+                        <div>
+                            <button id="clear-button">Clear</button>
+                            <button id="undo-button">Undo</button>
+                            <button id="save-button">Save</button>
+                            <form id="save-form" method="post" action="/YourController/SaveSignature">
+                                <input type="hidden" id="signature-data" name="signatureData">
+                            </form>
                         </div>
                     </div>
 
@@ -312,7 +331,7 @@
                     </button>
                 </div>
                
-            </form>
+           
             <hr /> 
             <div class="mt-2">
                 <h6> <b>Onboarding</b></h6>
@@ -362,9 +381,11 @@
                     Delete Account
                 </a>
             </div>
+            </form>
         </div>
-    </div>
 
+    </div>
+  
 </div>
 <script>
     $("#files").change(function () {
@@ -381,5 +402,47 @@
             event.preventDefault();
         }
     });
+    $(document).ready(function () {
+        var canvas = $('#signature-pad')[0];
+        var ctx = canvas.getContext('2d');
+        var drawing = false;
+        var strokes = [];
 
+        $('#signature-pad').on('mousedown', function (e) {
+            drawing = true;
+            ctx.beginPath();
+            ctx.moveTo(e.clientX - canvas.getBoundingClientRect().left, e.clientY - canvas.getBoundingClientRect().top);
+        });
+
+        $('#signature-pad').on('mousemove', function (e) {
+            if (drawing) {
+                ctx.lineTo(e.clientX - canvas.getBoundingClientRect().left, e.clientY - canvas.getBoundingClientRect().top);
+                ctx.stroke();
+            }
+        });
+
+        $('#signature-pad').on('mouseup', function () {
+            if (drawing) {
+                drawing = false;
+                strokes.push(ctx.getImageData(0, 0, canvas.width, canvas.height));
+            }
+        });
+
+        $('#clear-button').on('click', function () {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            strokes = [];
+        });
+
+        $('#undo-button').on('click', function () {
+            if (strokes.length > 0) {
+                ctx.putImageData(strokes.pop(), 0, 0);
+            }
+        });
+
+        $('#save-button').on('click', function () {
+            var dataURL = canvas.toDataURL("image/png");
+            $('#signature-data').val(dataURL); // Set the value of the hidden input field
+            $('#save-form').submit(); // Submit the form
+        });
+    });
 </script>

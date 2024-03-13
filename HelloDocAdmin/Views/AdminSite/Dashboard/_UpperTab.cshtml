@@ -1,4 +1,6 @@
 ﻿@using HelloDocAdmin.Entity.ViewModels;
+@using HelloDocAdmin.Controllers.Authenticate;
+
 
 @{
     ViewData["Title"] = "_UpperTab";
@@ -13,7 +15,16 @@
             <div class="row tb">
            
                 <div class="col-md-2 col-sm-4 col-4 ">
-                    <button type="submit" onclick="actAlrt(1)" value="1" name="Status" class="btn alert alert-primary  btn-outline-primary w-100 text-start active text-uppercase  a-primary t-tab">
+                    <button type="submit" onclick="actAlrt(1)" value="1" name="Status" class="btn alert alert-primary 
+
+@{
+if(CV.CurrentStatus()=="1")
+                    {
+                        @Html.Raw("active")
+                    }
+}
+
+btn-outline-primary w-100 text-start  text-uppercase  a-primary t-tab">
                     <div class="d-inline-flex">
                         <i class="fa-solid fa-circle-plus me-2 align-self-center d-none d-sm-block"></i>
                         NEW
@@ -24,7 +35,14 @@
                     </button>
                 </div>
                 <div class="col-md-2 col-sm-4 col-4 position-relative">
-                    <button type="submit" value="2" onclick="actAlrt(2)" name="Status" class="btn alert alert-info btn-outline-info w-100 text-start text-uppercase   a-info t-tab">
+                    <button type="submit" value="2" onclick="actAlrt(2)" name="Status" class="btn alert
+@{
+if(CV.CurrentStatus()=="2")
+                    {
+                            @Html.Raw("active")
+                    }
+}
+alert-info btn-outline-info w-100 text-start text-uppercase   a-info t-tab">
                     <div class="d-inline-flex">
                         <i class="fa-solid fa-user-clock me-2 align-self-center d-none d-sm-block"></i>
                         PENDING
@@ -35,7 +53,14 @@
                     </button>
                 </div>
                 <div class="col-md-2 col-sm-4 col-4 position-relative">
-                    <button type="submit" value="4,5" onclick="actAlrt(3)" name="Status" class="btn alert alert-success btn-outline-success w-100 text-start text-uppercase  a-success t-tab">
+                    <button type="submit" value="4,5" onclick="actAlrt(3)" name="Status" class="btn
+@{
+if(CV.CurrentStatus()=="4,5")
+                    {
+                            @Html.Raw("active")
+                    }
+}
+alert alert-success btn-outline-success w-100 text-start text-uppercase  a-success t-tab">
                     <div class="d-inline-flex">
                         <i class="fa-solid fa-circle-check me-2 align-self-center d-none d-sm-block"></i>
                         ACTIVE
@@ -47,7 +72,15 @@
 
                 </div>
                 <div class="col-md-2 col-sm-4 col-4 position-relative">
-                    <button type="submit" value="6" onclick="actAlrt(4)" name="Status" class="btn alert alert-warning  btn-outline-warning w-100 text-start text-uppercase  a-warning t-tab">
+                    <button type="submit" value="6" onclick="actAlrt(4)" name="Status" class="btn
+
+@{
+if(CV.CurrentStatus()=="6")
+                    {
+                            @Html.Raw("active")
+                    }
+}
+alert alert-warning  btn-outline-warning w-100 text-start text-uppercase  a-warning t-tab">
                     <div class="d-inline-flex">
                         <i class="fa-solid fa-clock-rotate-left me-2 align-self-center d-none d-sm-block"></i>
                         CONCLUDE
@@ -58,7 +91,16 @@
                     </button>
                 </div>
                 <div class="col-md-2 col-sm-4 col-4 position-relative">
-                    <button type="submit" value="3,7,8" onclick="actAlrt(5)" name="Status" class="btn alert alert-danger btn-outline-danger w-100 text-start text-uppercase  a-danger t-tab">
+                    <button type="submit" value="3,7,8" onclick="actAlrt(5)" name="Status" class="btn alert alert-danger
+
+@{
+if(CV.CurrentStatus()=="3,7,8")
+                    {
+                            @Html.Raw("active")
+                    }
+}
+
+btn-outline-danger w-100 text-start text-uppercase  a-danger t-tab">
                     <div class="d-inline-flex">
                         <i class="fa-solid fa-user-xmark me-2 align-self-center d-none d-sm-block"></i>
                         TO CLOSE
@@ -69,7 +111,15 @@
                     </button>
                 </div>
                 <div class="col-md-2 col-sm-4  col-4  position-relative">
-                    <button type="submit" value="9" onclick="actAlrt(6)" name="Status" class="btn alert alert-success btn-outline-success w-100 text-start text-uppercase  a-success t-tab">
+                    <button type="submit" value="9" onclick="actAlrt(6)" name="Status" class="btn 
+
+@{
+if(CV.CurrentStatus()=="9")
+                    {
+                            @Html.Raw("active")
+                    }
+}
+alert alert-success btn-outline-success w-100 text-start text-uppercase  a-success t-tab">
                     <div class="d-inline-flex">
                         <i class="fa-solid fa-circle-dollar-to-slot me-2 align-self-center d-none d-sm-block"></i>
                         UNPAID

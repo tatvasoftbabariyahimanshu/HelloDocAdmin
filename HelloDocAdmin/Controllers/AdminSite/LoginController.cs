@@ -1,4 +1,5 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using DocumentFormat.OpenXml.InkML;
 using HelloDocAdmin.Entity.Data;
 using HelloDocAdmin.Entity.Models;
 using HelloDocAdmin.Entity.ViewModels.Authentication;
@@ -9,7 +10,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
-
+using System.Net;
+using Microsoft.AspNetCore.Http.Extensions;
 
 namespace HelloDocAdmin.Controllers.AdminSite
 {
@@ -47,6 +49,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
                     Response.Cookies.Append("jwt", jwttoken);
                     Response.Cookies.Append("UserName", admin.Username);
                     Response.Cookies.Append("UserID", admin.AspUserID);
+                    Response.Cookies.Append("Status","1");
 
 
 
@@ -107,7 +110,9 @@ namespace HelloDocAdmin.Controllers.AdminSite
         {
             if(ModelState.IsValid)
             {
+                
                 ENC eNC = new ENC();
+            
                cpm.Email=eNC.DecryptString(cpm.Email);
                 if(_loginRepository.savepass(cpm))
                 {
@@ -139,27 +144,39 @@ namespace HelloDocAdmin.Controllers.AdminSite
         public async Task<IActionResult> ChangePassword(string email, string datetime)
         {
             ENC sn=new ENC();
-            ChangePassModel cpm=new ChangePassModel();
+            var currentUrl =Request.GetDisplayUrl();
+            Console.WriteLine(currentUrl);
+            ChangePassModel cpm =new ChangePassModel();
             cpm.Email = sn.DecryptString(email);
             TimeSpan time = DateTime.Now - sn.DecryptDate(datetime);
-            if (time.TotalHours > 24)
+
+            if(!_loginRepository.islinkexist(currentUrl))
             {
-                return View("../AdminSite/Login/LinkExpired");
+                if (time.TotalHours > 24)
+                {
+                    return View("../AdminSite/Login/LinkExpired");
+                }
+                else
+                {
+                    return View("../AdminSite/Login/Changepass", cpm);
+                }
             }
             else
             {
-                return View("../AdminSite/Login/Changepass",cpm);
+                return View("../AdminSite/Login/LinkExpired");
             }
+         
             
         }
         public async Task<IActionResult> NewRegsiter(string mail, string datetime)
         {
             ENC sn = new ENC();
-           NewRegistration cpm=new NewRegistration
+            NewRegistration cpm=new NewRegistration
            {
                Email= sn.DecryptString(mail),
            };
             TimeSpan time = DateTime.Now - sn.DecryptDate(datetime);
+
             if (time.TotalHours > 24)
             {
                 return View("../AdminSite/Login/LinkExpired");

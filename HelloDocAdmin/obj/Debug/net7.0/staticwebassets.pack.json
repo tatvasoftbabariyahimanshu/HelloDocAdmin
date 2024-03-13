@@ -5,6 +5,10 @@
       "PackagePath": "staticwebassets\\HelloDocAdmin.bundle.scp.css"
     },
     {
+      "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\11116016_415.jpg",
+      "PackagePath": "staticwebassets\\Upload\\11116016_415.jpg"
+    },
+    {
       "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\8145760_3816471.jpg",
       "PackagePath": "staticwebassets\\Upload\\8145760_3816471.jpg"
     },
@@ -119,6 +123,14 @@
     {
       "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\req_3\\Fig1. Platform login page.jpg",
       "PackagePath": "staticwebassets\\Upload\\req_3\\Fig1. Platform login page.jpg"
+    },
+    {
+      "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\req_4\\11116016_415.jpg",
+      "PackagePath": "staticwebassets\\Upload\\req_4\\11116016_415.jpg"
+    },
+    {
+      "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\req_4\\Fig1. Platform login page.jpg",
+      "PackagePath": "staticwebassets\\Upload\\req_4\\Fig1. Platform login page.jpg"
     },
     {
       "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\req_81\\Screenshot 2024-02-15 102048.png",

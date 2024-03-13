@@ -27,8 +27,8 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
         public async Task<IActionResult> Index()
         {
-           
 
+     
             ViewBag.RegionComboBox = await _combobox.RegionComboBox();
             ViewBag.CaseReasonComboBox = await _combobox.CaseReasonComboBox();
             DashboardCardsModel model = new DashboardCardsModel();
@@ -53,12 +53,13 @@ namespace HelloDocAdmin.Controllers.AdminSite
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> _SearchResult(string Status)
         {
-           
-            if (Status == null)
+            if(Status==null)
             {
-                Status = "1";
+                Status = CV.CurrentStatus();
             }
 
+            Response.Cookies.Delete("Status");
+            Response.Cookies.Append("Status", Status);
             List<DashboardRequestModel> contacts = _dashboardrepo.GetRequests(Status);
             TempData["CurrentStatusinlist"] = Status;
 
@@ -94,29 +95,29 @@ namespace HelloDocAdmin.Controllers.AdminSite
             switch (Status)
             {
                 case "1":
-
+                  
                     return PartialView("../AdminSite/Dashboard/_newList", contacts);
 
                     break;
                 case "2":
 
-
+                  
                     return PartialView("../AdminSite/Dashboard/_pandingList", contacts);
                     break;
                 case "4,5":
-
+                  
                     return PartialView("../AdminSite/Dashboard/_activeList", contacts);
                     break;
                 case "6":
-
+              
                     return PartialView("../AdminSite/Dashboard/_concludeList", contacts);
                     break;
                 case "3,7,8":
-
+                   
                     return PartialView("../AdminSite/Dashboard/_toCloseList", contacts);
                     break;
                 case "9":
-
+          
                     return PartialView("../AdminSite/Dashboard/_toUnpaidList", contacts);
                     break;
             }

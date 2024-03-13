@@ -26,37 +26,43 @@ namespace HelloDocAdmin.Repositories
        
         public async Task<UserInfo> CheckAccessLogin(LoginViewModel vm)
         {
-            var user = await _context.Aspnetusers.FirstOrDefaultAsync(u => u.Email == vm.Email);
-            var admindata= _context.Admins.FirstOrDefault(u=> u.Aspnetuserid == user.Id); 
-            UserInfo admin = new UserInfo();
-            if (user != null)
+            try
             {
-                var hasher = new PasswordHasher<string>();
-                PasswordVerificationResult result = hasher.VerifyHashedPassword(null, user.Passwordhash, vm.Password);
-                if (result != PasswordVerificationResult.Success)
+                var user = await _context.Aspnetusers.FirstOrDefaultAsync(u => u.Email == vm.Email);
+                var admindata = _context.Admins.FirstOrDefault(u => u.Aspnetuserid == user.Id);
+                UserInfo admin = new UserInfo();
+                if (user != null)
                 {
-                    admin = null;
-                    return admin;
+                    var hasher = new PasswordHasher<string>();
+                    PasswordVerificationResult result = hasher.VerifyHashedPassword(null, user.Passwordhash, vm.Password);
+                    if (result != PasswordVerificationResult.Success)
+                    {
+                        admin = null;
+                        return admin;
+                    }
+                    else
+                    {
+                        var data = _context.Aspnetuserroles.FirstOrDefault(E => E.Userid == user.Id);
+                        var datarole = _context.Aspnetroles.FirstOrDefault(e => e.Id == data.Roleid);
+
+
+                        admin.Username = user.Username;
+                        admin.FirstName = admin.FirstName ?? string.Empty;
+                        admin.LastName = admin.LastName ?? string.Empty;
+                        admin.Role = datarole.Name;
+                        //admin.UserId = admindata.Adminid ?? null;
+                        admin.AspUserID = user.Id;
+
+                        return admin;
+                    }
                 }
                 else
                 {
-                    var data =  _context.Aspnetuserroles.FirstOrDefault(E => E.Userid == user.Id);
-                    var datarole=_context.Aspnetroles.FirstOrDefault(e=>e.Id == data.Roleid);
-
-                    
-                                       admin.Username = user.Username;
-                    admin.FirstName = admin.FirstName ?? string.Empty;
-                                       admin.LastName = admin.LastName ?? string.Empty;
-                                       admin.Role = datarole.Name;
-                    //admin.UserId = admindata.Adminid ?? null;
-                    admin.AspUserID=user.Id;
-                                  
                     return admin;
                 }
-            }
-            else
+            }catch (Exception ex)
             {
-                return admin;
+                return null;
             }
         }
        
@@ -97,7 +103,19 @@ namespace HelloDocAdmin.Repositories
             }
 
         }
-
+        public bool islinkexist(string pwdModified)
+        {
+            var data = _context.Aspnetusers.FirstOrDefault(e => e.pwdModified == pwdModified);
+                if(data==null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+           
+        }
         public bool savepass(ChangePassModel cpm)
         {
             if (cpm == null)
@@ -113,7 +131,8 @@ namespace HelloDocAdmin.Repositories
                 if (aspnetuser != null)
                 {
                     aspnetuser.Passwordhash = hashedPassword;
-                    aspnetuser.Modifieddate = DateTime.Now;                 
+                    aspnetuser.Modifieddate = DateTime.Now;
+                    aspnetuser.pwdModified = cpm.pwdModified;
                     _context.Aspnetusers.Update(aspnetuser);
                     _context.SaveChanges();  
                     return true;

@@ -15,5 +15,6 @@ namespace HelloDocAdmin.Repositories.Interface
 
         public bool savepass(ChangePassModel cpm);
         public bool saveuser(NewRegistration cpm);
+        public bool islinkexist(string pwdModified);
     }
 }

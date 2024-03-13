@@ -20,6 +20,8 @@ namespace HelloDocAdmin.Entity.ViewModels.Authentication
         public string Password { get; set; }
 
         public string ConfirmPassword { get; set; }
+
+        public string? pwdModified { get; set; }
     }
 
     public class ForgotPassword

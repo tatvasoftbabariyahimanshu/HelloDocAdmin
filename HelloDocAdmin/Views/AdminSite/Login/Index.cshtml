@@ -31,7 +31,7 @@
         <div class="inputs-control w-100 mt-3 mb-3">
             <input placeholder=" " asp-for="Password" class="input-outline  w-100 inp" type="password" id="pas1">
             <label class="inputs-lable">Password</label>
-            <a onclick="Toggle()"><i class="far fa-eye icon-input bg-transparent" id="togglePassword"></i></a>
+            <a onclick="Toggle1()"><i class="far fa-eye icon-input bg-transparent" id="togglePassword"></i></a>
         </div>
         <span asp-validation-for="Password" class="err-msg"></span>
     </div>
@@ -43,7 +43,7 @@
 
     </form>
 <script>
-    function Toggle() {
+    function Toggle1() {
         var pas = document.getElementById('pas1');
         var toggle = document.getElementById('togglePassword');
 

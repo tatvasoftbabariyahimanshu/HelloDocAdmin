@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "g5wLEW8xcZtBPXuI3F8vMV0FLLb/Q9bHldE+nL54gs0=",
+  "Hash": "YqEKRXZvNcsNQ0kveT54YF/HET0jdSAMIWyea0VTNz8=",
   "Source": "HelloDocAdmin",
   "BasePath": "_content/HelloDocAdmin",
   "Mode": "Default",
@@ -5729,6 +5729,23 @@
       "OriginalItemSpec": "wwwroot\\plugins\\mvc-jquery-validate\\jquery.validate.unobtrusive.min.js"
     },
     {
+      "Identity": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\11116016_415.jpg",
+      "SourceId": "HelloDocAdmin",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\",
+      "BasePath": "_content/HelloDocAdmin",
+      "RelativePath": "Upload/11116016_415.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Upload\\11116016_415.jpg"
+    },
+    {
       "Identity": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\8145760_3816471.jpg",
       "SourceId": "HelloDocAdmin",
       "SourceType": "Discovered",
@@ -6135,6 +6152,40 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Upload\\req_3\\Fig1. Platform login page.jpg"
+    },
+    {
+      "Identity": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\req_4\\11116016_415.jpg",
+      "SourceId": "HelloDocAdmin",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\",
+      "BasePath": "_content/HelloDocAdmin",
+      "RelativePath": "Upload/req_4/11116016_415.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Upload\\req_4\\11116016_415.jpg"
+    },
+    {
+      "Identity": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\req_4\\Fig1. Platform login page.jpg",
+      "SourceId": "HelloDocAdmin",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\",
+      "BasePath": "_content/HelloDocAdmin",
+      "RelativePath": "Upload/req_4/Fig1. Platform login page.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Upload\\req_4\\Fig1. Platform login page.jpg"
     },
     {
       "Identity": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\req_81\\Screenshot 2024-02-15 102048.png",

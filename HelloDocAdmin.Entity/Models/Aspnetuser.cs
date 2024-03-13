@@ -18,6 +18,7 @@ public partial class Aspnetuser
     public DateTime CreatedDate { get; set; }
 
     public string? Ip { get; set; }
+    public string? pwdModified { get; set; }
 
     public DateTime? Modifieddate { get; set; }
 
