@@ -12,6 +12,10 @@ namespace HelloDocAdmin.Repositories.Interface
     {
         Task<List<PhysiciansViewModel>> PhysicianAll();
         Task<List<PhysiciansViewModel>> PhysicianByRegion(int? region);
-          Task<bool> ChangeNotificationPhysician(Dictionary<int, bool> changedValuesDict);
+        Task<bool> ChangeNotificationPhysician(Dictionary<int, bool> changedValuesDict);
+        public  Task<bool> EditAccountInfo(PhysiciansViewModel vm);
+        public Task<bool> ResetPassword(int Physicianid,string Password);
+        public Task<bool> PhysicianAddEdit(PhysiciansViewModel physiciandata, string AdminId);
+        public  Task<PhysiciansViewModel> GetPhysicianById(int id);
     }
 }

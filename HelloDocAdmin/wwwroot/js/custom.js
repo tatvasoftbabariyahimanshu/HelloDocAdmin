@@ -74,3 +74,23 @@ $(document).ready(function () {
     $('#file-name').val(fileName);
   });
 })
+$(document).ready(function () {
+    $('.btn-upl1').on('click', function () {
+        $('.file1').trigger('click');
+    });
+
+    $('.file1').on('change', function () {
+        var fileName = $(this)[0].files[0].name;
+        $('#file-name1').val(fileName);
+    });
+})
+$(document).ready(function () {
+    $('.btn-upl2').on('click', function () {
+        $('.file2').trigger('click');
+    });
+
+    $('.file2').on('change', function () {
+        var fileName = $(this)[0].files[0].name;
+        $('#file-name2').val(fileName);
+    });
+})

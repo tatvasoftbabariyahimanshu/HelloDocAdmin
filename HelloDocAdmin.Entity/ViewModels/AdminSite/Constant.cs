@@ -24,5 +24,16 @@ namespace HelloDocAdmin.Entity.ViewModels.AdminSite
             ToClose,
             UnPaid
         }
+        public enum Status
+        {
+            Unassigne = 1, Accepted, Cancelled, MDEnRoute, MDONSite, Conclude, CancelledByPatients, Closed, Unpaid, Clear,
+            Block
+
+        }
+        public enum AdminStatus
+        {
+            Pending = 1, Active, NotActive
+
+        }
     }
 }

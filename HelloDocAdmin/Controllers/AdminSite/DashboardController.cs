@@ -53,7 +53,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> _SearchResult(string Status)
         {
-            if(Status==null)
+             if(Status==null)
             {
                 Status = CV.CurrentStatus();
             }

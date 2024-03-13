@@ -1,14 +1,42 @@
 ﻿@{
     Layout = "~/Views/Shared/_DashboardLayout.cshtml";
 }
+@using  static HelloDocAdmin.Entity.ViewModels.AdminSite.Constant;
 @model HelloDocAdmin.Entity.ViewModels.PhysiciansViewModel
+
 <style>
     canvas#signature {
         border: 2px solid black;
     }
 
+    
+
    
 </style>
+@{
+    var enumData = from AdminStatus e in Enum.GetValues(typeof(AdminStatus))
+                   select new
+                   {
+                       ID = (int)e,
+                       Name = e.ToString()
+                   };
+
+    var status = "null";
+    if (TempData["Status"] == null)
+    {
+        status = "null";
+    }
+    else
+    {
+        status = TempData["Status"].ToString();
+
+    }
+
+
+}
+@{
+    string disable = Model == null ? "disabled" : "";
+}
 <div class="container">
     <div class="card bg-transparent border-0">
         <div class="card-header d-flex justify-content-between  border-0  bg-transparent p-1  mt-3 mb-2">
@@ -31,6 +59,7 @@
         <div class="card-body rounded shadow">
                  <form id="addedit" class="row g-3" asp-action="PhysicianAddEdit" asp-controller="Physician" enctype="multipart/form-data" >
             <div class="mt-4">
+                    <input id="123" type="hidden" name="Physicianid" asp-for="Physicianid" />
                 <h6> <b>Account Information</b></h6>
             </div>
           
@@ -39,7 +68,7 @@
                     <div class="col-md-6 mt-2">
                         <div class=" mb-2">
                             <div class="inputs-control ">
-                                <input placeholder=" " asp-for="UserName" class="input-outline w-100 inp " readonly type="text">
+                                <input placeholder=" " asp-for="UserName" class="input-outline inp-dis w-100 inp asp"  type="text">
                                 <label class="inputs-lable">UserName</label>
                             </div>
 
@@ -57,25 +86,32 @@
                     <div class="col-md-6 mt-2">
                         <div class=" mb-2">
                             <div class="input-control w-100 mt-3">
-                                <select class="input-outline input-outline-select inp  " asp-for="Status" required readonly data-allow-clear="true" tabindex="-1" onchange="myFunction_prof()" id="ProfessionType" data-control="select2" data-placeholder="Select Level">
+                                <select class="input-outline input-outline-select inp asp  inp-dis" asp-for="Roleid" required data-allow-clear="true" tabindex="-1" asp-items="@(new SelectList(enumData, "ID", "Name"))" data-control="select2" data-placeholder="Select Level">
                                     <option>Status</option>
                                 </select>
+                              
+                              
+                              
+                              
+                              
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6 mt-2">
                         <div class=" mb-2">
                             <div class="input-control w-100 mt-3">
-                                <select class="input-outline input-outline-select inp  " asp-for="Roleid" required disabled data-allow-clear="true" tabindex="-1" onchange="myFunction_prof()" id="ProfessionType" asp-items="@(new SelectList(ViewBag.userrolecombobox,"RoleId","RoleName"))" data-control="select2" data-placeholder="Select Level">
+                                <select class="input-outline input-outline-select inp  asp inp-dis " asp-for="Roleid" required data-allow-clear="true" tabindex="-1" onchange="myFunction_prof()" id="ProfessionType" asp-items="@(new SelectList(ViewBag.userrolecombobox,"RoleId","RoleName"))" data-control="select2" data-placeholder="Select Level">
                                     <option>Role</option>
                                 </select>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="text-end ">
-                    <button class="text-end btn btn-info text-white " type="submit">Edit</button>
-                    <button class="text-end btn btn-outline-info " type="submit">Reset Password</button>
+                <div class="text-end editable" style="display:none">
+                    <button type="submit" asp-action="EditAccountInfo" asp-controller="Physician" class="btn-info btn text-white" id="saveasp" style="display:none">Save</button>
+                    <div class="btn btn-info text-white" id="editasp">edit</div>
+                    <div class="btn btn-info text-white" id="cancelasp">Cancel</div>
+                    <button class="text-end btn btn-outline-info " asp-action="ResetPassword" asp-controller="Physician" id="submitresetpass">Reset Password</button>
                 </div>
          
             <div class="mt-2">
@@ -129,31 +165,52 @@
                     </div>
                     <div class="col-md-6 mt-2 d-flex justify-content-around flex-wrap">
                         <input asp-for="Regionsid" type="hidden" id="regionids" />
-                      
 
-                            @foreach (var cb in ViewBag.RegionComboBox)
+
+                        @foreach (var cb in ViewBag.RegionComboBox)
+                        {
+
+                            @if (Model != null  )
                             {
-
-                                @if (Model != null && Model.Regionids.Count > 0)
+                                @if (Model.Regionids!=null)
                                 {
-                                    <div class="form-check mx-2">
-                                        <input class="form-check-input" value="@cb.RegionId" type="checkbox" name="Region" id="flexCheckDefault" checked>
-                                        <label class="form-check-label" for="flexCheckDefault">
-                                            @cb.RegionName
-                                        </label>
-                                    </div>
-                                }
-                                else
-                                {
-                                    <div class="form-check mx-2">
-                                        <input class="form-check-input" value="@cb.RegionId" type="checkbox" name="Region" id="flexCheckDefault">
-                                        <label class="form-check-label" for="flexCheckDefault">
-                                            @cb.RegionName
-                                        </label>
-                                    </div>
-                                }
+                                    @if (Model.Regionids.Exists(id => id.regionid == cb.RegionId))
+                                    {
 
+                                        <div class="form-check mx-2">
+                                            <input class="form-check-input regionbox admin-input" value="@cb.RegionId" type="checkbox" name="Region" id="flexCheckDefault" checked>
+                                            <label class="form-check-label" for="flexCheckDefault">
+                                                @cb.RegionName
+                                            </label>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="form-check mx-2">
+                                            <input class="form-check-input regionbox admin-input" value="@cb.RegionId" type="checkbox" name="Region" id="flexCheckDefault">
+                                            <label class="form-check-label" for="flexCheckDefault">
+                                                @cb.RegionName
+                                            </label>
+                                        </div>
+                                    }
+                                }
+                               
+
+                               
+                               
                             }
+                            else
+                            {
+                                <div class="form-check mx-2">
+                                    <input class="form-check-input regionbox" value="@cb.RegionId" type="checkbox" name="Region" id="flexCheckDefault">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                        @cb.RegionName
+                                    </label>
+                                </div>
+                            }
+                            
+
+                        }
                         
                     </div>
                 </div>
@@ -167,9 +224,9 @@
                     <button type="submit" id="save1"  class="btn   btn-outline-info btn-submit mx-2 ">
                         save
                     </button>
-                    <button id="cancel1" @*asp-action="Index" asp-controller="MyProfile"*@ class="btn  btn-outline-danger ">
+                    <button id="cancel1" asp-action="Index" asp-controller="MyProfile" class="btn  btn-outline-danger ">
                         cancel
-                    </button>
+                   </button>
                     
                 </div>
           
@@ -207,16 +264,17 @@
                     </div>
                     <div class="col-md-6 mt-2">
                         <div class=" mb-3">
-                            <div class="inputs-control ">
-                                <input placeholder=" " class="input-outline w-100 inp  mail-billing-imp" type="text">
-                                <label class="inputs-lable">State</label>
+                            <div class="input-control w-100 mt-3">
+                                <select class="input-outline input-outline-select " asp-for="Regionid"  data-allow-clear="true" tabindex="-1" onchange="myFunction1()" id="region2" asp-items="@(new SelectList(ViewBag.RegionComboBox,"RegionId","RegionName"))" data-control="select2" data-placeholder="Select Level">
+                                    <option>All Region</option>
+                                </select>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6 mt-2">
                         <div class=" mb-3">
                             <div class="inputs-control ">
-                                <input placeholder=" " asp-for="Zip" class="input-outline w-100 inp  mail-billing-imp" type="text">
+                                <input placeholder=" " asp-for="Zipcode" class="input-outline w-100 inp  mail-billing-imp" type="text">
                                 <label class="inputs-lable">Zip</label>
                             </div>
                         </div>
@@ -230,17 +288,17 @@
                         </div>
                     </div>
                 </div>
-                <div class="text-end">
+              @*  <div class="text-end">
                     <a onclick="enable_disable_mailBilling()" id="edit1" class="btn  btn-outline-info btn-submit ">
                         Edit
                     </a>
                     <button type="submit" id="save1" class="btn  btn-outline-info btn-submit mx-2 ">
                         save
                     </button>
-                    <button id="cancel1" @*asp-action="Index" asp-controller="MyProfile"*@ class="btn  btn-outline-danger ">
+                    <button id="cancel1"  class="btn  btn-outline-danger ">
                         cancel
                     </button>
-                </div>
+                </div>*@
           
             <div class="mt-2">
                 <h6> <b>Provider Profile</b></h6>
@@ -267,47 +325,64 @@
                         </div>
                     </div>
                     <div class="col-md-6 mt-2">
-                        <div class="d-flex">
-                            <button type="button" id="choosenfile" class="col  btn upl-btn text-start text-secondary" onclick="document.getElementById('files').click()">
-                                Select File
-                            </button>
-                            <input id="files" type="file" class="d-none  form-control doc_uploder" name="UploadFile">
-                            <input name="id" value="" class="d-none" />
-                            <button type="submit" class="btn btn-info text-white py-2" value="Upload">
-                                <i class="fa fa-cloud-upload"></i>
-                                <span class="d-none d-sm-inline">Upload</span>
-                            </button>
 
-                        </div>
+                        <input type="file" id="file1" class="file1 file-uplode" name="PhotoFile" asp-for="PhotoFile">
+                            <div class="d-flex">
+                                <input placeholder="Photo" class="input-outline w-100 inp" type="text" id="file-name1"
+                                       readonly="readonly">
+
+                                <input type="button" class="btn btn-upl1 btn-info  btn-submit " value="uplode" style="color: white;">
+
+
+                            </div>
+                            
+
+                       
                         <span class="err-msg" id="error-file"></span>
                     </div>
                     <div class="col-md-6 mt-2">
                         <div class="d-flex">
+                            <input type="file" id="file2"  class="file2 file-uplode" name="SignatureFile" asp-for="SignatureFile">
                             <div class="d-flex w-100">
-                                <button type="button" id="choosenfile" class="col  btn upl-btn text-start text-secondary" onclick="document.getElementById('files').click()">
-                                    Select File
-                                </button>
-                                <input id="files" type="file" class="d-none  form-control doc_uploder" name="UploadFile">
-                                <input name="id" value="" class="d-none" />
-                                <button type="submit" class="btn btn-info text-white py-2" value="Upload">
-                                    <i class="fa fa-cloud-upload"></i>
-                                    <span class="d-none d-sm-inline">Upload</span>
-                                </button>
+                                <input placeholder="Signature" class="input-outline w-100 inp" type="text" id="file-name2"
+                                       readonly="readonly">
+
+                                <input type="button" class="btn btn-upl2 btn-info  btn-submit " value="uplode" style="color: white;">
 
 
                             </div>
-                            <button class="btn btn-info mx-2 text-white">Create</button>
-                        </div>
-                        <canvas id="signature-pad" class="border-2" width="400" height="200"></canvas>
 
-                        <div>
-                            <button id="clear-button">Clear</button>
-                            <button id="undo-button">Undo</button>
-                            <button id="save-button">Save</button>
-                            <form id="save-form" method="post" action="/YourController/SaveSignature">
-                                <input type="hidden" id="signature-data" name="signatureData">
-                            </form>
+                           
+                            <a class="btn btn-info mx-2 text-white" id="create-signature-button">Create</a>
                         </div>
+                      
+                    </div>
+                    <div class="col-md-6">
+                        @if (Model != null && Model.Photo != null)
+                        {
+                            <span> Photo  </span>
+                            <img class="img-fluid border border-1 " src="~/Upload/Physician/@Model.Physicianid/@Model.Photo" alt="Photo" />
+                        }
+                    </div>
+                    <div class="col-md-6">
+                        <div>
+                            @if (Model != null && Model.Signature != null)
+                            {
+                                <span> Signature  </span>
+                                <img class="img-fluid border border-1 " src="~/Upload/Physician/@Model.Physicianid/@Model.Signature" alt="Signature" />
+                            }
+                            <input type="hidden" id="signature-data" name="signatureData">
+                        </div>
+                        <div class=" d-flex">
+                            <img id="saved" alt="Signature" class="border border-1 border-success-subtle mx-3" style="display:none;" />
+                            <canvas id="signature-pad" width="300" height="200" style="display:none;"></canvas>
+
+                        </div>
+                        <div class="text-end mt-2">
+                            <div id="clear-button" class="btn btn-danger mt-0" style="display:none;">Clear</div>
+                            <div id="save-button" class="btn btn-success" style="display:none;" disabled>Save</div>
+                        </div>
+
                     </div>
 
                     <div class="col-md-12 mt-2">
@@ -319,17 +394,17 @@
 </div>
                   
                 </div>
-                <div class="text-end mt-2">
+               @* <div class="text-end mt-2">
                     <a onclick="enable_disable_mailBilling()" id="edit1" class="btn  btn-outline-info btn-submit ">
                         Edit
                     </a>
                     <button type="submit" id="save1" class="btn  btn-outline-info btn-submit mx-2 ">
                         save
                     </button>
-                    <button id="cancel1" @*asp-action="Index" asp-controller="MyProfile"*@ class="btn  btn-outline-danger ">
+                    <button id="cancel1" class="btn  btn-outline-danger ">
                         cancel
                     </button>
-                </div>
+                </div>*@
                
            
             <hr /> 
@@ -338,38 +413,143 @@
 
             </div>
 
-            <table>
-                <tr>
-                    <td > <input class="form-check-input form-check-inputs"  type="checkbox" ></td>
-                    <td class="p-3  table-text fs-6">Independent Contractor Agreement</td>
-                    <td class="p-3 "><button class="btn btn-info text-white">Upload</button></td>
-                    <td class="p-3 "><button class="btn btn-info  text-white">View</button></td>
-                </tr>
-                <tr>
-                    <td> <input class="form-check-input form-check-inputs" type="checkbox"></td>
-                    <td class="p-3  table-text fs-6">Background check</td>
-                    <td class="p-3 "><button class="btn btn-info text-white">Upload</button></td>
-                    <td class="p-3 "><button class="btn btn-info  text-white">View</button></td>
-                </tr>
-                <tr>
-                    <td> <input class="form-check-input form-check-inputs" type="checkbox"></td>
-                    <td class="p-3  table-text fs-6">HIPAA Compliance</td>
-                    <td class="p-3 "><button class="btn btn-info text-white">Upload</button></td>
-                    <td class="p-3 "><button class="btn btn-info  text-white">View</button></td>
-                </tr>
-                <tr>
-                    <td> <input class="form-check-input form-check-inputs" type="checkbox"></td>
-                    <td class="p-3  table-text fs-6">NON-Disclosure Agreement</td>
-                    <td class="p-3 "><button class="btn btn-info text-white">Upload</button></td>
-                    <td class="p-3 "></td>
-                </tr>
-                <tr>
-                    <td> <input class="form-check-input form-check-inputs" type="checkbox"></td>
-                    <td class="p-3  table-text fs-6">License Document</td>
-                    <td class="p-3 "><button class="btn btn-info text-white">Upload</button></td>
-                    <td class="p-3 "></td>
-                </tr>
-            </table>
+
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-check mx-2">
+                                <input class="form-check-input agreement-checkbox" asp-for="Isagreementdoc" name="Isagreementdoc" type="checkbox" id="flexCheckDefault">
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    Independent Contractor Agreement
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6 d-flex">
+                            <div class="inputWrapper">
+                                @{
+                                    bool? isChecked = Model != null ? Model.Isagreementdoc : null;
+                                }
+                                <input @(isChecked != null ? "" : "disabled") class="fileInput btn btn-info" id="abc" asp-for="Agreementdoc" type="file" name="Agreementdoc" />
+                                <span class="btn btn-info text-white upload-button">Upload</span>
+                            </div>
+                            @{
+                                if (Model != null && Model.Isagreementdoc)
+                                {
+                                    <a href="~/Upload/Physician/@Model.Physicianid/Agreementdoc.pdf" target="_blank" class="btn btn-info mx-2 text-white ">View</a>
+
+                                }
+                            }
+                            <a class="btn btn-info mx-2 text-white view-button" style="display:none;">View</a>
+
+                            <!-- Display uploaded file details -->
+                            <div class="file-details" style="display:none;">
+                                <p><span class="file-name"></span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-md-12 ">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-check mx-2">
+                                <input class="form-check-input agreement-checkbox" asp-for="Isbackgrounddoc" type="checkbox" id="Isbackgrounddoc">
+                                <label class="form-check-label" for="Isbackgrounddoc">
+                                    Background Check
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6 d-flex">
+                            <div class="inputWrapper">
+                                <input disabled class="fileInput btn btn-info" asp-for="BackGrounddoc" type="file" name="BackGrounddoc" />
+                                <span class="btn btn-info text-white upload-button">Upload</span>
+                            </div>
+                            <a class="btn btn-info mx-2 text-white view-button" style="display:none;">View</a>
+
+                            <!-- Display uploaded file details -->
+                            <div class="file-details" style="display:none;">
+                                <p><span class="file-name"></span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 ">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-check mx-2">
+                                <input class="form-check-input agreement-checkbox" asp-for="Istrainingdoc" type="checkbox" id="flexCheckDefault">
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    HIPAA Compliance
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6 d-flex">
+                            <div class="inputWrapper">
+                                <input disabled class="fileInput btn btn-info" asp-for="Trainingdoc" type="file" name="Trainingdoc" />
+                                <span class="btn btn-info text-white upload-button">Upload</span>
+                            </div>
+                            <a class="btn btn-info mx-2 text-white view-button" style="display:none;">View</a>
+
+                            <!-- Display uploaded file details -->
+                            <div class="file-details" style="display:none;">
+                                <p><span class="file-name"></span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 ">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-check mx-2">
+                                <input class="form-check-input agreement-checkbox" asp-for="Isnondisclosuredoc" type="checkbox" id="Isnondisclosuredoc">
+                                <label class="form-check-label" for="Isnondisclosuredoc">
+                                    Non-disclosure Agreement
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6 d-flex">
+                            <div class="inputWrapper">
+                                <input disabled class="fileInput btn btn-info" asp-for="NonDisclosuredoc" type="file" name="NonDisclosuredoc" />
+                                <span class="btn btn-info text-white upload-button">Upload</span>
+                            </div>
+                            <a class="btn btn-info mx-2 text-white view-button" style="display:none;">View</a>
+
+                            <!-- Display uploaded file details -->
+                            <div class="file-details" style="display:none;">
+                                <p><span class="file-name"></span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 ">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-check mx-2">
+                                <input class="form-check-input agreement-checkbox" asp-for="Islicensedoc" type="checkbox" id="Islicensedoc">
+                                <label class="form-check-label" for="Islicensedoc">
+                                    License Document
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6 d-flex ">
+                            <div class="inputWrapper">
+                                <input disabled class="fileInput btn btn-info" asp-for="Licensedoc" type="file" name="Licensedoc" />
+                                <span class="btn btn-info  text-white upload-button">Upload</span>
+                            </div>
+                            <a class="btn btn-info mx-2 text-white view-button" style="display:none;">View</a>
+
+                            <!-- Display uploaded file details -->
+                            <div class="file-details" style="display:none;">
+                                <p><span class="file-name"></span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
 
             <hr/>
             <div class="text-end mt-2">
@@ -387,62 +567,295 @@
     </div>
   
 </div>
-<script>
-    $("#files").change(function () {
-        filename = this.files[0].name;
-        console.log(filename);
-        $("#choosenfile").text(filename);
-    });
-    document.querySelector('form').addEventListener('submit', function (event) {
-        var fileInput = document.getElementById('files');
-        var fileName = fileInput.value;
-        var allowedExtensions = /(\.pdf|\.doc|\.docx|\.jpg|\.jpeg|\.png|\.jped|\.webp)$/i;
-        if (!allowedExtensions.exec(fileName)) {
-            document.getElementById('error-file').innerText = 'Only PDF, DOC, JPG, JPEG, PNG, JPED, and WEBP files are allowed.';
+@section Scripts
+    {
+
+    <script type="text/javascript">
+
+        $(function () {
+          
+
+            var modelIsNull = @((Model != null).ToString().ToLower());
+
+            if (modelIsNull) {
+                $('.editable').show();
+                $('.inp-dis').prop('disabled', true);
+                $('select').prop('disabled', true);
+                //$('#saveasp').hide();
+                $('#cancelasp').hide();
+                //$('#editasp').hide();
+                //$('#submitresetpass').hide();
+
+            }
+            //else{
+            //    $('#saveasp').hide();
+            //    $('#cancelasp').hide();
+            //    $('#editasp').show();
+            //    $('#submitresetpass').show();
+            //}
+
+            $('#editasp').on('click', function (e) {
+                $('.asp').prop('disabled', false);
+                $('#saveasp').show();
+                $('#cancelasp').show();
+                $('#editasp').hide();
+            });
+            $('#cancelasp').on('click', function (e) {
+                $('.asp').prop('disabled', true);
+                $('#saveasp').hide();
+                $('#cancelasp').hide();
+                $('#editasp').show();
+            });
+
+
+
+            $('.regionbox').on('change', function () {
+                event.preventDefault();
+                let checkboxes = document.querySelectorAll('.regionbox:checked');
+                let regionIds = [];
+                checkboxes.forEach((checkbox) => {
+                    regionIds.push(checkbox.value);
+                });
+                document.querySelector('#regionids').value = regionIds.join(',');
+                console.log(document.querySelector('#regionids').value);
+            });
+
+            $('.agreement-checkbox').on('change', function () {
+                var isChecked = $(this).prop('checked');
+                var $fileInput = $(this).closest('.row').find('.fileInput');
+
+                console.log($fileInput);
+
+                $fileInput.prop('disabled', !isChecked);
+            });
+
+
+            $('.fileInput').on('change', function () {
+                var file = $(this)[0].files[0];
+                var $fileDetails = $(this).closest('.inputWrapper').siblings('.file-details');
+                var $viewButton = $(this).closest('.inputWrapper').siblings('.view-button');
+                console.log($viewButton);
+
+                if (file) {
+                    $viewButton.show();
+                    $fileDetails.show();
+                    $fileDetails.find('.file-name').text(file.name);
+                }
+            });
+
+            $('.view-button').on('click', function (e) {
+                var $fileInput = $(this).siblings('.inputWrapper').find('.fileInput')[0];
+                var file = $fileInput.files[0];
+                if (file) {
+                    var fileType = file.type;
+                    if (fileType === 'application/pdf') {
+                        // Handle PDF file view
+                        var link = document.createElement('a');
+                        link.href = e.target.result;
+                        link.download = file.name;
+                        document.body.appendChild(link)
+                            ;
+                        link.click();
+                        document.body.removeChild(link)
+                    } else {
+                        // Handle other file types (e.g., prompt download)
+                        alert('Download file: ' + file.name);
+                    }
+                }
+            });
+
+
+
+            var canvas = $('#signature-pad')[0];
+            var ctx = canvas.getContext('2d');
+            var drawing = false;
+            var strokes = [];
+            var saveButton = $('#save-button');
+            var signatureFileInput = $('#file2');
+
+            function scaleUp(c, scale) {
+
+                var newCanvas = $("<canvas>")
+                    .attr("width", c.width * scale)
+                    .attr("height", c.height * scale)[0];
+
+                var ctx2 = newCanvas.getContext("2d");
+                ctx2.imageSmoothingEnabled = false;
+                ctx2.drawImage(c, 0, 0, newCanvas.width, newCanvas.height);
+
+                var dataURL = newCanvas.toDataURL("image/png");
+                document.getElementById("saved").src = dataURL;
+
+            }
+
+            $('#create-signature-button').on('click', function () {
+                $('#create-signature-button').hide();
+                $('#clear-button').show();
+                $('#undo-button').show();
+                $('#save-button').show();
+
+                canvas.style.display = 'block';
+            });
+
+            $('#signature-pad').on('mousedown', function (e) {
+                drawing = true;
+                ctx.beginPath();
+                ctx.moveTo(e.clientX - canvas.getBoundingClientRect().left, e.clientY - canvas.getBoundingClientRect().top);
+            });
+
+            $('#signature-pad').on('mousemove', function (e) {
+                if (drawing) {
+                    ctx.lineTo(e.clientX - canvas.getBoundingClientRect().left, e.clientY - canvas.getBoundingClientRect().top);
+                    ctx.stroke();
+                }
+            });
+
+            $('#signature-pad').on('mouseup', function () {
+                if (drawing) {
+                    drawing = false;
+                    strokes.push(ctx.getImageData(0, 0, canvas.width, canvas.height));
+                    updateSaveButtonState();
+                }
+            });
+
+            $('#clear-button').on('click', function () {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                strokes = [];
+                updateSaveButtonState();
+            });
+
+            $('#save-button').on('click', function () {
+                $('#saved').show();
+                scaleUp(canvas, 1);
+                var dataURL = canvas.toDataURL("image/png");
+                $('#signature-data').val(dataURL); // Set the value of the hidden input field
+                $('#file-name2').val(dataURL);
+                // $('#save-form').submit(); // Submit the form
+            });
+
+            function updateSignatureFileInput() {
+                if (strokes.length > 0) {
+                    var dataURL = canvas.toDataURL("image/png");
+                    var blob = dataURLToBlob(dataURL);
+                    var file = new File([blob], "signature.png", { type: "image/png" });
+                    signatureFileInput.prop('files', [file]);
+                    saveButton.prop('disabled', false);
+                } else {
+                    saveButton.prop('disabled', true);
+                }
+            }
+
+            function dataURLToBlob(dataURL) {
+                var byteString = atob(dataURL.split(',')[1]);
+                var ab = new ArrayBuffer(byteString.length);
+                var ia = new Uint8Array(ab);
+                for (var i = 0; i < byteString.length; i++) {
+                    ia[i] = byteString.charCodeAt(i);
+                }
+                return new Blob([ab], { type: 'image/png' });
+            }
+
+            function updateSaveButtonState() {
+                if (strokes.length > 0) {
+                    var dataURL = canvas.toDataURL("image/png");
+                    var blob = dataURLToBlob(dataURL);
+                    var file = new File([blob], "signature.png", { type: "image/png" });
+                    var dataTransfer = new DataTransfer();
+                    dataTransfer.items.add(file);
+                    signatureFileInput.prop('files', dataTransfer.files);
+                    saveButton.prop('disabled', false);
+                } else {
+                    saveButton.prop('disabled', true);
+                }
+            }
+        });
+
+        window.onload = function () {
+            console.log("@status  d");
+            if ("@status" != "null") {
+                savealt("@status")
+            }
+
+        };
+
+        const btn = document.querySelector('#submit');
+        const resetbtn = document.querySelector('#submitresetpass');
+        const billingbtn = document.querySelector('#submitbilling');
+
+        billingbtn.addEventListener('click', (event) => {
             event.preventDefault();
-        }
-    });
-    $(document).ready(function () {
-        var canvas = $('#signature-pad')[0];
-        var ctx = canvas.getContext('2d');
-        var drawing = false;
-        var strokes = [];
 
-        $('#signature-pad').on('mousedown', function (e) {
-            drawing = true;
-            ctx.beginPath();
-            ctx.moveTo(e.clientX - canvas.getBoundingClientRect().left, e.clientY - canvas.getBoundingClientRect().top);
+            Swal.fire({
+                title: "Do you want Reset PAssword  Changes ?",
+                showDenyButton: false,
+                showCancelButton: true,
+                confirmButtonText: "Yes",
+                denyButtonText: `Don't save`
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $('#billing').submit();
+                }
+                console.log(result);
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                    Swal.fire("Save Changes!", "", "success");
+                } else if (result.isDenied) {
+                    Swal.fire("Changes are not saved", "", "info");
+                }
+            });
         });
 
-        $('#signature-pad').on('mousemove', function (e) {
-            if (drawing) {
-                ctx.lineTo(e.clientX - canvas.getBoundingClientRect().left, e.clientY - canvas.getBoundingClientRect().top);
-                ctx.stroke();
-            }
+        resetbtn.addEventListener('click', (event) => {
+            event.preventDefault();
+
+            Swal.fire({
+                title: "Do you want Reset PAssword  Changes ?",
+                showDenyButton: false,
+                showCancelButton: true,
+                confirmButtonText: "Yes",
+                denyButtonText: `Don't save`
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $('#resetpass').submit();
+                }
+                console.log(result);
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                    Swal.fire("Save Changes!", "", "success");
+                } else if (result.isDenied) {
+                    Swal.fire("Changes are not saved", "", "info");
+                }
+            });
         });
 
-        $('#signature-pad').on('mouseup', function () {
-            if (drawing) {
-                drawing = false;
-                strokes.push(ctx.getImageData(0, 0, canvas.width, canvas.height));
-            }
+        btn.addEventListener('click', (event) => {
+            event.preventDefault();
+            let checkboxes = document.querySelectorAll('input[name="Region"]:checked');
+            let regionIds = [];
+            checkboxes.forEach((checkbox) => {
+                regionIds.push(checkbox.value);
+            });
+            document.querySelector('#regionids').value = regionIds.join(',');
+            console.log(document.querySelector('#regionids').value);
+            Swal.fire({
+                title: "Do you want Save Changes ?",
+                showDenyButton: false,
+                showCancelButton: true,
+                confirmButtonText: "Yes",
+                denyButtonText: `Don't save`
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $('#profile').submit();
+                }
+                console.log(result);
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                    Swal.fire("Save Changes!", "", "success");
+                } else if (result.isDenied) {
+                    Swal.fire("Changes are not saved", "", "info");
+                }
+            });
         });
 
-        $('#clear-button').on('click', function () {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            strokes = [];
-        });
-
-        $('#undo-button').on('click', function () {
-            if (strokes.length > 0) {
-                ctx.putImageData(strokes.pop(), 0, 0);
-            }
-        });
-
-        $('#save-button').on('click', function () {
-            var dataURL = canvas.toDataURL("image/png");
-            $('#signature-data').val(dataURL); // Set the value of the hidden input field
-            $('#save-form').submit(); // Submit the form
-        });
-    });
-</script>
+    </script>
+}
