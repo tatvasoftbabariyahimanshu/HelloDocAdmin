@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 
 namespace HelloDocAdmin.Controllers.AdminSite
 {
+    [CustomAuthorization("Admin")]
     public class PhysicianController : Controller
     {
         private IDashboardRepository _dashboardrepo;
@@ -33,7 +34,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
             TempData["Status"] = TempData["Status"];
             ViewBag.RegionComboBox = await _combobox.RegionComboBox();
             var v = await _phyrepo.PhysicianAll();
-            if (region == null)
+            if (region == null || region == 0)
             {
                 v = await _phyrepo.PhysicianAll();
 
@@ -151,6 +152,8 @@ namespace HelloDocAdmin.Controllers.AdminSite
         #region Edit info
         public async Task<IActionResult> EditAccountInfo(PhysiciansViewModel physicians)
         {
+            ViewBag.RegionComboBox = await _combobox.RegionComboBox();
+            ViewBag.userrolecombobox = await _combobox.UserRole();
             if (ModelState.IsValid)
             {
                 bool data = await _phyrepo.EditAccountInfo(physicians);
@@ -174,8 +177,9 @@ namespace HelloDocAdmin.Controllers.AdminSite
         }
         public async Task<IActionResult> ResetPassword(int Physicianid,string Password)
         {
-           
-                bool data = await _phyrepo.ResetPassword(Physicianid, Password);
+            ViewBag.RegionComboBox = await _combobox.RegionComboBox();
+            ViewBag.userrolecombobox = await _combobox.UserRole();
+            bool data = await _phyrepo.ResetPassword(Physicianid, Password);
                 if (data)
                 {
                     _notyf.Success("Password Change");
@@ -187,6 +191,87 @@ namespace HelloDocAdmin.Controllers.AdminSite
                 return RedirectToAction("PhysicianProfile", new { id = Physicianid });
             }
             
+
+        }
+     
+        public async Task<IActionResult> EditAdminInfo(PhysiciansViewModel physicians)
+        {
+            ViewBag.RegionComboBox = await _combobox.RegionComboBox();
+            ViewBag.userrolecombobox = await _combobox.UserRole();
+           
+                bool data = await _phyrepo.EditAdminInfo(physicians);
+                if (data)
+                {
+                    _notyf.Success("admin Info Updated Successfully...");
+                    return RedirectToAction("PhysicianProfile", new { id = physicians.Physicianid });
+                }
+                else
+                {
+                    _notyf.Error("some problem");
+                    return View("../AdminSite/Physician/PhysicianAddEdit", physicians);
+                }
+           
+
+
+        }
+        public async Task<IActionResult> EditMailBilling(PhysiciansViewModel physicians)
+        {
+            ViewBag.RegionComboBox = await _combobox.RegionComboBox();
+            ViewBag.userrolecombobox = await _combobox.UserRole();
+           
+                bool data = await _phyrepo.EditMailBilling(physicians);
+                if (data)
+                {
+                    _notyf.Success("mail and billing Info Updated Successfully...");
+                    return RedirectToAction("PhysicianProfile", new { id = physicians.Physicianid });
+                }
+                else
+                {
+                    _notyf.Error("some problem");
+                    return View("../AdminSite/Physician/PhysicianAddEdit", physicians);
+                }
+            
+
+
+        }
+        public async Task<IActionResult> EditProviderProfile(PhysiciansViewModel physicians)
+        {
+            ViewBag.RegionComboBox = await _combobox.RegionComboBox();
+            ViewBag.userrolecombobox = await _combobox.UserRole();
+
+            bool data = await _phyrepo.EditProviderProfile(physicians,CV.LoggedUserID());
+            if (data)
+            {
+                _notyf.Success("mail and billing Info Updated Successfully...");
+                return RedirectToAction("PhysicianProfile", new { id = physicians.Physicianid });
+            }
+            else
+            {
+                _notyf.Error("some problem");
+                return View("../AdminSite/Physician/PhysicianAddEdit", physicians);
+            }
+
+
+
+        }
+        public async Task<IActionResult> DeletePhysician(int PhysicianID)
+        {
+            ViewBag.RegionComboBox = await _combobox.RegionComboBox();
+            ViewBag.userrolecombobox = await _combobox.UserRole();
+
+            bool data = await _phyrepo.DeletePhysician(PhysicianID, CV.LoggedUserID());
+            if (data)
+            {
+                _notyf.Success("Deleted Successfully...");
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                _notyf.Error("not Deleted problem");
+                return RedirectToAction("PhysicianProfile", new { id = PhysicianID });
+            }
+
+
 
         }
         #endregion

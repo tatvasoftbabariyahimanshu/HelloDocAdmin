@@ -133,6 +133,22 @@
       "PackagePath": "staticwebassets\\Upload\\Physician\\19\\sdfdsf-20240313050713-Signature.png"
     },
     {
+      "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\Physician\\20\\-202403141107-Signature.png",
+      "PackagePath": "staticwebassets\\Upload\\Physician\\20\\-202403141107-Signature.png"
+    },
+    {
+      "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\Physician\\20\\-202403141108-Photo.png",
+      "PackagePath": "staticwebassets\\Upload\\Physician\\20\\-202403141108-Photo.png"
+    },
+    {
+      "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\Physician\\20\\-202403141119-Signature.png",
+      "PackagePath": "staticwebassets\\Upload\\Physician\\20\\-202403141119-Signature.png"
+    },
+    {
+      "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\Physician\\20\\-202403141229-Signature.png",
+      "PackagePath": "staticwebassets\\Upload\\Physician\\20\\-202403141229-Signature.png"
+    },
+    {
       "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\Physician\\20\\123213213-202403130512-Photo.jpg",
       "PackagePath": "staticwebassets\\Upload\\Physician\\20\\123213213-202403130512-Photo.jpg"
     },
@@ -143,6 +159,10 @@
     {
       "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\Physician\\20\\Agreementdoc.pdf",
       "PackagePath": "staticwebassets\\Upload\\Physician\\20\\Agreementdoc.pdf"
+    },
+    {
+      "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\Physician\\2\\-202403140443-Signature.png",
+      "PackagePath": "staticwebassets\\Upload\\Physician\\2\\-202403140443-Signature.png"
     },
     {
       "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\Physician\\2\\Agreementdoc.pdf",
@@ -199,6 +219,10 @@
     {
       "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\Physician\\4\\het - 20240313014948 - Signature.png",
       "PackagePath": "staticwebassets\\Upload\\Physician\\4\\het - 20240313014948 - Signature.png"
+    },
+    {
+      "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\Physician\\7\\-202403141208-Signature.png",
+      "PackagePath": "staticwebassets\\Upload\\Physician\\7\\-202403141208-Signature.png"
     },
     {
       "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\Physician\\7\\Agreementdoc.pdf",

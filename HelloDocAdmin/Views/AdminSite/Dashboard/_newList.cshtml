@@ -2,26 +2,15 @@
 @using HelloDocAdmin.Entity.ViewModels;
 @using HelloDocAdmin.Entity.ViewModels.AdminSite;
 @using static HelloDocAdmin.Entity.ViewModels.AdminSite.Constant;
-@model List<DashboardRequestModel>
+@model Dashboarddatamodel
 
 
 
 
 
-<div class="card bg-transparent p-1 border-0 ">
-    <div class="card-header p-2  d-flex justify-content-between  border-0  bg-transparent  mt-2">
-        <div class="text-start   d-flex ">
-            <span class="fw-bold hero-heading"> Patients</span><span class="mx-2 fw-bold text-primary mt-2 hero-heading-active">(@TempData["CurrentStatus"])</span>
-        </div>
-        <div class="text-end ">
-            <partial name="../Action/Partialdash/DashboardButtons.cshtml" />
-
-        </div>
-    </div>
-    <div class="card-body rounded shadow-lg m-2 ">
-        <partial name="../Action/Partialdash/_SearchFilter.cshtml" />
 
         <div class="table-responsive dashboard-tbl mt-3 " id="tbl">
+            <span>@Model.CurrentPage @Model.TotalPage</span>
             <table id="myTable" class="table table-responsive">
                 <thead class=" text-start tablehead">
                     <tr>
@@ -37,7 +26,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var (item, i) in Model.Select((item, i) => (item, i)))
+            @foreach (var (item, i) in Model.requestList.Select((item, i) => (item, i)))
                     {
 
                         if (item.RequestTypeID == 2)
@@ -143,7 +132,7 @@
             </table>
         </div>
         <div >
-            @foreach (var (item, i) in Model.Select((item, i) => (item, i)))
+            @foreach (var (item, i) in Model.requestList.Select((item, i) => (item, i)))
     {
         <div class="accordion-item text-secondary " id="Acordiantable">
                     <h2 class="accordion-header btn-i " id="flush-heading-@item.RequestID">
@@ -246,10 +235,21 @@
             
         </div>
     }
-</div>
+    <div class="text-center">
+        <nav aria-label="Page  navigation example">
+            <ul class="pagination">
 
+                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                @for (int i = 0; i < Model.TotalPage; i++)
+                {
+                    var page = i + 1;
+                    <li class="page-item"><a class="page-link" >@i</a></li>
+                }
+                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+            </ul>
+        </nav>
     </div>
-</div>
+    
     <script>
         function model_Case(id) {
         console.log(id);
@@ -267,10 +267,7 @@
 
       
 <script>
-   
-    $(document).ready(function () {
-        $("#myTable").DataTable();
-    });
+
     function myFunction() {
         // Declare variables
         var input, filter, table, tr, td, i, txtValue;

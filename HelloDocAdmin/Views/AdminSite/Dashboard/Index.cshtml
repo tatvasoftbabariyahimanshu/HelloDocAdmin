@@ -10,9 +10,27 @@
 
 <div class="container-fluid p-4 ">
     <partial name="_UpperTab.cshtml" />
+    <div class="card bg-transparent p-1 border-0 ">
+        <div class="card-header p-2  d-flex justify-content-between  border-0  bg-transparent  mt-2">
+            <div class="text-start   d-flex ">
+                <span class="fw-bold hero-heading"> Patients</span><span class="mx-2 fw-bold text-primary mt-2 hero-heading-active">()</span>
+            </div>
+            <div class="text-end ">
+                <partial name="../Action/Partialdash/DashboardButtons.cshtml" />
+
+            </div>
+        </div>
+        <div class="card-body rounded shadow-lg m-2 ">
+            <partial name="../Action/Partialdash/_SearchFilter.cshtml" />
+
     <div id="SearchResult">
 
    </div>
+           
+</div>
+
+    </div>
+</div>
     <partial name="../Action/Partialdash/_allPartialAction.cshtml" />
    
 </div>
@@ -30,37 +48,21 @@
     filterSelection("all")
     function filterSelection(c) {
 
-        var x, i;
-        x = document.getElementsByClassName("filterDiv");
-        if (c == "all") c = "";
-        for (i = 0; i < x.length; i++) {
-            w3AddClass(x[i], "unshow");
-
-            if (x[i].className.indexOf(c) > -1) {
-
-                w3RemoveClass(x[i], "unshow");
-            }
-        }
+        $('#dot-filter').val(c);
+       
     }
 
-    function w3AddClass(element, name) {
-        var i, arr1, arr2;
-        arr1 = element.className.split(" ");
-        arr2 = name.split(" ");
-        for (i = 0; i < arr2.length; i++) {
-            if (arr1.indexOf(arr2[i]) == -1) { element.className += " " + arr2[i]; }
-        }
-    }
 
-    function w3RemoveClass(element, name) {
-        var i, arr1, arr2;
-        arr1 = element.className.split(" ");
-        arr2 = name.split(" ");
-        for (i = 0; i < arr2.length; i++) {
-            while (arr1.indexOf(arr2[i]) > -1) {
-                arr1.splice(arr1.indexOf(arr2[i]), 1);
-            }
-        }
-        element.className = arr1.join(" ");
-    }
+
+
+
+   function getfilterdata()
+   {
+
+
+   }
+
+
+
+  
 </script>

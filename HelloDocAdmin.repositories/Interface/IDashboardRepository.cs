@@ -27,6 +27,7 @@ namespace HelloDocAdmin.Repositories.Interface
         public bool SendLink(string firstname, string lastname, string email, string phonenumber);
         public bool CancelCase(int RequestID, string Note, string CaseTag);
         public bool BlockCase(int RequestID, string Note);
+        public Dashboarddatamodel GetRequestsbyfilter(string Status, string search = "", int region = 0, int requesttype = 0, int currentpage = 1);
 
     }
 }

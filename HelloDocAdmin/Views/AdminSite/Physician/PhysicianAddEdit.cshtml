@@ -147,22 +147,41 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 mt-2">
-                        <div class=" mb-3">
-                            <div class="inputs-control ">
-                                <input placeholder=" "  class="input-outline w-100 inp  admin-input" type="text">
-                                <label class="inputs-lable">ConfirmEmail</label>
-                            </div>
-                        </div>
-                    </div>
+                   
                     <div class="col-md-6 mt-2">
                         <div class=" mb-3">
                             <div class="inputs-control w-100 ">
-                                <input id="phone" asp-for="Mobile" placeholder="Mobile" type="text" class=" telephone input-outline admin-input w-100 inp align-items-center " />
+                                <input id="phone" asp-for="Mobile" placeholder="Mobile" type="text" class=" telephone input-outline admin-input w-100 inp  " />
                                 <span class="err-msg"></span>
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-6 mt-2">
+                        <div class=" mb-3">
+                            <div class="inputs-control ">
+                                <input placeholder=" " asp-for="Medicallicense" class="input-outline w-100 inp admin-input " type="text">
+                                <label class="inputs-lable">Medicallicense</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mt-2">
+                   
+                        <div class=" mb-3">
+                            <div class="inputs-control ">
+                                <input placeholder=" " asp-for="Npinumber" class="input-outline w-100 inp admin-input " type="text">
+                                <label class="inputs-lable">Npinumber</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mt-2">
+                        <div class=" mb-3">
+                            <div class="inputs-control ">
+                                <input placeholder=" " asp-for="Syncemailaddress" class="input-outline w-100 inp admin-input " type="text">
+                                <label class="inputs-lable">Syncemailaddress</label>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="col-md-6 mt-2 d-flex justify-content-around flex-wrap">
                         <input asp-for="Regionsid" type="hidden" id="regionids" />
 
@@ -202,7 +221,7 @@
                             else
                             {
                                 <div class="form-check mx-2">
-                                    <input class="form-check-input regionbox" value="@cb.RegionId" type="checkbox" name="Region" id="flexCheckDefault">
+                                    <input class="form-check-input regionbox admin-input" value="@cb.RegionId" type="checkbox" name="Region" id="flexCheckDefault">
                                     <label class="form-check-label" for="flexCheckDefault">
                                         @cb.RegionName
                                     </label>
@@ -215,20 +234,33 @@
                     </div>
                 </div>
                 <div class="text-end">
-                    <a class="btn btn-info text-white">
-                        Enter Payrate
-                    </a>
-                    <a onclick="enable_disable_administration()" id="edit" class="btn  btn-info text-white btn-submit ">
+                    
+                    <a onclick="enable_disable_administration()" id="admin-input-edit" class="btn  btn-info text-white btn-submit ">
                         Edit
                     </a>
-                    <button type="submit" id="save1"  class="btn   btn-outline-info btn-submit mx-2 ">
+                    <button type="submit" asp-action="EditAdminInfo" asp-controller="Physician" id="save-admindata"  class="btn   btn-outline-info btn-submit mx-2 ">
                         save
                     </button>
-                    <button id="cancel1" asp-action="Index" asp-controller="MyProfile" class="btn  btn-outline-danger ">
+                    <a id="cancel-admindata" class="btn  btn-outline-danger ">
                         cancel
-                   </button>
+                   </a>
                     
                 </div>
+                <script>
+
+                    $('#admin-input-edit').on('click', function (e) {
+                        $('.admin-input').prop('disabled', false);
+                        $('#save-admindata').show();
+                        $('#cancel-admindata').show();
+                        $('#admin-input-edit').hide();
+                    });
+                    $('#cancel-admindata').on('click', function (e) {
+                        $('.admin-input').prop('disabled', true);
+                        $('#save-admindata').hide();
+                        $('#cancel-admindata').hide();
+                        $('#admin-input-edit').show();
+                    });
+                </script>
           
             <div class="mt-2">
                 <h6> <b>Mailing and billing Information</b></h6>
@@ -264,8 +296,8 @@
                     </div>
                     <div class="col-md-6 mt-2">
                         <div class=" mb-3">
-                            <div class="input-control w-100 mt-3">
-                                <select class="input-outline input-outline-select " asp-for="Regionid"  data-allow-clear="true" tabindex="-1" onchange="myFunction1()" id="region2" asp-items="@(new SelectList(ViewBag.RegionComboBox,"RegionId","RegionName"))" data-control="select2" data-placeholder="Select Level">
+                            <div class="input-control w-100">
+                                <select class="input-outline input-outline-select inp mail-billing-imp" asp-for="Regionid" data-allow-clear="true" tabindex="-1" onchange="myFunction1()" id="region2" asp-items="@(new SelectList(ViewBag.RegionComboBox,"RegionId","RegionName"))" data-control="select2" data-placeholder="Select Level">
                                     <option>All Region</option>
                                 </select>
                             </div>
@@ -282,24 +314,38 @@
                     <div class="col-md-6 mt-2">
                         <div class=" mb-3">
                             <div class="inputs-control w-100 ">
-                                <input id="phone2" asp-for="Mobile" placeholder="Mobile" type="tel" class=" telephone input-outline mail-billing-imp w-100 inp align-items-center " />
+                                <input id="phone2" asp-for="Altphone" placeholder="Mobile" type="tel" class="mail-billing-imp telephone input-outline mail-billing-imp w-100 inp align-items-center " />
                                 <span class="err-msg"></span>
                             </div>
                         </div>
                     </div>
                 </div>
-              @*  <div class="text-end">
-                    <a onclick="enable_disable_mailBilling()" id="edit1" class="btn  btn-outline-info btn-submit ">
+                <div class="text-end">
+                    <a onclick="enable_disable_mailBilling()" id="edit-mail-billing" class="btn text-white  btn-info btn-submit ">
                         Edit
                     </a>
-                    <button type="submit" id="save1" class="btn  btn-outline-info btn-submit mx-2 ">
+                    <button type="submit" id="save-mail-billing" asp-action="EditMailBilling" asp-controller="Physician" class="btn  btn-outline-info btn-submit mx-2 ">
                         save
                     </button>
-                    <button id="cancel1"  class="btn  btn-outline-danger ">
+                    <a id="cancel-mail-billing" class="btn  btn-outline-danger ">
                         cancel
-                    </button>
-                </div>*@
-          
+                    </a>
+                </div>
+                <script>
+                    $('#edit-mail-billing').on('click', function (e) {
+                        $('.mail-billing-imp').prop('disabled', false);
+                        $('#save-mail-billing').show();
+                        $('#cancel-mail-billing').show();
+                        $('#edit-mail-billing').hide();
+                    });
+                    $('#cancel-mail-billing').on('click', function (e) {
+                        $('.mail-billing-imp').prop('disabled', true);
+                        $('#save-mail-billing').hide();
+                        $('#cancel-mail-billing').hide();
+                        $('#edit-mail-billing').show();
+                    });
+                </script>
+               
             <div class="mt-2">
                 <h6> <b>Provider Profile</b></h6>
             </div>
@@ -308,7 +354,7 @@
                     <div class="col-md-6 mt-2">
                         <div class=" mb-3">
                             <div class="inputs-control ">
-                                <input placeholder=" " asp-for="Businessname" class="input-outline w-100 inp mail-billing-imp " type="text">
+                                <input placeholder=" " asp-for="Businessname" class="input-outline w-100 inp provider-prof " type="text">
                                 <label class="inputs-lable">Businessname</label>
                             </div>
 
@@ -318,7 +364,7 @@
                     <div class="col-md-6 mt-2">
                         <div class=" mb-3">
                             <div class="inputs-control  ">
-                                <input placeholder=" " asp-for="Businesswebsite" class="input-outline w-100 inp  mail-billing-imp" type="text">
+                                <input placeholder=" " asp-for="Businesswebsite" class="input-outline w-100 inp provider-prof" type="text">
                                 <label class="inputs-lable">Businesswebsite</label>
                             </div>
 
@@ -328,10 +374,10 @@
 
                         <input type="file" id="file1" class="file1 file-uplode" name="PhotoFile" asp-for="PhotoFile">
                             <div class="d-flex">
-                                <input placeholder="Photo" class="input-outline w-100 inp" type="text" id="file-name1"
+                            <input placeholder="Photo" class="input-outline w-100 inp provider-prof" type="text" id="file-name1"
                                        readonly="readonly">
 
-                                <input type="button" class="btn btn-upl1 btn-info  btn-submit " value="uplode" style="color: white;">
+                            <input type="button" class="btn btn-upl1 btn-info  btn-submit provider-prof" value="uplode" style="color: white;">
 
 
                             </div>
@@ -344,16 +390,16 @@
                         <div class="d-flex">
                             <input type="file" id="file2"  class="file2 file-uplode" name="SignatureFile" asp-for="SignatureFile">
                             <div class="d-flex w-100">
-                                <input placeholder="Signature" class="input-outline w-100 inp" type="text" id="file-name2"
+                                <input placeholder="Signature" class="input-outline w-100 inp provider-prof" type="text" id="file-name2"
                                        readonly="readonly">
 
-                                <input type="button" class="btn btn-upl2 btn-info  btn-submit " value="uplode" style="color: white;">
+                                <input type="button" class="btn btn-upl2 btn-info  btn-submit provider-prof " value="uplode" style="color: white;">
 
 
                             </div>
 
                            
-                            <a class="btn btn-info mx-2 text-white" id="create-signature-button">Create</a>
+                            <a class="btn btn-info mx-2 text-white provider-prof" id="create-signature-button">Create</a>
                         </div>
                       
                     </div>
@@ -368,7 +414,7 @@
                         <div>
                             @if (Model != null && Model.Signature != null)
                             {
-                                <span> Signature  </span>
+                                <span> Signature  </span><br/>
                                 <img class="img-fluid border border-1 " src="~/Upload/Physician/@Model.Physicianid/@Model.Signature" alt="Signature" />
                             }
                             <input type="hidden" id="signature-data" name="signatureData">
@@ -387,24 +433,40 @@
 
                     <div class="col-md-12 mt-2">
                         <div class="inputs-control w-100 mt-2">
-                            <textarea id="changenote" placeholder=" " asp-for="Adminnotes" rows="5" class="input-outline w-100  " type="text"></textarea>
+                            <textarea id="changenote" placeholder=" " asp-for="Adminnotes" rows="5" class="input-outline w-100 provider-prof " type="text"></textarea>
 
                             <label class="inputs-lable inputs-lable-textarea " id="notedata">Adminnotes</label>
                         </div>
 </div>
                   
                 </div>
-               @* <div class="text-end mt-2">
-                    <a onclick="enable_disable_mailBilling()" id="edit1" class="btn  btn-outline-info btn-submit ">
+                <div class="text-end mt-2">
+                    <a id="edit-provider-prof" class="btn  btn-outline-info btn-submit ">
                         Edit
                     </a>
-                    <button type="submit" id="save1" class="btn  btn-outline-info btn-submit mx-2 ">
+                    <button type="submit" asp-action="EditProviderProfile" asp-controller="Physician" id="save-provider-prof" class="btn  btn-outline-info btn-submit mx-2 ">
                         save
                     </button>
-                    <button id="cancel1" class="btn  btn-outline-danger ">
+                    <button id="cancel-provider-prof" class="btn  btn-outline-danger ">
                         cancel
                     </button>
-                </div>*@
+                </div>
+                <script>
+                    $('#edit-provider-prof').on('click', function (e) {
+                        $('.provider-prof').prop('disabled', false);
+                        $('#save-provider-prof').show();
+                        $('#cancel-provider-prof').show();
+                        $('#edit-provider-prof').hide();
+                        $('#create-signature-button').prop('disabled', false);
+                    });
+                    $('#cancel-mail-billing').on('click', function (e) {
+                        $('.provider-prof').prop('disabled', true);
+                        $('#save-provider-prof').hide();
+                        $('#cancel-provider-prof').hide();
+                        $('#edit-provider-prof').show();
+                        $('#create-signature-button').prop('disabled', true);
+                    });
+                </script>
                
            
             <hr /> 
@@ -557,7 +619,7 @@
                 <button type="submit" id="save1" class="btn text-white btn-info btn-submit mx-2 ">
                     save
                 </button>
-                <a id="cancel1" @*asp-action="Index" asp-controller="MyProfile"*@ class="btn  btn-danger ">
+                <a  asp-action="DeletePhysician" asp-controller="Physician" asp-route-PhysicianID="@Model.Physicianid" class="btn  btn-danger ">
                     Delete Account
                 </a>
             </div>
@@ -578,11 +640,21 @@
             var modelIsNull = @((Model != null).ToString().ToLower());
 
             if (modelIsNull) {
+                $('.admin-input').prop('disabled', true);
+                $('.provider-prof').prop('disabled', true);
+                $('#save-provider-prof').hide();
+                $('#cancel-provider-prof').hide();
+                $('.mail-billing-imp').prop('disabled', true);
+                $('#save-mail-billing').hide();
+                $('#cancel-mail-billing').hide();
                 $('.editable').show();
+                $('#save-admindata').hide();
+                $('#cancel-admindata').hide();
                 $('.inp-dis').prop('disabled', true);
                 $('select').prop('disabled', true);
-                //$('#saveasp').hide();
+                $('#saveasp').hide();
                 $('#cancelasp').hide();
+
                 //$('#editasp').hide();
                 //$('#submitresetpass').hide();
 

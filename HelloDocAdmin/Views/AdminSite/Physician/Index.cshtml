@@ -27,7 +27,7 @@
                 <div class="dropdown text-start ">
 
                     <select class="input-outline input-outline-select " name="region" data-allow-clear="true" tabindex="-1" onchange="myFunction()" id="Region" asp-items="@(new SelectList(ViewBag.RegionComboBox,"RegionId","RegionName"))" data-control="select2" data-placeholder="Select Level">
-                        <option >All Region</option>
+                        <option value="0" >All Region</option>
                     </select>
                 </div>
                 <div class="text-end d-flex">
@@ -247,8 +247,8 @@
 
                     // Add action buttons cell
                     var actionButtonsCell = $('<td class="d-flex" data-label="Document">');
-                    actionButtonsCell.append('<a asp-action="Index" asp-controller="Documentsinfo" asp-route-id="' + item.physicianid + '" class="btn btn-outline-info btn-sm document-button mx-1">Contact</a>');
-                    actionButtonsCell.append('<a asp-action="Index" asp-controller="Documentsinfo" asp-route-id="' + item.physicianid + '" class="btn btn-outline-info btn-sm document-button mx-1">Edit</a>');
+                    actionButtonsCell.append('<button  data-bs-toggle="modal" data-bs-id=" ' + item.physicianid + '" data-bs-email="' + item.Email + '"data-bs-target="#myModal" class="btn btn-outline-info btn-sm document-button mx-1">Contact</button>');
+                    actionButtonsCell.append('<a  href="/Physician/PhysicianProfile/' + item.physicianid + '" class="btn btn-outline-info btn-sm mx-1">Edit</a>');
                     newRow.append(actionButtonsCell);
 
                     // Append the new row to the table

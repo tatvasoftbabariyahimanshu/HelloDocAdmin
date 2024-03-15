@@ -27,15 +27,19 @@ namespace HelloDocAdmin.Repositories
             _email = email;
         }
         #region Index List
+       
         public async Task<List<PhysiciansViewModel>> PhysicianAll()
         {
-            List<PhysiciansViewModel> pl = await (from r in _context.Physicians
+            BitArray bt = new BitArray(1);
+            bt.Set(0, false);
+            List<PhysiciansViewModel> pl = (from r in _context.Physicians
                                          join Notifications in _context.Physiciannotifications
                                          on r.Physicianid equals Notifications.Physicianid into aspGroup
                                          from nof in aspGroup.DefaultIfEmpty()
                                          join role in _context.Roles
                                          on r.Roleid equals role.Roleid into roleGroup
                                          from roles in roleGroup.DefaultIfEmpty()
+                                         where  r.Isdeleted == bt
                                          select new PhysiciansViewModel
                                          {
                                              notificationid = nof.Id,
@@ -48,6 +52,7 @@ namespace HelloDocAdmin.Repositories
                                              Businessname = r.Businessname,
                                              Businesswebsite = r.Businesswebsite,
                                              City = r.City,
+
                                              Firstname = r.Firstname,
                                              Lastname = r.Lastname,
                                              notification = nof.Isnotificationstopped,
@@ -56,7 +61,7 @@ namespace HelloDocAdmin.Repositories
                                              Email = r.Email
                         
                                          })
-                                        .ToListAsync();
+                                        .ToList();
 
             return pl;
 
@@ -65,7 +70,8 @@ namespace HelloDocAdmin.Repositories
         #region PhysicianByRegion
         public async Task<List<PhysiciansViewModel>> PhysicianByRegion(int? region)
         {
-
+            BitArray bt = new BitArray(1);
+            bt.Set(0, false);
 
             List<PhysiciansViewModel> pl = await (
                                         from pr in _context.Physicianregions
@@ -78,7 +84,7 @@ namespace HelloDocAdmin.Repositories
                                         join role in _context.Roles
                                         on r.Roleid equals role.Roleid into roleGroup
                                         from roles in roleGroup.DefaultIfEmpty()
-                                        where pr.Regionid == region
+                                        where pr.Regionid == region && r.Isdeleted == bt
                                         select new PhysiciansViewModel
                                         {
                                             Createddate = r.Createddate,
@@ -195,6 +201,231 @@ namespace HelloDocAdmin.Repositories
 
                         _context.Physicians.Update(DataForChange);
                         _context.Aspnetusers.Update(U);
+                        _context.SaveChanges();
+
+
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+
+        public async Task<bool> EditAdminInfo(PhysiciansViewModel vm)
+        {
+            try
+            {
+                if (vm == null)
+                {
+                    return false;
+                }
+                else
+                {
+                    var DataForChange = await _context.Physicians
+                        .Where(W => W.Physicianid == vm.Physicianid)
+                        .FirstOrDefaultAsync();
+                 
+
+                    if (DataForChange != null)
+                    {
+
+                       
+                        DataForChange.Firstname = vm.Firstname;
+                        DataForChange.Lastname  = vm.Lastname;
+                        DataForChange.Email=vm.Email;
+                        DataForChange.Mobile=vm.Mobile;
+                        DataForChange.Medicallicense = vm.Medicallicense;
+                        DataForChange.Npinumber = vm.Npinumber;
+                        DataForChange.Syncemailaddress = vm.Syncemailaddress;
+                         
+
+
+                        _context.Physicians.Update(DataForChange);
+                        List<int> priceList = vm.Regionsid.Split(',').Select(int.Parse).ToList();
+                       
+
+                      
+                      
+                        foreach (var dataitem2 in priceList)
+                        {
+                            var data = _context.Physicianregions.FirstOrDefault(e => e.Physicianid == vm.Physicianid && e.Regionid == dataitem2);
+                            if(data != null)
+                            {
+
+                            }
+                            else {
+                                Physicianregion adr = new Physicianregion
+                                {
+                                    Physicianid = DataForChange.Physicianid,
+                                    Regionid = dataitem2
+                                };
+
+                                _context.Physicianregions.Add(adr);
+                                _context.SaveChanges();
+                            }
+                           
+
+
+                        }
+
+
+
+                        _context.SaveChanges();
+
+
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+        public async Task<bool> DeletePhysician(int PhysicianID, string AdminID)
+        {
+            try
+            {
+                BitArray bt = new BitArray(1);
+                bt.Set(0, true);
+                if (PhysicianID == null)
+                {
+                    return false;
+                }
+                else
+                {
+                    var DataForChange = await _context.Physicians
+                        .Where(W => W.Physicianid == PhysicianID)
+                        .FirstOrDefaultAsync();
+
+
+                    if (DataForChange != null)
+                    {
+
+
+                        DataForChange.Isdeleted = bt;
+                        DataForChange.Modifieddate = DateTime.Now;
+                        DataForChange.Modifiedby = AdminID;
+                        _context.Physicians.Update(DataForChange);
+                      
+
+
+                        _context.SaveChanges();
+
+
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+        public async Task<bool> EditMailBilling(PhysiciansViewModel vm)
+        {
+            try
+            {
+                if (vm == null)
+                {
+                    return false;
+                }
+                else
+                {
+                    var DataForChange = await _context.Physicians
+                        .Where(W => W.Physicianid == vm.Physicianid)
+                        .FirstOrDefaultAsync();
+
+
+                    if (DataForChange != null)
+                    {
+
+
+                        DataForChange.Address1 = vm.Address1;
+                        DataForChange.City = vm.City;
+                        DataForChange.Regionid = vm.Regionid;
+                        DataForChange.Zip = vm.Zipcode;
+                        DataForChange.Altphone = vm.Altphone;
+                    
+
+
+
+                        _context.Physicians.Update(DataForChange);
+
+                        _context.SaveChanges();
+
+
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+        public async Task<bool> EditProviderProfile(PhysiciansViewModel vm, string AdminId)
+        {
+            try
+            {
+                if (vm == null)
+                {
+                    return false;
+                }
+                else
+                {
+                    var DataForChange = await _context.Physicians
+                        .Where(W => W.Physicianid == vm.Physicianid)
+                        .FirstOrDefaultAsync();
+
+
+                    if (DataForChange != null)
+                    {
+                        if(vm.PhotoFile!=null)
+                        {
+                            DataForChange.Photo = vm.PhotoFile != null ? vm.Firstname + "-" + DateTime.Now.ToString("yyyyMMddhhmm") + "-Photo." + Path.GetExtension(vm.PhotoFile.FileName).Trim('.') : null;
+                            CM.UploadProviderDoc(vm.PhotoFile, vm.Physicianid, vm.Firstname + "-" + DateTime.Now.ToString("yyyyMMddhhmm") + "-Photo." + Path.GetExtension(vm.PhotoFile.FileName).Trim('.'));
+
+                        }
+                        if(vm.SignatureFile!=null)
+                        {
+                            DataForChange.Signature = vm.SignatureFile != null ? vm.Firstname + "-" + DateTime.Now.ToString("yyyyMMddhhmm") + "-Signature.png" : null;
+                            CM.UploadProviderDoc(vm.SignatureFile, vm.Physicianid, vm.Firstname + "-" + DateTime.Now.ToString("yyyyMMddhhmm") + "-Signature.png");
+                        }
+                     
+
+
+                        DataForChange.Businessname = vm.Businessname;
+                        DataForChange.Businesswebsite = vm.Businesswebsite;
+                        DataForChange.Modifiedby = AdminId;
+                        DataForChange.Adminnotes = vm.Adminnotes;
+                        DataForChange.Modifieddate=DateTime.Now;
+                        _context.Physicians.Update(DataForChange);
+
                         _context.SaveChanges();
 
 
@@ -359,6 +590,9 @@ namespace HelloDocAdmin.Repositories
                                       Regionid = r.Regionid,
                                      Mobile=r.Mobile,
                                      Zipcode=r.Zip,
+                                     Medicallicense=r.Medicallicense,
+                                     Npinumber=r.Npinumber,
+                                     Syncemailaddress=r.Syncemailaddress,
                                 
                                   
                                        Firstname = r.Firstname,

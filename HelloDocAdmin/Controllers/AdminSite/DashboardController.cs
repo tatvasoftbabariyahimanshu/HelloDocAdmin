@@ -51,9 +51,10 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> _SearchResult(string Status)
+        public async Task<IActionResult> _SearchResult(string Status,int currentpage)
         {
-             if(Status==null)
+            ViewBag.RegionComboBox = await _combobox.RegionComboBox();
+            if (Status==null)
             {
                 Status = CV.CurrentStatus();
             }
@@ -61,6 +62,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
             Response.Cookies.Delete("Status");
             Response.Cookies.Append("Status", Status);
             List<DashboardRequestModel> contacts = _dashboardrepo.GetRequests(Status);
+            Dashboarddatamodel dm= _dashboardrepo.GetRequestsbyfilter(Status,"",0,0,currentpage+2);
             TempData["CurrentStatusinlist"] = Status;
 
             switch (Status)
@@ -96,7 +98,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
             {
                 case "1":
                   
-                    return PartialView("../AdminSite/Dashboard/_newList", contacts);
+                    return PartialView("../AdminSite/Dashboard/_newList", dm);
 
                     break;
                 case "2":

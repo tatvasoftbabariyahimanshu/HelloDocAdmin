@@ -7,18 +7,7 @@
 
 
 
-<div class="card bg-transparent border-0 ">
-    <div class="card-header p-2  d-flex justify-content-between  border-0  bg-transparent  mt-2">
-        <div class="text-start   d-flex ">
-            <span class="fw-bold hero-heading"> Patients</span><span class="mx-2 fw-bold text-primary mt-2 hero-heading-active">(@TempData["CurrentStatus"])</span>
-        </div>
-        <div class="text-end ">
-            <partial name="../Action/Partialdash/DashboardButtons.cshtml" />
 
-        </div>
-    </div>
-    <div class="card-body rounded shadow-lg m-2 ">
-        <partial name="../Action/Partialdash/_SearchFilter.cshtml" />
         <div class="table-responsive dashboard-tbl mt-3" id="tbl" >
             <table id="myTable" class="table table-responsive">
                 <thead class=" text-start tablehead">
@@ -273,8 +262,7 @@
         </div>
     }
       
-    </div>
-</div>
+
 <script>
     function deleteLink(id) {
         console.log(id);
@@ -362,9 +350,7 @@
 
 </script>
 <script>
-    $(document).ready(function () {
-        $("#myTable").DataTable();
-    });
+   
     function myFunction() {
         // Declare variables
         var input, filter, table, tr, td, i, txtValue;

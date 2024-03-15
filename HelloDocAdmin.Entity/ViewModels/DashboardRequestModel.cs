@@ -16,7 +16,7 @@ namespace HelloDocAdmin.Entity.ViewModels
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
         public string? RequestorPhoneNumber { get; set; }
-   
+       public int? RegionID { get; set; }    
         public int? RequestID { get; set; }
         public int? RequestTypeID { get; set; }
         public string? Address { get; set; }

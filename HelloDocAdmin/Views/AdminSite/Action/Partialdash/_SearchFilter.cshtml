@@ -16,23 +16,17 @@
             <div class="col-md-6">
                 <div class="dropdown w-100 mt-1   ">
                     <div class="inputs-control w-100 p-0 ">
-                        <input class="  input-outline input-outline-search h-100 " type="button" data-bs-toggle="dropdown" aria-expanded="false" onfocus="false" />
+                        
 
 
-                        <label class="inputs-lable-ser ">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-                            </svg> All Region
-                        </label>
+                      
 
+                            <select class="input-outline input-outline-search h-100 " data-allow-clear="true" aria-expanded="false" tabindex="-1" onchange="getfilterdata()" id="region-filter" asp-items="@(new SelectList(ViewBag.RegionComboBox,"RegionId","RegionName"))" data-control="select2" data-placeholder="Select Level">
+                                <option>All Region</option>
+                            </select>
 
-
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
-                    </div>
+                        </div>
+                    
 
                 </div>
             </div>

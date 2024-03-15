@@ -13,7 +13,7 @@ namespace HelloDocAdmin.Entity.ViewModels
         public int? notificationid { get; set; }
         public BitArray? notification { get; set; }
         public string? role { get; set; }
-        public int? Physicianid { get; set; }
+        public int Physicianid { get; set; }
 
         public string? Aspnetuserid { get; set; }
         public string? UserName { get; set; }

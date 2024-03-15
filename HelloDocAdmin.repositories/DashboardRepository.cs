@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -16,6 +17,7 @@ using System.Linq;
 using System.Runtime.Intrinsics.Arm;
 using System.Text;
 using System.Threading.Tasks;
+using static HelloDocAdmin.Entity.ViewModels.AdminSite.Constant;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -179,6 +181,7 @@ namespace HelloDocAdmin.Repositories
 
         public List<DashboardRequestModel> GetRequests(string Status)
         {
+          
 
             List<int> priceList = Status.Split(',').Select(int.Parse).ToList();
 
@@ -212,7 +215,75 @@ namespace HelloDocAdmin.Repositories
                                                        ProviderID = req.Physicianid,
                                                        RequestorPhoneNumber = req.Phonenumber
                                                    }).ToList();
+
+
+           
             return allData;
+        }
+        public Dashboarddatamodel GetRequestsbyfilter(string Status,  string search="", int region=0, int requesttype=0, int currentpage = 1)
+        {
+            Dashboarddatamodel dm = new Dashboarddatamodel();
+
+            List<int> priceList = Status.Split(',').Select(int.Parse).ToList();
+
+           IQueryable<DashboardRequestModel> allData = (from req in _context.Requests
+                                                   join reqClient in _context.Requestclients
+                                                   on req.Requestid equals reqClient.Requestid into reqClientGroup
+                                                   from rc in reqClientGroup.DefaultIfEmpty()
+                                                   join phys in _context.Physicians
+                                                   on req.Physicianid equals phys.Physicianid into physGroup
+                                                   from p in physGroup.DefaultIfEmpty()
+                                                   join reg in _context.Regions
+                                                  on rc.Regionid equals reg.Regionid into RegGroup
+                                                   from rg in RegGroup.DefaultIfEmpty()
+                                                   where priceList.Contains(req.Status)
+                                                   orderby req.Createddate descending
+                                                   select new DashboardRequestModel
+                                                   {
+                                                       RequestID = req.Requestid,
+                                                       RequestTypeID = req.Requesttypeid,
+                                                       Requestor = req.Firstname + " " + req.Lastname,
+                                                       PatientName = rc.Firstname + " " + rc.Lastname,
+                                                       Dob = new DateOnly((int)rc.Intyear, DateTime.ParseExact(rc.Strmonth, "MMMM", new CultureInfo("en-US")).Month, (int)rc.Intdate),
+                                                       RequestedDate = req.Createddate,
+                                                       Email = rc.Email,
+                                                       RegionID=rc.Regionid,
+                                                       Region = rg.Name,
+                                                       ProviderName = p.Firstname + " " + p.Lastname,
+                                                       PhoneNumber = rc.Phonenumber,
+                                                       Address = rc.Address + ", " + rc.Street + ", " + rc.City + ", " + rc.State + ", " + rc.Zipcode,
+                                                       Notes = rc.Notes,
+                                                       ProviderID = req.Physicianid,
+                                                       RequestorPhoneNumber = req.Phonenumber
+                                                   });
+
+
+          
+            if (region != 0)
+            {
+                allData = allData.Where(r => r.RegionID == region);
+            }
+            if (requesttype != 0)
+            {
+                allData = allData.Where(r => r.RequestTypeID == requesttype);
+            }
+            if (!search.IsNullOrEmpty())
+            {
+                allData = allData.Where(r => r.PatientName.IndexOf(search, StringComparison.OrdinalIgnoreCase) > 0);
+            }
+            dm.TotalPage= (int)Math.Ceiling((double)allData.Count() / 1)  ;
+            allData = allData.OrderByDescending(x => x.RequestedDate).Skip((currentpage - 1) * 1).Take(1);
+            dm.requestList= allData.ToList();
+
+          
+
+            dm.CurrentPage = currentpage;
+
+            
+
+
+
+            return dm;
         }
         public  ViewNotesModel getNotesByID(int id)
         {
