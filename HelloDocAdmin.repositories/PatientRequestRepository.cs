@@ -234,8 +234,13 @@ namespace HelloDocAdmin.Repositories
                     _context.SaveChanges();
 
 
-
-
+                    Requeststatuslog rsl=new Requeststatuslog();
+                    rsl.Status = 1;
+                    rsl.Createddate = DateTime.Now; 
+                    rsl.Notes = viewdata.Symptoms;
+                    rsl.Requestid= Request.Requestid;
+                    _context.Requeststatuslogs.Add(rsl);
+                    _context.SaveChanges();
                     return true;
                 }
             }
@@ -362,6 +367,13 @@ namespace HelloDocAdmin.Repositories
                 if (_email.SendMail(viewdata.Email,  "New Patient Account Creation", emailContent))
                 {
 
+                    Requeststatuslog rsl = new Requeststatuslog();
+                    rsl.Status = 1;
+                    rsl.Createddate = DateTime.Now;
+                    rsl.Notes = viewdata.Symptoms;
+                    rsl.Requestid = Request.Requestid;
+                    _context.Requeststatuslogs.Add(rsl);
+                    _context.SaveChanges();
 
                     return true;
 
@@ -496,6 +508,13 @@ namespace HelloDocAdmin.Repositories
                 if (_email.SendMail(viewdata.Email, "New Patient Account Creation", emailContent))
                 {
 
+                    Requeststatuslog rsl = new Requeststatuslog();
+                    rsl.Status = 1;
+                    rsl.Createddate = DateTime.Now;
+                    rsl.Notes = viewdata.Symptoms;
+                    rsl.Requestid = Request.Requestid;
+                    _context.Requeststatuslogs.Add(rsl);
+                    _context.SaveChanges();
 
                     return true;
 
@@ -631,7 +650,13 @@ namespace HelloDocAdmin.Repositories
 
                 if (_email.SendMail(viewdata.Email, "New Patient Account Creation", emailContent))
                 {
-
+                    Requeststatuslog rsl = new Requeststatuslog();
+                    rsl.Status = 1;
+                    rsl.Createddate = DateTime.Now;
+                    rsl.Notes = viewdata.Symptoms;
+                    rsl.Requestid = Request.Requestid;
+                    _context.Requeststatuslogs.Add(rsl);
+                    _context.SaveChanges();
 
                     return true;
 

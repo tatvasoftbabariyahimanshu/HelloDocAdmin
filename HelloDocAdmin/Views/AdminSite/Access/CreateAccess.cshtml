@@ -1,0 +1,125 @@
+﻿@using static HelloDocAdmin.Entity.ViewModels.AdminSite.Constant;
+@model HelloDocAdmin.Entity.ViewModels.AdminSite.RolesModel;
+@{
+    var enumData = from AccountType e in Enum.GetValues(typeof(AccountType))
+                   select new
+                   {
+                       ID = (int)e,
+                       Name = e.ToString()
+                   };
+  
+  
+}
+@{
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+
+<div class="container">
+    <div class="card bg-transparent border-0">
+        <div class="card-header d-flex justify-content-between  border-0  bg-transparent p-1  mt-3 mb-2">
+            <div class="text-start d-flex align-items-center">
+                <h5 class="mt-2"><b> @ViewData["Page"] Role</b></h5>
+
+            </div>
+            <div class="text-end">
+                <a asp-controller="Access" asp-action="Index"
+                   class="btn btn-outline-info btn-back">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                         fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                              d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5" />
+                    </svg>Back
+                </a>
+            </div>
+        </div>
+
+        <div class="card-body rounded shadow">
+
+
+            <div class="mt-4">
+               
+                <h6> <b>Details</b></h6>
+            </div>
+             <form asp-action="PostRoleMenu" asp-controller="Access" id="resetpass" class="row g-3 mx-2 my-3 ">
+            <div class="row">
+                <div class="col-md-6 mt-2">
+                    <div class=" mb-2">
+                        <div class="inputs-control ">
+                            <input placeholder=" " asp-for="Name" class="input-outline inp-dis w-100 inp asp" type="text">
+                            <label class="inputs-lable">Role Name</label>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-md-6 mt-2">
+                    <div class=" mb-2">
+                        <div class="input-control w-100 ">
+                            <select class="input-outline input-outline-select inp asp  inp-dis" onchange="accounttype()" asp-for="Accounttype" id="Accounttype" data-allow-clear="true" tabindex="-1" asp-items="@(new SelectList(enumData, "ID", "Name"))" data-control="select2" data-placeholder="Select Level">
+                                <option>Select Role</option>
+                            </select>
+
+                        </div>
+                    </div>
+                </div>
+                <input name="Menusid" type="hidden" id="menusid" />
+                <input asp-for="Roleid" type="hidden" id="roleid" />
+                <div class="col-md-12 mt-3" style="min-height:150px"  >
+                    <div id="menu" class="d-flex">
+
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="card-footer border-0 bg-transparent text-end">
+                    <button type="submit" class="btn btn-info text-white">@ViewData["Page"]</button>
+                    <button type="reset" class="btn btn-danger btn-cancel">
+                    cancel
+                </button>
+            </div>
+            </form>
+
+        </div>
+    </div>
+
+</div>
+<script>
+    accounttype()
+    function accounttype() {
+        var Accounttype = $("#Accounttype").val();
+        var roleid = $("#roleid").val();
+        console.log(Accounttype);
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("GetMenusByAccount","Access")?Accounttype=' + Accounttype + '&&roleid=' + roleid,
+            cache: false,
+            success: function (response) {
+                console.log(response);
+                // Clear previous content
+                $('#menu').empty();
+                // Append checkboxes to the menu div
+                response.forEach(function (menuItem) {
+                    $('#menu').append('<div class="form-check mx-2"><input ' + menuItem.checekd + ' id = "' + menuItem.menuid + '" onchange="menubox()" class="form-check-input menubox" type="checkbox" name="' + menuItem.name + '" value="' + menuItem.menuid + '">  <label class="form-check-label" for= "' + menuItem.menuid + '" >' + menuItem.name + '</label></div>');
+                });
+                menubox();
+            },
+            error: function () {
+                alert("Error while checking email.");
+            }
+        });
+    }
+    function menubox() {
+        event.preventDefault();
+        let checkboxes = document.querySelectorAll('.menubox:checked');
+        let regionIds = [];
+        checkboxes.forEach((checkbox) => {
+            regionIds.push(checkbox.value);
+        });
+        document.querySelector('#menusid').value = regionIds.join(',');
+        console.log(document.querySelector('#menusid').value);
+    };
+
+</script>
+
+

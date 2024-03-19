@@ -17,6 +17,22 @@
       "PackagePath": "staticwebassets\\Upload\\Fig Contact your Provider.jpg"
     },
     {
+      "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\Fig1. Platform login page (1).jpg",
+      "PackagePath": "staticwebassets\\Upload\\Fig1. Platform login page (1).jpg"
+    },
+    {
+      "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\Fig1. Platform login page.jpg",
+      "PackagePath": "staticwebassets\\Upload\\Fig1. Platform login page.jpg"
+    },
+    {
+      "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\Fig2. Forgot Password.jpg",
+      "PackagePath": "staticwebassets\\Upload\\Fig2. Forgot Password.jpg"
+    },
+    {
+      "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\Fig56._Patient_site_1-removebg-preview.png",
+      "PackagePath": "staticwebassets\\Upload\\Fig56._Patient_site_1-removebg-preview.png"
+    },
+    {
       "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\Physician\\10\\12312-20240313035828-Photo.jpg",
       "PackagePath": "staticwebassets\\Upload\\Physician\\10\\12312-20240313035828-Photo.jpg"
     },
@@ -35,6 +51,10 @@
     {
       "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\Physician\\11\\asdasd-20240313040637-Signature.png",
       "PackagePath": "staticwebassets\\Upload\\Physician\\11\\asdasd-20240313040637-Signature.png"
+    },
+    {
+      "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\Physician\\12\\-202403190945-Signature.png",
+      "PackagePath": "staticwebassets\\Upload\\Physician\\12\\-202403190945-Signature.png"
     },
     {
       "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\Physician\\12\\h-20240313041038-Photo.jpg",
@@ -59,6 +79,14 @@
     {
       "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\Physician\\13\\BackGrounddoc.pdf",
       "PackagePath": "staticwebassets\\Upload\\Physician\\13\\BackGrounddoc.pdf"
+    },
+    {
+      "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\Physician\\14\\-202403190621-Photo.jpg",
+      "PackagePath": "staticwebassets\\Upload\\Physician\\14\\-202403190621-Photo.jpg"
+    },
+    {
+      "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\Physician\\14\\-202403190621-Signature.png",
+      "PackagePath": "staticwebassets\\Upload\\Physician\\14\\-202403190621-Signature.png"
     },
     {
       "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\Physician\\14\\ASasA-20240313042939-Photo.png",
@@ -253,6 +281,14 @@
       "PackagePath": "staticwebassets\\Upload\\Physician\\8\\BackGrounddoc.pdf"
     },
     {
+      "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\Physician\\9\\-202403180143-Photo.jpg",
+      "PackagePath": "staticwebassets\\Upload\\Physician\\9\\-202403180143-Photo.jpg"
+    },
+    {
+      "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\Physician\\9\\-202403180143-Signature.png",
+      "PackagePath": "staticwebassets\\Upload\\Physician\\9\\-202403180143-Signature.png"
+    },
+    {
       "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\Physician\\9\\Agreementdoc.pdf",
       "PackagePath": "staticwebassets\\Upload\\Physician\\9\\Agreementdoc.pdf"
     },
@@ -267,6 +303,10 @@
     {
       "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\SRS-23-24-Trainees-21Feb24 (1).pdf",
       "PackagePath": "staticwebassets\\Upload\\SRS-23-24-Trainees-21Feb24 (1).pdf"
+    },
+    {
+      "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\Screenshot (1) (66).png",
+      "PackagePath": "staticwebassets\\Upload\\Screenshot (1) (66).png"
     },
     {
       "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\Screenshot (1).png",
@@ -357,6 +397,10 @@
       "PackagePath": "staticwebassets\\Upload\\req_131\\Fig56. Patient site 1.jpg"
     },
     {
+      "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\req_16\\8145760_3816471 (1) (1).jpg",
+      "PackagePath": "staticwebassets\\Upload\\req_16\\8145760_3816471 (1) (1).jpg"
+    },
+    {
       "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\req_1\\Fig1. Platform login page.jpg",
       "PackagePath": "staticwebassets\\Upload\\req_1\\Fig1. Platform login page.jpg"
     },
@@ -369,8 +413,20 @@
       "PackagePath": "staticwebassets\\Upload\\req_2\\11116016_415.jpg"
     },
     {
+      "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\req_2\\Fig2. Forgot Password.jpg",
+      "PackagePath": "staticwebassets\\Upload\\req_2\\Fig2. Forgot Password.jpg"
+    },
+    {
+      "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\req_3\\8145760_3816471 (1) (1).jpg",
+      "PackagePath": "staticwebassets\\Upload\\req_3\\8145760_3816471 (1) (1).jpg"
+    },
+    {
       "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\req_3\\Fig1. Platform login page.jpg",
       "PackagePath": "staticwebassets\\Upload\\req_3\\Fig1. Platform login page.jpg"
+    },
+    {
+      "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\req_3\\Fig56._Patient_site_1-removebg-preview.png",
+      "PackagePath": "staticwebassets\\Upload\\req_3\\Fig56._Patient_site_1-removebg-preview.png"
     },
     {
       "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\req_4\\11116016_415.jpg",

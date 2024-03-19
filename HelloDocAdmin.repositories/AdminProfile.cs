@@ -28,14 +28,14 @@ namespace HelloDocAdmin.Repositories
         public ViewAdminProfileModel GetDetailsForAdminProfile(string id)
         {
             
-            var aspnetuserdata=_context.Aspnetusers.FirstOrDefault(e=>e.Id== "787a81c3-1917-41d9-abc6-2e3536b8906c");
+            var aspnetuserdata=_context.Aspnetusers.FirstOrDefault(e=>e.Id== id);
             ViewAdminProfileModel model = new ViewAdminProfileModel
             {
                 ASP_UserName=aspnetuserdata.Username,
                 ASP_Password=aspnetuserdata.Passwordhash
                 
             };
-            var admindata = _context.Admins.FirstOrDefault(e => e.Aspnetuserid == "787a81c3-1917-41d9-abc6-2e3536b8906c");
+            var admindata = _context.Admins.FirstOrDefault(e => e.Aspnetuserid == id);
 
             model.ASP_Status = admindata.Status;
             model.ASP_RoleID=admindata.Roleid;
@@ -60,6 +60,8 @@ namespace HelloDocAdmin.Repositories
             model.Address2 = admindata.Address2;
             model.City = admindata.City;
             model.zip = admindata.Zip;
+            model.AspnetUserID=admindata.Aspnetuserid;
+            model.RegionID = (int)admindata.Regionid;
 
             return model;
         }
@@ -186,13 +188,168 @@ namespace HelloDocAdmin.Repositories
         }
 
 
+        public bool AddAdmin(ViewAdminProfileModel data,string id) {
+            try
+            {
+                if (data != null)
+                {
+                    var hasher = new PasswordHasher<string>();
+
+                    string hashedPassword = hasher.HashPassword(null, data.ASP_Password);
+                    Aspnetuser user = new Aspnetuser()
+                    {
+                        Username = data.ASP_UserName,
+                        Passwordhash = hashedPassword,
+                        Email = data.User_Email,
+                        CreatedDate = DateTime.Now,
+                        Modifieddate = DateTime.Now,
+                        Id = Guid.NewGuid().ToString()
+
+                };
+                    _context.Aspnetusers.Add(user);
+                    _context.SaveChanges();
+
+
+                    Admin admin = new Admin()
+                    {
+                        Firstname = data.User_FirtName,
+                        Lastname = data.User_LastName,
+                        Email = data.User_Email,
+                        Mobile = data.User_PhoneNumber,
+                        Aspnetuserid = user.Id,
+                        Address1 = data.Address1,
+                        Address2 = data.Address2,
+                        Status = data.ASP_Status,
+                        Roleid=data.ASP_RoleID,
+                        City = data.City,
+                        Regionid = data.RegionID,
+                        Zip = data.zip,
+                       
+                        Createdby = id,
+                        Createddate = DateTime.Now,
+                        Modifiedby = id,
+                        Modifieddate = DateTime.Now,
+
+                    };
+                    _context.Admins.Add(admin);
+                    _context.SaveChanges();
+                    Admin DataForChange = _context.Admins.FirstOrDefault(e => e.Aspnetuserid == admin.Aspnetuserid);
+                    List<Adminregion> dataforregion = _context.Adminregions.Where(e => e.Adminid == DataForChange.Adminid).ToList();
+                    foreach (var dataitem in dataforregion)
+                    {
+                        _context.Adminregions.Remove(dataitem);
+                        _context.SaveChanges();
+                    }
+                    foreach (var dataitem2 in data.AdminReqionList)
+                    {
+                        Adminregion adr = new Adminregion
+                        {
+                            Adminid = DataForChange.Adminid,
+                            Regionid = dataitem2
+                        };
+
+                        _context.Adminregions.Add(adr);
+                        _context.SaveChanges();
+
+
+                    }
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+               
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+            
+        
+        
+        
+        
+        }
+        public bool EditAdmin(ViewAdminProfileModel data, string id)
+        {
+            try
+            {
+                if (data != null)
+                {
+                    Aspnetuser asp=_context.Aspnetusers.FirstOrDefault(E=>E.Id==data.AspnetUserID);
+                    asp.Username = data.ASP_UserName;
+                    asp.Modifieddate = DateTime.Now;
+                    _context.Aspnetusers.Update(asp);
+                     _context.SaveChanges();
 
 
 
+                    Admin adm=_context.Admins.FirstOrDefault(E=>E.Aspnetuserid==data.AspnetUserID);
+
+                    adm.Address1 = data.Address1;
+                    adm.Address2 = data.Address2;
+                    adm.Altphone = data.User_PhoneNumber;
+                    adm.Firstname = data.User_FirtName;
+                    adm.Lastname = data.User_LastName;
+                    adm.Email = data.User_Email;
+                    adm.Mobile = data.User_PhoneNumber;
+                    adm.Regionid = data.RegionID;
+                    adm.Roleid = data.ASP_RoleID;
+                    adm.Status=data.ASP_Status;
+                    adm.City = data.City;
+                    adm.Zip = data.zip;
+                    adm.Modifiedby = id;
+                    adm.Modifieddate = DateTime.Now;    
+
+
+                    _context.Admins.Update(adm);
+                    _context.SaveChanges();
+
+                    Admin DataForChange = _context.Admins.FirstOrDefault(e => e.Aspnetuserid == adm.Aspnetuserid);
+                    List<Adminregion> dataforregion = _context.Adminregions.Where(e => e.Adminid == DataForChange.Adminid).ToList();
+                    foreach (var dataitem in dataforregion)
+                    {
+                        _context.Adminregions.Remove(dataitem);
+                        _context.SaveChanges();
+                    }
+                    foreach (var dataitem2 in data.AdminReqionList)
+                    {
+                        Adminregion adr = new Adminregion
+                        {
+                            Adminid = DataForChange.Adminid,
+                            Regionid = dataitem2
+                        };
+
+                        _context.Adminregions.Add(adr);
+                        _context.SaveChanges();
+
+
+                    }
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
 
 
 
 
 
         }
+
+
+
+
+
+
+
+    }
 }

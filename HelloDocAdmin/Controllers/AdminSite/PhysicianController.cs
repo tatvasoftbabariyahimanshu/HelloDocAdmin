@@ -154,8 +154,8 @@ namespace HelloDocAdmin.Controllers.AdminSite
         {
             ViewBag.RegionComboBox = await _combobox.RegionComboBox();
             ViewBag.userrolecombobox = await _combobox.UserRole();
-            if (ModelState.IsValid)
-            {
+            //if (ModelState.IsValid)
+            //{
                 bool data = await _phyrepo.EditAccountInfo(physicians);
                 if (data)
                 {
@@ -167,12 +167,12 @@ namespace HelloDocAdmin.Controllers.AdminSite
                     _notyf.Error("some problem");
                     return View("../AdminSite/Physician/PhysicianAddEdit", physicians);
                 }
-            }
-            else
-            {
-                _notyf.Error("Enter Valid data");
-                return View("../AdminSite/Physician/PhysicianAddEdit", physicians);
-            }
+            //}
+            //else
+            //{
+            //    _notyf.Error("Enter Valid data");
+            //    return View("../AdminSite/Physician/PhysicianAddEdit", physicians);
+            //}
            
         }
         public async Task<IActionResult> ResetPassword(int Physicianid,string Password)

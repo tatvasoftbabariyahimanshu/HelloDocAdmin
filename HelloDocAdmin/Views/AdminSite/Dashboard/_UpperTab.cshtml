@@ -8,14 +8,13 @@
 @model DashboardCardsModel
 
   ﻿
-    <form id="filterForm" data-ajax="true" data-ajax-method="post" data-ajax-mode="replace" data-ajax-update="#SearchResult"
-             asp-action="_SearchResult" asp-controller="Dashboard" novalidate="novalidate">
-        @Html.AntiForgeryToken()
+    <input type="hidden" value="" id="cr-status"/>
+       
         <div class="tab p-2 ">
             <div class="row tb">
            
                 <div class="col-md-2 col-sm-4 col-4 ">
-                    <button type="submit" onclick="actAlrt(1)" value="1" name="Status" class="btn alert alert-primary 
+            <button type="submit" onclick="actAlrt(1)    " value="1" name="Status" class="btn alert alert-primary
 
 @{
 if(CV.CurrentStatus()=="1")
@@ -35,7 +34,7 @@ btn-outline-primary w-100 text-start  text-uppercase  a-primary t-tab">
                     </button>
                 </div>
                 <div class="col-md-2 col-sm-4 col-4 position-relative">
-                    <button type="submit" value="2" onclick="actAlrt(2)" name="Status" class="btn alert
+                <button type="submit" value="2" onclick="actAlrt(2) " name="Status" class="btn alert
 @{
 if(CV.CurrentStatus()=="2")
                     {
@@ -133,25 +132,47 @@ alert alert-success btn-outline-success w-100 text-start text-uppercase  a-succe
         </div>
 
 
-    </form>
+  
 
    <script>
 
     function actAlrt(value)
     {
         var items = document.getElementsByClassName("alert");
+        if(value==1)
+        {
+            $('#cr-status').val('1');
+        }
+        else if (value == 2)
+        {
+            $('#cr-status').val('2');
+        }
+        else if (value == 3) {
+            $('#cr-status').val('4,5');
+        }
+        else if (value == 4) {
+            $('#cr-status').val('6');
+        }
+        else if (value == 5) {
+            $('#cr-status').val('3,7,8');
+        }
+        else {
+            $('#cr-status').val('9');
+        }
 
         for(var i=0;i<items.length;i++){
 
             if(i==value-1)
             {
                 items[i].classList.add("active");
+              
 
             }
             else{
                 items[i].classList.remove("active");
             }
         }
+        getfilterdata();
     }
 
     </script>

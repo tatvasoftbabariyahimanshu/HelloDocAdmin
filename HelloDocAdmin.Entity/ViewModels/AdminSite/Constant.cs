@@ -35,5 +35,11 @@ namespace HelloDocAdmin.Entity.ViewModels.AdminSite
             Pending = 1, Active, NotActive
 
         }
+        public enum AccountType
+        {
+            All = 1, Admin, Physician,
+            Patient
+        }
+
     }
 }

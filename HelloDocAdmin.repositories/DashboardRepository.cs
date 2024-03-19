@@ -17,6 +17,7 @@ using System.Linq;
 using System.Runtime.Intrinsics.Arm;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Xsl;
 using static HelloDocAdmin.Entity.ViewModels.AdminSite.Constant;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -211,7 +212,7 @@ namespace HelloDocAdmin.Repositories
                                                        ProviderName = p.Firstname + " " + p.Lastname,
                                                        PhoneNumber = rc.Phonenumber,
                                                        Address = rc.Address + ", " + rc.Street + ", " + rc.City + ", " + rc.State + ", " + rc.Zipcode,
-                                                       Notes = rc.Notes,
+                                                      
                                                        ProviderID = req.Physicianid,
                                                        RequestorPhoneNumber = req.Phonenumber
                                                    }).ToList();
@@ -220,7 +221,7 @@ namespace HelloDocAdmin.Repositories
            
             return allData;
         }
-        public Dashboarddatamodel GetRequestsbyfilter(string Status,  string search="", int region=0, int requesttype=0, int currentpage = 1)
+        public async Task<Dashboarddatamodel> GetRequestsbyfilter(string Status,  string search="", int region=0, int requesttype=0, int currentpage = 1,int pagesize=5)
         {
             Dashboarddatamodel dm = new Dashboarddatamodel();
 
@@ -252,13 +253,12 @@ namespace HelloDocAdmin.Repositories
                                                        ProviderName = p.Firstname + " " + p.Lastname,
                                                        PhoneNumber = rc.Phonenumber,
                                                        Address = rc.Address + ", " + rc.Street + ", " + rc.City + ", " + rc.State + ", " + rc.Zipcode,
-                                                       Notes = rc.Notes,
+                                                      
                                                        ProviderID = req.Physicianid,
                                                        RequestorPhoneNumber = req.Phonenumber
                                                    });
+           
 
-
-          
             if (region != 0)
             {
                 allData = allData.Where(r => r.RegionID == region);
@@ -268,14 +268,37 @@ namespace HelloDocAdmin.Repositories
                 allData = allData.Where(r => r.RequestTypeID == requesttype);
             }
             if (!search.IsNullOrEmpty())
+              
             {
-                allData = allData.Where(r => r.PatientName.IndexOf(search, StringComparison.OrdinalIgnoreCase) > 0);
+                allData = allData.Where(r => r.PatientName.ToLower().Contains(search.ToLower()));
             }
-            dm.TotalPage= (int)Math.Ceiling((double)allData.Count() / 1)  ;
-            allData = allData.OrderByDescending(x => x.RequestedDate).Skip((currentpage - 1) * 1).Take(1);
+            dm.TotalPage= (int)Math.Ceiling((double)allData.Count() / pagesize)  ;
+            allData = allData.OrderByDescending(x => x.RequestedDate).Skip((currentpage - 1) * pagesize).Take(pagesize);
             dm.requestList= allData.ToList();
+            dm.pageSize = pagesize;
+            int i = 0;
+            foreach (var item in dm.requestList)
+            {
+                item.Notes = item.Notes ?? new List<string>(); // Initialize Notes if null
+                var rsa = (from rs in _context.Requeststatuslogs
+                           join py in _context.Physicians on rs.Physicianid equals py.Physicianid into pyGroup
+                           from py in pyGroup.DefaultIfEmpty()
+                           join p in _context.Physicians on rs.Transtophysicianid equals p.Physicianid into pGroup
+                           from p in pGroup.DefaultIfEmpty()
+                           join a in _context.Admins on rs.Adminid equals a.Adminid into aGroup
+                           from a in aGroup.DefaultIfEmpty()
+                           where rs.Requestid == item.RequestID && (rs.Transtoadmin != null || rs.Transtophysicianid != null || rs.Status == 2)
+                           select rs.Notes).ToList();
 
-          
+                foreach (var slt in rsa)
+                {
+                    item.Notes.Add(slt);
+                }
+
+                dm.requestList[i].Notes = item.Notes;
+                i++;
+            }
+
 
             dm.CurrentPage = currentpage;
 
@@ -385,11 +408,12 @@ namespace HelloDocAdmin.Repositories
             return true;
         }
         #region Assign_Provider
-        public async Task<bool> AssignProvider(int RequestId, int ProviderId, string notes)
+        public async Task<bool> AssignProvider(int RequestId, int ProviderId, string notes,string id)
         {
-
+            var admindata = _context.Admins.FirstOrDefault(E => E.Aspnetuserid == id);
             var request = await _context.Requests.FirstOrDefaultAsync(req => req.Requestid == RequestId);
             request.Physicianid = ProviderId;
+           
             request.Status = 2;
             _context.Requests.Update(request);
             _context.SaveChanges();
@@ -401,6 +425,7 @@ namespace HelloDocAdmin.Repositories
 
             rsl.Createddate = DateTime.Now;
             rsl.Status = 2;
+            rsl.Adminid = admindata.Adminid;
             _context.Requeststatuslogs.Update(rsl);
             _context.SaveChanges();
 
@@ -501,15 +526,18 @@ namespace HelloDocAdmin.Repositories
         }
 
 
-        public bool CancelCase(int RequestID, string Note, string CaseTag)
+        public bool CancelCase(int RequestID, string Note, string CaseTag,string id)
         {
             try
             {
+                var admindata = _context.Admins.FirstOrDefault(E => E.Aspnetuserid == id);
                 var requestData = _context.Requests.FirstOrDefault(e => e.Requestid == RequestID);
                 if (requestData != null)
                 {
                     requestData.Casetag = CaseTag;
                     requestData.Status = 3;
+                    requestData.Modifieddate=DateTime.Now;
+             
                     _context.Requests.Update(requestData);
                     _context.SaveChanges();
 
@@ -518,6 +546,7 @@ namespace HelloDocAdmin.Repositories
                         Requestid = RequestID,
                         Notes = Note,
                         Status = 3,
+                        Adminid=admindata.Adminid,
                         Createddate = DateTime.Now
                     };
                     _context.Requeststatuslogs.Add(rsl);

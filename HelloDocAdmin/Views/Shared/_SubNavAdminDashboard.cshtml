@@ -6,26 +6,7 @@
         background-color: #01BCE9;
     }
 </style>
-@*<nav class="navbar p-0 pt-2  navbar-expand-lg bg-body shadow mb-5  rounded">
-    <div class="container-fluid">
-       
-        <!-- <a class="navbar-brand" href="#">Patient_</a> -->
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link  @(path.Equals("/AdminDashboard") ? "active" : "")px-3" aria-current="page" asp-action="Index" asp-controller="AdminDashboard">Dashboard</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link @(path.EndsWith("/ProviderLocation") ? "active" : "") px-3" asp-action="ProviderLocation" asp-controller="AdminDashboard">ProviderLocation</a>
-                </li>
 
-            </ul>
-        </div>
-    </div>
-</nav>*@
 <nav class="navbar navbar-expand-lg bg-body shadow  rounded">
     <div class="container-fluid  p-2">
      
@@ -59,10 +40,15 @@
                         Partners
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link " asp-action="Index" asp-controller="Access">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle @(path.StartsWith("/Access") ? "active" : "")  " data-bs-toggle="dropdown" style="cursor:pointer" aria-expanded="false" asp-action="Index" asp-controller="Access">
                        Access
                     </a>
+                    <ul class="dropdown-menu border-0">
+                        <li><a class="dropdown-item @(path.EndsWith("/Access") ? "active" : "") " asp-action="Index" asp-controller="Access"> Role </a></li>
+                        <li><a class="dropdown-item @(path.EndsWith("/UserAccess") ? "active" : "") " asp-action="UserAccess" asp-controller="Access">User Access</a></li>
+                        <li><a class="dropdown-item " href="#">Invoicing</a></li>
+                    </ul>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link " asp-action="ProviderLocation" asp-controller="AdminDashboard">

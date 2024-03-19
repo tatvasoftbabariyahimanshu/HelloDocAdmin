@@ -20,7 +20,7 @@ namespace HelloDocAdmin.Entity.ViewModels
         public int? RequestID { get; set; }
         public int? RequestTypeID { get; set; }
         public string? Address { get; set; }
-        public string? Notes { get; set; }
+        public List<string>? Notes { get; set; }
 
         public int? ProviderID { get; set; }
         public string? ProviderName { get; set; }

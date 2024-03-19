@@ -122,7 +122,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
         #region AssignProvider
         public async Task<IActionResult> AssignProvider(int requestid, int ProviderId, string Notes)
         {
-            if (await _dashboardrepo.AssignProvider(requestid, ProviderId, Notes))
+            if (await _dashboardrepo.AssignProvider(requestid, ProviderId, Notes,CV.LoggedUserID()))
             {
                 _notyf.Success("Physician Assigned successfully...");
             }
@@ -181,11 +181,11 @@ namespace HelloDocAdmin.Controllers.AdminSite
         #endregion
 
         #region _CancelCase
-        public IActionResult CancelCase(int RequestID, string Note, string CaseTag)
+        public IActionResult CancelCase(int RequestId, string Note, string CaseTag)
         {
 
 
-            bool CancelCase = _dashboardrepo.CancelCase(RequestID, Note, CaseTag);
+            bool CancelCase = _dashboardrepo.CancelCase(RequestId, Note, CaseTag,CV.LoggedUserID());
             if (CancelCase)
             {
                 _notyf.Success("Case Canceled Successfully");

@@ -1,0 +1,83 @@
+﻿@{
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+@model List<HelloDocAdmin.Entity.Models.Role>;
+@using static HelloDocAdmin.Entity.ViewModels.AdminSite.Constant;
+
+@{
+
+    var status = "null";
+    if (TempData["Status"] == null)
+    {
+        status = "null";
+    }
+    else
+    {
+        status = TempData["Status"].ToString();
+
+    }
+}
+
+<div class="container">
+    <div class="card bg-transparent border-0">
+        <div class="card-header d-flex justify-content-between  border-0  bg-transparent p-1  mt-3 mb-2">
+            <div class="text-start d-flex align-items-center">
+                <h5 class="mt-2"><b> Access</b></h5>
+
+            </div>
+            <div class="text-end">
+                <a asp-controller="Dashboard" asp-action="Index"
+                   class="btn btn-outline-info btn-back">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                         fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                              d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5" />
+                    </svg>Back
+                </a>
+            </div>
+        </div>
+        <div class="card-body rounded shadow">
+                <div class="text-end ">
+                <a class="btn btn-outline-info " asp-action="CreateAccess" asp-controller="Access">
+                        <span class="addnewlg">
+                            Create New
+                        </span>
+                        <span class="addnewsm">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2" />
+                            </svg>
+                        </span>
+                    </a>
+                </div>        
+            <div class="table-responsive  dashboard-tbl mt-3 ">
+                <table id="myTable" class="table table-responsive">
+                    <thead class=" text-start tablehead">
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Account Type</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="">
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td scope="row" data-label="Created Date" class="table-text"> @item.Name</td>
+                                <td class="table-text" data-label="Current Status"> @Enum.GetName(typeof(AccountType), item.Accounttype)</td>
+                                <td class="table-text" data-label="Document">
+                                    <a asp-action="CreateAccess" asp-controller="Access" asp-route-id="@item.Roleid" class="btn btn-outline-info btn-sm document-button">
+                                        Edit
+                                        
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+

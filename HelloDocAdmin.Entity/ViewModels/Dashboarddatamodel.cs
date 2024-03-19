@@ -13,5 +13,7 @@ namespace HelloDocAdmin.Entity.ViewModels
         public int TotalPage { get; set; }
 
         public int CurrentPage { get; set; }
+
+        public int pageSize { get; set; }
     }
 }

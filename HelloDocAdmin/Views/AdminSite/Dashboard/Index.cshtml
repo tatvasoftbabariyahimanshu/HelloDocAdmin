@@ -1,7 +1,61 @@
 ﻿@{
     Layout = "~/Views/Shared/_DashboardLayout.cshtml";
 }
+@using HelloDocAdmin.Controllers.Authenticate;
+<script>
 
+    function getfilterdata() {
+        var currentpage = $('#crt-page').val();
+        var region = $('#region').val();
+        var search ="" + $('#myInput').val() ;
+        var pagesize = $('#SizeSelect').val();
+        var requesttype = $('#dot-filter').val();
+        var Status=$('#cr-status').val();
+        console.log(pagesize);
+        if(Status=='1')
+        {
+            $('#page-status').html('New');
+        }
+        else if (Status == '2') {
+            $('#page-status').html('Panding');
+        }
+        else if (Status == '4,5') {
+            $('#page-status').html('Active');
+        } else if (Status == '6') {
+            $('#page-status').html('Conclude');
+        }
+        else if (Status == '3,7,8') {
+            $('#page-status').html('To Close');
+        }
+        else if (Status == '9') {
+            $('#page-status').html('Unpaid');
+        }
+        $.ajax({
+            url: "/Dashboard/_SearchResult",
+            type: "GET",
+            data: {
+                search: search,
+                region: region,
+                requesttype: requesttype,
+                currentpage: currentpage,
+                Status: Status,
+                pagesize: pagesize
+
+            },
+            success: function (response) {
+                $('#SearchResult').html(response);
+            },
+            error: function () {
+                alert("error");
+            }
+        });
+    }
+    
+    function getpage(index) {
+        $("#crt-page").val(index);
+    
+    }
+    </script>
 <div class="loding-div">
     <div class="bro" id="BRO" style="height:100%;width:100%;position:absolute;background-color:black;opacity:0.2;z-index:1">
     </div>
@@ -13,7 +67,16 @@
     <div class="card bg-transparent p-1 border-0 ">
         <div class="card-header p-2  d-flex justify-content-between  border-0  bg-transparent  mt-2">
             <div class="text-start   d-flex ">
-                <span class="fw-bold hero-heading"> Patients</span><span class="mx-2 fw-bold text-primary mt-2 hero-heading-active">()</span>
+                <span class="fw-bold hero-heading"> Patients</span><span class="mx-2 fw-bold text-primary mt-2 hero-heading-active">(
+                    
+                    
+                    <span class="" id="page-status">@CV.CurrentStatusText()</span>
+
+              
+
+
+                    )</span >
+
             </div>
             <div class="text-end ">
                 <partial name="../Action/Partialdash/DashboardButtons.cshtml" />
@@ -39,28 +102,19 @@
     $(function () {
         $(".loding-div").show();
         
-        $("#filterForm").submit();
+      
+        getfilterdata();
         $(".loding-div").hide();
       
     });
 
 
-    filterSelection("all")
-    function filterSelection(c) {
-
-        $('#dot-filter').val(c);
-       
-    }
+   
+   
 
 
 
 
-
-   function getfilterdata()
-   {
-
-
-   }
 
 
 

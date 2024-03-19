@@ -7,12 +7,12 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form asp-action="CancelCase" asp-controller="Action">
-            <input type="hidden" value="" id="RequestID_Input_ModelCancelCase" name="RequestId"/>
+            <input type="hidden"  id="RequestID_Input_ModelCancelCase" name="RequestId"/>
 
             <div class="modal-body">
                 <h3 class="modal-title fs-5" id="exampleModalLabel">Patient Name : <span class="text-info" id="PatientName_ModelCancelCase"> </span></h3>
                
-                    <input value="" type="hidden" name="requestid" id="requestid" />
+                   
                     <div class="mb-4 mt-3">
                         <div class="input-control w-100">
                             <select name="CaseTag" class="input-outline input-outline-select " required data-allow-clear="true" tabindex="-1" id="Region"  asp-items="@(new SelectList(ViewBag.CaseReasonComboBox,"CaseReasonId","CaseReasonName"))" data-control="select2" data-placeholder="Cancel Reason">

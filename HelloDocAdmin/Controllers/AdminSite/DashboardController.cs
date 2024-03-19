@@ -21,10 +21,10 @@ namespace HelloDocAdmin.Controllers.AdminSite
           _combobox= combobox;
         }
 
-    
-       
 
 
+
+        [CustomAuthorization("Admin")]
         public async Task<IActionResult> Index()
         {
 
@@ -49,83 +49,74 @@ namespace HelloDocAdmin.Controllers.AdminSite
         }
         #endregion
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> _SearchResult(string Status,int currentpage)
+  
+        public async Task<IActionResult> _SearchResult(string? Status, int currentpage = 1, int region = 0, int requesttype = 0, string search = "",int pagesize=5)
         {
             ViewBag.RegionComboBox = await _combobox.RegionComboBox();
-            if (Status==null)
+
+            if (Status == null)
             {
                 Status = CV.CurrentStatus();
             }
 
+         
             Response.Cookies.Delete("Status");
             Response.Cookies.Append("Status", Status);
-            List<DashboardRequestModel> contacts = _dashboardrepo.GetRequests(Status);
-            Dashboarddatamodel dm= _dashboardrepo.GetRequestsbyfilter(Status,"",0,0,currentpage+2);
+
+            
+            List<DashboardRequestModel> requests = _dashboardrepo.GetRequests(Status);
+
+          
+            Dashboarddatamodel dm =await _dashboardrepo.GetRequestsbyfilter(Status, search, region, requesttype, currentpage,pagesize);
+
+            // Set TempData for current status
             TempData["CurrentStatusinlist"] = Status;
+            TempData["CurrentStatus"] = GetStatusName(Status);
 
+            // Return appropriate partial view based on status
             switch (Status)
             {
                 case "1":
-                    TempData["CurrentStatus"] = "New";
-                  
-
-                    break;
-                case "2":
-                    TempData["CurrentStatus"] = "Panding";
-                 
-                    break;
-                case "4,5":
-                    TempData["CurrentStatus"] = "Active";
-               
-                    break;
-                case "6":
-                    TempData["CurrentStatus"] = "Conclude";
-               
-                    break;
-                case "3,7,8":
-                    TempData["CurrentStatus"] = "To Close";
-               
-                    break;
-                case "9":
-                    TempData["CurrentStatus"] = "Unpaid";
-                  
-                    break;
-            }
-
-            switch (Status)
-            {
-                case "1":
-                  
+                    Response.Cookies.Append("StatusText", "New");
                     return PartialView("../AdminSite/Dashboard/_newList", dm);
 
-                    break;
                 case "2":
+                    Response.Cookies.Append("StatusText", "Pending");
+                    return PartialView("../AdminSite/Dashboard/_pandingList", dm);
 
-                  
-                    return PartialView("../AdminSite/Dashboard/_pandingList", contacts);
-                    break;
                 case "4,5":
-                  
-                    return PartialView("../AdminSite/Dashboard/_activeList", contacts);
-                    break;
-                case "6":
-              
-                    return PartialView("../AdminSite/Dashboard/_concludeList", contacts);
-                    break;
-                case "3,7,8":
-                   
-                    return PartialView("../AdminSite/Dashboard/_toCloseList", contacts);
-                    break;
-                case "9":
-          
-                    return PartialView("../AdminSite/Dashboard/_toUnpaidList", contacts);
-                    break;
-            }
-           
+                    Response.Cookies.Append("StatusText", "Active");
+                    return PartialView("../AdminSite/Dashboard/_activeList", dm);
 
-            return PartialView("../AdminSite/Dashboard/nodata", contacts);
+                case "6":
+                    Response.Cookies.Append("StatusText", "Conclude");
+                    return PartialView("../AdminSite/Dashboard/_concludeList", dm);
+
+                case "3,7,8":
+                    Response.Cookies.Append("StatusText", "To Close");
+                    return PartialView("../AdminSite/Dashboard/_toCloseList", dm);
+
+                case "9":
+                    Response.Cookies.Append("StatusText", "Unpaid");
+                    return PartialView("../AdminSite/Dashboard/_toUnpaidList", dm);
+
+                default:
+                    return PartialView("../AdminSite/Dashboard/nodata", dm);
+            }
+        }
+
+        private string GetStatusName(string status)
+        {
+            return status switch
+            {
+                "1" => "New",
+                "2" => "Pending",
+                "4,5" => "Active",
+                "6" => "Conclude",
+                "3,7,8" => "To Close",
+                "9" => "Unpaid",
+                _ => "Unknown",
+            };
         }
 
     }

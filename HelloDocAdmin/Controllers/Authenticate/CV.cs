@@ -36,6 +36,13 @@ namespace HelloDocAdmin.Controllers.Authenticate
 
             return Status;
         }
+        public static string? CurrentStatusText()
+        {
+            string? StatusText = _httpContextAccessor.HttpContext.Request.Cookies["StatusText"];
+
+
+            return StatusText;
+        }
         public static string? LoggedUserRole()
         {
             string? UserRole = null;

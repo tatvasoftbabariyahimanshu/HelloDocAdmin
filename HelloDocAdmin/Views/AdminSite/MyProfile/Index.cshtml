@@ -1,6 +1,14 @@
 ﻿@using HelloDocAdmin.Entity.ViewModels.AdminSite;
+@using static HelloDocAdmin.Entity.ViewModels.AdminSite.Constant;
 @{
     Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+    var enumData = from AdminStatus e in Enum.GetValues(typeof(AdminStatus))
+                   select new
+                   {
+                       ID = (int)e,
+                       Name = e.ToString()
+                   };
+
 }
 @model ViewAdminProfileModel;
 <script>
@@ -87,7 +95,7 @@
                     <div class="col-md-6 mt-2">
                         <div class=" mb-2">
                             <div class="input-control w-100 mt-3">
-                                <select class="input-outline input-outline-select inp  " asp-for="ASP_Status" required readonly data-allow-clear="true" tabindex="-1" onchange="myFunction_prof()" id="ProfessionType" data-control="select2" data-placeholder="Select Level">
+                                <select class="input-outline input-outline-select inp asp  inp-dis" asp-for="ASP_Status" disabled required data-allow-clear="true" tabindex="-1" asp-items="@(new SelectList(enumData, "ID", "Name"))" data-control="select2" data-placeholder="Select Level">
                                     <option>Status</option>
                                 </select>
                             </div>
@@ -183,7 +191,7 @@
                     <button type="submit" id="save" class="btn  btn-outline-info btn-submit mx-2 ">
                         save
                     </button>
-                    <button id="cancel" @*asp-action="Index" asp-controller="MyProfile"*@ class="btn  btn-outline-danger ">
+                    <button id="cancel" class="btn  btn-outline-danger ">
                         cancel
                     </button>
                 </div>
@@ -269,7 +277,7 @@
                     <button type="submit" id="save1" class="btn  btn-outline-info btn-submit mx-2 ">
                         save
                     </button>
-                    <button id="cancel1" @*asp-action="Index" asp-controller="MyProfile"*@ class="btn  btn-outline-danger ">
+                    <button id="cancel1" class="btn  btn-outline-danger ">
                         cancel
                     </button>
                 </div>
@@ -299,16 +307,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
 <script>
     const phoneInputField = document.querySelector("#phone");
-
     const phoneInput = window.intlTelInput(phoneInputField, {
-        utilsScript:
+    utilsScript:
             "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
     });
     const phoneInputField2 = document.querySelector("#phone2");
-
     const phoneInput2 = window.intlTelInput(phoneInputField2, {
-        utilsScript:
+    utilsScript:
             "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
     });
-
 </script>

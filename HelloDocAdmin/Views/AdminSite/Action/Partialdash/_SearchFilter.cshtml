@@ -5,7 +5,7 @@
             <div class="col-md-6">
 
                 <div class="inputs-control mt-1 w-100 p-0 ">
-                    <input placeholder=" " class="input-outline input-outline-search " id="myInput" onkeyup="myFunction()" type="text">
+                    <input placeholder=" " class="input-outline input-outline-search " id="myInput" onkeyup=" getfilterdata()" type="text"/>
                     <label class="inputs-lable">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                             <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
@@ -21,8 +21,8 @@
 
                       
 
-                            <select class="input-outline input-outline-search h-100 " data-allow-clear="true" aria-expanded="false" tabindex="-1" onchange="getfilterdata()" id="region-filter" asp-items="@(new SelectList(ViewBag.RegionComboBox,"RegionId","RegionName"))" data-control="select2" data-placeholder="Select Level">
-                                <option>All Region</option>
+                            <select class="input-outline input-outline-search h-100 " id="region" data-allow-clear="true" aria-expanded="false" tabindex="-1" onchange="getfilterdata()" asp-items="@(new SelectList(ViewBag.RegionComboBox,"RegionId","RegionName"))" data-control="select2" data-placeholder="Select Level">
+                                <option value="0">All Region</option>
                             </select>
 
                         </div>
@@ -37,33 +37,35 @@
     </div>
 
     <div class="text-start mt-2 col-md-4">
+        <input type="hidden" value="0" id="dot-filter"/>
         <div class="d-flex  text-start  justify-content-end ">
           @*  <button class="btn  btn-outline-info btn-sm mx-2 cir-text">all </button>*@
-            <div type="button" class="d-flex align-items-center " onclick="filterSelection('all')">
-                <div type="button" class="btn btn-outline-info ">All</div>
+            <div class="d-flex align-items-center active1 itm " onclick="hello(0)">
+                <div  class="text-info">All</div>
             </div>
-            <div type="button" class="d-flex align-items-center " onclick="filterSelection('bg-patient-row')">
+            
+            <div class="d-flex align-items-center itm" style="cursor:pointer;" onclick="hello(1)">
                 <div class="cir-patient mx-2">
                 </div>
                 <span class="cir-text">
                     Patient
                 </span>
             </div>
-            <div type="button" class="d-flex align-items-center " onclick="filterSelection('bg-family-row')">
+            <div class="d-flex align-items-center  itm" style="cursor:pointer;" onclick="hello(2)">
                 <div class="cir-family mx-2">
                 </div>
                 <span class="cir-text" >
                     Family/Friend
                 </span>
             </div>
-            <div type="button"  class="d-flex align-items-center " onclick="filterSelection('bg-business-row')">
+            <div class="d-flex align-items-center itm" style="cursor:pointer;" onclick="hello(3)">
                 <div class="cir-Business mx-2">
                 </div>
                 <span class="cir-text" >
                     Business
                 </span>
             </div>
-            <div type="button"  class="d-flex align-items-center " onclick="filterSelection('bg-concierge-row')">
+            <div class="d-flex align-items-center itm " style="cursor:pointer;" onclick="hello(4)">
                 <div class="cir-Concierge mx-2">
                 </div>
                 <span class="cir-text" >
@@ -75,3 +77,25 @@
 
 
 </div>
+<script>
+    function hello(num){
+        $('#dot-filter').val(num);
+        getfilterdata();
+
+
+       
+    }
+
+    var navLinks = document.getElementsByClassName("itm");
+    for (var i = 0; i < navLinks.length; i++) {
+        navLinks[i].addEventListener("click", function () {
+            var current = document.getElementsByClassName("active1");
+            if (current.length > 0) {
+                current[0].className = current[0].className.replace(" active1", "");
+            }
+            this.className += " active1";
+        });
+    }
+   
+
+</script>

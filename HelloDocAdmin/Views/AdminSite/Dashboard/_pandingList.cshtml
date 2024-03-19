@@ -1,7 +1,7 @@
 ﻿@using HelloDocAdmin.Entity.Models;
 @using HelloDocAdmin.Entity.ViewModels;
 @using static HelloDocAdmin.Entity.ViewModels.AdminSite.Constant;
-@model List<DashboardRequestModel>
+@model Dashboarddatamodel
 
 
 
@@ -25,7 +25,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var (item, i) in Model.Select((item, i) => (item, i)))
+                    @foreach (var (item, i) in Model.requestList.Select((item, i) => (item, i)))
                     {
 
                         if (item.RequestTypeID == 2)
@@ -109,7 +109,27 @@
                                 }
                             </td>
                             <td scope="col">@item.Address</td>
-                            <td scope="col">@item.Notes</td>
+                    <td scope="col">
+
+                        @{
+                            if (item.Notes != null || item.Notes.Count() > 0)
+                            {
+                                foreach (var not in item.Notes)
+                                {
+                                    <span> - @not </span>
+
+                                    <br />
+
+                                }
+                            }
+                            else
+                            {
+                                <span>-</span>
+                            }
+
+                        }
+
+                    </td>
                             <td scope="col" style="flex:auto">
                                 <div class="border border-1 p-1 rounded-2 text-center w-75 py-1">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-workspace" viewBox="0 0 16 16">
@@ -148,7 +168,7 @@
            
         </div>
        
-    @foreach (var (item, i) in Model.Select((item, i) => (item, i)))
+    @foreach (var (item, i) in Model.requestList.Select((item, i) => (item, i)))
     {
         <div class="accordion-item text-secondary " id="Acordiantable">
             <h2 class="accordion-header btn-i " id="flush-heading-@item.RequestID">
@@ -207,7 +227,26 @@
                     <p> <i class="fa fa-calendar border border-info rounded-pill p-1 me-2" aria-hidden="true"></i><b>Date of Birth:</b> @item.Dob</p>
                     <p> <i class="fa fa-envelope border border-info rounded-pill p-1 me-2"></i><b>Email :</b>  @item.Email</p>
                     <p> <i class="fa fa-phone border  border-info rounded-pill p-1 me-2"></i><b> Patient : </b>@item.PhoneNumber</p>
-                    <p><i class="fa fa-sticky-note border border-info rounded-pill p-1 me-2"></i> <b>Transfer Notes :</b> @item.Notes</p>
+                <p>
+                    <i class="fa fa-sticky-note border border-info rounded-pill p-1 me-2"></i> <b>Transfer Notes :</b>
+                    @{
+                        if (item.Notes != null || item.Notes.Count()>0 )
+                        {
+                            foreach (var not in item.Notes)
+                            {
+                                <span> -@not </span>
+
+                                <br />
+
+                            }
+                        }
+                        else
+                        {
+                            <span>-</span>
+                        }
+
+                    }
+                </p>
                     <p><i class="fa fa-calendar border border-info rounded-pill p-1 me-2"></i><b>Date of service :</b> -</p>
                     <p><i class="fa fa-calendar border border-info rounded-pill p-1 me-2"></i><b>Physician :</b> @item.ProviderName</p>
                     <p><i class="fa fa-user border border-info rounded-pill p-1 me-2"></i><b>Requestor :</b> @item.Requestor</p>
@@ -261,6 +300,39 @@
 
         </div>
     }
+<input type="hidden" id="crt-page" value="1" />
+<div class="d-flex justify-content-between">
+    <div class="text-start">
+
+        <select id="SizeSelect" asp-for="pageSize" onchange="getfilterdata()" class="form-select">
+            <option value="5" selected>5</option>
+            <option value="10">10</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
+        </select>
+    </div>
+    <div class="text-center">
+        <nav aria-label="Page  navigation example">
+            <ul class="pagination">
+                @if (Model.CurrentPage > 1)
+                {
+                    <li class="page-item"><a class="page-link" onclick="getpage(@Model.CurrentPage-1); getfilterdata(); ">Previous</a></li>
+                }
+
+                @for (int i = 1; i <= Model.TotalPage; i++)
+                {
+
+                    <li class="page-item"><a class="page-link @(i == Model.CurrentPage ? "active" : "") " onclick="getpage(@i); getfilterdata(); ">@i</a></li>
+                }
+                @if (Model.CurrentPage < Model.TotalPage)
+                {
+                    <li class="page-item"><a class="page-link" onclick="getpage(@Model.CurrentPage+1); getfilterdata(); ">next</a></li>
+                }
+
+            </ul>
+        </nav>
+    </div>
+</div>
       
 
 <script>
@@ -283,7 +355,7 @@
                 // If confirmed, construct the URL and navigate to it
                 var controller = 'Action'; // Replace 'Action' with your controller name
                 var action = 'ClearCase'; // Replace 'ClearCase' with your action name
-                var RequestID = dltdata[id].requestID;
+                var RequestID = dltdata.requestList[id].requestID;
                 var url = '/' + controller + '/' + action + '?RequestID=' + RequestID;
                 window.location.href = url;
             }
@@ -295,16 +367,16 @@
     function model_Case(id) {
         console.log(id);
         var modeldata = @Html.Raw(Json.Serialize(Model))
-            console.log(modeldata[id])
-        document.getElementById('PatientName_ModelCancelCase').innerText = modeldata[id].patientName;
-        document.getElementById('RequestID_Input_ModelCancelCase').value = modeldata[id].requestID;
-        document.getElementById('RequestID_Input_ModelTransferCase').value = modeldata[id].requestID;
-        document.getElementById("RequestID_sendAgreement").value = modeldata[id].requestID;
-        document.getElementById("Phonenumber_sendAgreement").value = modeldata[id].phoneNumber;
-        document.getElementById("Email_sendAgreement").value = modeldata[id].email;
-        document.getElementById('RequestID_Input_ModelBlockCase').value = modeldata[id].requestID;
-        document.getElementById('PatientName_ModelBlockCase').innerText = modeldata[id].patientName;
-        if (modeldata[id].requestTypeID==1)
+            console.log(modeldata.requestList[id])
+        document.getElementById('PatientName_ModelCancelCase').innerText = modeldata.requestList[id].patientName;
+        document.getElementById('RequestID_Input_ModelCancelCase').value = modeldata.requestList[id].requestID;
+        document.getElementById('RequestID_Input_ModelTransferCase').value = modeldata.requestList[id].requestID;
+        document.getElementById("RequestID_sendAgreement").value = modeldata.requestList[id].requestID;
+        document.getElementById("Phonenumber_sendAgreement").value = modeldata.requestList[id].phoneNumber;
+        document.getElementById("Email_sendAgreement").value = modeldata.requestList[id].email;
+        document.getElementById('RequestID_Input_ModelBlockCase').value = modeldata.requestList[id].requestID;
+        document.getElementById('PatientName_ModelBlockCase').innerText = modeldata.requestList[id].patientName;
+        if (modeldata.requestList[id].requestTypeID==1)
         {
             document.getElementById('typediv').innerHTML = `
           <div class="d-flex fs-4 align-items-center">
@@ -312,7 +384,7 @@
             <span class="cir-text fs-6">Patient</span>
       </div>`;
             }
-        else if (modeldata[id].requestTypeID == 2) {
+        else if (modeldata.requestList[id].requestTypeID == 2) {
             document.getElementById('typediv').innerHTML = `
                  <div  class="d-flex fs-4 align-items-center " >
                         <div class="cir-family fs-6 mx-2">
@@ -322,7 +394,7 @@
                     </span>
                 </div>`;
         }
-       else if (modeldata[id].requestTypeID == 3) {
+       else if (modeldata.requestList[id].requestTypeID == 3) {
             document.getElementById('typediv').innerHTML = `
                      <div   class="d-flex  align-items-center " >
                         <div class="cir-Concierge fs-6 mx-2">
@@ -333,7 +405,7 @@
                 </div>
              `;
         }
-       else if (modeldata[id].requestTypeID == 4) {
+       else if (modeldata.requestList[id].requestTypeID == 4) {
             document.getElementById('typediv').innerHTML = `
                   <div   class="d-flex  align-items-center ">
                             <div class="cir-Business mx-2 fs-6">

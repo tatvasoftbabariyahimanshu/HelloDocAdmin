@@ -21,6 +21,7 @@ builder.Services.AddScoped<ILoginRepository, LoginRepository>();
 builder.Services.AddScoped<IPatientDashboardRepository, PatientDashboardRepository>();
 builder.Services.AddScoped<IJWTService, JWTService>();
 builder.Services.AddScoped<IPhysicianRepository, PhysicianRepository>();
+builder.Services.AddScoped<IAccessRepository, AccessRepository>();
 builder.Services.AddScoped<IAdminProfile, AdminProfile>();
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 

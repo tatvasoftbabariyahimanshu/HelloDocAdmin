@@ -45,7 +45,7 @@
 
             </div>
             <div class="text-end">
-                <a asp-controller="Dashboard" asp-action="Index"
+                <a asp-controller="Physician" asp-action="Index"
                    class="btn btn-outline-info btn-back">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                          fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
@@ -59,12 +59,10 @@
         <div class="card-body rounded shadow">
                  <form id="addedit" class="row g-3" asp-action="PhysicianAddEdit" asp-controller="Physician" enctype="multipart/form-data" >
             <div class="mt-4">
-                    <input id="123" type="hidden" name="Physicianid" asp-for="Physicianid" />
+                    <input id="123" type="hidden"  asp-for="Physicianid" />
                 <h6> <b>Account Information</b></h6>
-            </div>
-          
+            </div>    
                 <div class="row">
-
                     <div class="col-md-6 mt-2">
                         <div class=" mb-2">
                             <div class="inputs-control ">
@@ -77,7 +75,7 @@
                     <div class="col-md-6 mt-2">
                         <div class=" mb-2">
                             <div class="inputs-control ">
-                                <input placeholder=" " name="Password" class="input-outline w-100 inp " type="text">
+                                <input placeholder=" " name"="Password" class="input-outline w-100 inp " type="text">
                                 <label class="inputs-lable">password</label>
                             </div>
 
@@ -89,11 +87,6 @@
                                 <select class="input-outline input-outline-select inp asp  inp-dis" asp-for="Roleid" required data-allow-clear="true" tabindex="-1" asp-items="@(new SelectList(enumData, "ID", "Name"))" data-control="select2" data-placeholder="Select Level">
                                     <option>Status</option>
                                 </select>
-                              
-                              
-                              
-                              
-                              
                             </div>
                         </div>
                     </div>
@@ -276,14 +269,12 @@
 
                         </div>
                     </div>
-
                     <div class="col-md-6 mt-2">
                         <div class=" mb-3">
                             <div class="inputs-control  ">
                                 <input placeholder=" " asp-for="Address2" class="input-outline w-100 inp  mail-billing-imp" type="text">
                                 <label class="inputs-lable">Address2</label>
                             </div>
-
                         </div>
                     </div>
                     <div class="col-md-6 mt-2">

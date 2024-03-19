@@ -95,10 +95,14 @@ body {
     color: var(--third);
     text-decoration: none;
 }
+.active1 {
+    border: 1px solid var(--primary);
+    border-radius:5px;
+}
 
 .bg-image-dash {
     opacity: 0;
-    display:none;
+    display: none;
 }
 
 .bg-image {
@@ -956,7 +960,7 @@ th:nth-child(6) {
 
 }
 .tablehead {
-    height: 60px;
+    height: 36px;
     align-items: center;
     background-color: #E7E9EB;
     font-size:1rem;

@@ -63,7 +63,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
                     worksheet.Cell(row, 6).Value = item.RequestedDate;
                     worksheet.Cell(row, 7).Value = item.PhoneNumber;
                     worksheet.Cell(row, 8).Value = item.Address;
-                    worksheet.Cell(row, 9).Value = item.Notes;
+                    //worksheet.Cell(row, 9).Value = item.Notes;
                     row++;
                 }
                 worksheet.Columns().AdjustToContents();

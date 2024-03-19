@@ -146,8 +146,7 @@ namespace HelloDocAdmin.Repositories
         }
         public bool saveuser(NewRegistration cpm)
         {
-            try
-                
+            try           
             {
               
                 var hasher = new PasswordHasher<string>();
