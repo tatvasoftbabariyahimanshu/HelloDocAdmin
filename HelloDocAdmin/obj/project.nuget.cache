@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "kCYtSD94Cu7+62YMO8JDsQGDpjkXIfcxZ7ed1l/EwUcM7NkrxnNE3yj56PxHzBIG1N3tzlJSsMP+844otlmNBw==",
+  "dgSpecHash": "Ghj1C0TMh1Mhg2Sys6Rxpo9hwx4iiDUOB2RV2ZMPFIgmq7+22mc+ws9xiC5pC8bwcP6Z3QegKlNSgZeifoTlLQ==",
   "success": true,
   "projectFilePath": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\HelloDocAdmin.csproj",
   "expectedPackageFiles": [
@@ -8,6 +8,7 @@
     "C:\\Users\\pci105\\.nuget\\packages\\closedxml\\0.102.2\\closedxml.0.102.2.nupkg.sha512",
     "C:\\Users\\pci105\\.nuget\\packages\\documentformat.openxml\\2.16.0\\documentformat.openxml.2.16.0.nupkg.sha512",
     "C:\\Users\\pci105\\.nuget\\packages\\excelnumberformat\\1.1.0\\excelnumberformat.1.1.0.nupkg.sha512",
+    "C:\\Users\\pci105\\.nuget\\packages\\googlemaps.locationservices\\1.2.0.5\\googlemaps.locationservices.1.2.0.5.nupkg.sha512",
     "C:\\Users\\pci105\\.nuget\\packages\\humanizer\\2.14.1\\humanizer.2.14.1.nupkg.sha512",
     "C:\\Users\\pci105\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\pci105\\.nuget\\packages\\humanizer.core.af\\2.14.1\\humanizer.core.af.2.14.1.nupkg.sha512",

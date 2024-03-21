@@ -18,24 +18,24 @@ namespace HelloDocAdmin.Controllers.AdminSite
         private IActionRepository _actionrepo;
         private IAccessRepository _accesrepo;
         private IDashboardRepository _dashboardrepo;
-    private ICombobox _combobox;
-    private readonly ILogger<DashboardController> _logger;
-    private readonly INotyfService _notyf;
-    private readonly EmailConfiguration _email;
+        private ICombobox _combobox;
+        private readonly ILogger<DashboardController> _logger;
+        private readonly INotyfService _notyf;
+        private readonly EmailConfiguration _email;
         private readonly IPhysicianRepository _phyrepo;
         private readonly IAdminProfile _admin;
         public AccessController(ILogger<DashboardController> logger,IPhysicianRepository physician,  IAdminProfile adminProfile, IDashboardRepository dashboardRepository, ICombobox combobox, IActionRepository actionrepo, INotyfService notyf, EmailConfiguration email,IAccessRepository accesrepo)
-    {
+        {
         _logger = logger;
         _combobox = combobox;
         _dashboardrepo = dashboardRepository;
         _actionrepo = actionrepo;
         _notyf = notyf;
         _email = email;
-            _accesrepo = accesrepo;
-            _phyrepo = physician;
-            _admin = adminProfile;
-    }
+        _accesrepo = accesrepo;
+        _phyrepo = physician;
+        _admin = adminProfile;
+        }
    
         public IActionResult Index()
         {

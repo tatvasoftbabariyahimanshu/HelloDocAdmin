@@ -84,7 +84,7 @@
                     <div class="col-md-6 mt-2">
                         <div class=" mb-2">
                             <div class="input-control w-100 mt-3">
-                                <select class="input-outline input-outline-select inp asp  inp-dis" asp-for="Roleid" required data-allow-clear="true" tabindex="-1" asp-items="@(new SelectList(enumData, "ID", "Name"))" data-control="select2" data-placeholder="Select Level">
+                                <select class="input-outline input-outline-select inp asp  inp-dis" asp-for="Status" required data-allow-clear="true" tabindex="-1" asp-items="@(new SelectList(enumData, "ID", "Name"))" data-control="select2" data-placeholder="Select Level">
                                     <option>Status</option>
                                 </select>
                             </div>
@@ -226,7 +226,7 @@
                         
                     </div>
                 </div>
-                <div class="text-end">
+                <div class="text-end editable" style="display:none">
                     
                     <a onclick="enable_disable_administration()" id="admin-input-edit" class="btn  btn-info text-white btn-submit ">
                         Edit
@@ -311,7 +311,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="text-end">
+                <div class="text-end editable" style="display:none">
                     <a onclick="enable_disable_mailBilling()" id="edit-mail-billing" class="btn text-white  btn-info btn-submit ">
                         Edit
                     </a>
@@ -415,7 +415,7 @@
                             <canvas id="signature-pad" width="300" height="200" style="display:none;"></canvas>
 
                         </div>
-                        <div class="text-end mt-2">
+                        <div class="text-end mt-2 ">
                             <div id="clear-button" class="btn btn-danger mt-0" style="display:none;">Clear</div>
                             <div id="save-button" class="btn btn-success" style="display:none;" disabled>Save</div>
                         </div>
@@ -431,7 +431,7 @@
 </div>
                   
                 </div>
-                <div class="text-end mt-2">
+                <div class="text-end mt-2 editable" style="display:none">
                     <a id="edit-provider-prof" class="btn  btn-outline-info btn-submit ">
                         Edit
                     </a>
@@ -610,9 +610,20 @@
                 <button type="submit" id="save1" class="btn text-white btn-info btn-submit mx-2 ">
                     save
                 </button>
-                <a  asp-action="DeletePhysician" asp-controller="Physician" asp-route-PhysicianID="@Model.Physicianid" class="btn  btn-danger ">
-                    Delete Account
-                </a>
+                    @{
+                        if(Model!=null)
+                        {
+                            if (Model.Aspnetuserid == null || Model.Physicianid == null)
+                            {
+                                <a asp-action="DeletePhysician" asp-controller="Physician" asp-route-PhysicianID="@Model.Physicianid" class="btn  btn-danger ">
+                                    Delete Account
+                                </a>
+                            }
+                        }
+                    
+                        
+                }
+               
             </div>
             </form>
         </div>

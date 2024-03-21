@@ -36,7 +36,7 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" asp-action="ProviderLocation" asp-controller="AdminDashboard">
+                    <a class="nav-link @(path.StartsWith("/Vendor") ? "active" : "")" asp-action="Index" asp-controller="Vendor">
                         Partners
                     </a>
                 </li>
@@ -50,10 +50,15 @@
                         <li><a class="dropdown-item " href="#">Invoicing</a></li>
                     </ul>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link " asp-action="ProviderLocation" asp-controller="AdminDashboard">
-                        Records
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle @(path.StartsWith("/Records") ? "active" : "")  " data-bs-toggle="dropdown" style="cursor:pointer" aria-expanded="false" asp-action="SearchRecord" asp-controller="Records">
+                        Recoard
                     </a>
+                    <ul class="dropdown-menu border-0">
+                        <li><a class="dropdown-item @(path.EndsWith("/Records") ? "active" : "") " asp-action="SearchRecord" asp-controller="Records"> Search Recoard </a></li>
+                        <li><a class="dropdown-item @(path.EndsWith("/UserAccess") ? "active" : "") " asp-action="UserAccess" asp-controller="Access">User Access</a></li>
+                        <li><a class="dropdown-item " href="#">Invoicing</a></li>
+                    </ul>
                 </li>
          
         </ul>

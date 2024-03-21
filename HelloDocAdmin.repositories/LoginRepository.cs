@@ -47,9 +47,10 @@ namespace HelloDocAdmin.Repositories
 
 
                         admin.Username = user.Username;
-                        admin.FirstName = admin.FirstName ?? string.Empty;
-                        admin.LastName = admin.LastName ?? string.Empty;
+                        admin.FirstName = admindata.Firstname ?? string.Empty;
+                        admin.LastName = admindata.Lastname ?? string.Empty;
                         admin.Role = datarole.Name;
+                        admin.Email = user.Email;
                         //admin.UserId = admindata.Adminid ?? null;
                         admin.AspUserID = user.Id;
 

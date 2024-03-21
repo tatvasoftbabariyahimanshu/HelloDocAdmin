@@ -12,8 +12,8 @@
                     <input type="hidden"  name="requestid" id="RequestID_Input_ModelAssignCase" />
                     <div class="mb-3">
                         <div class="input-control w-100 mt-3">
-                            <select class="input-outline input-outline-select " required name="region" data-allow-clear="true" tabindex="-1" onchange="myFunction1()" id="region2" asp-items="@(new SelectList(ViewBag.RegionComboBox,"RegionId","RegionName"))" data-control="select2" data-placeholder="Select Level">
-                            <option>All Region</option>
+                            <select required class="input-outline input-outline-select "  name="region" data-allow-clear="true" tabindex="-1" onchange="myFunction1()" id="region2" asp-items="@(new SelectList(ViewBag.RegionComboBox,"RegionId","RegionName"))" data-control="select2" data-placeholder="Select Level">
+                            <option value="">All Region</option>
                         </select>
                         </div>
 
@@ -21,13 +21,13 @@
                     <div class="mb-3">
                         <div class="input-control w-100 mt-3">
                             <select class="input-outline input-outline-select" required name="ProviderId" data-allow-clear="true" tabindex="-1" id="provider" data-control="select2" data-placeholder="Select Level">
-                            <option>All Provider</option>
+                            <option value="">All Provider</option>
                         </select>
                         </div>
 
                     </div>
                     <div class="inputs-control w-100 mt-2">
-                        <textarea id="changenote" placeholder=" " name="Notes" rows="5" class="input-outline w-100 fs-6 " type="text"></textarea>
+                        <textarea id="changenote"  placeholder=" " name="Notes" rows="5" class="input-outline w-100 fs-6 " type="text"></textarea>
 
                         <label class="inputs-lable inputs-lable-textarea fs-6" id="notedata">Notes</label>
                     </div>

@@ -13,7 +13,7 @@
                     <div class="mb-3">
                         <div class="input-control w-100 mt-3">
                             <select class="input-outline input-outline-select " required name="region" data-allow-clear="true" tabindex="-1" onchange="myFunction2()" id="region3" asp-items="@(new SelectList(ViewBag.RegionComboBox,"RegionId","RegionName"))" data-control="select2" data-placeholder="Select Level">
-                                <option>All Region</option>
+                                <option value="">All Region</option>
                             </select>
                         </div>
 
@@ -21,7 +21,7 @@
                     <div class="mb-3">
                         <div class="input-control w-100 mt-3">
                             <select class="input-outline input-outline-select" required name="ProviderId" data-allow-clear="true" tabindex="-1" id="provider2" data-control="select2" data-placeholder="Select Level">
-                                <option>All Provider</option>
+                                <option value="">All Provider</option>
                             </select>
                         </div>
 

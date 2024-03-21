@@ -13,6 +13,8 @@ namespace HelloDocAdmin.Entity.ViewModels.AdminSite
         public string? PatientNotes { get; set; }
         public string? ConfirmationNumber { get; set; } 
         public string FirstName { get; set;}
+
+        public int? physicianID { get; set; }
         public string LastName { get; set; }
         public string PhoneNumber { get; set; }
         public DateTime  Dob { get; set; }

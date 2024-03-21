@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace HelloDocAdmin.Entity.Models;
 
 public partial class Healthprofessional
 {
-    public int Vendorid { get; set; }
+    public int? Vendorid { get; set; }
 
     public string Vendorname { get; set; } = null!;
 
+    [Required]
     public int? Profession { get; set; }
 
     public string Faxnumber { get; set; } = null!;
@@ -33,7 +35,7 @@ public partial class Healthprofessional
     public BitArray? Isdeleted { get; set; }
 
     public string? Ip { get; set; }
-
+    [EmailAddress]
     public string? Email { get; set; }
 
     public string? Businesscontact { get; set; }

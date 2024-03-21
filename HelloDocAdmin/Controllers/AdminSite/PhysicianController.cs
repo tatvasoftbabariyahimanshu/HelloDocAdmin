@@ -123,8 +123,8 @@ namespace HelloDocAdmin.Controllers.AdminSite
             ViewBag.userrolecombobox = await _combobox.UserRole();
             // bool b = physicians.Isagreementdoc[0];
 
-            if (ModelState.IsValid)
-            {
+            //if (ModelState.IsValid)
+            //{
                bool data= await _phyrepo.PhysicianAddEdit(physicians, CV.LoggedUserID());
                 if(data)
                 {
@@ -137,12 +137,12 @@ namespace HelloDocAdmin.Controllers.AdminSite
                     return View("../AdminSite/Physician/PhysicianAddEdit", physicians);
                 }
 
-            }
-            else
-            {
-                _notyf.Error("Physician Data not Valid...");
-                return View("../AdminSite/Physician/PhysicianAddEdit", physicians);
-            }
+            //}
+            //else
+            //{
+            //    _notyf.Error("Physician Data not Valid...");
+            //    return View("../AdminSite/Physician/PhysicianAddEdit", physicians);
+            //}
 
          
         }

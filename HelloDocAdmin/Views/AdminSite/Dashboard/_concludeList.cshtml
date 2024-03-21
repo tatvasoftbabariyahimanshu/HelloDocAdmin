@@ -149,7 +149,7 @@
         </div>
 @foreach (var (item, i) in Model.requestList.Select((item, i) => (item, i)))
         {
-            <div class="accordion-item text-secondary " id="Acordiantable">
+    <div class="accordion-item text-secondary " style="position:relative;" id="Acordiantable">
                 <h2 class="accordion-header btn-i " id="flush-heading-@item.RequestID">
                     <div class="p-3 collapsed border-bottom" type="button" data-bs-toggle="collapse" data-bs-target="#flush-@item.RequestID" aria-expanded="false" aria-controls="collapse_@item.RequestID">
                         <div class="d-flex text-dark align-items-center justify-content-between w-100">
@@ -171,32 +171,14 @@
                             <div class="text-start col-6 h6">
                                 <small>@item.Address</small>
                             </div>
-                            <div class="col-6 text-end ">
-                                <a class="btn btn-sm btn-white border-info text-info p-1 rounded-pill " style="margin-right:-1rem" id="map-button">
-                                    <small>Map Location</small>
-                                </a>
-                            </div>
+                           
                         </div>
-                        <div class="modal" id="myModal" tabindex="-1">
-                            <div class="modal-dialog modal-xl">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">Your Location</h5>
-                                        <button type="button" class="btn-close close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="gmap_canvas">
-                                            <iframe id="gmap_canvas" style="min-height:500px;width:100%;" src="" frameborder="0" scrolling="no" marginheight="0" marginwidth="0">
-                                            </iframe>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                   
+                    
                     </div>
                 </h2>
+        <a data-address="@item.Address" onclick="mapdata(this)" class="btn btn-sm btn-white border-info text-info p-1 rounded-pill " style="right: 25px;position: absolute;top: 50px;" id="map-button_@item.RequestID">
+            <small>Map Location</small>
+        </a>
                 <div id="flush-@item.RequestID" class="accordion-collapse text-dark  position-relative  btn-i p-2 collapse mb-3 border-top" data-bs-parent="#accordionExample">
                     <a asp-action="ViewCase" asp-controller="Action" asp-route-id="@item.RequestID" class="btn btn-outline-primary rounded-4 p-1 fs-6 px-3 bg-light my-2 position-absolute" style="top:-20px!important;right:15px !important ">
                         View Case
@@ -288,7 +270,24 @@
         </nav>
     </div>
 </div>
- 
+<div class="modal" id="myModal" tabindex="-1">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Your Location</h5>
+                <button type="button" class="btn-close close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="gmap_canvas">
+                    <iframe id="gmap_canvas" style="min-height:500px;width:100%;" src="" frameborder="0" scrolling="no" marginheight="0" marginwidth="0">
+                    </iframe>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 <script>
   
     function myFunction() {
@@ -310,6 +309,26 @@
                     tr[i].style.display = "none";
                 }
             }
+        }
+    }
+</script>
+<script>
+    var spany = document.getElementsByClassName("close")[0];
+
+    var modal = document.getElementById("myModal");
+    function mapdata(ID) {
+        var data = ID.getAttribute("data-address");
+        console.log(data);
+        var address1 = `https://maps.google.com/maps?q= + ${data} + &t=&z=13&ie=UTF8&iwloc=&output=embed`;
+        document.getElementById('gmap_canvas').src = address1;
+        modal.style.display = "block";
+    }
+    spany.onclick = function () {
+        modal.style.display = "none";
+    }
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
         }
     }
 </script>

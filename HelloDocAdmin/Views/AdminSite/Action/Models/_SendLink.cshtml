@@ -8,20 +8,20 @@
             <form asp-action="SendLink" asp-controller="Action">
                 <div class="modal-body">
                     <div class="inputs-control ">
-                        <input placeholder=" " name="firstname" class="input-outline w-100 inp edit-frm" type="text" >
+                        <input placeholder=" " name="firstname" class="input-outline w-100 inp edit-frm" type="text" required >
                         <label class="inputs-lable">First name</label>
                     </div>
                     <div class="inputs-control mt-2 ">
-                        <input placeholder=" " name="lastname" class="input-outline w-100 inp edit-frm" type="text" >
+                        <input placeholder=" " name="lastname" class="input-outline w-100 inp edit-frm" type="text" required>
                         <label class="inputs-lable">Last name</label>
                     </div>
                     <div class=" form-floating mt-2">
-                        <input id="phone4" placeholder="Mobile" name="phone" type="tel"  class=" telephone input-outline w-100 inp align-items-center edit-frm" />
+                        <input id="phone4" placeholder="Mobile" name="phone" type="tel" class=" telephone input-outline w-100 inp align-items-center edit-frm" required />
 
                        
                     </div>
                     <div class="inputs-control mt-2 ">
-                        <input placeholder=" " name="email" class="input-outline w-100 inp edit-frm" type="email" >
+                        <input placeholder=" " name="email" class="input-outline w-100 inp edit-frm" type="email" required>
                         <label class="inputs-lable">Email</label>
                     </div>
                 </div>

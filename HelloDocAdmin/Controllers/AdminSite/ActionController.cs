@@ -137,7 +137,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
         #region TransferProvider
         public async Task<IActionResult> TransferProvider(int requestid, int ProviderId, string Notes)
         {
-            if (await _actionrepo.TransferProvider(requestid, ProviderId, Notes))
+            if (await _actionrepo.TransferProvider(requestid, ProviderId, Notes,CV.LoggedUserID()))
             {
                 _notyf.Success("Physician Transfered successfully...");
             }
@@ -362,7 +362,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
         {
             if(ModelState.IsValid)
             {
-                bool data=_actionrepo.SendOrder(sm);
+                bool data=_actionrepo.SendOrder(sm,CV.LoggedUserID());
                 if(data)
                 {
                     _notyf.Success("Order Created  successfully...");
@@ -391,7 +391,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
         #region Clear_case
           public IActionResult ClearCase(int RequestID)
         {
-             bool sm=_actionrepo.ClearCase(RequestID);
+             bool sm=_actionrepo.ClearCase(RequestID,CV.LoggedUserID());
             if(sm)
             {
                 _notyf.Success("Case Cleared...");

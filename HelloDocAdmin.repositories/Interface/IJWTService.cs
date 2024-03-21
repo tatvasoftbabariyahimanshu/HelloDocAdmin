@@ -10,6 +10,7 @@ namespace HelloDocAdmin.Repositories.Interface
 {
     public interface IJWTService
     {
+        public CookieModel getDetails(string token);
         string GenerateJWTAuthetication(UserInfo userinfo);
         bool ValidateToken(string token, out JwtSecurityToken jwtSecurityTokenHandler);
     }

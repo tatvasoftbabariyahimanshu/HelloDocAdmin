@@ -123,15 +123,17 @@ namespace HelloDocAdmin.Repositories
             }
 
         }
-        public bool ClearCase(int RequestID)
+        public bool ClearCase(int RequestID,string id)
         {
             try
             {
+                var admindata = _context.Admins.FirstOrDefault(e => e.Aspnetuserid == id);
                 var requestData = _context.Requests.FirstOrDefault(e => e.Requestid == RequestID);
                 if (requestData != null)
                 {
 
                     requestData.Status = 10;
+                    requestData.Modifieddate = DateTime.Now;
                     _context.Requests.Update(requestData);
                     _context.SaveChanges();
 
@@ -141,7 +143,9 @@ namespace HelloDocAdmin.Repositories
 
 
                         Status = 10,
-                        Createddate = DateTime.Now
+                        Adminid=admindata.Adminid,
+                        Createddate = DateTime.Now,
+                        
                     };
                     _context.Requeststatuslogs.Add(rsl);
                     _context.SaveChanges();
@@ -159,8 +163,10 @@ namespace HelloDocAdmin.Repositories
         {
             return _context.Healthprofessionals.FirstOrDefault(e => e.Vendorid == VendorID);
         }
-        public bool SendOrder(ViewSendOrderModel data)
+        public bool SendOrder(ViewSendOrderModel data,string id)
         {
+           
+
             try
             {
                 Orderdetail od = new Orderdetail
@@ -173,14 +179,14 @@ namespace HelloDocAdmin.Repositories
                     Prescription = data.Prescription,
                     Noofrefill = data.NoOFRefill,
                     Createddate = DateTime.Now,
-                    Createdby = "001e35a5 - cd12 - 4ec8 - a077 - 95db9d54da0f"
+                    Createdby = id
 
 
                 };
                 _context.Orderdetails.Add(od);
                 _context.SaveChanges(true);
                 var req = _context.Requests.FirstOrDefault(e => e.Requestid == data.RequestID);
-                _email.SendMail(data.Email, "New Order arrived", data.Prescription + "Request name" + req.Firstname);
+                _email.SendMail(data.Email, "New Order arrived", data.Prescription + "Request name" + req.Firstname +"By Admin:"+id);
                 return true;
             }
             catch (Exception ex)
@@ -191,20 +197,23 @@ namespace HelloDocAdmin.Repositories
 
         }
         #region Transfer_Provider
-        public async Task<bool> TransferProvider(int RequestId, int ProviderId, string notes)
+        public async Task<bool> TransferProvider(int RequestId, int ProviderId, string notes, string id)
         {
-
+            var admindata = _context.Admins.FirstOrDefault(e => e.Aspnetuserid == id);
             var request = await _context.Requests.FirstOrDefaultAsync(req => req.Requestid == RequestId);
             request.Physicianid = ProviderId;
             request.Status = 2;
+            request.Modifieddate = DateTime.Now;
             _context.Requests.Update(request);
             _context.SaveChanges();
 
             Requeststatuslog rsl = new Requeststatuslog();
             rsl.Requestid = RequestId;
             rsl.Physicianid = ProviderId;
+       
             rsl.Notes = notes;
-
+            rsl.Createddate = DateTime.Now;
+            rsl.Adminid = admindata.Adminid;
             rsl.Createddate = DateTime.Now;
             rsl.Transtophysicianid = ProviderId;
             rsl.Status = 2;

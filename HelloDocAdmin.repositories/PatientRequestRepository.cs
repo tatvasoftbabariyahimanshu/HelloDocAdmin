@@ -188,7 +188,9 @@ namespace HelloDocAdmin.Repositories
                   
                     if (viewdata.UploadFile != null)
                     {
-                        string FilePath = "wwwroot\\Upload";
+                       
+
+                        string FilePath = "wwwroot\\Upload\\req_" + Request.Requestid;
                         string path = Path.Combine(Directory.GetCurrentDirectory(), FilePath);
                         if (!Directory.Exists(path))
                             Directory.CreateDirectory(path);
@@ -309,6 +311,13 @@ namespace HelloDocAdmin.Repositories
               
                 if (viewdata.UploadFile != null)
                 {
+                    //string FilePath = "wwwroot\\Upload\\req_" + Requestid;
+                    //string path = Path.Combine(Directory.GetCurrentDirectory(), FilePath);
+                    //if (!Directory.Exists(path))
+                    //    Directory.CreateDirectory(path);
+                    //string fileNameWithPath = Path.Combine(path, UploadFile.FileName);
+                    //UploadImage = "~" + FilePath.Replace("wwwroot\\", "/") + "/" + UploadFile.FileName;
+
                     string FilePath = "wwwroot\\Upload\\req_" + Request.Requestid;
                     string path = Path.Combine(Directory.GetCurrentDirectory(), FilePath);
                     if (!Directory.Exists(path))

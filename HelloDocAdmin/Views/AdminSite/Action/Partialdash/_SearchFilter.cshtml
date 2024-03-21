@@ -16,12 +16,12 @@
             <div class="col-md-6">
                 <div class="dropdown w-100 mt-1   ">
                     <div class="inputs-control w-100 p-0 ">
-                        
 
 
-                      
 
-                            <select class="input-outline input-outline-search h-100 " id="region" data-allow-clear="true" aria-expanded="false" tabindex="-1" onchange="getfilterdata()" asp-items="@(new SelectList(ViewBag.RegionComboBox,"RegionId","RegionName"))" data-control="select2" data-placeholder="Select Level">
+
+
+                        <select class="input-outline input-outline-search h-100 " style="color:#ADADAD" id="region" data-allow-clear="true" aria-expanded="false" tabindex="-1" onchange="getfilterdata()" asp-items="@(new SelectList(ViewBag.RegionComboBox,"RegionId","RegionName"))" data-control="select2" data-placeholder="Select Level">
                                 <option value="0">All Region</option>
                             </select>
 
@@ -36,39 +36,39 @@
 
     </div>
 
-    <div class="text-start mt-2 col-md-4">
+    <div class="text-start mt-2 col-md-5">
         <input type="hidden" value="0" id="dot-filter"/>
-        <div class="d-flex  text-start  justify-content-end ">
+        <div class="d-flex   text-start  justify-content-end ">
           @*  <button class="btn  btn-outline-info btn-sm mx-2 cir-text">all </button>*@
-            <div class="d-flex align-items-center active1 itm " onclick="hello(0)">
-                <div  class="text-info">All</div>
+            <div class="d-flex  align-items-center active1 mx-1 itm " tyle="cursor:pointer;" onclick="hello(0)">
+                <div class="text-info cir-text">All</div>
             </div>
             
-            <div class="d-flex align-items-center itm" style="cursor:pointer;" onclick="hello(1)">
-                <div class="cir-patient mx-2">
+            <div class="d-flex align-items-center  mx-1" style="cursor:pointer;" onclick="hello(1)">
+                <div class="cir-patient mx-1 ">
                 </div>
-                <span class="cir-text">
+                <span class="cir-text itm">
                     Patient
                 </span>
             </div>
-            <div class="d-flex align-items-center  itm" style="cursor:pointer;" onclick="hello(2)">
-                <div class="cir-family mx-2">
+            <div class="d-flex align-items-center mx-1 " style="cursor:pointer;" onclick="hello(2)">
+                <div class="cir-family mx-1 ">
                 </div>
-                <span class="cir-text" >
+                <span class="cir-text itm">
                     Family/Friend
                 </span>
             </div>
-            <div class="d-flex align-items-center itm" style="cursor:pointer;" onclick="hello(3)">
-                <div class="cir-Business mx-2">
+            <div class="d-flex align-items-center mx-1 " style="cursor:pointer;" onclick="hello(3)">
+                <div class="cir-Business mx-1 ">
                 </div>
-                <span class="cir-text" >
+                <span class="cir-text itm">
                     Business
                 </span>
             </div>
-            <div class="d-flex align-items-center itm " style="cursor:pointer;" onclick="hello(4)">
-                <div class="cir-Concierge mx-2">
+            <div class="d-flex align-items-center mx-1  " style="cursor:pointer;" onclick="hello(4)">
+                <div class="cir-Concierge mx-1  ">
                 </div>
-                <span class="cir-text" >
+                <span class="cir-text itm">
                     Concierge
                 </span>
             </div>

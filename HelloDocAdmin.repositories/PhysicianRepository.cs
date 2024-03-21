@@ -1,4 +1,5 @@
-﻿using HelloDocAdmin.Entity.Data;
+﻿using GoogleMaps.LocationServices;
+using HelloDocAdmin.Entity.Data;
 using HelloDocAdmin.Entity.Models;
 using HelloDocAdmin.Entity.ViewModels;
 using HelloDocAdmin.Entity.ViewModels;
@@ -10,6 +11,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -354,7 +356,7 @@ namespace HelloDocAdmin.Repositories
                     var DataForChange = await _context.Physicians
                         .Where(W => W.Physicianid == vm.Physicianid)
                         .FirstOrDefaultAsync();
-
+                    var locationchange=await _context.Physicianlocations.FirstOrDefaultAsync(E=>E.Physicianid==vm.Physicianid);
 
                     if (DataForChange != null)
                     {
@@ -365,17 +367,26 @@ namespace HelloDocAdmin.Repositories
                         DataForChange.Regionid = vm.Regionid;
                         DataForChange.Zip = vm.Zipcode;
                         DataForChange.Altphone = vm.Altphone;
-                    
-
-
-
                         _context.Physicians.Update(DataForChange);
 
                         _context.SaveChanges();
 
 
+
+                        if(locationchange !=null)
+                        {
+                            locationchange.Address = vm.Address1 + ","+ vm.City+","+ vm.Zipcode;
+                            var locationService = new GoogleLocationService("AIzaSyARrk6kY-nnnSpReeWotnQxCAo_MoI4qbU");
+                            var point = locationService.GetLatLongFromAddress(locationchange.Address);
+                            locationchange.Latitude = (decimal?)point.Latitude;
+                            locationchange.Longitude = (decimal?)point.Longitude;
+                            _context.Physicianlocations.Update(locationchange);
+                            _context.SaveChanges();
+                        }
+
                         return true;
                     }
+                   
                     else
                     {
                         return false;
@@ -449,23 +460,24 @@ namespace HelloDocAdmin.Repositories
         {
             try
             {
-                if (physiciandata.UserName != null && physiciandata.PassWord != null)
+                if (physiciandata.UserName != null /*&& physiciandata.PassWord != null*/)
                 {
                     var Aspnetuser = new Aspnetuser();
                     var hasher = new PasswordHasher<string>();
                     Aspnetuser.Id = Guid.NewGuid().ToString();
                     Aspnetuser.Username = physiciandata.UserName;
-                    Aspnetuser.Passwordhash = hasher.HashPassword(null, physiciandata.PassWord);
+                    //Aspnetuser.Passwordhash = hasher.HashPassword(null, physiciandata.PassWord);
                     Aspnetuser.Email = physiciandata.Email;
                     Aspnetuser.CreatedDate = DateTime.Now;
                     _context.Aspnetusers.Add(Aspnetuser);
                     _context.SaveChanges();
 
 
+                    BitArray bt = new BitArray(1);
+                    bt.Set(0, true); 
 
 
 
-                    
                     // Physician
                     var Physician = new Physician();
                     Physician.Aspnetuserid = Aspnetuser.Id;
@@ -488,7 +500,7 @@ namespace HelloDocAdmin.Repositories
                     Physician.Createddate = DateTime.Now;
                     Physician.Createdby = AdminId;
                     Physician.Regionid = physiciandata.Regionid;
-
+                    Physician.Isdeleted = bt;
                     Physician.Isagreementdoc = new BitArray(1);
                     Physician.Isbackgrounddoc = new BitArray(1);
                     Physician.Isnondisclosuredoc = new BitArray(1);
@@ -501,6 +513,7 @@ namespace HelloDocAdmin.Repositories
                     Physician.Islicensedoc[0] = physiciandata.Islicensedoc;
                     Physician.Istrainingdoc[0] = physiciandata.Istrainingdoc;
                     Physician.Adminnotes = physiciandata.Adminnotes;
+                    Physician.Status = physiciandata.Status;
 
 
                     Physician.Photo = physiciandata.PhotoFile != null ? Physician.Firstname + "-" + DateTime.Now.ToString("yyyyMMddhhmm") + "-Photo." + Path.GetExtension(physiciandata.PhotoFile.FileName).Trim('.') : null;
@@ -511,8 +524,7 @@ namespace HelloDocAdmin.Repositories
                     _context.Physicians.Add(Physician);
                     _context.SaveChanges();
 
-                    BitArray bt = new BitArray(1);
-                    bt.Set(0, true);
+                   
 
                     Physiciannotification nf=new Physiciannotification();
                     nf.Physicianid = Physician.Physicianid;
@@ -540,13 +552,27 @@ namespace HelloDocAdmin.Repositories
 
                     }
 
+                    Physicianlocation pl=new Physicianlocation();
+                    pl.Physicianid = Physician.Physicianid;
+                    pl.Address = physiciandata.Address1 +","+ physiciandata.City +","+ physiciandata.Zipcode;
+                    var locationService = new GoogleLocationService("AIzaSyARrk6kY-nnnSpReeWotnQxCAo_MoI4qbU");
+                    var point = locationService.GetLatLongFromAddress(pl.Address);
+                    pl.Latitude= (decimal?)point.Latitude;
+                    pl.Longitude = (decimal?)point.Longitude;
+                    pl.Createddate= DateTime.Now;
+                    pl.Physicianname = physiciandata.Firstname + " " + physiciandata.Lastname;
+                    _context.Physicianlocations.Add(pl);
+                    _context.SaveChanges();
+
+                    return true;
+
 
                 }
                     else
                     {
                     return false;
                     }
-                return true;
+                
             }
             catch (Exception e)
             {

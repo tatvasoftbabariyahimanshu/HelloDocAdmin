@@ -8,7 +8,7 @@ namespace HelloDocAdmin.Entity.ViewModels
 {
     public class HealthprofessionalCombobox
     {
-        public int VendorID { get; set; }
+        public int? VendorID { get; set; }
         public string VendorName { get; set; }
     }
 }

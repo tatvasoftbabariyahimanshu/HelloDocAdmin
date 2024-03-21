@@ -1,5 +1,202 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@using static HelloDocAdmin.Entity.ViewModels.AdminSite.Constant;
 @{
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+    var enumData = from Status e in Enum.GetValues(typeof(Status))
+                   select new
+                   {
+                       ID = (int)e,
+                       Name = e.ToString()
+                   };
+    var reqtype = from RequestType e in Enum.GetValues(typeof(RequestType))
+                   select new
+                   {
+                       ID = (int)e,
+                       Name = e.ToString()
+                   };
 }
+
+<div class="container-fluid">
+    <div class="card bg-transparent border-0">
+        <div class="card-header d-flex justify-content-between  border-0  bg-transparent p-1  mt-3 mb-2">
+            <div class="text-start d-flex align-items-center">
+                <h5 class="mt-2 bold"><b> Search Records</b></h5>
+
+            </div>
+            <div class="text-end">
+                <a asp-controller="Dashboard" asp-action="Index"
+                   class="btn btn-info btn-back">
+                    <i class="fa-solid fa-share mx-2"></i>Export Data To Excel
+                </a>
+            </div>
+        </div>
+
+        <div class="card-body rounded shadow">
+            <div class="row mt-3">
+                <div class="col-md-3 ">
+                    
+                        <div class="input-control w-100 ">
+                            <select class="input-outline input-outline-select inp asp  inp-dis" id="status"  data-allow-clear="true" tabindex="-1" asp-items="@(new SelectList(enumData, "ID", "Name"))" data-control="select2" data-placeholder="Select Level">
+                            <option value="0">Status</option>
+                            </select>
+                        </div>
+                    
+                </div>
+                <div class="col-md-3 ">
+                    
+                        <div class="inputs-control ">
+                            <input placeholder=" " id="patientname" class="input-outline w-100 inp admin-input " type="text">
+                            <label class="inputs-lable">Patient Name</label>
+                        </div>
+
+                   
+                </div>
+                <div class="col-md-3 ">
+
+                    <div class="input-control w-100 ">
+                        <select class="input-outline input-outline-select inp asp  inp-dis" id="requesttype" data-allow-clear="true" tabindex="-1" asp-items="@(new SelectList(reqtype, "ID", "Name"))" data-control="select2" data-placeholder="Select Level">
+                            <option value="0">Select request type</option>
+                        </select>
+                    </div>
+
+                </div>
+                <div class="col-md-3">
+                  
+                        <div class="inputs-control  ">
+
+                            <input placeholder=" " id="startdate"  class="input-outline w-100 inp form-control-sm " type="date">
+                            <label class="inputs-lable-dob">Start Date</label>
+                        </div>
+                       
+
+                    
+
+                </div>
+               
+               
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-3">
+
+                    <div class="inputs-control  ">
+
+                        <input placeholder=" " id="enddate" class="input-outline w-100 inp form-control-sm " type="date">
+                        <label class="inputs-lable-dob">End date</label>
+                    </div>
+
+
+
+
+                </div>
+                <div class="col-md-3 ">
+
+                    <div class="inputs-control ">
+                        <input placeholder=" " id="providername" class="input-outline w-100 inp admin-input " type="text">
+                        <label class="inputs-lable">Provider Name</label>
+                    </div>
+
+
+                </div>
+                <div class="col-md-3 ">
+
+                    <div class="inputs-control ">
+                        <input placeholder=" " id="email" class="input-outline w-100 inp admin-input " type="text">
+                        <label class="inputs-lable">Email</label>
+                    </div>
+
+
+                </div>
+                <div class="col-md-3 ">
+
+                    <div class="inputs-control ">
+                        <input placeholder=" " id="phonenumber" class="input-outline w-100 inp admin-input " type="text">
+                        <label class="inputs-lable">Phone Number</label>
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="text-end mt-2">
+                <button onclick="getfilterdata()" id="save1" class="btn  btn-outline-info  mx-2 ">
+                    Search
+                </button>
+                <button onclick="clearInputs()" class="btn  btn-outline-danger  mx-2 ">
+                    Clear
+                </button>
+            </div>
+            <div class="loding-div">
+                <div class="bro" id="BRO" style="height:100%;width:100%;position:absolute;background-color:black;opacity:0.2;z-index:1">
+                </div>
+                <div class="loading" id="Loading"></div>
+            </div>
+            <div id="SearchResult">
+               
+            </div>
+        </div>
+    </div>
+
+</div><script>
+    $(function () {
+        $(".loding-div").show();
+        getfilterdata();
+        $(".loding-div").hide();
+
+    });
+</script>
+<script>
+
+    function getfilterdata() {
+        $(".loding-div").show();
+        var patientname = $('#patientname').val();
+        var status = $('#status').val();
+        var phonenumber = $('#phonenumber').val();
+        var email = $('#email').val();
+        var providername = $('#providername').val();
+        var enddate = $('#enddate').val();
+        var startdate = $('#startdate').val();
+        var requesttype = $('#requesttype').val();
+        var currentpage = $('#crt-page').val();
+        var pagesize = $('#SizeSelect').val();
+      
+        $.ajax({
+            url: "/Records/FilterRequest",
+            type: "GET",
+            data: {
+                email: email,
+                phonenumber: phonenumber,
+                physicianname: providername,
+                patientname: patientname,
+                enddate: enddate,
+                startdate: startdate,
+                requesttype: requesttype,
+                status: status,
+                currentpage: currentpage,  
+               pagesize: pagesize
+
+            },
+            success: function (response) {
+                $(".loding-div").hide();
+                $('#SearchResult').html(response);
+            },
+            error: function () {
+                $(".loding-div").hide();
+                alert("error");
+            }
+        });
+    }
+
+    function getpage(index) {
+        $("#crt-page").val(index);
+
+    }
+    function clearInputs() {
+        $('#patientname').val('');
+        $('#status').val('0');
+        $('#phonenumber').val('');
+        $('#email').val('');
+        $('#providername').val('');
+        $('#enddate').val('');
+        $('#startdate').val('');
+        $('#requesttype').val('0');
+    }
+
+</script>

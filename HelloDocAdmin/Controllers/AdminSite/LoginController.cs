@@ -47,9 +47,9 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
                     var jwttoken = _jwtservice.GenerateJWTAuthetication(admin);
                     Response.Cookies.Append("jwt", jwttoken);
-                    Response.Cookies.Append("UserName", admin.Username);
-                    Response.Cookies.Append("UserID", admin.AspUserID);
+              
                     Response.Cookies.Append("Status","1");
+                    Response.Cookies.Append("StatusText", "New");
 
 
 
@@ -193,6 +193,8 @@ namespace HelloDocAdmin.Controllers.AdminSite
         public async Task<IActionResult> Logout()
         {
             Response.Cookies.Delete("jwt");
+            Response.Cookies.Delete("UserID");
+            Response.Cookies.Delete("UserName");
             return RedirectToAction("Index", "Dashboard");
         }
         public IActionResult SaveUser(NewRegistration cpm)

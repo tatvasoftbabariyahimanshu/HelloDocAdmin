@@ -29,11 +29,11 @@ namespace HelloDocAdmin.Repositories
         {
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Email, userinfo.Username),
+                new Claim(ClaimTypes.Email, userinfo.Email),
                 new Claim(ClaimTypes.Role, userinfo.Role),
                 new Claim("FirstName", userinfo.FirstName),
-                new Claim("UserId", userinfo.UserId.ToString()),
-                new Claim(ClaimTypes.Email, userinfo.Username),
+                new Claim("AspNetUserID", userinfo.AspUserID.ToString()),
+                new Claim(ClaimTypes.Name, userinfo.Username),
                 new Claim(JwtHeaderParameterNames.Jku, userinfo.FirstName),
                 new Claim(JwtHeaderParameterNames.Kid, Guid.NewGuid().ToString()),
                 new Claim(ClaimTypes.NameIdentifier, userinfo.Username)
@@ -99,6 +99,37 @@ namespace HelloDocAdmin.Repositories
             {
                 return false;
             }
+        }
+
+
+      public  CookieModel getDetails(string token)
+        {
+            JwtSecurityToken jwtSecurityToken = null;
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]);
+            tokenHandler.ValidateToken(token, new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(key),
+                ValidateIssuer = false,
+                ValidateAudience = false,
+                ClockSkew = TimeSpan.Zero
+
+            }, out SecurityToken validatedToken);
+
+            // Corrected access to the validatedToken
+            jwtSecurityToken = (JwtSecurityToken)validatedToken;
+
+            CookieModel cookieModel = new CookieModel()
+            {
+                AspNetUserID = jwtSecurityToken.Claims.FirstOrDefault(c => c.Type == "AspNetUserID").Value,
+             
+                role = jwtSecurityToken.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value,
+             
+                UserName = jwtSecurityToken.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name).Value,
+            };
+
+            return cookieModel;
         }
     }
 }

@@ -4,7 +4,7 @@
 
 @{
     ViewData["Title"] = "_UpperTab";
-}
+  }
 @model DashboardCardsModel
 
   ﻿
@@ -13,7 +13,7 @@
         <div class="tab p-2 ">
             <div class="row tb">
            
-                <div class="col-md-2 col-sm-4 col-4 ">
+                <div class="col-lg-2 col-md-4 col-sm-4   col-4 ">
             <button type="submit" onclick="actAlrt(1)    " value="1" name="Status" class="btn alert alert-primary
 
 @{
@@ -33,7 +33,7 @@ btn-outline-primary w-100 text-start  text-uppercase  a-primary t-tab">
                         </div>
                     </button>
                 </div>
-                <div class="col-md-2 col-sm-4 col-4 position-relative">
+        <div class="col-lg-2 col-md-4 col-4 position-relative">
                 <button type="submit" value="2" onclick="actAlrt(2) " name="Status" class="btn alert
 @{
 if(CV.CurrentStatus()=="2")
@@ -51,7 +51,7 @@ alert-info btn-outline-info w-100 text-start text-uppercase   a-info t-tab">
                         </div>
                     </button>
                 </div>
-                <div class="col-md-2 col-sm-4 col-4 position-relative">
+        <div class="col-lg-2 col-md-4 col-sm-4 col-4 position-relative">
                     <button type="submit" value="4,5" onclick="actAlrt(3)" name="Status" class="btn
 @{
 if(CV.CurrentStatus()=="4,5")
@@ -70,7 +70,7 @@ alert alert-success btn-outline-success w-100 text-start text-uppercase  a-succe
                     </button>
 
                 </div>
-                <div class="col-md-2 col-sm-4 col-4 position-relative">
+        <div class="col-lg-2 col-md-4 col-sm-4 col-4 position-relative">
                     <button type="submit" value="6" onclick="actAlrt(4)" name="Status" class="btn
 
 @{
@@ -89,7 +89,7 @@ alert alert-warning  btn-outline-warning w-100 text-start text-uppercase  a-warn
                         </div>
                     </button>
                 </div>
-                <div class="col-md-2 col-sm-4 col-4 position-relative">
+        <div class="col-lg-2 col-md-4 col-sm-4 col-4 position-relative">
                     <button type="submit" value="3,7,8" onclick="actAlrt(5)" name="Status" class="btn alert alert-danger
 
 @{
@@ -109,7 +109,7 @@ btn-outline-danger w-100 text-start text-uppercase  a-danger t-tab">
                         </div>
                     </button>
                 </div>
-                <div class="col-md-2 col-sm-4  col-4  position-relative">
+        <div class="col-lg-2 col-md-4 col-sm-4  col-4  position-relative">
                     <button type="submit" value="9" onclick="actAlrt(6)" name="Status" class="btn 
 
 @{

@@ -1,1 +1,97 @@
-﻿
+﻿@using static HelloDocAdmin.Entity.ViewModels.AdminSite.Constant;
+@{
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+    var enumData = from AdminStatus e in Enum.GetValues(typeof(AdminStatus))
+                   select new
+                   {
+                       ID = (int)e,
+                       Name = e.ToString()
+                   };
+}
+@model List<HelloDocAdmin.Entity.ViewModels.AdminSite.VendorListView>
+
+<div class="container-fluid">
+    <div class="card bg-transparent border-0">
+        <div class="card-header d-flex justify-content-between  border-0  bg-transparent p-1  mt-3 mb-2">
+            <div class="text-start d-flex align-items-center">
+                <h5 class="mt-2"><b> vendor(s)</b></h5>
+
+            </div>
+            <div class="text-end">
+                <a asp-controller="Dashboard" asp-action="Index"
+                   class="btn btn-outline-info btn-back">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                         fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                              d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5" />
+                    </svg>Back
+                </a>
+            </div>
+        </div>
+
+        <div class="card-body rounded shadow">
+            <div class="d-flex justify-content-between">
+              <div class="dropdown text-start ">
+
+                   @* <select class="input-outline input-outline-select " name="region" data-allow-clear="true" tabindex="-1" onchange="myFunction()" id="Region" asp-items="@(new SelectList(ViewBag.HealthprofessionaltypeCombobox,"RegionId","RegionName"))" data-control="select2" data-placeholder="Select Level">
+                        <option value="0">All Region</option>
+                    </select>*@
+                </div>
+                <div class="text-end d-flex"> 
+                    <a class="btn btn-info text-white" asp-action="VendorAddEdit" asp-controller="Vendor">
+                        <span class="addnewlg">
+                            Add Vendor
+                        </span>
+                        <span class="addnewsm">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2" />
+                            </svg>
+                        </span>
+                    </a>
+                </div>
+            </div>
+            <div class="table-responsive  dashboard-tbl mt-3 ">
+                <table id="myTable" class="table table-responsive">
+                    <thead class=" text-start tablehead">
+                        <tr>
+                            <th scope="col">Profession</th>
+                            <th scope="col">Business Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Fax Number </th>
+                            <th scope="col">Phone Number</th>
+                            <th scope="col">Business Contact</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody class="">
+                       
+                        @foreach(var item in Model)
+                        {
+                            <tr >
+                                <td scope="col" class="table-text">@item.Profession</td>
+                                <td scope="col" class="table-text">@item.VendorName</td>
+                                <td scope="col" class="table-text">@item.Email</td>
+                                <td scope="col" class="table-text">@item.FaxNumber</td>
+                                <td scope="col" class="table-text">@item.PhoneNumber</td>
+                                <td scope="col" class="table-text">@item.BusinessContact</td>
+                                <td scope="col" class="table-text d-flex">
+
+                                    <a class="btn  btn-sm btn-outline-danger mx-2" asp-action="DeleteVendor" asp-controller="Vendor" asp-route-vendorid="@item.VendorID">Delete</a>
+                                    <a class="btn btn-sm btn-outline-info" asp-action="VendorAddEdit" asp-controller="Vendor" asp-route-vendorid="@item.VendorID"> Edit</a>
+
+
+                                </td>
+
+                            </tr>
+                        }
+
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+

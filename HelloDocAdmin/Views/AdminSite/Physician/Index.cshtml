@@ -1,5 +1,12 @@
-﻿@{
+﻿@using static HelloDocAdmin.Entity.ViewModels.AdminSite.Constant;
+@{
     Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+    var enumData = from AdminStatus e in Enum.GetValues(typeof(AdminStatus))
+                   select new
+                   {
+                       ID = (int)e,
+                       Name = e.ToString()
+                   };
 }
 @model List<HelloDocAdmin.Entity.ViewModels.PhysiciansViewModel>
 
@@ -76,7 +83,7 @@
                                 <td scope="row" class="table-text" >@item.Firstname  @item.Lastname</td>
                                 <td scope="row" class="table-text" >@item.role</td>
                                 <td scope="row" class="table-text">@item.Isnondisclosuredoc</td>
-                                <td scope="row" class="table-text" >@item.Status</td>
+                                <td scope="row" class="table-text">@Enum.GetName(typeof(AdminStatus), item.Status) </td>
                                 <td class=" d-flex" data-label="Document">
 
                                     <button data-bs-toggle="modal" data-bs-id="@item.Physicianid" data-bs-email="@item.Email" data-bs-target="#myModal" class="btn btn-outline-info btn-sm document-button mx-1">

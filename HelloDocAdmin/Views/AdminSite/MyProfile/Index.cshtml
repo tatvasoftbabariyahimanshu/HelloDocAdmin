@@ -13,7 +13,7 @@
 @model ViewAdminProfileModel;
 <script>
     $(document).ready(function () {
-        $(".admin-input").prop("readonly", true);
+        $(".admin-input").prop("disabled", true);
 
         $(".form-check-input").prop("disabled", true);
         $("#save").css("display", "none");
@@ -21,14 +21,14 @@
         $('#cancel').click(function () {
             $("#save").css("display", "none");
             $("#cancel").css("display", "none");
-            $(".admin-input").prop("readonly", true);
-            $(".admin-input").prop("readonly", false);
+            $(".admin-input").prop("disabled", true);
+            $(".admin-input").prop("disabled", false);
             $("#edit").css("display", "");
         });
     });
 
     $(document).ready(function () {
-        $(".mail-billing-imp").prop("readonly", true);
+        $(".mail-billing-imp").prop("disabled", true);
 
        
         $("#save1").css("display", "none");
@@ -36,7 +36,7 @@
         $('#cancel1').click(function () {
             $("#save1").css("display", "none");
             $("#cancel1").css("display", "none");
-            $("mail-billing-imp").prop("readonly", true);
+            $("mail-billing-imp").prop("disabled", true);
       
             $("#edit1").css("display", "");
         });
@@ -77,7 +77,7 @@
                     <div class="col-md-6 mt-2">
                         <div class=" mb-2">
                             <div class="inputs-control ">
-                                <input placeholder=" " asp-for="ASP_UserName" class="input-outline w-100 inp " readonly type="text">
+                                <input placeholder=" " asp-for="ASP_UserName" class="input-outline w-100 inp " disabled type="text">
                                 <label class="inputs-lable">UserName</label>
                             </div>
 
@@ -86,7 +86,7 @@
                     <div class="col-md-6 mt-2">
                         <div class=" mb-2">
                             <div class="inputs-control ">
-                                <input placeholder=" " name="password" class="input-outline w-100 inp " type="text">
+                                <input placeholder=" " name="password" required class="input-outline w-100 inp " type="text">
                                 <label class="inputs-lable">password</label>
                             </div>
 
@@ -126,7 +126,7 @@
                     <div class="col-md-6 mt-2">
                         <div class=" mb-3">
                             <div class="inputs-control ">
-                                <input placeholder=" " asp-for="User_FirtName" class="input-outline w-100 inp admin-input " type="text">
+                                <input placeholder=" " disab asp-for="User_FirtName" class="input-outline w-100 inp admin-input " type="text">
                                 <label class="inputs-lable">FirstName</label>
                             </div>
 
@@ -145,7 +145,7 @@
                     <div class="col-md-6 mt-2">
                         <div class=" mb-3">
                             <div class="inputs-control ">
-                                <input placeholder=" " asp-for="User_Email" class="input-outline w-100 inp admin-input " type="text">
+                                <input placeholder=" " asp-for="User_Email" id="email" class="input-outline w-100 inp admin-input " type="text">
                                 <label class="inputs-lable">Email</label>
                             </div>
                         </div>
@@ -153,9 +153,10 @@
                     <div class="col-md-6 mt-2">
                         <div class=" mb-3">
                             <div class="inputs-control ">
-                                <input placeholder=" " asp-for="User_Email" class="input-outline w-100 inp  admin-input" type="text">
+                                <input placeholder=" " asp-for="User_Email" id="confirmemail" class="input-outline w-100 inp  admin-input" type="text">
                                 <label class="inputs-lable">ConfirmEmail</label>
                             </div>
+                            <span id="confirm-check" class="err-msg"></span>
                         </div>
                     </div>
                     <div class="col-md-6 mt-2">
@@ -201,10 +202,10 @@
                 <script>
                   
                     function enable_disable_administration() {
-                        $(".admin-input").prop("readonly", false);
+                        $(".admin-input").prop("disabled", false);
                         $(".form-check-input").prop("disabled", false);
-                        $("#save").prop("readonly", false);
-                        $("#cancel").prop("readonly", false);
+                        $("#save").prop("disabled", false);
+                        $("#cancel").prop("disabled", false);
                         $("#save").css("display", "");
                         $("#cancel").css("display", "");
                         $("#edit").css("display", "none");
@@ -245,11 +246,13 @@
                             </div>
                         </div>
                     </div>
+                 
                     <div class="col-md-6 mt-2">
                         <div class=" mb-3">
-                            <div class="inputs-control ">
-                                <input placeholder=" " class="input-outline w-100 inp  mail-billing-imp" type="text">
-                                <label class="inputs-lable">State</label>
+                            <div class="input-control w-100">
+                                <select class="input-outline input-outline-select inp mail-billing-imp" required asp-for="RegionID" data-allow-clear="true" tabindex="-1" onchange="myFunction1()" id="region2" asp-items="@(new SelectList(ViewBag.RegionComboBox,"RegionId","RegionName"))" data-control="select2" data-placeholder="Select Level">
+                                    <option value="">All Region</option>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -287,10 +290,10 @@
             <script>
 
                 function enable_disable_mailBilling() {
-                    $(".mail-billing-imp").prop("readonly", false);
+                    $(".mail-billing-imp").prop("disabled", false);
                    
-                    $("#save1").prop("readonly", false);
-                    $("#cancel1").prop("readonly", false);
+                    $("#save1").prop("disabled", false);
+                    $("#cancel1").prop("disabled", false);
                     $("#save1").css("display", "");
                     $("#cancel1").css("display", "");
                     $("#edit1").css("display", "none");
@@ -306,6 +309,26 @@
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
 <script>
+
+    $(document).ready(function () {
+        // Function to enable/disable save button based on email and confirm email match
+        function toggleSaveButton() {
+            var email = $("#email").val();
+            var confirmEmail = $("#confirmemail").val();
+            if (email === confirmEmail) {
+                $("#save").prop("disabled", false);
+                $('#confirm-check').html("");
+            } else {
+                $('#confirm-check').html("Email and Confirm Email should be same");
+                $("#save").prop("disabled", true);
+            }
+        }
+
+        // Call toggleSaveButton when confirm email field changes
+        $("#confirmemail").on("input", toggleSaveButton);
+    });
+
+
     const phoneInputField = document.querySelector("#phone");
     const phoneInput = window.intlTelInput(phoneInputField, {
     utilsScript:

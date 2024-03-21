@@ -9,109 +9,109 @@
 
 
 
-        <div class="table-responsive dashboard-tbl mt-3 " id="tbl">
-        
-            <table id="myTable" class="table table-responsive">
-                <thead class=" text-start tablehead">
-                    <tr>
-                        <th scope="col">Name</th>
-                        <th scope="col">Date</th>
-                        <th scope="col">Rqequestor</th>
-                        <th scope="col">Request Date</th>
-                        <th scope="col">Phone</th>
-                        <th scope="col">Address</th>
-                        <th scope="col">Notes</th>
-                        <th scope="col">Chat With</th>
-                        <th scope="col">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
+<div class="table-responsive dashboard-tbl mt-3 " id="tbl">
+
+    <table id="myTable" class="table table-responsive">
+        <thead class=" text-start tablehead">
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Date</th>
+                <th scope="col">Rqequestor</th>
+                <th scope="col">Request Date</th>
+                <th scope="col">Phone</th>
+                <th scope="col">Address</th>
+                <th scope="col">Notes</th>
+                <th scope="col">Chat With</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
             @foreach (var (item, i) in Model.requestList.Select((item, i) => (item, i)))
-                    {
+            {
 
-                        if (item.RequestTypeID == 2)
-                        {
-                            TempData["hb"] = "bg-family-row";
-                        }
-                        else if (item.RequestTypeID == 4)
-                        {
-                            TempData["hb"] = "bg-business-row";
-                        }
-                        else if (item.RequestTypeID == 3)
-                        {
-                            TempData["hb"] = "bg-concierge-row";
+                if (item.RequestTypeID == 2)
+                {
+                    TempData["hb"] = "bg-family-row";
+                }
+                else if (item.RequestTypeID == 4)
+                {
+                    TempData["hb"] = "bg-business-row";
+                }
+                else if (item.RequestTypeID == 3)
+                {
+                    TempData["hb"] = "bg-concierge-row";
 
-                        }
-                        else
-                        {
-                            TempData["hb"] = "bg-patient-row";
-                        }
+                }
+                else
+                {
+                    TempData["hb"] = "bg-patient-row";
+                }
 
 
-                        <tr class="@TempData["hb"] filterDiv">
-                            <td scope="col">
-                                <div class="text-end d-flex justify-content-between">
-                                    <div class="text-start d-grid">
-                                        @item.PatientName
-                                    </div> <div class="text-end   border border-1 p-1 text-end rounded-1 py-0 btn text-white">
-                                        <a href="mailto:@item.Email" class="text-white">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
-                                                <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z" />
-                                            </svg>
-                                        </a>
-
-                                    </div>
-                                </div>
-                            </td>
-
-                            <td scope="col">@item.Dob</td>
-                            <td scope="col">@item.Requestor</td>
-                            <td scope="col">@item.RequestedDate</td>
-                            <td scope="col">
-                                <a href=" tel:+@item.PhoneNumber" class="text-white">
-                                    <div class="border border-1 p-1 rounded-2 text-center  w-75 py-1"><i class="bi bi-telephone"></i> @item.PhoneNumber </div>
-
+                <tr class="@TempData["hb"] filterDiv">
+                    <td scope="col">
+                        <div class="text-end d-flex justify-content-between">
+                            <div class="text-start d-grid">
+                                @item.PatientName
+                            </div> <div class="text-end   border border-1 p-1 text-end rounded-1 py-0 btn text-white">
+                                <a href="mailto:@item.Email" class="text-white">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
+                                        <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z" />
+                                    </svg>
                                 </a>
-                                <span>
-                                    (Patient)
-                                </span>
 
-                                @{
-                                    if (item.RequestTypeID == 2)
-                                    {
-                                        <a href=" tel:+@item.PhoneNumber" class="text-white">
-                                            <div class="border border-1 p-1 rounded-2 text-center  w-75 py-1"><i class="bi bi-telephone"></i> @item.RequestorPhoneNumber </div>
-                                        </a>  <span>
-                                            (Family/Friend)
-                                        </span>
-                                    }
-                                    else if (item.RequestTypeID == 4)
-                                    {
-                                        <a href=" tel:+@item.PhoneNumber" class="text-white">
-                                            <div class="border border-1 p-1 rounded-2 text-center w-75 py-1"><i class="bi bi-telephone"></i> @item.RequestorPhoneNumber </div>
-                                        </a> <span>
-                                            (Concierge)
-                                        </span>
-                                    }
-                                    else if (item.RequestTypeID == 3)
-                                    {
-                                        <a href=" tel:+@item.PhoneNumber" class="text-white">
-                                            <div class="border border-1 p-1 rounded-2 text-center  w-75 py-1"><i class="bi bi-telephone"></i> @item.RequestorPhoneNumber </div>
-                                        </a> <span>
-                                            (Business Partner)
-                                        </span>
-                                    }
-                                }
-                            </td>
-                            <td scope="col">@item.Address</td>
-                            <td scope="col">
+                            </div>
+                        </div>
+                    </td>
+
+                    <td scope="col">@item.Dob</td>
+                    <td scope="col">@item.Requestor</td>
+                    <td scope="col">@item.RequestedDate</td>
+                    <td scope="col">
+                        <a href=" tel:+@item.PhoneNumber" class="text-white">
+                            <div class="border border-1 p-1 rounded-2 text-center  w-75 py-1"><i class="bi bi-telephone"></i> @item.PhoneNumber </div>
+
+                        </a>
+                        <span>
+                            (Patient)
+                        </span>
+
+                        @{
+                            if (item.RequestTypeID == 2)
+                            {
+                                <a href=" tel:+@item.PhoneNumber" class="text-white">
+                                    <div class="border border-1 p-1 rounded-2 text-center  w-75 py-1"><i class="bi bi-telephone"></i> @item.RequestorPhoneNumber </div>
+                                </a>  <span>
+                                    (Family/Friend)
+                                </span>
+                            }
+                            else if (item.RequestTypeID == 4)
+                            {
+                                <a href=" tel:+@item.PhoneNumber" class="text-white">
+                                    <div class="border border-1 p-1 rounded-2 text-center w-75 py-1"><i class="bi bi-telephone"></i> @item.RequestorPhoneNumber </div>
+                                </a> <span>
+                                    (Concierge)
+                                </span>
+                            }
+                            else if (item.RequestTypeID == 3)
+                            {
+                                <a href=" tel:+@item.PhoneNumber" class="text-white">
+                                    <div class="border border-1 p-1 rounded-2 text-center  w-75 py-1"><i class="bi bi-telephone"></i> @item.RequestorPhoneNumber </div>
+                                </a> <span>
+                                    (Business Partner)
+                                </span>
+                            }
+                        }
+                    </td>
+                    <td scope="col">@item.Address</td>
+                    <td scope="col">
 
                         @{
                             if (item.Notes != null || item.Notes.Count() > 0)
                             {
                                 foreach (var not in item.Notes)
                                 {
-                                    <span> -@not </span>
+                                    <span> -Transfred To Physician:<b>@item.ProviderName</b><br /> Notes:<b>@not</b>  </span>
 
                                     <br />
 
@@ -124,100 +124,88 @@
 
                         }
 
-                            </td>
-                            <td scope="col">
-                                <div class="border border-1 p-1 rounded-2 text-center w-75 py-1">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-workspace" viewBox="0 0 16 16">
-                                        <path d="M4 16s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1zm4-5.95a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5" />
-                                        <path d="M2 1a2 2 0 0 0-2 2v9.5A1.5 1.5 0 0 0 1.5 14h.653a5.4 5.4 0 0 1 1.066-2H1V3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v9h-2.219c.554.654.89 1.373 1.066 2h.653a1.5 1.5 0 0 0 1.5-1.5V3a2 2 0 0 0-2-2z" />
-                                    </svg> Provider
-                                </div>
-                            </td>
-                            <td scope="col">
-                                <div class="border act-btn  border-1 p-1 rounded-2 text-center  py-1" data-bs-toggle="dropdown" aria-expanded="false">Actions </div>
-                              
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item " asp-action="" onclick="model_Case(@i)"  asp-controller="" data-bs-toggle="modal" data-bs-target="#Assigncase" data-bs-requestid="@item.RequestID" data-bs-patientname="@item.PatientName"><i class="bi  bi-journal-text  mx-1"></i>Assign Case</a></li>
-                                    <li><a class="dropdown-item " asp-action="" onclick="model_Case(@i)" asp-controller="" data-bs-toggle="modal" data-bs-target="#Cancelcase" data-bs-requestid="@item.RequestID" data-bs-patientname="@item.PatientName"><i class="bi bi-x-circle  mx-1"></i>Cancel Case</a></li>
-                                    <li><a class="dropdown-item " asp-action="ViewCase" asp-controller="Action" asp-route-id="@item.RequestID" ><i class="bi bi-file-earmark-fill  mx-1"></i>View Case</a></li>
-                                    <li><a class="dropdown-item " asp-action="ViewNotes" asp-controller="Action" asp-route-id="@item.RequestID"><i class="bi bi-card-text  mx-1"></i>View Notes</a></li>
-                                    <li><a class="dropdown-item " asp-action="" onclick="model_Case(@i)" id="CancelCase_@item.RequestID" asp-controller="" data-bs-toggle="modal" data-bs-target="#BlockCase" data-bs-requestid="@item.RequestID" data-bs-patientname="@item.PatientName"><i class="bi bi-ban  mx-1"></i>Block Patient</a></li>     
-                                </ul>                              
-                            </td>
-                        </tr>
-                    }
+                    </td>
+                    <td scope="col">
+                        <div class="border border-1 p-1 rounded-2 text-center w-75 py-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-workspace" viewBox="0 0 16 16">
+                                <path d="M4 16s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1zm4-5.95a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5" />
+                                <path d="M2 1a2 2 0 0 0-2 2v9.5A1.5 1.5 0 0 0 1.5 14h.653a5.4 5.4 0 0 1 1.066-2H1V3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v9h-2.219c.554.654.89 1.373 1.066 2h.653a1.5 1.5 0 0 0 1.5-1.5V3a2 2 0 0 0-2-2z" />
+                            </svg> Provider
+                        </div>
+                    </td>
+                    <td scope="col">
+                        <div class="border act-btn  border-1 p-1 rounded-2 text-center  py-1" data-bs-toggle="dropdown" aria-expanded="false">Actions </div>
+
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item " asp-action="" onclick="model_Case(@i)" asp-controller="" data-bs-toggle="modal" data-bs-target="#Assigncase" data-bs-requestid="@item.RequestID" data-bs-patientname="@item.PatientName"><i class="bi  bi-journal-text  mx-1"></i>Assign Case</a></li>
+                            <li><a class="dropdown-item " asp-action="" onclick="model_Case(@i)" asp-controller="" data-bs-toggle="modal" data-bs-target="#Cancelcase" data-bs-requestid="@item.RequestID" data-bs-patientname="@item.PatientName"><i class="bi bi-x-circle  mx-1"></i>Cancel Case</a></li>
+                            <li><a class="dropdown-item " asp-action="ViewCase" asp-controller="Action" asp-route-id="@item.RequestID"><i class="bi bi-file-earmark-fill  mx-1"></i>View Case</a></li>
+                            <li><a class="dropdown-item " asp-action="ViewNotes" asp-controller="Action" asp-route-id="@item.RequestID"><i class="bi bi-card-text  mx-1"></i>View Notes</a></li>
+                            <li><a class="dropdown-item " asp-action="" onclick="model_Case(@i)" id="CancelCase_@item.RequestID" asp-controller="" data-bs-toggle="modal" data-bs-target="#BlockCase" data-bs-requestid="@item.RequestID" data-bs-patientname="@item.PatientName"><i class="bi bi-ban  mx-1"></i>Block Patient</a></li>
+                        </ul>
+                    </td>
+                </tr>
+            }
 
 
-                </tbody>
-            </table>
-        </div>
-        <div >
-            @foreach (var (item, i) in Model.requestList.Select((item, i) => (item, i)))
+        </tbody>
+    </table>
+</div>
+<div>
+    @foreach (var (item, i) in Model.requestList.Select((item, i) => (item, i)))
     {
-        <div class="accordion-item text-secondary " id="Acordiantable">
-                    <h2 class="accordion-header btn-i " id="flush-heading-@item.RequestID">
+        <div class="accordion-item text-secondary " style="position:relative;" id="Acordiantable">
+            <h2 class="accordion-header btn-i " id="flush-heading-@item.RequestID">
                 <div class="p-3 collapsed border-bottom" type="button" data-bs-toggle="collapse" data-bs-target="#flush-@item.RequestID" aria-expanded="false" aria-controls="collapse_@item.RequestID">
-                            <div class="d-flex text-dark align-items-center justify-content-between w-100">
+                    <div class="d-flex text-dark align-items-center justify-content-between w-100">
                         <div class="text-start mb-3 h6">
                             <small>@item.PatientName</small>
                         </div>
                         <div class="text-end mb-3 d-flex">
 
-                                    <small style="font-size:.8rem"><b>@Enum.GetName(typeof(RequestType), item.RequestTypeID)</b></small>
-                                    <div class="cir-@Enum.GetName(typeof(RequestType), item.RequestTypeID).ToLower()  mx-2 ">
-                                    </div>
-                
-                                   
-                        </div>
-                               
-                    
-                    </div>
-                            <div class="d-flex row  text-dark justify-content-between w-100 mb-3 ">
-                                <div class="text-start col-6 h6" >
-                                    <small>@item.Address</small>
-                                </div>
-                                <div class="col-6 text-end ">
-                                    <a class="btn btn-sm btn-white border-info text-info p-1 rounded-pill " style="margin-right:-1rem" id="map-button">
-                                        <small>Map Location</small>
-                                    </a>
-                                </div>
+                            <small style="font-size:.8rem"><b>@Enum.GetName(typeof(RequestType), item.RequestTypeID)</b></small>
+                            <div class="cir-@Enum.GetName(typeof(RequestType), item.RequestTypeID).ToLower()  mx-2 ">
                             </div>
-                            <div class="modal" id="myModal" tabindex="-1">
-                                <div class="modal-dialog modal-xl">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title">Your Location</h5>
-                                            <button type="button" class="btn-close close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="gmap_canvas">
-                                                <iframe id="gmap_canvas" style="min-height:500px;width:100%;" src="" frameborder="0" scrolling="no" marginheight="0" marginwidth="0">
-                                                </iframe>
-                                            </div>
-                                        </div>
 
-                                    </div>
-                                </div>
-                            </div>
-                           
+
+                        </div>
+
+
+                    </div>
+                    <div class="d-flex row  text-dark justify-content-between w-100 mb-3 ">
+                        <div class="text-start col-6 h6">
+                            <small>@item.Address</small>
+                        </div>
+
+                    </div>
+                 
+
                 </div>
             </h2>
-                    <div id="flush-@item.RequestID" class="accordion-collapse text-dark  position-relative btn-i p-2 collapse mb-3 border-top" data-bs-parent="#accordionExample">
-                        <a asp-action="ViewCase" asp-controller="Action" asp-route-id="@item.RequestID" class="btn btn-outline-primary rounded-4 p-1 fs-6 px-3 bg-light my-2 position-absolute" style="top:-20px!important;right:15px !important ">
-                            View Case
-                        </a>
+                <a data-address="@item.Address" onclick="mapdata(this)" class="btn btn-sm btn-white border-info text-info p-1 rounded-pill " style="right: 25px;position: absolute;top: 50px;"  id="map-button_@item.RequestID">
+                    <small>Map Location</small>
+                </a>
+
+            
+            <div id="flush-@item.RequestID" class="accordion-collapse text-dark  position-relative btn-i p-2 collapse mb-3 border-top" data-bs-parent="#accordionExample">
+                <a asp-action="ViewCase" asp-controller="Action" asp-route-id="@item.RequestID" class="btn btn-outline-primary rounded-4 p-1 fs-6 px-3 bg-light my-2 position-absolute" style="top:-20px!important;right:15px !important ">
+                    View Case
+                </a>
+
+
+
                 <div class="accordion-body container-fluid">
-                           
-                            <p> <i class="fa fa-calendar border border-info rounded-pill p-1 me-2" aria-hidden="true"></i><b>Date of Birth:</b> @item.Dob</p>
-                            <p> <i class="fa fa-envelope border border-info rounded-pill p-1 me-2"></i><b>Email :</b>  @item.Email</p>
-                            <p> <i class="fa fa-phone border  border-info rounded-pill p-1 me-2"></i><b> Patient : </b>@item.PhoneNumber</p>
+
+                    <p> <i class="fa fa-calendar border border-info rounded-pill p-1 me-2" aria-hidden="true"></i><b>Date of Birth:</b> @item.Dob</p>
+                    <p> <i class="fa fa-envelope border border-info rounded-pill p-1 me-2"></i><b>Email :</b>  @item.Email</p>
+                    <p> <i class="fa fa-phone border  border-info rounded-pill p-1 me-2"></i><b> Patient : </b>@item.PhoneNumber</p>
                     <p>
                         <i class="fa fa-sticky-note border border-info rounded-pill p-1 me-2"></i> <b>Transfer Notes :</b> @{
                             if (item.Notes != null || item.Notes.Count() > 0)
                             {
                                 foreach (var not in item.Notes)
                                 {
-                                    <span> - @not </span>
+                                    <span> -Transfred To Physician:<b>@item.ProviderName</b><br /> Notes:<b>@not</b>  </span>
 
                                     <br />
 
@@ -230,57 +218,57 @@
 
                         }
                     </p>
-                            <p><i class="fa fa-calendar border border-info rounded-pill p-1 me-2"></i><b>Date of service :</b> @item.RequestedDate</p>
-                            <p><i class="fa fa-user border border-info rounded-pill p-1 me-2"></i><b>Requestor :</b> @item.Requestor</p>
-                          
+                    <p><i class="fa fa-calendar border border-info rounded-pill p-1 me-2"></i><b>Date of service :</b> @item.RequestedDate</p>
+                    <p><i class="fa fa-user border border-info rounded-pill p-1 me-2"></i><b>Requestor :</b> @item.Requestor</p>
+
                     <div class="row">
                         <div class="col-6 mb-3">
-                                    <a class="btn btn-white text-white rounded-pill 2px w-100" style="background-color: #3ecc4e;" asp-action="ViewNotes" asp-controller="Action" asp-route-id="@item.RequestID">
+                            <a class="btn btn-white text-white rounded-pill 2px w-100" style="background-color: #3ecc4e;" asp-action="ViewNotes" asp-controller="Action" asp-route-id="@item.RequestID">
                                 <small>View Notes</small>
                             </a>
                         </div>
                         <div class="col-6 mb-3">
-                                    <a asp-action="" onclick="model_Case(@i)" asp-controller="" data-bs-toggle="modal" data-bs-target="#Assigncase" data-bs-requestid="@item.RequestID" data-bs-patientname="@item.PatientName" class="btn btn-warning text-white rounded-pill 2px w-100">
+                            <a asp-action="" onclick="model_Case(@i)" asp-controller="" data-bs-toggle="modal" data-bs-target="#Assigncase" data-bs-requestid="@item.RequestID" data-bs-patientname="@item.PatientName" class="btn btn-warning text-white rounded-pill 2px w-100">
                                 <small>Assign Case</small>
                             </a>
                         </div>
 
-                       @* <div class="col-6 mb-3">
-                            <a class="btn btn-white text-white rounded-pill 2px w-100" style="background-color: #3ecc4e;">
-                                <small>View Uploads</small>
-                            </a>
-                        </div>*@
+                        @* <div class="col-6 mb-3">
+                    <a class="btn btn-white text-white rounded-pill 2px w-100" style="background-color: #3ecc4e;">
+                    <small>View Uploads</small>
+                    </a>
+                    </div>*@
                         <div class="col-6 mb-3">
-                                    <a asp-action="" onclick="model_Case(@i)" asp-controller="" data-bs-toggle="modal" data-bs-target="#Cancelcase" data-bs-requestid="@item.RequestID" data-bs-patientname="@item.PatientName" class="btn btn-danger text-white rounded-pill 2px w-100">
+                            <a asp-action="" onclick="model_Case(@i)" asp-controller="" data-bs-toggle="modal" data-bs-target="#Cancelcase" data-bs-requestid="@item.RequestID" data-bs-patientname="@item.PatientName" class="btn btn-danger text-white rounded-pill 2px w-100">
                                 <small>Cancel Case</small>
                             </a>
                         </div>
                         <div class="col-6 mb-3">
-                                    <a asp-action="" onclick="model_Case(@i)" id="CancelCase_@item.RequestID" asp-controller="" data-bs-toggle="modal" data-bs-target="#BlockCase" data-bs-requestid="@item.RequestID" data-bs-patientname="@item.PatientName" class="btn btn-danger text-white rounded-pill 2px w-100" >
+                            <a asp-action="" onclick="model_Case(@i)" id="CancelCase_@item.RequestID" asp-controller="" data-bs-toggle="modal" data-bs-target="#BlockCase" data-bs-requestid="@item.RequestID" data-bs-patientname="@item.PatientName" class="btn btn-danger text-white rounded-pill 2px w-100">
                                 <small>Block Case</small>
                             </a>
                         </div>
                         <div class="col-6 mb-3 ">
-                                    <a href="mailto:@item.Email" class="btn btn-white text-white rounded-pill 2px w-100" style="background-color: #3ecc4e;">
+                            <a href="mailto:@item.Email" class="btn btn-white text-white rounded-pill 2px w-100" style="background-color: #3ecc4e;">
                                 <small>Email</small>
                             </a>
                         </div>
                     </div>
-                   
+
                 </div>
-                       
+
             </div>
-            
+
         </div>
     }
-    <input type="hidden" id="crt-page" value="1"/>
+    <input type="hidden" id="crt-page" value="1" />
     <div class="d-flex justify-content-between">
         <div class="text-start">
-           
+
             <select id="SizeSelect" asp-for="pageSize" onchange="getfilterdata()" class="form-select">
                 <option value="5" selected>5</option>
-                 <option value="10">10</option>
-                  <option value="15">15</option>
+                <option value="10">10</option>
+                <option value="15">15</option>
                 <option value="20">20</option>
             </select>
         </div>
@@ -307,82 +295,117 @@
         </div>
 
     </div>
-   
-    
+    <div class="modal" id="myModal" tabindex="-1">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Your Location</h5>
+                    <button type="button" class="btn-close close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="gmap_canvas">
+                        <iframe id="gmap_canvas" style="min-height:500px;width:100%;" src="" frameborder="0" scrolling="no" marginheight="0" marginwidth="0">
+                        </iframe>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
     <script>
         function model_Case(id) {
-        console.log(id);
-        var modeldata=@Html.Raw(Json.Serialize(Model))
-               
-        document.getElementById('PatientName_ModelCancelCase').innerText=modeldata.requestList[id].patientName;
-        document.getElementById('RequestID_Input_ModelCancelCase').value = modeldata.requestList[id].requestID;
-        document.getElementById('RequestID_Input_ModelAssignCase').value = modeldata.requestList[id].requestID;
-        document.getElementById('RequestID_Input_ModelBlockCase').value = modeldata.requestList[id].requestID;
-        document.getElementById('PatientName_ModelBlockCase').innerText = modeldata.requestList[id].patientName;
-            
-      }
+            console.log(id);
+            var modeldata = @Html.Raw(Json.Serialize(Model))
+
+                document.getElementById('PatientName_ModelCancelCase').innerText=modeldata.requestList[id].patientName;
+            document.getElementById('RequestID_Input_ModelCancelCase').value = modeldata.requestList[id].requestID;
+            document.getElementById('RequestID_Input_ModelAssignCase').value = modeldata.requestList[id].requestID;
+            document.getElementById('RequestID_Input_ModelBlockCase').value = modeldata.requestList[id].requestID;
+            document.getElementById('PatientName_ModelBlockCase').innerText = modeldata.requestList[id].patientName;
+
+        }
 
     </script>
 
-
+   <script>
+        var spany = document.getElementsByClassName("close")[0];
       
-<script>
+        var modal = document.getElementById("myModal");
+       function mapdata(ID)
+       {
+            var data = ID.getAttribute("data-address");
+            console.log(data);
+            var address1 = `https://maps.google.com/maps?q= + ${data} + &t=&z=13&ie=UTF8&iwloc=&output=embed`;
+            document.getElementById('gmap_canvas').src = address1;
+            modal.style.display = "block";
+       }
+        spany.onclick = function () {
+            modal.style.display = "none";
+        }
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+       </script>
 
-    function myFunction() {
-        // Declare variables
-        var input, filter, table, tr, td, i, txtValue;
-        input = document.getElementById("myInput");
-        filter = input.value.toUpperCase();
-        table = document.getElementById("myTable");
-        tr = table.getElementsByTagName("tr");
+    <script>
 
-        // Loop through all table rows, and hide those who don't match the search query
-        for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[0];
-            if (td) {
-                txtValue = td.textContent || td.innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    tr[i].style.display = "";
-                } else {
-                    tr[i].style.display = "none";
+        function myFunction() {
+            // Declare variables
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("myInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("myTable");
+            tr = table.getElementsByTagName("tr");
+
+            // Loop through all table rows, and hide those who don't match the search query
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[0];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
                 }
             }
         }
-    }
-    filterSelection("all")
-    function filterSelection(c) {
-        
-        var x, i;
-        x = document.getElementsByClassName("filterDiv");
-        if (c == "all") c = "";
-        for (i = 0; i < x.length; i++) {
-            w3AddClass(x[i], "unshow");
-          
-            if (x[i].className.indexOf(c) > -1) 
-            {  
-                 w3RemoveClass(x[i], "unshow");
+        filterSelection("all")
+        function filterSelection(c) {
+
+            var x, i;
+            x = document.getElementsByClassName("filterDiv");
+            if (c == "all") c = "";
+            for (i = 0; i < x.length; i++) {
+                w3AddClass(x[i], "unshow");
+
+                if (x[i].className.indexOf(c) > -1) {
+                    w3RemoveClass(x[i], "unshow");
+                }
             }
         }
-    }
-    function w3AddClass(element, name) {
-        var i, arr1, arr2;
-        arr1 = element.className.split(" ");
-        arr2 = name.split(" ");
-        for (i = 0; i < arr2.length; i++) {
-            if (arr1.indexOf(arr2[i]) == -1) { element.className += " " + arr2[i]; }
-        }
-    }
-
-    function w3RemoveClass(element, name) {
-        var i, arr1, arr2;
-        arr1 = element.className.split(" ");
-        arr2 = name.split(" ");
-        for (i = 0; i < arr2.length; i++) {
-            while (arr1.indexOf(arr2[i]) > -1) {
-                arr1.splice(arr1.indexOf(arr2[i]), 1);
+        function w3AddClass(element, name) {
+            var i, arr1, arr2;
+            arr1 = element.className.split(" ");
+            arr2 = name.split(" ");
+            for (i = 0; i < arr2.length; i++) {
+                if (arr1.indexOf(arr2[i]) == -1) { element.className += " " + arr2[i]; }
             }
         }
-        element.className = arr1.join(" ");
-    }
 
-</script>
+        function w3RemoveClass(element, name) {
+            var i, arr1, arr2;
+            arr1 = element.className.split(" ");
+            arr2 = name.split(" ");
+            for (i = 0; i < arr2.length; i++) {
+                while (arr1.indexOf(arr2[i]) > -1) {
+                    arr1.splice(arr1.indexOf(arr2[i]), 1);
+                }
+            }
+            element.className = arr1.join(" ");
+        }
+
+    </script>

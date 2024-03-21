@@ -2,6 +2,15 @@
   "version": 3,
   "targets": {
     "net7.0": {
+      "GoogleMaps.LocationServices/1.2.0.5": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/GoogleMaps.LocationServices.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/GoogleMaps.LocationServices.dll": {}
+        }
+      },
       "Microsoft.AspNetCore.Cryptography.Internal/8.0.2": {
         "type": "package",
         "compile": {
@@ -1870,6 +1879,18 @@
     }
   },
   "libraries": {
+    "GoogleMaps.LocationServices/1.2.0.5": {
+      "sha512": "0j3RL5+acxYgQNz72JdXJ1nUKxMGaY+6UvrOIOxZfp0qpJOUmo/ivCAm53atbnuy0z3vrZK+j9mZifh35UBqag==",
+      "type": "package",
+      "path": "googlemaps.locationservices/1.2.0.5",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "googlemaps.locationservices.1.2.0.5.nupkg.sha512",
+        "googlemaps.locationservices.nuspec",
+        "lib/netstandard2.0/GoogleMaps.LocationServices.dll"
+      ]
+    },
     "Microsoft.AspNetCore.Cryptography.Internal/8.0.2": {
       "sha512": "eZecZwgDIIK3QdtDHE2ndH1Yw/Mbo/b4HpyB135eZsIWYVr4dyO4vYa6s/IRIaWEMUdPNT2qU8mILF0MwDl+FQ==",
       "type": "package",
@@ -5999,6 +6020,7 @@
   },
   "projectFileDependencyGroups": {
     "net7.0": [
+      "GoogleMaps.LocationServices >= 1.2.0.5",
       "HelloDocAdmin.Entity >= 1.0.0",
       "Microsoft.Extensions.Identity.Core >= 8.0.2",
       "System.IdentityModel.Tokens.Jwt >= 7.4.0"
@@ -6047,6 +6069,10 @@
       "net7.0": {
         "targetAlias": "net7.0",
         "dependencies": {
+          "GoogleMaps.LocationServices": {
+            "target": "Package",
+            "version": "[1.2.0.5, )"
+          },
           "Microsoft.Extensions.Identity.Core": {
             "target": "Package",
             "version": "[8.0.2, )"

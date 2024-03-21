@@ -2,6 +2,11 @@
 using Microsoft.AspNetCore.Mvc.Filters;
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
+using HelloDocAdmin.Entity.ViewModels.Authentication;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using System.Configuration;
+
 namespace HelloDocAdmin.Controllers.Authenticate
 {
     public class CV : Controller
@@ -12,22 +17,54 @@ namespace HelloDocAdmin.Controllers.Authenticate
         {
             _httpContextAccessor = new HttpContextAccessor();
         }
-
-        public static string? LoggedUserName()
+        public static CookieModel getmodel(string token)
         {
             
              
-            string? UserName = _httpContextAccessor.HttpContext.Request.Cookies["Username"];
-          
-            return UserName;
+            JwtSecurityToken jwtSecurityToken = null;
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.UTF8.GetBytes("Himanshubabariyahimanshubabariyahimanshubabariya");
+            tokenHandler.ValidateToken(token, new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(key),
+                ValidateIssuer = false,
+                ValidateAudience = false,
+                ClockSkew = TimeSpan.Zero
+
+            }, out SecurityToken validatedToken);
+
+            // Corrected access to the validatedToken
+            jwtSecurityToken = (JwtSecurityToken)validatedToken;
+
+            CookieModel cookieModel = new CookieModel()
+            {
+                AspNetUserID = jwtSecurityToken.Claims.FirstOrDefault(c => c.Type == "AspNetUserID").Value,
+
+                role = jwtSecurityToken.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value,
+
+                UserName = jwtSecurityToken.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name).Value,
+            };
+
+
+
+            return cookieModel;
+        }
+
+        public static string? LoggedUserName()
+        {
+            string? token = _httpContextAccessor.HttpContext.Request.Cookies["jwt"];
+            CookieModel sm = getmodel(token);
+           
+            return sm.UserName;
         }
 
         public static string? LoggedUserID()
         {
-            string? UserID = _httpContextAccessor.HttpContext.Request.Cookies["Userid"];
+            string? token = _httpContextAccessor.HttpContext.Request.Cookies["jwt"];
+            CookieModel sm = getmodel(token);
 
-           
-            return UserID;
+            return sm.AspNetUserID;
         }
         public static string? CurrentStatus()
         {
@@ -45,14 +82,10 @@ namespace HelloDocAdmin.Controllers.Authenticate
         }
         public static string? LoggedUserRole()
         {
-            string? UserRole = null;
+            string? token = _httpContextAccessor.HttpContext.Request.Cookies["jwt"];
+            CookieModel sm = getmodel(token);
 
-            if (_httpContextAccessor.HttpContext.Session.GetString("UserRole") != null)
-            {
-                UserRole = _httpContextAccessor.HttpContext.Session.GetString("UserRole").ToString();
-
-            }
-            return UserRole;
+            return sm.role;
         }
     }
 }

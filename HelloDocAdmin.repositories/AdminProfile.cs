@@ -145,6 +145,7 @@ namespace HelloDocAdmin.Repositories
                         DataForChange.Address1 = vm.Address1;
                         DataForChange.Address2 = vm.Address2;
                         DataForChange.City = vm.City;
+                        DataForChange.Regionid = vm.RegionID;
                         DataForChange.Mobile = vm.User_PhoneNumber;
 
 

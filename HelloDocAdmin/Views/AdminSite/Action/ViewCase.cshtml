@@ -271,11 +271,15 @@
                 </div>
                
                     <div class="card-footer border-0 bg-transparent text-end">
+                        @if(Model.physicianID==null)
+                    {
                     <a class="btn btn-info text-white" asp-action="" onclick="model_Case()" asp-controller="" data-bs-toggle="modal" data-bs-target="#Assigncase">Assign Case</a>
-                    <a asp-action="ViewNotes" asp-controller="Action" asp-route-id="@Model.RequestID" type="submit" class="btn btn-info btn-submit">
+                        
+                    }
+                    <a asp-action="ViewNotes" asp-controller="Action" asp-route-id="@Model.RequestID" type="submit" class="btn text-white btn-info btn-submit">
                            View Notes
                         </a>
-                        <a class="btn btn-danger btn-cancel ">
+                        <a asp-action="Index" asp-controller="Dashboard" class="btn btn-danger btn-cancel ">
                             cancel
                         </a>
                     </div>
@@ -381,7 +385,7 @@
             </div>
             <div class="modal-footer">
                 <input type="submit" class=" btn btn-info text-white" value="Assign">
-                <a  asp-action="Index" asp-controller="Dashboard" asp class="btn btn-outline-info" data-bs-dismiss="modal">Close</a>
+                <button type="button" class="btn btn-outline-info" data-bs-dismiss="modal">Close</button>
             </div>
         </form>
     </div>

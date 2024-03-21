@@ -61,6 +61,7 @@ namespace HelloDocAdmin.Repositories
                 PhoneNumber = l.Phonenumber,
                 PatientNotes = l.Notes,
                 Email = l.Email,
+                physicianID=n.Physicianid,
                 RequestTypeID = n.Requesttypeid,
                 Address = l.Street + "," + l.City + "," + l.State,
                 Room = l.Address,
