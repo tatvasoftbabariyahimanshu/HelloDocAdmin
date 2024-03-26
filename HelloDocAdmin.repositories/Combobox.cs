@@ -58,6 +58,24 @@ namespace HelloDocAdmin.Repositories
             })
                 .ToListAsync();
         }
+        public async Task<List<RoleComboBox>> RolelistAdmin()
+        {
+            return await _context.Roles.Where(e=>e.Accounttype==2).Select(req => new RoleComboBox()
+            {
+                RoleID = req.Roleid,
+               Name = req.Name
+            })
+                .ToListAsync();
+        }
+        public async Task<List<RoleComboBox>> RolelistProvider()
+        {
+            return await _context.Roles.Where(e => e.Accounttype == 3).Select(req => new RoleComboBox()
+            {
+                RoleID = req.Roleid,
+                Name = req.Name
+            })
+                .ToListAsync();
+        }
         public async Task<List<CaseReasonComboBox>> CaseReasonComboBox()
         {
             return await _context.Casetags.Select(req => new CaseReasonComboBox()

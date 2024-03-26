@@ -4,6 +4,7 @@ using HelloDocAdmin.Entity.ViewModels.AdminSite;
 using HelloDocAdmin.Repositories.Interface;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,8 +26,9 @@ namespace HelloDocAdmin.Repositories
         #region GetRoleAccessDetails
         public  List<Role> GetRoleAccessDetails()
         {
-
-            List<Role> v =  _context.Roles.ToList();
+            BitArray bt = new BitArray(1);
+            bt.Set(0, false);
+            List<Role> v =  _context.Roles.Where(e=>e.Isdeleted==bt).ToList();
 
             return v;
 
@@ -64,6 +66,9 @@ namespace HelloDocAdmin.Repositories
         {
             try
             {
+
+                BitArray bt = new BitArray(1);
+                bt.Set(0, false);
                 Role check = await _context.Roles.Where(r => r.Name == role.Name).FirstOrDefaultAsync();
                 if (check == null && role != null && Menusid != null)
                 {
@@ -73,8 +78,8 @@ namespace HelloDocAdmin.Repositories
                     r.Accounttype = role.Accounttype;
                     r.Createdby = ID;
                     r.Createddate = DateTime.Now;
-                    r.Isdeleted = new System.Collections.BitArray(1);
-                    r.Isdeleted[0] = false;
+                  
+                    r.Isdeleted = bt;
                     _context.Roles.Add(r);
                     _context.SaveChanges();
 
@@ -174,7 +179,24 @@ namespace HelloDocAdmin.Repositories
         }
         #endregion
 
+        public bool DeleteAccess(int id)
+        {
+            BitArray bt=new BitArray(1);
+            bt.Set(0, true);
+            try
+            {
+                Role rn =_context.Roles.FirstOrDefault(E=>E.Roleid==id);
+                rn.Isdeleted = bt;
+                _context.Roles.Update(rn);
+                _context.SaveChanges();
+                return true;
 
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
         #region GetProfileAll
         public async Task<List<ViewUserAccess>>  GetAllUserDetails()
         {

@@ -1,5 +1,6 @@
 ﻿using HelloDocAdmin.Entity.Models;
 using HelloDocAdmin.Entity.ViewModels;
+using HelloDocAdmin.Entity.ViewModels.AdminSite;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,5 +22,8 @@ namespace HelloDocAdmin.Repositories.Interface
         public  Task<PhysiciansViewModel> GetPhysicianById(int id);
         public Task<bool> EditProviderProfile(PhysiciansViewModel vm, string AdminId);
         public Task<bool> DeletePhysician(int PhysicianID, string AdminID);
+
+        public  Task<List<Schedule>> GetShift(int month);
+        public Task<bool> CreateShift(Schedule v, string id);
     }
 }

@@ -29,6 +29,28 @@
 .nav-link {
     color: #ADADAD;
 }
+.Status-1 {
+    font-size: 0.7rem;
+    background-color: #c2f7c2;
+}
+
+.Status-0 {
+    font-size: 0.7rem;
+    background-color: lightcoral;
+}
+
+.view-all-btn {
+}
+
+.model-Status-1 {
+    background-color: #c2f7c2;
+    border: 1px solid white;
+}
+
+.model-Status-0 {
+    background-color: lightcoral;
+    border: 1px solid;
+}
 
 .nav-underline .nav-link.active, .nav-underline .show > .nav-link {
     color: var(--primary) !important;

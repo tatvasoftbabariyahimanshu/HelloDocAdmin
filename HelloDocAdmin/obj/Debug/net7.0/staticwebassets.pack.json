@@ -109,6 +109,10 @@
       "PackagePath": "staticwebassets\\Upload\\Physician\\14\\BackGrounddoc.pdf"
     },
     {
+      "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\Physician\\15\\-202403260215-Signature.png",
+      "PackagePath": "staticwebassets\\Upload\\Physician\\15\\-202403260215-Signature.png"
+    },
+    {
       "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\Physician\\15\\sdfdsf-20240313043233-Photo.png",
       "PackagePath": "staticwebassets\\Upload\\Physician\\15\\sdfdsf-20240313043233-Photo.png"
     },
@@ -247,6 +251,14 @@
     {
       "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\Physician\\2\\-202403200314-Photo.jpg",
       "PackagePath": "staticwebassets\\Upload\\Physician\\2\\-202403200314-Photo.jpg"
+    },
+    {
+      "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\Physician\\2\\-202403260447-Photo.pdf",
+      "PackagePath": "staticwebassets\\Upload\\Physician\\2\\-202403260447-Photo.pdf"
+    },
+    {
+      "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\Physician\\2\\-202403260448-Photo.png",
+      "PackagePath": "staticwebassets\\Upload\\Physician\\2\\-202403260448-Photo.png"
     },
     {
       "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\Physician\\2\\Agreementdoc.pdf",
@@ -483,6 +495,10 @@
     {
       "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\req_2\\Fig2. Forgot Password.jpg",
       "PackagePath": "staticwebassets\\Upload\\req_2\\Fig2. Forgot Password.jpg"
+    },
+    {
+      "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\req_32\\Resume_44137.pdf",
+      "PackagePath": "staticwebassets\\Upload\\req_32\\Resume_44137.pdf"
     },
     {
       "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\req_33\\8145760_3816471 (1) (1) (1).jpg",
@@ -1295,6 +1311,74 @@
     {
       "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\js\\custom.js",
       "PackagePath": "staticwebassets\\js\\custom.js"
+    },
+    {
+      "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\js\\custom2\\CommonJsFunctions - Copy.js",
+      "PackagePath": "staticwebassets\\js\\custom2\\CommonJsFunctions - Copy.js"
+    },
+    {
+      "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\js\\custom2\\CommonJsFunctions.js",
+      "PackagePath": "staticwebassets\\js\\custom2\\CommonJsFunctions.js"
+    },
+    {
+      "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\js\\custom2\\CommonValidation.js",
+      "PackagePath": "staticwebassets\\js\\custom2\\CommonValidation.js"
+    },
+    {
+      "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\js\\custom2\\FillComboBox.js",
+      "PackagePath": "staticwebassets\\js\\custom2\\FillComboBox.js"
+    },
+    {
+      "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\js\\custom2\\InitMain.js",
+      "PackagePath": "staticwebassets\\js\\custom2\\InitMain.js"
+    },
+    {
+      "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\js\\custom2\\UI_BlockUI.js",
+      "PackagePath": "staticwebassets\\js\\custom2\\UI_BlockUI.js"
+    },
+    {
+      "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\js\\custom2\\UI_Bootbox.js",
+      "PackagePath": "staticwebassets\\js\\custom2\\UI_Bootbox.js"
+    },
+    {
+      "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\js\\custom2\\UI_Currency.js",
+      "PackagePath": "staticwebassets\\js\\custom2\\UI_Currency.js"
+    },
+    {
+      "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\js\\custom2\\UI_CurrentMenu.js",
+      "PackagePath": "staticwebassets\\js\\custom2\\UI_CurrentMenu.js"
+    },
+    {
+      "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\js\\custom2\\UI_DateTime_Picker.js",
+      "PackagePath": "staticwebassets\\js\\custom2\\UI_DateTime_Picker.js"
+    },
+    {
+      "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\js\\custom2\\UI_FormReset.js",
+      "PackagePath": "staticwebassets\\js\\custom2\\UI_FormReset.js"
+    },
+    {
+      "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\js\\custom2\\UI_Mask.js",
+      "PackagePath": "staticwebassets\\js\\custom2\\UI_Mask.js"
+    },
+    {
+      "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\js\\custom2\\UI_ModalEvents.js",
+      "PackagePath": "staticwebassets\\js\\custom2\\UI_ModalEvents.js"
+    },
+    {
+      "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\js\\custom2\\UI_Select2.js",
+      "PackagePath": "staticwebassets\\js\\custom2\\UI_Select2.js"
+    },
+    {
+      "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\js\\custom2\\UI_Selectize.js",
+      "PackagePath": "staticwebassets\\js\\custom2\\UI_Selectize.js"
+    },
+    {
+      "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\js\\custom2\\UI_TinyMCE.js",
+      "PackagePath": "staticwebassets\\js\\custom2\\UI_TinyMCE.js"
+    },
+    {
+      "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\js\\custom2\\UI_Toastr.js",
+      "PackagePath": "staticwebassets\\js\\custom2\\UI_Toastr.js"
     },
     {
       "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\js\\site.js",

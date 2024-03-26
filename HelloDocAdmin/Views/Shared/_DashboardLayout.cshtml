@@ -70,6 +70,8 @@
         <main role="main" class="pb-3" style="min-height:1000px">
             @RenderBody()
         </main>
+    <div id="modal-placeholder"></div>
+    
     <footer>
         <div class="d-flex justify-content-end mt-2 mb-2 ">
             <span class="d-flex ">
@@ -79,14 +81,19 @@
             </span>
         </div>
     </footer>
-    <script src="@Url.Content("~/plugins/mvc-jquery-ajax/jquery.unobtrusive-ajax.js")"></script>
-    <script src="@Url.Content("~/plugins/mvc-jquery-validate/jquery.validate.js")"></script>
-    <script src="@Url.Content("~/plugins/mvc-jquery-validate/jquery.validate.unobtrusive.js")"></script>
+   
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/bootstrap.bundle.min.js" asp-append-version="true"></script>
     <script src="~/js/custom.js" asp-append-version="true"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="@Url.Content("~/plugins/mvc-jquery-ajax/jquery.unobtrusive-ajax.js")"></script>
+    <script src="@Url.Content("~/plugins/mvc-jquery-validate/jquery.validate.js")"></script>
+    <script src="@Url.Content("~/plugins/mvc-jquery-validate/jquery.validate.unobtrusive.js")"></script>
+    <script src="@Url.Content("~/js/custom2/UI_Bootbox.js")"></script>
+    <script src="@Url.Content("~/js/custom2/UI_ModalEvents.js")"></script>
+    <script src="@Url.Content("~/js/custom2/UI_BlockUI.js")"></script>
+    <script src="@Url.Content("~/js/custom2/InitMain.js")"></script>
     @await Component.InvokeAsync("Notyf")
     @await RenderSectionAsync("Scripts", required: false)
 </body>

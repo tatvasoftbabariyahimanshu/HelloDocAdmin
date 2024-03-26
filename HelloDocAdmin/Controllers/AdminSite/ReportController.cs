@@ -1,5 +1,6 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using ClosedXML.Excel;
+using HelloDocAdmin.Controllers.Authenticate;
 using HelloDocAdmin.Entity.Data;
 using HelloDocAdmin.Entity.Models;
 using HelloDocAdmin.Repositories.Interface;
@@ -10,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HelloDocAdmin.Controllers.AdminSite
 {
+    
     public class ReportController : Controller
     {
         private readonly ApplicationDbContext _context;

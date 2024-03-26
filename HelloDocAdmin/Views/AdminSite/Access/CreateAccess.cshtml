@@ -49,6 +49,7 @@
                             <input placeholder=" " asp-for="Name" class="input-outline inp-dis w-100 inp asp" type="text">
                             <label class="inputs-lable">Role Name</label>
                         </div>
+                        <span asp-validation-for="Name" class="err-msg"></span>
 
                     </div>
                 </div>
@@ -56,13 +57,14 @@
                     <div class=" mb-2">
                         <div class="input-control w-100 ">
                             <select class="input-outline input-outline-select inp asp  inp-dis" onchange="accounttype()" asp-for="Accounttype" id="Accounttype" data-allow-clear="true" tabindex="-1" asp-items="@(new SelectList(enumData, "ID", "Name"))" data-control="select2" data-placeholder="Select Level">
-                                <option>Select Role</option>
+                                <option value="">Select Role</option>
                             </select>
 
                         </div>
+                            <span asp-validation-for="Accounttype" class="err-msg"></span>
                     </div>
                 </div>
-                <input name="Menusid" type="hidden" id="menusid" />
+                <input name="Menusid" required type="hidden" id="menusid" />
                 <input asp-for="Roleid" type="hidden" id="roleid" />
                 <div class="col-md-12 mt-3" style="min-height:150px"  >
                     <div id="menu" class="d-flex">
@@ -70,8 +72,13 @@
                     </div>
 
                 </div>
+                    @if (ViewData["Page"] == null)
+                    {
 
-            </div>
+                        ViewData["Page"] = "save";
+                    }
+    
+                                    </div>
             <div class="card-footer border-0 bg-transparent text-end">
                     <button type="submit" class="btn btn-info text-white">@ViewData["Page"]</button>
                     <button type="reset" class="btn btn-danger btn-cancel">

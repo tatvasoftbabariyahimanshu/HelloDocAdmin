@@ -9,8 +9,8 @@ namespace HelloDocAdmin.Entity.ViewModels.AdminSite
 {
     public class RolesModel
     {
-      
-            public int Roleid { get; set; }
+
+        public int? Roleid { get; set; } 
 
 
             public string Name { get; set; } = null!;
@@ -19,10 +19,10 @@ namespace HelloDocAdmin.Entity.ViewModels.AdminSite
             public short Accounttype { get; set; }
 
 
-            public string Createdby { get; set; } = null!;
+            public string? Createdby { get; set; } = null!;
 
 
-            public DateTime Createddate { get; set; }
+            public DateTime? Createddate { get; set; }
 
 
             public string? Modifiedby { get; set; }
@@ -30,8 +30,8 @@ namespace HelloDocAdmin.Entity.ViewModels.AdminSite
             public DateTime? Modifieddate { get; set; }
 
 
-            public BitArray Isdeleted { get; set; } = null!;
-            public List<Menu> Menus { get; set; }
+            public BitArray? Isdeleted { get; set; } = null!;
+            public List<Menu>? Menus { get; set; }
 
             public class Menu
             {

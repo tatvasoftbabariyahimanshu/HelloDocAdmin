@@ -3,12 +3,14 @@ using DocumentFormat.OpenXml.EMMA;
 using DocumentFormat.OpenXml.ExtendedProperties;
 using DocumentFormat.OpenXml.Spreadsheet;
 using DocumentFormat.OpenXml.Wordprocessing;
+using HelloDocAdmin.Controllers.Authenticate;
 using HelloDocAdmin.Entity.Data;
 using HelloDocAdmin.Entity.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HelloDocAdmin.Controllers.AdminSite
 {
+    
     public class SendAgreementController : Controller
     {
         private readonly ApplicationDbContext _context;

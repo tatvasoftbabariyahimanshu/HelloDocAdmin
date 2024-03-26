@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HelloDocAdmin.Controllers.AdminSite
 {
+    [CustomAuthorization("Admin")]
     public class AccessController : Controller
     {
         private IActionRepository _actionrepo;
@@ -36,7 +37,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
         _phyrepo = physician;
         _admin = adminProfile;
         }
-   
+
         public IActionResult Index()
         {
             List<Role> v =  _accesrepo.GetRoleAccessDetails();
@@ -89,27 +90,41 @@ namespace HelloDocAdmin.Controllers.AdminSite
         public async Task<IActionResult> PostRoleMenu(RolesModel role, string Menusid)
         {
             bool data = false;
-
-            if (role.Roleid == 0)
+            if(Menusid==null)
             {
-                data = await _accesrepo.PostRoleMenu(role, Menusid, CV.LoggedUserID());
+                _notyf.Warning("Select Menus!!!");
+                return View("../AdminSite/Access/CreateAccess", role);
+            }
+           if(ModelState.IsValid)
+            {
+                if (role.Roleid == null)
+                {
+                    data = await _accesrepo.PostRoleMenu(role, Menusid, CV.LoggedUserID());
 
+                }
+                else
+                {
+                    data = await _accesrepo.PutRoleMenu(role, Menusid, CV.LoggedUserID());
+                }
+
+                if (data)
+                {
+
+                    _notyf.Success("Role Added/Updated Successfully");
+                }
+                else
+                {
+                    _notyf.Error("Role not added/Updated");
+                }
+                return RedirectToAction("Index");
             }
             else
             {
-                data = await _accesrepo.PutRoleMenu(role, Menusid, CV.LoggedUserID());
+                _notyf.Error("Enter valid details");
+                return View("../AdminSite/Access/CreateAccess", role);
             }
-
-            if (data)
-            {
-              
-                _notyf.Success("Role Added/Updated Successfully");
-            }
-            else
-            {
-                _notyf.Error("Role not added/Updated");
-            }
-            return RedirectToAction("Index");
+           
+           
         }
         #endregion
 
@@ -126,7 +141,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
         {
             //TempData["Status"] = TempData["Status"];
             ViewBag.RegionComboBox = await _combobox.RegionComboBox();
-            ViewBag.userrolecombobox = await _combobox.UserRole();
+            ViewBag.userrolecombobox = await _combobox.RolelistProvider();
             if (id == null)
             {
                 ViewData["PhysicianAccount"] = "Add";
@@ -187,7 +202,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
         public async Task<IActionResult> AdminProfile(string? id)
         {
-            ViewBag.userrolecombobox = await _combobox.UserRole();
+            ViewBag.userrolecombobox = await _combobox.RolelistAdmin();
             ViewBag.RegionComboBox = await _combobox.RegionComboBox();
             if (id != null)
             {
@@ -199,7 +214,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
         public async Task<IActionResult> AdminAddEdit(ViewAdminProfileModel model)
         {
-            ViewBag.userrolecombobox = await _combobox.UserRole();
+            ViewBag.userrolecombobox = await _combobox.RolelistAdmin();
             ViewBag.RegionComboBox = await _combobox.RegionComboBox();
             if (ModelState.IsValid) {
                 model.AdminReqionList = Request.Form["SelectedRegions"].Select(int.Parse).ToList();
@@ -245,6 +260,20 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
           
            
+        }
+
+
+        public async Task<IActionResult> DeleteAccess(int id)
+        {
+            if(_accesrepo.DeleteAccess(id))
+            {
+                _notyf.Success("Role Deletde SuccessFully");
+            }
+            else
+            {
+                _notyf.Error("Role not Deleted SuccessFully");
+            }
+            return RedirectToAction("Index");
         }
         #endregion 
     }

@@ -1,4 +1,5 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using HelloDocAdmin.Controllers.Authenticate;
 using HelloDocAdmin.Entity.Data;
 using HelloDocAdmin.Entity.ViewModels.AdminSite;
 using HelloDocAdmin.Repositories;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HelloDocAdmin.Controllers.AdminSite
 {
+    [CustomAuthorization("Admin")]
     public class RecordsController : Controller
     {
         private readonly ApplicationDbContext _context;

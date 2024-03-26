@@ -13,6 +13,7 @@ using System.Drawing;
 
 namespace HelloDocAdmin.Controllers.AdminSite
 {
+    [CustomAuthorization("Admin")]
     public class ActionController : Controller
     {
         private IActionRepository _actionrepo;

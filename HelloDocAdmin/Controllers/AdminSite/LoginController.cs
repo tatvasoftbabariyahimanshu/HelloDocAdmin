@@ -32,6 +32,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
             _jwtservice = jwtservice;
             _patientRequestRepository = patientRequestRepository;
         }
+       
         public IActionResult Index()
         {
             return View("../AdminSite/Login/Index");
@@ -132,7 +133,8 @@ namespace HelloDocAdmin.Controllers.AdminSite
             }
         }
 
-            public async Task<IActionResult> AccessDenide()
+       
+        public async Task<IActionResult> AccessDenide()
         {
             return View("../AdminSite/Login/AccessDenide");
         }

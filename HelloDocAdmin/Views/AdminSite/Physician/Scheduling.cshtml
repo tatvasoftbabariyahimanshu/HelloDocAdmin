@@ -1,0 +1,394 @@
+﻿@using static HelloDocAdmin.Entity.ViewModels.AdminSite.Constant;
+@{
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+    var enumData = from AdminStatus e in Enum.GetValues(typeof(AdminStatus))
+                   select new
+                   {
+                       ID = (int)e,
+                       Name = e.ToString()
+                   };
+};
+<style>
+    .day-box{
+        border:1px solid gray;
+        background-color: #6d6e70 !important;
+        color: white !important;
+       
+
+    }
+
+    .day-active {
+        background-color: antiquewhite !important;
+    }
+    .sch-div
+    {
+        margin-top:1px;
+        min-height:25px;
+        border: 1px solid gray;
+       
+    }
+
+    .sch-div-day {
+        margin-top: 1px;
+        min-height: 25px;
+        border: 1px solid gray;
+        background-color: #fcaef5 ;
+        
+    }
+</style>
+<div class="container">
+    <div class="card bg-transparent border-0">
+        <div class="card-header d-flex justify-content-between  border-0  bg-transparent p-1  mt-3 mb-2">
+            <div class="text-start d-flex align-items-center">
+                <h5 class="mt-2"><b> Provider Information</b></h5>
+
+            </div>
+            <div class="text-end">
+                <a asp-controller="Dashboard" asp-action="Index"
+                   class="btn btn-outline-info btn-back">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                         fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                              d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5" />
+                    </svg>Back
+                </a>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <div class="d-flex justify-content-between">
+                <div class="dropdown text-start ">
+
+                    <select class="input-outline input-outline-select " name="region" data-allow-clear="true" tabindex="-1" onchange="myFunction()" id="Region" @*asp-items="@(new SelectList(ViewBag.RegionComboBox,"RegionId","RegionName"))"*@ data-control="select2" data-placeholder="Select Level">
+                        <option value="0">All Region</option>
+                    </select>
+                </div>
+                <div class="text-end d-flex">
+
+                    <a class="btn mx-2  btn-info text-white" asp-action="PhysicianProfile" asp-controller="Physician">
+                        <span class="addnewlg">
+                            Provider on call
+                        </span>
+                        <span class="addnewsm">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2" />
+                            </svg>
+                        </span>
+                    </a>
+                    <a class="btn mx-2 btn-info text-white" asp-action="PhysicianProfile" asp-controller="Physician">
+                        <span class="addnewlg">
+                            Shift for review
+                        </span>
+                        <span class="addnewsm">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2" />
+                            </svg>
+                        </span>
+                    </a>
+                    <a class="btn btn-info text-white js-stkModal-btn mx-2"
+                       data-form-id="formEdit_UMS"
+                       data-url='@Url.Action("_CreateShift", "Physician")'
+                       data-modal-size="lg">Add New Shift  </a>
+                    
+                </div>
+            </div>
+            <div class="d-flex mt-4 justify-content-between">
+
+                <div id="Month_year"></div>
+                <div class="d-flex">
+                    <div>
+
+                    <svg class="bd-placeholder-img rounded me-2" width="20" height="20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#f4c894"></rect></svg>
+                    Pendding Shift    
+                    </div>
+                    <div class="mx-2">
+
+                        <svg class="bd-placeholder-img rounded me-2" width="20" height="20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#ceedce"></rect></svg>
+                        Approved Shift
+                    </div>
+                
+                </div>
+            </div>
+            <div class="d-flex justify-content-between mt-3">
+
+
+                <div>
+                    <div class="btn-group" role="group" aria-label="Month selection">
+                        <button type="button" class="btn btn-info rounded-circle " id="prevMonthBtn">&lt;</button>
+                        <span class=" mx-2 mt-2" id=""><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                        <button type="button" class="btn btn-info rounded-circle" id="nextMonthBtn">&gt;</button>
+                    </div>
+                </div>
+
+                <div class="d-flex">
+
+                    <button class="btn btn-outline-info "> Day</button>
+                    <button class="btn btn-outline-info mx-2"> Week</button>
+                    <button class="btn btn-outline-info"> Month</button>
+
+                </div>
+
+            </div>
+            <div id="calendar" class="mt-4"></div>
+
+        </div>
+    </div>
+    <div class=""></div>
+</div>
+
+
+
+
+<script>
+    let extractedDataArray = [];
+    const calendarDiv = document.getElementById('calendar');
+    const month_year = document.getElementById('Month_year');
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  
+
+    function GetShiftForMonth(month) {
+        
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("GetShiftForMonth", "Physician")',
+            data: { month: month },
+            dataType: "json",
+            success: function (response) {
+                response.forEach(function (shift) {
+                    console.log(shift.shiftDate);
+
+                    var extractedData = {
+                        date: shift.shiftDate ? shift.shiftDate.match(/\d{4}-\d{2}-(\d{2})/)[1] : null,
+                        shiftId: shift.shiftid,
+                        physicianId: shift.physicianid,
+                        physicianName: shift.physicianName,
+                        shiftDate: shift.shiftDate,
+                        startTime: shift.starttime,
+                        endTime: shift.endtime,
+                        isRepeat: shift.isrepeat
+                    };
+
+                    if (Array.isArray(shift.dayList)) {
+                        // Create an array to store day data
+                        var dayDataArray = [];
+                        // Iterate over dayList and store data
+                        shift.dayList.forEach(function (day) {
+                            var dayData = {
+                                shiftid: day.shiftid,
+                                physicianName: day.physicianName,
+                                startTime: day.starttime,
+                                endTime: day.endtime,
+                                status: day.status,
+                            };
+                            // Push day data into dayDataArray
+                            dayDataArray.push(dayData);
+                        });
+                        // Add dayDataArray to extractedData object
+                        extractedData.dayDataArray = dayDataArray;
+                    }
+
+                    // Push extracted data into the array
+                    extractedDataArray.push(extractedData);
+
+                console.log(extractedData);
+                    initializeCalendar()
+                });
+            },
+            error: function () {
+                // Handle error
+                console.error("Error fetching provider list");
+            }
+        });
+    }
+    let currentDate1 = new Date();
+    const month1=currentDate1.getMonth();
+    GetShiftForMonth(month1 + 1);
+    let currentYear, currentMonth;
+
+
+
+    function generateCalendar(year, month) {
+        const monthName = months[month];
+
+        let daysInMonth = new Date(year, month + 1, 0).getDate();
+        let firstDayOfMonth = new Date(year, month, 1).getDay();
+        month_year.innerHTML = `<h3>${monthName} ${year}</h3>`;
+        let calendarHTML = `<div class="table-responsive"><table class="table"><thead class="text-center"><tr>`;
+        calendarHTML += `<th scope="col" class="day-box">SUN</th><th scope="col" class="day-box">MON</th><th scope="col" class="day-box">TUE</th><th scope="col"  class="day-box">WED</th>`;
+        calendarHTML += `<th scope="col" class="day-box">THU</th><th scope="col" class="day-box">FRI</th><th scope="col" class="day-box">SAT</th></tr></thead><tbody><tr>`;
+        let dayCount = 0;
+        for (let i = 0; i < firstDayOfMonth; i++) {
+            calendarHTML += `<td> 
+                     <div class="sch-div">
+                    </div>
+                     <div class="sch-div">
+                </div>
+                     <div class="sch-div">
+                </div>
+                         <div class="sch-div">
+                    </div>
+                             <div class="sch-div">
+                    </div>
+           </td>`;
+            dayCount++;
+        }
+
+      
+        for (let day = 1; day <= daysInMonth; day++) {
+          
+
+            
+
+            let date = new Date();
+            let isToday = day === date.getDate() && month === new Date().getMonth() && year === new Date().getFullYear() ? "day-active" : "";
+            console.log(extractedDataArray);
+            let foundItem = extractedDataArray.find(o => {
+                return parseInt(o.date) === day;
+            });
+           
+            let isDayInArray = foundItem ? "matched" : "";
+            let dayDataArrayfinal = foundItem ? foundItem.dayDataArray : "";
+            let ProviderNames = [];
+            let Status = [];
+            let buttonId = `viewAllButton_${day}`;
+            console.log(dayDataArrayfinal);
+            
+            if (dayDataArrayfinal) {
+                dayDataArrayfinal.forEach(item => {
+                    let providerObj = {
+                        name: item.physicianName + ' <br/> ' + item.startTime +" To "+ item.endTime,
+                        status: item.status,
+                        shiftid: item.shiftid
+                    };
+                    ProviderNames.push(providerObj);
+                    Status.push(item.status);
+                });
+            }
+         
+
+            if (dayCount > 6) {
+                calendarHTML += `</tr><tr>`;
+                dayCount = 0;
+            }
+            calendarHTML += `<td class="table-text">
+                    <div class=" ${isToday} sch-div-day text-center">
+               
+            ${day}
+           
+            </div>
+                <div class="sch-div ${Status.length > 0 ? 'Status-' + Status[0] : ''}">
+                    <a data-form-id="formEdit_UMS"
+                                        data-url='@Url.Action("_EditShift", "Physician")?id=${ProviderNames.length > 0 ? ProviderNames[0].shiftid : ''}'
+                    class="js-stkModal-btn  " >${ProviderNames.length > 0 ? ProviderNames[0].name : ''}</a>
+            </div>
+                <div class="sch-div ${Status.length > 1 ? 'Status-' + Status[1] : ''}">
+                <a
+                    data-form-id="formEdit_UMS"
+                                            data-url='@Url.Action("_EditShift", "Physician")?id=${ProviderNames.length > 1 ? ProviderNames[1].shiftid : ''}'class="js-stkModal-btn  " >${ProviderNames.length > 1 ? ProviderNames[1].name : ''}</a>
+            </div>
+                <div class="sch-div ${Status.length > 2 ? 'Status-' + Status[2] : ''}">
+                    <a data-form-id="formEdit_UMS"
+                                            data-url='@Url.Action("_EditShift", "Physician")?id=${ProviderNames.length > 2 ? ProviderNames[2].shiftid : ''}'
+                    class="js-stkModal-btn " >${ProviderNames.length > 2 ? ProviderNames[2].name : ''}</a>
+            </div>
+            <div class="sch-div">
+                            <div type="button"  id="${buttonId}" data-bs-toggle="modal" data-bs-target="${ProviderNames.length > 3 ? '#exampleModal' : ''}" data-month="${month}" data-year="${year}" data-index="${day}" class="${Status.length > 3 ? 'btn btn-info w-100 text-white rounded-0 view-all-btn' : ''}">${ProviderNames.length > 3 ? 'View All' : ''}</div>
+
+                    </div>
+            </td>`;
+            dayCount++;
+        }
+
+       
+        for (let i = dayCount; i < 7; i++) {
+            calendarHTML += `<td>
+                 <div class="sch-div">
+                        </div>
+                     <div class="sch-div">
+                    </div >
+                         <div class="sch-div">
+                    </div>
+                             <div class="sch-div">
+                        </div>
+                                 <div class="sch-div">
+                        </div></td>`;
+        }
+
+        calendarHTML += `</tr></tbody></table></div>`;
+        calendarDiv.innerHTML = calendarHTML;
+    }
+
+ 
+    function initializeCalendar() {
+        let currentDate = new Date();
+        currentYear = currentDate.getFullYear();
+        currentMonth = currentDate.getMonth();
+        generateCalendar(currentYear, currentMonth);
+    }
+
+  
+    document.getElementById('prevMonthBtn').addEventListener('click', function () {
+        currentMonth -= 1;
+        if (currentMonth < 0) {
+            currentMonth = 11;
+            currentYear -= 1;
+        }
+        generateCalendar(currentYear, currentMonth);
+    });
+
+ 
+    document.getElementById('nextMonthBtn').addEventListener('click', function () {
+        currentMonth += 1;
+        if (currentMonth > 11) {
+            currentMonth = 0;
+            currentYear += 1;
+        }
+        generateCalendar(currentYear, currentMonth);
+    });
+    $(document).on('click', '.view-all-btn', function () {
+
+        // Get the index associated with the clicked button
+        let index = parseInt($(this).data('index'));
+        let month = parseInt($(this).data('month'));
+        let year = parseInt($(this).data('year'));
+        $('#model-head').html(index + ' / ' + months[month] +' / ' + year);
+        
+        let foundItem = extractedDataArray.find(o => parseInt(o.date) === index);
+        let dayDataArrayfinal = foundItem ? foundItem.dayDataArray : [];
+
+     
+        $('.modal-body').empty();
+
+       
+        dayDataArrayfinal.forEach(item => {
+            let shiftDetails = `
+                                                        <div class=" my-1 p-2 ${'model-Status-' + item.status}" >
+                        <div>Physician Name: ${item.physicianName}</div>
+                        <div>Start Time: ${item.startTime}</div>
+                        <div>End Time: ${item.endTime}</div>
+                        <div>
+                        `;
+            $('.modal-body').append(shiftDetails);
+        });
+    });
+
+  
+   
+</script>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-info text-center text-white">
+                <h1 class="modal-title fs-5" id="model-head"></h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-info" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+

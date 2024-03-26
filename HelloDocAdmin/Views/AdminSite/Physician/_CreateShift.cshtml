@@ -1,0 +1,227 @@
+﻿@using HelloDocAdmin.Controllers.Authenticate
+@model HelloDocAdmin.Entity.ViewModels.AdminSite.Schedule﻿
+<div class="modal-header  bg-info text-white">
+    <h1 class="modal-title fs-5" id="exampleModalLabel">Create Shift</h1>
+    <button type="button" class="btn btn-transparent btn-icon btn-lg text-light" data-bs-dismiss="modal" aria-label="Close">
+        <i class="bi bi-x-circle"></i>
+    </button>
+</div>
+<div class=" modal-body container-fluid">
+    <form id="formAddEditSave_UMS" data-ajax="true" data-ajax-method="post" class="row"
+          data-ajax-success="OnSuccess(this.id,data, status, xhr);" data-ajax-failure="OnFailure(xhr, status, error);"
+          asp-action="_CreateShiftPost" asp-controller="Physician">
+          <input type="hidden" asp-for="Shiftid"/>
+        <div class="col-md-12 mt-2">
+            <div class="mb-3">
+                <div class="input-control w-100">
+                    <select class="input-outline input-outline-select inp " asp-for="Regionid" data-allow-clear="true" tabindex="-1" onchange="myFunction1()" id="region2" asp-items="@(new SelectList(ViewBag.RegionComboBox,"RegionId","RegionName"))" data-control="select2" data-placeholder="Select Level">
+                        <option>All Region</option>
+                    </select>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-12 mt-2">
+            <div class="mb-3">
+                <div class="input-control w-100 ">
+                    <select class="input-outline input-outline-select  inp" asp-for="Physicianid" data-allow-clear="true" tabindex="-1" id="provider" data-control="select2" data-placeholder="Select Level">
+                        <option value="">All Provider</option>
+                    </select>
+                </div>
+
+            </div>
+            </div>
+        <div class="col-md-12 mt-2">
+            <div class="mb-3">
+                <div class="inputs-control ">
+
+                    <input placeholder=" " asp-for="Startdate" id="StartDate" class="input-outline w-100 inp form-control-sm " type="date">
+                    <label class="inputs-lable-dob">Startdate</label>
+                </div>
+
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="col-md-6">
+                <div class="inputs-control ">
+
+                    <input placeholder=" " id="StartTime" asp-for="Starttime"  class="input-outline w-100 inp form-control-sm " name="Starttime" type="time">
+                    <label class="inputs-lable-dob">Starttime</label>
+                </div>
+
+            </div>
+            <div class="col-md-6">
+                <div class="inputs-control ">
+
+                    <input placeholder=" " id="EndTime" asp-for="Endtime" class="input-outline w-100 inp form-control-sm " name="Endtime" type="time">
+                    <label class="inputs-lable-dob">Endtime</label>
+                </div>
+
+            </div>
+           
+           
+            
+
+        </div>
+        <div class="col-md-6  my-4">
+            <div class="form-check form-switch">
+                <label class="form-check-label" for="flexSwitchCheckDefault">Repeat</label>
+                <input class="form-check-input" asp-for="Isrepeat" type="checkbox" onchange="toggleCheckboxes()"  id="flexSwitchCheckDefault">
+            </div>
+        </div>
+
+        <label class="my-1" for="Sunday">Repeat Days</label>
+        <input type="hidden" asp-for="checkWeekday" id="checkWeekday" />
+
+        <div class="col-md-12 row form-floating">
+            <div class="col-md-3 ">
+                <div class="form-check mx-2">
+                    <input onchange="menubox()" class="form-check-input Every disabled" disabled type="checkbox" name="Sunday" value="0">
+                    <label class="form-check-label" for="Sunday">Every Sunday</label>
+                </div>
+            </div>
+            <div class="col-md-3 ">
+                <div class="form-check mx-2">
+                    <input onchange="menubox()" class="form-check-input Every" disabled type="checkbox" name="Monday" value="1">
+                    <label class="form-check-label" for="Monday">Every Monday</label>
+                </div>
+            </div>
+            <div class="col-md-3 ">
+                <div class="form-check mx-2">
+                    <input onchange="menubox()" class="form-check-input Every" disabled type="checkbox" name="Tuesday" value="2">
+                    <label class="form-check-label" for="Tuesday">Every Tuesday</label>
+                </div>
+            </div>
+            <div class="col-md-3 ">
+                <div class="form-check mx-2">
+                    <input onchange="menubox()" class="form-check-input Every" disabled type="checkbox" name="Wednesday" value="3">
+                    <label class="form-check-label" for="Wednesday">Every Wednesday</label>
+                </div>
+            </div>
+            <div class="col-md-3 ">
+                <div class="form-check mx-2">
+                    <input onchange="menubox()" class="form-check-input Every" disabled type="checkbox" name="Thursday" value="4">
+                    <label class="form-check-label" for="Thursday">Every Thursday</label>
+                </div>
+            </div>
+            <div class="col-md-3 ">
+                <div class="form-check mx-2">
+                    <input onchange="menubox()" class="form-check-input Every" disabled type="checkbox" name="Friday" value="5">
+                    <label class="form-check-label" for="Friday">Every Friday</label>
+                </div>
+            </div>
+            <div class="col-md-3 ">
+                <div class="form-check mx-2">
+                    <input onchange="menubox()" class="form-check-input Every" disabled type="checkbox" name="Saturday" value="6">
+                    <label class="form-check-label" for="Saturday">Every Saturday</label>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-6 form-floating  my-2">
+            <div class="input-control w-100 mt-3">
+                <select class="input-outline w-100 inp form-control-sm " asp-for="Repeatupto" required data-allow-clear="true" tabindex="-1" id="Refile" data-control="select2" data-placeholder="Select Level">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                </select>
+            </div>
+           
+            <label class="inputs-lable-dob " for="Sunday">Repeat End</label>
+
+        </div>
+        <hr class="form-button-divider" />
+        @{
+            short i = 0;
+
+            if (CV.LoggedUserRole() == "Admin")
+            {
+                i = 1;
+            }
+        }
+        <input type="hidden" asp-for="Status" value="@i" id="checkWeekday" />
+
+        <div class="row">
+            <div class="offset-md-4 col-md-8">
+                <input type="submit" value="Save" class="btn btn-info text-white js-btn-modal-form-submit" />
+                <button type="button" class="btn btn-outline-info " data-bs-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </form>
+          </div>
+<script type="text/javascript">
+    function menubox() {
+        event.preventDefault();
+        let checkboxes = document.querySelectorAll('.Every:checked');
+        let regionIds = [];
+        checkboxes.forEach((checkbox) => {
+            regionIds.push(checkbox.value);
+        });
+        document.querySelector('#checkWeekday').value = regionIds.join(',');
+        console.log(document.querySelector('#checkWeekday').value);
+    };
+    var today = new Date();
+
+    // Get the date part of today's date in yyyy-mm-dd format
+    var formattedDate = today.toISOString().split('T')[0];
+
+    // Set the min attribute of the Start Date input to today's date
+    document.getElementById('StartDate').min = formattedDate;
+    document.getElementById('StartTime').addEventListener('change', function () {
+        // Get the selected Start Time
+        var startTime = this.value;
+
+        // Set the min attribute of the End Time input to the selected Start Time
+        document.getElementById('EndTime').min = startTime;
+
+        // If the current End Time value is less than the selected Start Time, reset it
+        if (document.getElementById('EndTime').value < startTime) {
+            document.getElementById('EndTime').value = startTime;
+        }
+    });
+    window.onload = toggleCheckboxes;
+    function toggleCheckboxes() {
+        var repeatCheckbox = document.getElementById('flexSwitchCheckDefault');
+        var refile = document.getElementById('Refile');
+        var checkboxes = document.querySelectorAll('.Every');
+
+        if (!repeatCheckbox.checked) {
+            checkboxes.forEach(function (checkbox) {
+                checkbox.checked = false;
+                checkbox.disabled = true;
+                refile.disabled = true;
+            });
+        } else {
+            checkboxes.forEach(function (checkbox) {
+                checkbox.disabled = false;
+                refile.disabled = false;
+            });
+        }
+    }
+
+    function myFunction1() {
+
+
+        var region = $("#region2").val();
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("ProviderbyRegion","Dashboard")?Regionid=' + region,
+            cache: false,
+            success: function (response) {
+
+                console.log(response);
+                var s = '<option value="-1">Please Select</option>';
+                for (var i = 0; i < response.length; i++) {
+                    s += '<option value="' + response[i].physicianid + '">' + response[i].firstname + ' ' + response[i].lastname + '</option>';
+                }
+                $("#provider").html(s);
+            },
+            error: function () {
+                alert("Error while checking email.");
+            }
+        });
+    }
+
+</script>

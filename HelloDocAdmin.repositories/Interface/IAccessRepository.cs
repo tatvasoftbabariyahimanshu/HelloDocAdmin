@@ -16,6 +16,8 @@ namespace HelloDocAdmin.Repositories.Interface
         public List<Role> GetRoleAccessDetails();
         public Task<List<int>> CheckMenuByRole(int roleid);
         public  RolesModel GetRoleByMenus(int roleid);
+        public bool DeleteAccess(int id);
+
         public Task<List<ViewUserAccess>> GetAllUserDetails();
     }
 }

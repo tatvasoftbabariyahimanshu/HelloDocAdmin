@@ -4,15 +4,10 @@ using HelloDocAdmin.Entity.ViewModels.Authentication;
 using HelloDocAdmin.Repositories.Interface;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HelloDocAdmin.Repositories
 {
-    public class LoginRepository:ILoginRepository
+    public class LoginRepository : ILoginRepository
     {
         private readonly ApplicationDbContext _context;
         private readonly EmailConfiguration _email;
@@ -23,7 +18,7 @@ namespace HelloDocAdmin.Repositories
             _email = email;
         }
 
-       
+
         public async Task<UserInfo> CheckAccessLogin(LoginViewModel vm)
         {
             try
@@ -61,12 +56,13 @@ namespace HelloDocAdmin.Repositories
                 {
                     return admin;
                 }
-            }catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 return null;
             }
         }
-       
+
 
         public bool sendmailforresetpass(string Email)
         {
@@ -99,7 +95,8 @@ namespace HelloDocAdmin.Repositories
                     return false;
                 }
             }
-            catch {
+            catch
+            {
                 return false;
             }
 
@@ -107,7 +104,7 @@ namespace HelloDocAdmin.Repositories
         public bool islinkexist(string pwdModified)
         {
             var data = _context.Aspnetusers.FirstOrDefault(e => e.pwdModified == pwdModified);
-                if(data==null)
+            if (data == null)
             {
                 return false;
             }
@@ -115,7 +112,7 @@ namespace HelloDocAdmin.Repositories
             {
                 return true;
             }
-           
+
         }
         public bool savepass(ChangePassModel cpm)
         {
@@ -135,21 +132,21 @@ namespace HelloDocAdmin.Repositories
                     aspnetuser.Modifieddate = DateTime.Now;
                     aspnetuser.pwdModified = cpm.pwdModified;
                     _context.Aspnetusers.Update(aspnetuser);
-                    _context.SaveChanges();  
+                    _context.SaveChanges();
                     return true;
                 }
                 else
                 {
-           
+
                     return false;
                 }
             }
         }
         public bool saveuser(NewRegistration cpm)
         {
-            try           
+            try
             {
-              
+
                 var hasher = new PasswordHasher<string>();
 
 
@@ -162,9 +159,9 @@ namespace HelloDocAdmin.Repositories
                     Email = cpm.Email,
                     Passwordhash = hashedPassword,
                     Username = cpm.Email,
-                    CreatedDate= DateTime.Now,
-                    Phonenumber=U.Phonenumber,
-                    Modifieddate= DateTime.Now
+                    CreatedDate = DateTime.Now,
+                    Phonenumber = U.Phonenumber,
+                    Modifieddate = DateTime.Now
                 };
                 _context.Aspnetusers.Add(aspnetuser);
                 _context.SaveChanges();
@@ -196,8 +193,6 @@ namespace HelloDocAdmin.Repositories
                 _context.SaveChanges();
                 List<Requestclient> rc = new List<Requestclient>();
                 rc = _context.Requestclients.Where(e => e.Email == cpm.Email).ToList();
-
-
 
                 foreach (var r in rc)
                 {

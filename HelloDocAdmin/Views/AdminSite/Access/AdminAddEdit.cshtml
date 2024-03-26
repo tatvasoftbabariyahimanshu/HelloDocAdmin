@@ -47,7 +47,7 @@
           
             <div class="row">
                 
-                    <div class="col-md-6 mt-2">
+                    <div class="col-md-4 mt-2">
                         <div class=" mb-2">
                             <div class="inputs-control ">
                                 <input placeholder=" " asp-for="ASP_UserName" class="input-outline w-100 inp "  type="text">
@@ -56,7 +56,7 @@
 
                         </div>
                     </div>
-                    <div class="col-md-6 mt-2">
+                    <div class="col-md-4 mt-2">
                         <div class=" mb-2">
                             <div class="inputs-control ">
                                 <input placeholder=" " asp-for="ASP_Password" class="input-outline w-100 inp " type="text">
@@ -65,7 +65,7 @@
 
                         </div>
                     </div>
-                    <div class="col-md-6 mt-2">
+                   @* <div class="col-md-6 mt-2">
                         <div class=" mb-2">
                             <div class="input-control w-100 mt-3">
                                 <select class="input-outline input-outline-select inp asp  inp-dis" asp-for="ASP_Status"   data-allow-clear="true" tabindex="-1" asp-items="@(new SelectList(enumData, "ID", "Name"))" data-control="select2" data-placeholder="Select Level">
@@ -73,11 +73,13 @@
                                 </select>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-6 mt-2">
+                    </div>*@
+                    <input type="hidden" asp-for="ASP_Status" value="1"/>
+
+                    <div class="col-md-4 mt-2">
                         <div class=" mb-2">
-                            <div class="input-control w-100 mt-3">
-                                <select class="input-outline input-outline-select inp  " asp-for="ASP_RoleID"   data-allow-clear="true" tabindex="-1" onchange="myFunction_prof()" id="ProfessionType" asp-items="@(new SelectList(ViewBag.userrolecombobox,"RoleId","RoleName"))" data-control="select2" data-placeholder="Select Level">
+                            <div class="input-control w-100 ">
+                                <select class="input-outline input-outline-select inp  " asp-for="ASP_RoleID"   data-allow-clear="true" tabindex="-1" onchange="myFunction_prof()" id="ProfessionType" asp-items="@(new SelectList(ViewBag.userrolecombobox,"RoleID","Name"))" data-control="select2" data-placeholder="Select Level">
                                     <option>Role</option>
                                 </select>
                             </div>
@@ -87,13 +89,11 @@
             <div class="text-end">
                 <button class="text-end btn btn-outline-info " type="submit">Reset Password</button>
             </div>
-                
-
-                  
+            
             <div class="mt-2">
                 <h6> <b>Administration Information</b></h6>
             </div>
-          
+
                 <div class="row">
 
                     <div class="col-md-6 mt-2">
@@ -140,7 +140,6 @@
                         </div>
                     </div>
                     <div class="col-md-6 mt-2 d-flex justify-content-around flex-wrap">
-
                         @foreach (var item in ViewBag.RegionComboBox)
                         {
                             <div class="form-check">
@@ -154,9 +153,6 @@
                                     {
                                          isChecked = false;
                                     }
-
-
-                                   
                                     <input class="form-check-input" type="checkbox"
                                            value="@item.RegionId" id="checkbox_@item.RegionId"
                                            name="SelectedRegions" @(isChecked ? "checked" : "")>
@@ -168,13 +164,6 @@
                         }
                     </div>
                 </div>
-               
-          
-         
-           
-               
-              
-
             <div class="mt-2">
                 <h6> <b>Mailing and billing Information</b></h6>
             </div>
@@ -238,7 +227,7 @@
                     <button type="submit"  class="btn  btn-outline-info btn-submit mx-2 ">
                         save
                     </button>
-                    <button id="cancel1" @*asp-action="Index" asp-controller="MyProfile"*@ class="btn  btn-outline-danger ">
+                    <button id="cancel1"  class="btn  btn-outline-danger ">
                         cancel
                     </button>
                 </div>
