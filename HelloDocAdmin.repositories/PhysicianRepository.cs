@@ -210,21 +210,7 @@ namespace HelloDocAdmin.Repositories
                 return false;
             }
         }
-        //#region Get Details of role by if
 
-
-        //public Schedule GetRoledetails(int id)
-        //{
-        //    try {
-
-
-        //    }
-        //    catch
-        //    {
-
-        //    }
-        //}
-        //#endregion
 
         public async Task<bool> EditAdminInfo(PhysiciansViewModel vm)
         {
@@ -702,7 +688,6 @@ namespace HelloDocAdmin.Repositories
                                 sdd.Isdeleted[0] = false;
                                 _context.Shiftdetails.Add(sdd);
                                 _context.SaveChanges();
-
                                 Shiftdetailregion srr = new Shiftdetailregion();
                                 srr.Shiftdetailid = sdd.Shiftdetailid;
                                 srr.Regionid = s.Regionid;
@@ -735,6 +720,8 @@ namespace HelloDocAdmin.Repositories
         #region Get Shift By Month
         public async Task<List<Schedule>> GetShift(int month)
         {
+            BitArray bt = new BitArray(1);
+            bt.Set(0, false);
             List<Schedule> ScheduleDetails = new List<Schedule>();
             var uniqueDates = await _context.Shiftdetails
                             .Where(sd => sd.Shiftdate.Month == month)
@@ -743,13 +730,16 @@ namespace HelloDocAdmin.Repositories
                             .ToListAsync();
             foreach (DateTime schedule in uniqueDates)
             {
+
+
+
                 List<Schedule> ss = await (from s in _context.Shifts
                                            join pd in _context.Physicians
                                            on s.Physicianid equals pd.Physicianid
                                            join sd in _context.Shiftdetails
                                            on s.Shiftid equals sd.Shiftid into shiftGroup
                                            from sd in shiftGroup.DefaultIfEmpty()
-                                           where sd.Shiftdate == schedule
+                                           where sd.Shiftdate == schedule && sd.Isdeleted == bt && sd.Shiftdate.Month == month
                                            select new Schedule
                                            {
                                                Shiftid = sd.Shiftdetailid,
@@ -774,5 +764,149 @@ namespace HelloDocAdmin.Repositories
         #endregion
 
 
+
+
+
+        #region GetShiftByShiftdetailId
+        public async Task<Schedule> GetShiftByShiftdetailId(int Shiftdetailid)
+        {
+            BitArray bt = new BitArray(1);
+            bt.Set(0, false);
+
+            Schedule schedule = (from sh in _context.Shifts
+                                 join ph in _context.Physicians
+                                 on sh.Physicianid equals ph.Physicianid
+                                 join sd in _context.Shiftdetails
+                                 on sh.Shiftid equals sd.Shiftid into shiftdetailsgroup
+                                 from sd in shiftdetailsgroup.DefaultIfEmpty()
+                                 join Region in _context.Regions
+                                 on sd.Regionid equals Region.Regionid
+                                 where sd.Shiftdetailid == Shiftdetailid
+                                 select new Schedule
+                                 {
+                                     Regionid = (int)sd.Regionid,
+                                     Shiftid = sd.Shiftdetailid,
+                                     Status = sd.Status,
+                                     Physicianid = ph.Physicianid,
+                                     Starttime = sd.Starttime,
+                                     Endtime = sd.Endtime,
+                                     PhysicianName = ph.Firstname + " " + ph.Lastname,
+                                     ShiftDate = sd.Shiftdate
+
+                                 }).FirstOrDefault();
+
+
+
+
+
+
+            return schedule;
+
+        }
+        #endregion
+        #region UpdateStatusShift
+        public async Task<bool> UpdateStatusShift(string s, string AdminID)
+        {
+            List<int> shidtID = s.Split(',').Select(int.Parse).ToList();
+            try
+            {
+                foreach (int i in shidtID)
+                {
+                    Shiftdetail sd = _context.Shiftdetails.FirstOrDefault(sd => sd.Shiftdetailid == i);
+                    if (sd != null)
+                    {
+                        sd.Status = (short)(sd.Status == 1 ? 0 : 1);
+                        sd.Modifiedby = AdminID;
+                        sd.Modifieddate = DateTime.Now;
+                        _context.Shiftdetails.Update(sd);
+                        _context.SaveChanges();
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+
+
+
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+
+        }
+        #endregion
+
+        #region EditShift
+        public async Task<bool> EditShift(Schedule s, string AdminID)
+        {
+            try
+            {
+                Shiftdetail sd = _context.Shiftdetails.FirstOrDefault(sd => sd.Shiftdetailid == s.Shiftid);
+                if (sd != null)
+                {
+                    sd.Shiftdate = (DateTime)s.ShiftDate;
+                    sd.Starttime = s.Starttime;
+                    sd.Endtime = s.Endtime;
+                    sd.Modifiedby = AdminID;
+                    sd.Modifieddate = DateTime.Now;
+                    _context.Shiftdetails.Update(sd);
+                    _context.SaveChanges();
+                }
+                else
+                {
+                    return false;
+                }
+
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+
+        }
+        #endregion
+        #region DeleteShift
+        public async Task<bool> DeleteShift(string s, string AdminID)
+        {
+            BitArray bt = new BitArray(1);
+            bt.Set(0, true);
+            List<int> shidtID = s.Split(',').Select(int.Parse).ToList();
+            try
+            {
+                foreach (int i in shidtID)
+                {
+                    Shiftdetail sd = _context.Shiftdetails.FirstOrDefault(sd => sd.Shiftdetailid == i);
+                    if (sd != null)
+                    {
+                        sd.Isdeleted = bt;
+                        sd.Modifiedby = AdminID;
+                        sd.Modifieddate = DateTime.Now;
+                        _context.Shiftdetails.Update(sd);
+                        _context.SaveChanges();
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+
+
+
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+
+        }
+        #endregion
     }
 }

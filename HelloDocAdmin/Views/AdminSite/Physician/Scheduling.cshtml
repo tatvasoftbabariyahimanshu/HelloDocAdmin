@@ -121,15 +121,41 @@
                 </div>
 
                 <div class="d-flex">
+                    <nav class="container-fluid pt-2">
+                        <div class="nav  nav-underline text-white" id="nav-tab" role="tablist">
+                            <button class="btn btn-outline-info" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-day"
+                                    type="button" role="tab" aria-controls="nav-home" aria-selected="false" tabindex="-1">
+                               Day
+                            </button>
+                            <button class="btn btn-outline-info " id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-week" type="button"
+                                    role="tab" aria-controls="nav-profile" aria-selected="false" tabindex="-1">
+                               Week
+                            </button>
+                            <button class="btn btn-outline-info active " id="nav-month-tab" data-bs-toggle="tab" data-bs-target="#nav-month" type="button"
+                                    role="tab" aria-controls="nav-month" aria-selected="true" >
+                                month
+                            </button>
 
-                    <button class="btn btn-outline-info "> Day</button>
-                    <button class="btn btn-outline-info mx-2"> Week</button>
-                    <button class="btn btn-outline-info"> Month</button>
+                        </div>
+                    </nav>
+                    
 
                 </div>
 
             </div>
-            <div id="calendar" class="mt-4"></div>
+            <div class="tab-content mt-5 " id="nav-tabContent">
+                <div class="tab-pane fade  " id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                   @* <partial name="_DashboardRequest.cshtml" />*@
+                </div>
+                <div class="tab-pane fade  " id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                   @* <partial name="_Profiledashboard.cshtml" />*@
+                </div>
+                <div class="tab-pane fade show  active" id="nav-month" role="tabpanel" aria-labelledby="nav-month-tab">
+                    <div id="calendar" class="mt-4"></div>
+                </div>
+
+            </div>
+          
 
         </div>
     </div>
@@ -140,70 +166,74 @@
 
 
 <script>
+    var currentYear, currentMonth;
     let extractedDataArray = [];
     const calendarDiv = document.getElementById('calendar');
     const month_year = document.getElementById('Month_year');
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-  
 
-    function GetShiftForMonth(month) {
-        
+
+    function GetShiftForMonth(year, month) {
+        console.log("for:" + year + " " + month);
+
         $.ajax({
             type: "GET",
             url: '@Url.Action("GetShiftForMonth", "Physician")',
             data: { month: month },
             dataType: "json",
             success: function (response) {
-                response.forEach(function (shift) {
-                    console.log(shift.shiftDate);
+                extractedDataArray = []; // Clear the array
+                if (response && response.length > 0) {
+                    response.forEach(function (shift) {
+                        var extractedData = {
+                            date: shift.shiftDate ? shift.shiftDate.match(/\d{4}-\d{2}-(\d{2})/)[1] : null,
+                            shiftId: shift.shiftid,
+                            physicianId: shift.physicianid,
+                            physicianName: shift.physicianName,
+                            shiftDate: shift.shiftDate,
+                            startTime: shift.starttime,
+                            endTime: shift.endtime,
+                            isRepeat: shift.isrepeat
+                        };
 
-                    var extractedData = {
-                        date: shift.shiftDate ? shift.shiftDate.match(/\d{4}-\d{2}-(\d{2})/)[1] : null,
-                        shiftId: shift.shiftid,
-                        physicianId: shift.physicianid,
-                        physicianName: shift.physicianName,
-                        shiftDate: shift.shiftDate,
-                        startTime: shift.starttime,
-                        endTime: shift.endtime,
-                        isRepeat: shift.isrepeat
-                    };
+                        if (Array.isArray(shift.dayList)) {
+                            var dayDataArray = [];
+                            shift.dayList.forEach(function (day) {
+                                var dayData = {
+                                    shiftid: day.shiftid,
+                                    physicianName: day.physicianName,
+                                    startTime: day.starttime,
+                                    endTime: day.endtime,
+                                    status: day.status,
+                                };
+                                dayDataArray.push(dayData);
+                            });
+                            extractedData.dayDataArray = dayDataArray;
+                        }
 
-                    if (Array.isArray(shift.dayList)) {
-                        // Create an array to store day data
-                        var dayDataArray = [];
-                        // Iterate over dayList and store data
-                        shift.dayList.forEach(function (day) {
-                            var dayData = {
-                                shiftid: day.shiftid,
-                                physicianName: day.physicianName,
-                                startTime: day.starttime,
-                                endTime: day.endtime,
-                                status: day.status,
-                            };
-                            // Push day data into dayDataArray
-                            dayDataArray.push(dayData);
-                        });
-                        // Add dayDataArray to extractedData object
-                        extractedData.dayDataArray = dayDataArray;
-                    }
-
-                    // Push extracted data into the array
-                    extractedDataArray.push(extractedData);
-
-                console.log(extractedData);
-                    initializeCalendar()
-                });
+                        extractedDataArray.push(extractedData);
+                    });
+                    initializeCalendar(currentYear, currentMonth);
+                } else {
+                    generateCalendar(currentYear, currentMonth)
+                    console.log("Response is null or empty.");
+                    // Handle the case when the response is null or empty
+                }
             },
             error: function () {
-                // Handle error
                 console.error("Error fetching provider list");
             }
         });
     }
+
     let currentDate1 = new Date();
-    const month1=currentDate1.getMonth();
-    GetShiftForMonth(month1 + 1);
-    let currentYear, currentMonth;
+    const month1 = currentDate1.getMonth();
+
+    GetShiftForMonth(currentDate1.getFullYear(), month1 + 1);
+
+
+   
+    
 
 
 
@@ -213,12 +243,17 @@
         let daysInMonth = new Date(year, month + 1, 0).getDate();
         let firstDayOfMonth = new Date(year, month, 1).getDay();
         month_year.innerHTML = `<h3>${monthName} ${year}</h3>`;
+
+        // Clear previous calendar HTML
+        calendarDiv.innerHTML = "";
+
         let calendarHTML = `<div class="table-responsive"><table class="table"><thead class="text-center"><tr>`;
         calendarHTML += `<th scope="col" class="day-box">SUN</th><th scope="col" class="day-box">MON</th><th scope="col" class="day-box">TUE</th><th scope="col"  class="day-box">WED</th>`;
         calendarHTML += `<th scope="col" class="day-box">THU</th><th scope="col" class="day-box">FRI</th><th scope="col" class="day-box">SAT</th></tr></thead><tbody><tr>`;
         let dayCount = 0;
+
         for (let i = 0; i < firstDayOfMonth; i++) {
-            calendarHTML += `<td> 
+            calendarHTML += `<td>
                      <div class="sch-div">
                     </div>
                      <div class="sch-div">
@@ -233,30 +268,24 @@
             dayCount++;
         }
 
-      
         for (let day = 1; day <= daysInMonth; day++) {
-          
-
-            
-
             let date = new Date();
             let isToday = day === date.getDate() && month === new Date().getMonth() && year === new Date().getFullYear() ? "day-active" : "";
-            console.log(extractedDataArray);
+
             let foundItem = extractedDataArray.find(o => {
                 return parseInt(o.date) === day;
             });
-           
+
             let isDayInArray = foundItem ? "matched" : "";
             let dayDataArrayfinal = foundItem ? foundItem.dayDataArray : "";
             let ProviderNames = [];
             let Status = [];
             let buttonId = `viewAllButton_${day}`;
-            console.log(dayDataArrayfinal);
-            
+
             if (dayDataArrayfinal) {
                 dayDataArrayfinal.forEach(item => {
                     let providerObj = {
-                        name: item.physicianName + ' <br/> ' + item.startTime +" To "+ item.endTime,
+                        name: item.physicianName + ' <br/> ' + item.startTime + " To " + item.endTime,
                         status: item.status,
                         shiftid: item.shiftid
                     };
@@ -264,7 +293,6 @@
                     Status.push(item.status);
                 });
             }
-         
 
             if (dayCount > 6) {
                 calendarHTML += `</tr><tr>`;
@@ -272,9 +300,9 @@
             }
             calendarHTML += `<td class="table-text">
                     <div class=" ${isToday} sch-div-day text-center">
-               
+
             ${day}
-           
+
             </div>
                 <div class="sch-div ${Status.length > 0 ? 'Status-' + Status[0] : ''}">
                     <a data-form-id="formEdit_UMS"
@@ -299,7 +327,6 @@
             dayCount++;
         }
 
-       
         for (let i = dayCount; i < 7; i++) {
             calendarHTML += `<td>
                  <div class="sch-div">
@@ -308,9 +335,9 @@
                     </div >
                          <div class="sch-div">
                     </div>
-                             <div class="sch-div">
-                        </div>
                                  <div class="sch-div">
+                        </div>
+                                     <div class="sch-div">
                         </div></td>`;
         }
 
@@ -318,32 +345,41 @@
         calendarDiv.innerHTML = calendarHTML;
     }
 
- 
-    function initializeCalendar() {
-        let currentDate = new Date();
-        currentYear = currentDate.getFullYear();
-        currentMonth = currentDate.getMonth();
+
+
+    function initializeCalendar(year, month) {
+        console.log("Initializing calendar...");
+        if (month == null || year == null) {
+            let currentDate = new Date();
+            currentYear = currentDate.getFullYear();
+            currentMonth = currentDate.getMonth();
+        } else {
+            currentYear = year;
+            currentMonth = month;
+        }
         generateCalendar(currentYear, currentMonth);
     }
 
-  
+    function updateCalendar() {
+        GetShiftForMonth(currentYear, currentMonth + 1);
+    }
+
     document.getElementById('prevMonthBtn').addEventListener('click', function () {
         currentMonth -= 1;
         if (currentMonth < 0) {
             currentMonth = 11;
             currentYear -= 1;
         }
-        generateCalendar(currentYear, currentMonth);
+        updateCalendar();
     });
 
- 
     document.getElementById('nextMonthBtn').addEventListener('click', function () {
         currentMonth += 1;
         if (currentMonth > 11) {
             currentMonth = 0;
             currentYear += 1;
         }
-        generateCalendar(currentYear, currentMonth);
+        updateCalendar();
     });
     $(document).on('click', '.view-all-btn', function () {
 
@@ -361,12 +397,15 @@
 
        
         dayDataArrayfinal.forEach(item => {
-            let shiftDetails = `
+            let shiftDetails = ` <a data-form-id="formEdit_UMS"
+                                                data-url='@Url.Action("_EditShift", "Physician")?id=${ item.shiftid }'
+                            class="js-stkModal-btn dropdown-item fs-6 " >
                                                         <div class=" my-1 p-2 ${'model-Status-' + item.status}" >
                         <div>Physician Name: ${item.physicianName}</div>
                         <div>Start Time: ${item.startTime}</div>
                         <div>End Time: ${item.endTime}</div>
                         <div>
+                        </a>
                         `;
             $('.modal-body').append(shiftDetails);
         });

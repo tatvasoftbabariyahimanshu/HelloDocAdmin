@@ -1,0 +1,183 @@
+﻿@using HelloDocAdmin.Controllers.Authenticate
+@model HelloDocAdmin.Entity.ViewModels.AdminSite.Schedule
+
+<div class="modal-header bg-info text-white">
+    <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Shift</h1>
+    <button type="button" class="btn btn-transparent btn-icon btn-lg text-light" data-bs-dismiss="modal" aria-label="Close">
+        <i class="bi bi-x-circle"></i>
+    </button>
+</div>
+
+<div class="modal-body container-fluid">
+    <form id="formAddEditSave_UMS" data-ajax="true" data-ajax-method="post" class="row"
+          data-ajax-success="OnSuccess(this.id,data, status, xhr);" data-ajax-failure="OnFailure(xhr, status, error);"
+          asp-action="_EditShiftPost" asp-controller="Physician">
+        <input type="hidden" asp-for="Shiftid" id="shiftid" />
+    
+
+
+        <div class="col-md-12 mt-2">
+            <div class="mb-3">
+                <div class="input-control w-100">
+                    <select class="input-outline input-outline-select inp" disabled asp-for="Regionid" data-allow-clear="true" tabindex="-1" onchange="myFunction2()" id="region2" asp-items="@(new SelectList(ViewBag.RegionComboBox,"RegionId","RegionName"))" data-control="select2" data-placeholder="Select Level">
+                        <option>All Region</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12 mt-2">
+            <div class="mb-3">
+                <div class="input-control w-100">
+                    <select class="input-outline input-outline-select inp" disabled asp-for="Physicianid" data-allow-clear="true" tabindex="-1" id="provider" data-control="select2" data-placeholder="Select Level">
+                        <option value="">All Provider</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12 mt-2">
+            <div class="mb-3">
+                <div class="inputs-control">
+                    <input placeholder=" " asp-for="ShiftDate" disabled id="StartDate" class="input-outline w-100 inp form-control-sm" type="date">
+                    <label class="inputs-lable-dob">ShiftDate</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="inputs-control">
+                <input placeholder=" " id="StartTime" disabled asp-for="Starttime" class="input-outline w-100 inp form-control-sm" name="Starttime" type="time">
+                <label class="inputs-lable-dob">Starttime</label>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="inputs-control">
+                <input placeholder=" " id="EndTime" disabled asp-for="Endtime" class="input-outline w-100 inp form-control-sm" name="Endtime" type="time">
+                <label class="inputs-lable-dob">Endtime</label>
+            </div>
+        </div>
+
+        @{
+            short i = 0;
+
+            if (CV.LoggedUserRole() == "Admin")
+            {
+                i = 1;
+            }
+        }
+        <input type="hidden" asp-for="Status" value="@i" id="checkWeekday" />
+
+        <div class="text-end mt-2">
+            @*<div class="btn btn-info text-white btn-sm " onclick="myFunction()" id="retunrcall">Return</div>*@
+            <input id="save" style="display:none" type="submit" value="Save" class="btn btn-sm btn-info text-white js-btn-modal-form-submit" />
+            <div id="edit" onclick="toggleCheckboxes()" class="btn btn-info text-white btn-sm">Edit</div>
+            <div id="delete" class="btn btn-danger btn-sm">Delete</div>
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript">
+    function myFunction2() {
+        var region = $("#region2").val();
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("ProviderbyRegion","Dashboard")?Regionid=' + region,
+            cache: false,
+            success: function (response) {
+                console.log("Response:", response); 
+
+                var s = '<option value="-1">Please Select</option>';
+
+                for (var i = 0; i < response.length; i++) {
+                    s += '<option value="' + response[i].physicianid + '"';
+
+                    if (response[i].physicianid.toString() === '@Model.Physicianid') {
+                        console.log("Match found:", response[i].physicianid); 
+                        s += ' selected';
+                    }
+                    s += '>'+ response[i].firstname + ' ' + response[i].lastname;
+
+                    console.log("Comparing:", response[i].physicianid, "@Model.Physicianid"); 
+
+                  
+                    s += '</option>';
+                }
+                $("#provider").html(s);
+            },
+            error: function (xhr, status, error) {
+                console.error("Error:", error); 
+                alert("Error while checking email.");
+            }
+        });
+    }
+    function deleteshift() {
+        var shiftid = $("#shiftid").val();
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("_DeleteShiftPost","Physician")?id=' + shiftid,
+            cache: false,
+            success: function (response) {
+
+                console.log(response);
+                location.reload();
+            },
+            error: function () {
+                alert("Not Deleted....");
+            }
+        });
+    }
+
+    document.getElementById('delete').addEventListener('click', (event) => {
+        event.preventDefault();
+
+        Swal.fire({
+            title: "delete shift ?",
+            showDenyButton: false,
+            showCancelButton: true,
+            confirmButtonText: "Yes",
+            denyButtonText: `Don't delete`
+        }).then((result) => {
+            if (result.isConfirmed) {
+                deleteshift();
+            }
+            console.log(result);
+         
+            if (result.isConfirmed) {
+                Swal.fire("Save Changes!", "", "success");
+            } else if (result.isDenied) {
+                Swal.fire("Changes are not saved", "", "info");
+            }
+        });
+    });
+
+    
+    $(document).ready(function () {
+        myFunction2(); 
+    });
+    function toggleCheckboxes() {
+        var StartDate = document.getElementById('StartDate');
+        var StartTime = document.getElementById('StartTime');
+        var EndTime = document.getElementById('EndTime');
+        var save = document.getElementById('save');
+        var edit = document.getElementById('edit');
+
+        if (StartDate.disabled) {
+       
+            save.style.display = 'inline-block';
+            edit.style.display = 'none';
+            StartDate.disabled = false;
+            StartTime.disabled = false;
+            EndTime.disabled = false;
+        } else {
+          
+            edit.style.display = 'inline-block';
+            save.style.display = 'none';
+            StartDate.disabled = true;
+            StartTime.disabled = true;
+            EndTime.disabled = true;
+        }
+    }
+</script>
+

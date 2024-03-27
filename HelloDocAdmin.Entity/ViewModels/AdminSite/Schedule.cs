@@ -1,14 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HelloDocAdmin.Entity.ViewModels.AdminSite
+﻿namespace HelloDocAdmin.Entity.ViewModels.AdminSite
 {
     public class Schedule
     {
@@ -17,6 +7,9 @@ namespace HelloDocAdmin.Entity.ViewModels.AdminSite
         public int Physicianid { get; set; }
         public string? PhysicianName { get; set; }
         public int Regionid { get; set; }
+
+
+        public int ShiftDetailsID { get; set; }
 
         public DateOnly Startdate { get; set; }
         public DateTime? ShiftDate { get; set; }

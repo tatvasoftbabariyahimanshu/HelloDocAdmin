@@ -296,7 +296,12 @@ namespace HelloDocAdmin.Controllers.AdminSite
         public async Task<IActionResult> _EditShift(int id)
         {
             ViewBag.RegionComboBox = await _combobox.RegionComboBox();
-            return PartialView("../AdminSite/Physician/_CreateShift");
+
+
+            Schedule schedule = await _phyrepo.GetShiftByShiftdetailId(id);
+
+
+            return PartialView("../AdminSite/Physician/_EditShift", schedule);
         }
 
         #endregion
@@ -322,6 +327,47 @@ namespace HelloDocAdmin.Controllers.AdminSite
             return Json(v);
         }
 
+        #region _EditShiftPost
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> _EditShiftPost(Schedule v, string submittt)
+        {
+            if (submittt == "Return" && await _phyrepo.UpdateStatusShift("" + v.Shiftid, CV.LoggedUserID()))
+            {
+                _notyf.Success("Shift Updated successfully..");
+            }
+            else
+            {
+
+                if (await _phyrepo.EditShift(v, CV.LoggedUserID()))
+                {
+                    _notyf.Success("Shift Updated successfully..");
+                }
+                else
+                {
+                    _notyf.Error("Shift Not  Updated ");
+                }
+            }
+
+            return RedirectToAction("Index");
+        }
+        #endregion
+        #region _DeleteShiftPost
+
+        public async Task<IActionResult> _DeleteShiftPost(int id)
+        {
+            if (await _phyrepo.DeleteShift("" + id, CV.LoggedUserID()))
+            {
+                _notyf.Success("Shift deleted successfully..");
+            }
+            else
+            {
+                _notyf.Error("Shift Not  Deleted ");
+            }
+
+            return RedirectToAction("Index");
+        }
+        #endregion
 
     }
 }

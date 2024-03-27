@@ -489,6 +489,10 @@
       "PackagePath": "staticwebassets\\Upload\\req_1\\Fig2. Forgot Password.jpg"
     },
     {
+      "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\req_29\\Fig1. Platform login page.jpg",
+      "PackagePath": "staticwebassets\\Upload\\req_29\\Fig1. Platform login page.jpg"
+    },
+    {
       "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\req_2\\11116016_415.jpg",
       "PackagePath": "staticwebassets\\Upload\\req_2\\11116016_415.jpg"
     },
@@ -663,6 +667,10 @@
     {
       "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\css\\style2.css",
       "PackagePath": "staticwebassets\\css\\style2.css"
+    },
+    {
+      "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\css\\sweetalert2.css",
+      "PackagePath": "staticwebassets\\css\\sweetalert2.css"
     },
     {
       "Id": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\favicon.ico",

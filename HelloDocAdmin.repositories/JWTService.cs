@@ -4,13 +4,9 @@ using HelloDocAdmin.Repositories.Interface;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace HelloDocAdmin.Repositories
 {
@@ -48,7 +44,7 @@ namespace HelloDocAdmin.Repositories
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var expires =
-                DateTime.UtcNow.AddMinutes(20);
+                DateTime.UtcNow.AddMinutes(60);
 
             var token = new JwtSecurityToken(
                 Configuration["Jwt:Issuer"],
@@ -85,7 +81,7 @@ namespace HelloDocAdmin.Repositories
 
                 }, out SecurityToken validatedToken);
 
-                
+
                 jwtSecurityTokenHandler = (JwtSecurityToken)validatedToken;
 
                 if (jwtSecurityTokenHandler != null)
@@ -102,7 +98,7 @@ namespace HelloDocAdmin.Repositories
         }
 
 
-      public  CookieModel getDetails(string token)
+        public CookieModel getDetails(string token)
         {
             JwtSecurityToken jwtSecurityToken = null;
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -123,9 +119,9 @@ namespace HelloDocAdmin.Repositories
             CookieModel cookieModel = new CookieModel()
             {
                 AspNetUserID = jwtSecurityToken.Claims.FirstOrDefault(c => c.Type == "AspNetUserID").Value,
-             
+
                 role = jwtSecurityToken.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value,
-             
+
                 UserName = jwtSecurityToken.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name).Value,
             };
 

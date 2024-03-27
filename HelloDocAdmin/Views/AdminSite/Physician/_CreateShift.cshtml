@@ -8,13 +8,13 @@
 </div>
 <div class=" modal-body container-fluid">
     <form id="formAddEditSave_UMS" data-ajax="true" data-ajax-method="post" class="row"
-          data-ajax-success="OnSuccess(this.id,data, status, xhr);" data-ajax-failure="OnFailure(xhr, status, error);"
+        
           asp-action="_CreateShiftPost" asp-controller="Physician">
           <input type="hidden" asp-for="Shiftid"/>
         <div class="col-md-12 mt-2">
             <div class="mb-3">
                 <div class="input-control w-100">
-                    <select class="input-outline input-outline-select inp " asp-for="Regionid" data-allow-clear="true" tabindex="-1" onchange="myFunction1()" id="region2" asp-items="@(new SelectList(ViewBag.RegionComboBox,"RegionId","RegionName"))" data-control="select2" data-placeholder="Select Level">
+                    <select class="input-outline input-outline-select inp " asp-for="Regionid" data-allow-clear="true" tabindex="-1" onchange="myFunction3()" id="region2" asp-items="@(new SelectList(ViewBag.RegionComboBox,"RegionId","RegionName"))" data-control="select2" data-placeholder="Select Level">
                         <option>All Region</option>
                     </select>
                 </div>
@@ -35,7 +35,14 @@
             <div class="mb-3">
                 <div class="inputs-control ">
 
-                    <input placeholder=" " asp-for="Startdate" id="StartDate" class="input-outline w-100 inp form-control-sm " type="date">
+                    <input placeholder=" " asp-for="Startdate" id="StartDate" class="input-outline w-100 inp form-control-sm "
+                    
+               
+                        
+                    
+                    
+                    
+                    type="date" >
                     <label class="inputs-lable-dob">Startdate</label>
                 </div>
 
@@ -121,7 +128,7 @@
         </div>
         <div class="col-md-6 form-floating  my-2">
             <div class="input-control w-100 mt-3">
-                <select class="input-outline w-100 inp form-control-sm " asp-for="Repeatupto" required data-allow-clear="true" tabindex="-1" id="Refile" data-control="select2" data-placeholder="Select Level">
+                <select class="input-outline w-100 inp form-control-sm " disabled asp-for="Repeatupto" required data-allow-clear="true" tabindex="-1" id="Refile" data-control="select2" data-placeholder="Select Level">
                     <option>1</option>
                     <option>2</option>
                     <option>3</option>
@@ -200,7 +207,7 @@
         }
     }
 
-    function myFunction1() {
+    function myFunction3() {
 
 
         var region = $("#region2").val();

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "OuUsABElRVge6a+OWoBWYlA9IxenYONoIqoaVQpu/JQ=",
+  "Hash": "QTNI9Qr4pojkErkGnZAh81z8vcnmRbK2WhmYwG6E2zQ=",
   "Source": "HelloDocAdmin",
   "BasePath": "_content/HelloDocAdmin",
   "Mode": "Default",
@@ -185,6 +185,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\style2.css"
+    },
+    {
+      "Identity": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\css\\sweetalert2.css",
+      "SourceId": "HelloDocAdmin",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\",
+      "BasePath": "_content/HelloDocAdmin",
+      "RelativePath": "css/sweetalert2.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\sweetalert2.css"
     },
     {
       "Identity": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\favicon.ico",
@@ -8005,6 +8022,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Upload\\req_2\\Fig2. Forgot Password.jpg"
+    },
+    {
+      "Identity": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\req_29\\Fig1. Platform login page.jpg",
+      "SourceId": "HelloDocAdmin",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\",
+      "BasePath": "_content/HelloDocAdmin",
+      "RelativePath": "Upload/req_29/Fig1. Platform login page.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Upload\\req_29\\Fig1. Platform login page.jpg"
     },
     {
       "Identity": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\req_3\\8145760_3816471 (1) (1).jpg",
