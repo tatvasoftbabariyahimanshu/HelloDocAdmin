@@ -56,6 +56,8 @@
                     </a>
                     <ul class="dropdown-menu border-0">
                         <li><a class="dropdown-item @(path.EndsWith("/Records") ? "active" : "") " asp-action="SearchRecord" asp-controller="Records"> Search Recoard </a></li>
+                        <li><a class="dropdown-item @(path.EndsWith("/Records") ? "active" : "") " asp-action="PatientRecord" asp-controller="Records"> Patient Recoard </a></li>
+
                         <li><a class="dropdown-item @(path.EndsWith("/UserAccess") ? "active" : "") " asp-action="UserAccess" asp-controller="Access">User Access</a></li>
                         <li><a class="dropdown-item " href="#">Invoicing</a></li>
                     </ul>

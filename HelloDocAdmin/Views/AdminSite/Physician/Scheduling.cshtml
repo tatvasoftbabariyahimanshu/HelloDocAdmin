@@ -113,7 +113,12 @@
 
 
                 <div>
-                    <div class="btn-group" role="group" aria-label="Month selection">
+                    <div class="btn-group" role="group" id="month-nav" aria-label="Month selection">
+                        <button type="button" class="btn btn-info rounded-circle " id="prevMonthBtn">&lt;</button>
+                        <span class=" mx-2 mt-2" id=""><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                        <button type="button" class="btn btn-info rounded-circle" id="nextMonthBtn">&gt;</button>
+                    </div>
+                    <div class="btn-group" role="group" id="week-nav" aria-label="Month selection">
                         <button type="button" class="btn btn-info rounded-circle " id="prevMonthBtn">&lt;</button>
                         <span class=" mx-2 mt-2" id=""><i class="fa fa-calendar" aria-hidden="true"></i></span>
                         <button type="button" class="btn btn-info rounded-circle" id="nextMonthBtn">&gt;</button>
@@ -127,17 +132,29 @@
                                     type="button" role="tab" aria-controls="nav-home" aria-selected="false" tabindex="-1">
                                Day
                             </button>
-                            <button class="btn btn-outline-info " id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-week" type="button"
+                            <button class="btn btn-outline-info " onclick="showweekbutton()" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-week" type="button"
                                     role="tab" aria-controls="nav-profile" aria-selected="false" tabindex="-1">
                                Week
                             </button>
-                            <button class="btn btn-outline-info active " id="nav-month-tab" data-bs-toggle="tab" data-bs-target="#nav-month" type="button"
+                            <button onclick="showmonthbutton()" class="btn btn-outline-info active " id="nav-month-tab" data-bs-toggle="tab" data-bs-target="#nav-month" type="button"
                                     role="tab" aria-controls="nav-month" aria-selected="true" >
                                 month
                             </button>
 
                         </div>
-                    </nav>
+                    </nav><script>
+                              $("#week-nav").hide();
+                              function showmonthbutton()
+                              {
+                                  $("#month-nav").show();
+                                  $("#week-nav").hide();
+                              }
+                              function showweekbutton() {
+                                  $("#month-nav").hide();
+                                  $("#week-nav").show();
+                              }
+                    </script>
+
                     
 
                 </div>
@@ -148,7 +165,60 @@
                    @* <partial name="_DashboardRequest.cshtml" />*@
                 </div>
                 <div class="tab-pane fade  " id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-                   @* <partial name="_Profiledashboard.cshtml" />*@
+                  <div style="display:none" id="weekviewcontainer" class="active">
+
+        <table style="width:100%;">
+            <thead>
+                <tr class="weekhead">
+                    <td>Staf</td>
+
+                    <td class="title" data-name="Sun">Sun</td>
+
+                    <td class="title" data-name="Mon">Mon</td>
+
+
+                    <td class="title" data-name="Tue">Tue</td>
+
+
+                    <td class="title" data-name="Wed">Wed</td>
+
+
+                    <td class="title" data-name="Thu">Thu</td>
+
+                    <td class="title" data-name="Fri">Fri</td>
+
+                    <td class="title" data-name="Sat">Sat</td>
+
+
+
+                </tr>
+                <tr class="Converage">
+                    <th>Converage</th>
+
+                    <td class="" data-name="Sun">0/24</td>
+
+                    <td class="" data-name="Mon">0/24</td>
+
+
+                    <td class="" data-name="Tue">0/24</td>
+
+
+                    <td class="" data-name="Wed">0/24</td>
+
+
+                    <td class="" data-name="Thu">0/24</td>
+
+                    <td class="" data-name="Fri">0/24</td>
+
+                    <td class="" data-name="Sat">0/24</td>
+
+
+                </tr>
+            </thead>
+            <tbody class="main">
+            </tbody>
+        </table>
+    </div>
                 </div>
                 <div class="tab-pane fade show  active" id="nav-month" role="tabpanel" aria-labelledby="nav-month-tab">
                     <div id="calendar" class="mt-4"></div>
@@ -347,6 +417,7 @@
 
 
 
+   
     function initializeCalendar(year, month) {
         console.log("Initializing calendar...");
         if (month == null || year == null) {

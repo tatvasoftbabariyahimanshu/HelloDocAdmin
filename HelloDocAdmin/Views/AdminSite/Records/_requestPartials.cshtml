@@ -34,25 +34,39 @@
             @foreach (var (item, i) in Model.requestList.Select((item, i) => (item, i)))
             {
 <tr>
-                    <td scope="col" class="table-text" class="table-text">@item.PatientName</td>
+                    <td scope="col" class="table-text">@item.PatientName</td>
                     <td scope="col" class="table-text">@Enum.GetName(typeof(RequestType), item.RequestTypeID)</td>
                     <td scope="col" class="table-text">@item.DateOfService</td>
-                      <td scope="col" class="table-text">-</td>
-                        <td scope="col" class="table-text">@item.Email</td>
-                          <td scope="col" class="table-text">@item.PhoneNumber</td>
-                          
+                    @if(item.CloseCaseDate!=null)
+                    {
+                        <td scope="col" class="table-text">@item.CloseCaseDate</td>
+                    }
+                    else
+                    {
+                        <td scope="col" class="table-text">-</td>
+                    }
+              
+                    <td scope="col" class="table-text">@item.Email</td>
+                    <td scope="col" class="table-text">@item.PhoneNumber</td>      
                     <td scope="col" class="table-text">@item.Address</td>
-                              <td scope="col" class="table-text">@item.Zip</td>
+                    <td scope="col" class="table-text">@item.Zip</td>
                     <td scope="col" class="table-text">@Enum.GetName(typeof(Status), item.Status)</td>
-                              <td scope="col" class="table-text">@item.PhysicianName</td>
+                    <td scope="col" class="table-text">@item.PhysicianName</td>
                     <td scope="col" class="table-text">@item.PhysicianNote</td>
-                    <td scope="col" class="table-text">-</td>
+                    @if (item.CancelByProviderNote != "")
+                    {
+                        <td scope="col" class="table-text">@item.CancelByProviderNote</td>
+                    }
+                    else
+                    {
+                        <td scope="col" class="table-text">-</td>
+                    }
                     <td scope="col" class="table-text">@item.AdminNote</td>
                     <td scope="col" class="table-text">@item.PatientNote</td>
                     <td scope="col" class="table-text">
-                        <button onclick="getfilterdata()"  class="btn btn-sm btn-outline-info  mx-2 ">
-                            Delete
-                        </button>
+                    <button onclick="getfilterdata()"  class="btn btn-sm btn-outline-info  mx-2 ">
+                     Delete
+                    </button>
                     </td>
 </tr>
            

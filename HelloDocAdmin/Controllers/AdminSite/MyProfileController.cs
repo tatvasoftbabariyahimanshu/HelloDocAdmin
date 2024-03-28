@@ -1,9 +1,8 @@
-﻿using AspNetCore;
-using AspNetCoreHero.ToastNotification.Abstractions;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using HelloDocAdmin.Controllers.Authenticate;
 using HelloDocAdmin.Entity.ViewModels.AdminSite;
 using HelloDocAdmin.Repositories.Interface;
 using Microsoft.AspNetCore.Mvc;
-using HelloDocAdmin.Controllers.Authenticate;
 
 namespace HelloDocAdmin.Controllers.AdminSite
 {
@@ -15,12 +14,12 @@ namespace HelloDocAdmin.Controllers.AdminSite
         private IAdminProfile _adminProfile;
         private readonly ILogger<DashboardController> _logger;
         private readonly INotyfService _notyf;
-        public MyProfileController(ILogger<DashboardController> logger, IDashboardRepository dashboardRepository, ICombobox combobox,IAdminProfile adminprofile, INotyfService notyf)
+        public MyProfileController(ILogger<DashboardController> logger, IDashboardRepository dashboardRepository, ICombobox combobox, IAdminProfile adminprofile, INotyfService notyf)
         {
             _logger = logger;
             _dashboardrepo = dashboardRepository;
             _combobox = combobox;
-            _adminProfile=adminprofile;
+            _adminProfile = adminprofile;
             _notyf = notyf;
         }
 
@@ -28,16 +27,16 @@ namespace HelloDocAdmin.Controllers.AdminSite
         {
             ViewBag.userrolecombobox = await _combobox.UserRole();
             ViewBag.RegionComboBox = await _combobox.RegionComboBox();
-            ViewAdminProfileModel vm =  _adminProfile.GetDetailsForAdminProfile(CV.LoggedUserID());
-            return View("../AdminSite/MyProfile/Index",vm);
+            ViewAdminProfileModel vm = _adminProfile.GetDetailsForAdminProfile(CV.LoggedUserID());
+            return View("../AdminSite/MyProfile/Index", vm);
         }
         [HttpPost]
         public IActionResult SaveAdministrationinfo(ViewAdminProfileModel vm)
         {
 
-          
+
             vm.AdminReqionList = Request.Form["SelectedRegions"].Select(int.Parse).ToList();
-            bool data= _adminProfile.Edit_Admin_Profile(vm, CV.LoggedUserID());
+            bool data = _adminProfile.Edit_Admin_Profile(vm, CV.LoggedUserID());
             if (data)
             {
                 _notyf.Success("Administration Information Changed...");
@@ -53,7 +52,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
         {
 
 
-          
+
             bool data = _adminProfile.Edit_Billing_Info(vm, CV.LoggedUserID());
             if (data)
             {
@@ -71,7 +70,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
         {
 
 
-        
+
             bool data = _adminProfile.ChangePassword(password, CV.LoggedUserID());
             if (data)
             {

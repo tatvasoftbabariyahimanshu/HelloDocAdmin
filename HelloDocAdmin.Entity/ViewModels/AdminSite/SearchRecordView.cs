@@ -1,23 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HelloDocAdmin.Entity.ViewModels.AdminSite
+﻿namespace HelloDocAdmin.Entity.ViewModels.AdminSite
 {
     public class SearchRecordView
     {
-       public int RequestID { get; set; }
+        public int RequestID { get; set; }
 
+        public DateTime? Modifieddate { get; set; }
+        public int RequestTypeID { get; set; }
 
-        public int RequestTypeID { get; set; }  
-
-       public string PatientName { get; set; }
+        public string PatientName { get; set; }
         public DateTime DateOfService { get; set; }
-        public DateTime CloseCaseDate { get; set; }
+        public DateTime? CloseCaseDate { get; set; }
 
-        public  string Email { get ; set; }
+        public string Email { get; set; }
 
         public string PhoneNumber { get; set; }
 

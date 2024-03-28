@@ -1,9 +1,7 @@
 ﻿using HelloDocAdmin.Controllers.Authenticate;
-using HelloDocAdmin.Entity.Models;
 using HelloDocAdmin.Entity.ViewModels;
 using HelloDocAdmin.Repositories.Interface;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 
 
 namespace HelloDocAdmin.Controllers.AdminSite
@@ -14,11 +12,11 @@ namespace HelloDocAdmin.Controllers.AdminSite
         private IDashboardRepository _dashboardrepo;
         private ICombobox _combobox;
         private readonly ILogger<DashboardController> _logger;
-        public DashboardController(ILogger<DashboardController> logger, IDashboardRepository dashboardRepository,ICombobox combobox)
+        public DashboardController(ILogger<DashboardController> logger, IDashboardRepository dashboardRepository, ICombobox combobox)
         {
             _logger = logger;
             _dashboardrepo = dashboardRepository;
-          _combobox= combobox;
+            _combobox = combobox;
         }
 
 
@@ -28,7 +26,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
         public async Task<IActionResult> Index()
         {
 
-     
+
             ViewBag.RegionComboBox = await _combobox.RegionComboBox();
             ViewBag.CaseReasonComboBox = await _combobox.CaseReasonComboBox();
             DashboardCardsModel model = new DashboardCardsModel();
@@ -39,18 +37,18 @@ namespace HelloDocAdmin.Controllers.AdminSite
             model.ToCloseRequests = _dashboardrepo.GetRequestNumberByStatus("3,7,8");
             model.UnpaidRequests = _dashboardrepo.GetRequestNumberByStatus("9");
 
-            return View("../AdminSite/Dashboard/Index",model);
+            return View("../AdminSite/Dashboard/Index", model);
         }
         #region providerbyregion
-        public  IActionResult ProviderbyRegion(int? Regionid)
+        public IActionResult ProviderbyRegion(int? Regionid)
         {
-            var v =  _combobox.ProviderbyRegion(Regionid);
+            var v = _combobox.ProviderbyRegion(Regionid);
             return Json(v);
         }
         #endregion
 
-  
-        public async Task<IActionResult> _SearchResult(string? Status, int currentpage = 1, int region = 0, int requesttype = 0, string search = "",int pagesize=5)
+
+        public async Task<IActionResult> _SearchResult(string? Status, int currentpage = 1, int region = 0, int requesttype = 0, string search = "", int pagesize = 5)
         {
             ViewBag.RegionComboBox = await _combobox.RegionComboBox();
 
@@ -59,21 +57,21 @@ namespace HelloDocAdmin.Controllers.AdminSite
                 Status = CV.CurrentStatus();
             }
 
-         
+
             Response.Cookies.Delete("Status");
             Response.Cookies.Append("Status", Status);
 
-            
+
             List<DashboardRequestModel> requests = _dashboardrepo.GetRequests(Status);
 
-          
-            Dashboarddatamodel dm =await _dashboardrepo.GetRequestsbyfilter(Status, search, region, requesttype, currentpage,pagesize);
 
-            // Set TempData for current status
+            Dashboarddatamodel dm = await _dashboardrepo.GetRequestsbyfilter(Status, search, region, requesttype, currentpage, pagesize);
+
+
             TempData["CurrentStatusinlist"] = Status;
             TempData["CurrentStatus"] = GetStatusName(Status);
 
-            // Return appropriate partial view based on status
+
             switch (Status)
             {
                 case "1":
