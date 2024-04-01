@@ -36,9 +36,9 @@
                     <td scope="col" class="table-text"><b>@item.Street</b>,@item.City,@item.State</td>
                
                     <td scope="col" class="table-text">
-                        <button onclick="getfilterdata()" class="btn btn-sm btn-outline-info  mx-2 ">
-                           Action
-                        </button>
+                        <a asp-action="PatientRecords" asp-controller="Records" asp-route-UserID="@item.Userid" class="btn btn-sm btn-outline-info  mx-2 ">
+                           Explore
+                        </a>
                     </td>
                 </tr>
 

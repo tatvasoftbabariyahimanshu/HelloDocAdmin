@@ -184,7 +184,186 @@ namespace HelloDocAdmin.Repositories
 
         }
 
+        public async Task<PatientRecordsView> PatientRecordsViewBy(int? UserID, int currentpage = 1, int pagesize = 5)
+        {
+            PatientRecordsView dm = new PatientRecordsView();
+
+            IQueryable<PatientRecords> data = (from req in _context.Requests
+                                               join cl in _context.Requestclients
+                                                 on req.Requestid equals cl.Requestid into reqClientGroup
+                                               from rc in reqClientGroup.DefaultIfEmpty()
+                                               join phy in _context.Physicians
+                                               on req.Physicianid equals phy.Physicianid into phyGroup
+                                               from phys in phyGroup.DefaultIfEmpty()
+                                               where req.Userid == UserID
+                                               select new PatientRecords
+                                               {
+                                                   RequestID = rc.Requestid,
+                                                   ClientName = rc.Firstname + " " + rc.Lastname,
+                                                   ConfirmationNumber = req.Confirmationnumber,
+                                                   CreatedDate = req.Createddate,
+                                                   ProviderName = phys.Firstname + " " + phys.Lastname,
+                                                   StatusID = req.Status,
+                                                   Modifieddate = req.Modifieddate,
+                                               }
+                                             );
+
+            dm.TotalPage = (int)Math.Ceiling((double)data.Count() / pagesize);
+            data = data.Skip((currentpage - 1) * pagesize).Take(pagesize);
+            dm.List = data.ToList();
+            for (int i = 0; i < dm.List.Count; i++)
+            {
+                if (dm.List[i].StatusID == 6)
+                {
+                    dm.List[i].ConcludeDate = dm.List[i].Modifieddate;
+                }
+                else
+                {
+                    dm.List[i].ConcludeDate = null;
+                }
+            }
+            dm.UserID = (int)UserID;
+            dm.pageSize = pagesize;
+            dm.CurrentPage = currentpage;
+
+            return dm;
+        }
+
+        public async Task<EmailRecords> EmailLogs(int accounttype, string email, string ReciverName, DateTime CreatedDate, DateTime SendDate, int pagesize = 5, int currentpage = 1)
+        {
+            EmailRecords dm = new EmailRecords();
+            IQueryable<Emaillogdata> data = (from req in _context.Emaillogs
 
 
+                                             select new Emaillogdata
+                                             {
+                                                 Recipient = _context.Aspnetusers.FirstOrDefault(e => e.Email == req.Emailid).Username ?? null,
+                                                 Confirmationnumber = req.Confirmationnumber,
+                                                 Createdate = req.Createdate,
+                                                 Emailtemplate = req.Emailtemplate,
+                                                 Filepath = req.Filepath,
+                                                 Sentdate = req.Sentdate,
+                                                 Roleid = req.Roleid,
+                                                 Emailid = req.Emailid,
+                                                 Senttries = req.Senttries,
+                                                 Subjectname = req.Subjectname,
+                                                 Action = req.Action
+                                             }
+                                          );
+            if (accounttype != 0)
+            {
+                data = data.Where(r => r.Roleid == accounttype);
+            }
+            if (CreatedDate != default(DateTime))
+            {
+                data = data.Where(r => r.Createdate.Date == CreatedDate.Date);
+            }
+            if (SendDate != default(DateTime))
+            {
+                data = data.Where(r => r.Sentdate.Date == SendDate.Date);
+            }
+            if (!ReciverName.IsNullOrEmpty())
+
+            {
+                data = data.Where(r => r.Recipient.ToLower().Contains(ReciverName.ToLower()));
+            }
+            if (!email.IsNullOrEmpty())
+
+            {
+                data = data.Where(r => r.Emailid.ToLower().Contains(email.ToLower()));
+            }
+
+            dm.TotalPage = (int)Math.Ceiling((double)data.Count() / pagesize);
+            data = data.Skip((currentpage - 1) * pagesize).Take(pagesize);
+            dm.List = data.ToList();
+
+            dm.pageSize = pagesize;
+            dm.CurrentPage = currentpage;
+            return dm;
+        }
+        public async Task<BlockRequest> BlockHistory(string name, string email, string phonenumber, DateTime CreatedDate, int pagesize = 5, int currentpage = 1)
+        {
+            BlockRequest dm = new BlockRequest();
+            IQueryable<BlockRequestData> data = (from req in _context.Blockrequests
+
+
+                                                 select new BlockRequestData
+                                                 {
+                                                     PatientName = _context.Requests.FirstOrDefault(e => e.Requestid == req.Requestid).Firstname,
+                                                     Email = req.Email,
+                                                     Createddate = (DateTime)req.Createddate,
+                                                     Isactive = req.Isactive,
+                                                     Requestid = req.Requestid,
+                                                     Phonenumber = req.Phonenumber,
+                                                     Reason = req.Reason,
+                                                 }
+                                         );
+
+            if (CreatedDate != default(DateTime))
+            {
+                data = data.Where(r => r.Createddate.Date == CreatedDate.Date);
+            }
+
+            if (!name.IsNullOrEmpty())
+
+            {
+                data = data.Where(r => r.PatientName.ToLower().Contains(name.ToLower()));
+            }
+            if (!email.IsNullOrEmpty())
+
+            {
+                data = data.Where(r => r.Email.ToLower().Contains(email.ToLower()));
+            }
+            if (!phonenumber.IsNullOrEmpty())
+
+            {
+                data = data.Where(r => r.Phonenumber.ToLower().Contains(phonenumber.ToLower()));
+            }
+
+            dm.TotalPage = (int)Math.Ceiling((double)data.Count() / pagesize);
+            data = data.Skip((currentpage - 1) * pagesize).Take(pagesize);
+            dm.List = data.ToList();
+
+            dm.pageSize = pagesize;
+            dm.CurrentPage = currentpage;
+            return dm;
+        }
+        public async Task<bool> UnBlock(int RequestID, string id)
+        {
+            try
+            {
+                Blockrequest br = _context.Blockrequests.FirstOrDefault(e => e.Requestid == RequestID);
+                _context.Blockrequests.Remove(br);
+                _context.SaveChanges();
+
+
+                Request re = _context.Requests.FirstOrDefault(e => e.Requestid == RequestID);
+                re.Status = 1;
+
+                re.Modifieddate = DateTime.Now;
+                _context.Requests.Update(re);
+                _context.SaveChanges();
+                var admindata = _context.Admins.FirstOrDefault(e => e.Aspnetuserid == id);
+                Requeststatuslog rs = new Requeststatuslog();
+                rs.Status = 1;
+                rs.Requestid = RequestID;
+                rs.Adminid = admindata.Adminid;
+                rs.Createddate = DateTime.Now;
+
+                _context.Requeststatuslogs.Add(rs);
+                _context.SaveChanges();
+
+
+
+
+
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
     }
 }

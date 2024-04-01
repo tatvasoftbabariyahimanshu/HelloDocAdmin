@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using HelloDocAdmin.Entity.Data;
+﻿using HelloDocAdmin.Entity.Data;
 using HelloDocAdmin.Entity.Models;
 using HelloDocAdmin.Entity.ViewModel.PatientSite;
 using HelloDocAdmin.Repositories.PatientInterface;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+using System.Collections;
+using System.Globalization;
 
 namespace HelloDocAdmin.Repositories
 {
@@ -43,11 +36,11 @@ namespace HelloDocAdmin.Repositories
             bt.Set(0, false);
             try
             {
-               
+
                 var region = _context.Regions.FirstOrDefault(u => u.Name == viewdata.State.Trim().ToLower().Replace(" ", ""));
                 int requests = _context.Requests.Where(u => u.Createddate == DateTime.Now.Date).Count();
                 string ConfirmationNumber = string.Concat(region.Abbreviation, viewdata.FirstName.Substring(0, 2).ToUpper(), viewdata.LastName.Substring(0, 2).ToUpper(), viewdata.LastName.Substring(0, 2).ToUpper(), requests.ToString("D" + 4));
-              
+
                 var isexist = _context.Users.FirstOrDefault(x => x.Email == viewdata.Email);
 
                 if (isexist == null)
@@ -128,7 +121,7 @@ namespace HelloDocAdmin.Repositories
                             Requestid = Request.Requestid,
                             Filename = viewdata.UploadFile.FileName,
                             Createddate = DateTime.Now,
-                            Isdeleted=bt
+                            Isdeleted = bt
                         };
                         _context.Requestwisefiles.Add(requestwisefile);
                         _context.SaveChanges();
@@ -147,7 +140,7 @@ namespace HelloDocAdmin.Repositories
                         Address = viewdata.Street,
                         State = viewdata.State,
                         City = viewdata.City,
-                        Street=viewdata.Street,
+                        Street = viewdata.Street,
                         Zipcode = viewdata.ZipCode,
                         Regionid = region.Regionid,
                         Intdate = date,
@@ -177,18 +170,18 @@ namespace HelloDocAdmin.Repositories
                         Lastname = viewdata.LastName,
                         Email = viewdata.Email,
                         Userid = isexist.Userid,
-                     
+
                         Phonenumber = viewdata.PhoneNumber,
-                       Confirmationnumber= ConfirmationNumber,
+                        Confirmationnumber = ConfirmationNumber,
                         Createddate = DateTime.Now,
                         Isurgentemailsent = new BitArray(1),
                     };
                     _context.Requests.Add(Request);
                     _context.SaveChanges();
-                  
+
                     if (viewdata.UploadFile != null)
                     {
-                       
+
 
                         string FilePath = "wwwroot\\Upload\\req_" + Request.Requestid;
                         string path = Path.Combine(Directory.GetCurrentDirectory(), FilePath);
@@ -236,11 +229,11 @@ namespace HelloDocAdmin.Repositories
                     _context.SaveChanges();
 
 
-                    Requeststatuslog rsl=new Requeststatuslog();
+                    Requeststatuslog rsl = new Requeststatuslog();
                     rsl.Status = 1;
-                    rsl.Createddate = DateTime.Now; 
+                    rsl.Createddate = DateTime.Now;
                     rsl.Notes = viewdata.Symptoms;
-                    rsl.Requestid= Request.Requestid;
+                    rsl.Requestid = Request.Requestid;
                     _context.Requeststatuslogs.Add(rsl);
                     _context.SaveChanges();
                     return true;
@@ -250,7 +243,7 @@ namespace HelloDocAdmin.Repositories
             {
                 return false;
             }
-           
+
         }
         #endregion
 
@@ -297,8 +290,8 @@ namespace HelloDocAdmin.Repositories
                     Email = viewdata.Email,
                     State = viewdata.State,
                     City = viewdata.City,
-                    Address=viewdata.RoomSite,
-                    Street= viewdata.Street,
+                    Address = viewdata.RoomSite,
+                    Street = viewdata.Street,
                     Zipcode = viewdata.ZipCode,
                     Regionid = region.Regionid,
                     Intdate = date,
@@ -308,7 +301,7 @@ namespace HelloDocAdmin.Repositories
                 };
                 _context.Requestclients.Add(Requestclient);
                 _context.SaveChanges();
-              
+
                 if (viewdata.UploadFile != null)
                 {
                     //string FilePath = "wwwroot\\Upload\\req_" + Requestid;
@@ -373,8 +366,22 @@ namespace HelloDocAdmin.Repositories
         ";
 
 
-                if (_email.SendMail(viewdata.Email,  "New Patient Account Creation", emailContent))
+                if (_email.SendMail(viewdata.Email, "New Patient Account Creation", emailContent))
                 {
+                    Emaillog el = new Emaillog();
+                    el.Action = 2;
+                    el.Confirmationnumber = ConfirmationNumber;
+                    el.Sentdate = DateTime.Now;
+                    el.Createdate = DateTime
+                         .Now;
+                    el.Emailtemplate = "first";
+                    el.Senttries = 1;
+                    el.Subjectname = "New Patient Account Creation";
+                    el.Requestid = Request.Requestid;
+                    el.Roleid = 4;
+                    el.Emailid = Request.Email;
+                    _context.Emaillogs.Add(el);
+
 
                     Requeststatuslog rsl = new Requeststatuslog();
                     rsl.Status = 1;
@@ -394,9 +401,9 @@ namespace HelloDocAdmin.Repositories
             {
                 return false;
             }
-         
-          
-            
+
+
+
         }
         #endregion
         #region Create Concierge Request
@@ -427,7 +434,7 @@ namespace HelloDocAdmin.Repositories
                     Address = viewdata.CON_PropertyName
                 };
                 _context.Concierges.Add(Concierge);
-                 _context.SaveChanges();
+                _context.SaveChanges();
 
 
                 int id1 = Concierge.Conciergeid;
@@ -446,7 +453,7 @@ namespace HelloDocAdmin.Repositories
 
                 };
                 _context.Requests.Add(Request);
-                 _context.SaveChanges();
+                _context.SaveChanges();
                 int id2 = Request.Requestid;
                 int monthnum = viewdata.BirthDate.Month;
                 string monthName = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(monthnum);
@@ -462,25 +469,25 @@ namespace HelloDocAdmin.Repositories
                     Phonenumber = viewdata.PhoneNumber,
                     Email = viewdata.Email,
                     State = viewdata.CON_State,
-                    Street=viewdata.CON_Street,
+                    Street = viewdata.CON_Street,
                     City = viewdata.CON_City,
                     Zipcode = viewdata.CON_ZipCode,
                     Location = viewdata.RoomSite,
                     Regionid = region.Regionid,
-                    Address=viewdata.RoomSite,
+                    Address = viewdata.RoomSite,
                     Intdate = date,
                     Intyear = year,
                     Strmonth = monthName
 
                 };
                 _context.Requestclients.Add(Requestclient);
-                 _context.SaveChanges();
+                _context.SaveChanges();
 
                 Requestconcierge.Requestid = id2;
                 Requestconcierge.Conciergeid = id1;
 
                 _context.Requestconcierges.Add(Requestconcierge);
-                 _context.SaveChanges();
+                _context.SaveChanges();
                 ENC encyptdecypt = new ENC();
 
                 string encyptemail = encyptdecypt.EnryptString(viewdata.Email);
@@ -516,6 +523,19 @@ namespace HelloDocAdmin.Repositories
 
                 if (_email.SendMail(viewdata.Email, "New Patient Account Creation", emailContent))
                 {
+                    Emaillog el = new Emaillog();
+                    el.Action = 2;
+                    el.Confirmationnumber = ConfirmationNumber;
+                    el.Sentdate = DateTime.Now;
+                    el.Createdate = DateTime
+                         .Now;
+                    el.Emailtemplate = "first";
+                    el.Senttries = 1;
+                    el.Subjectname = "New Patient Account Creation";
+                    el.Requestid = Request.Requestid;
+                    el.Roleid = 4;
+                    el.Emailid = Request.Email;
+                    _context.Emaillogs.Add(el);
 
                     Requeststatuslog rsl = new Requeststatuslog();
                     rsl.Status = 1;
@@ -572,7 +592,7 @@ namespace HelloDocAdmin.Repositories
                     Createddate = DateTime.Now
                 };
                 _context.Businesses.Add(Business);
-                 _context.SaveChanges();
+                _context.SaveChanges();
 
                 int id1 = Business.Businessid;
 
@@ -589,7 +609,7 @@ namespace HelloDocAdmin.Repositories
                     Confirmationnumber = ConfirmationNumber
                 };
                 _context.Requests.Add(Request);
-                 _context.SaveChanges();
+                _context.SaveChanges();
 
                 int id2 = Request.Requestid;
                 int monthnum = viewdata.BirthDate.Month;
@@ -608,7 +628,7 @@ namespace HelloDocAdmin.Repositories
                     State = viewdata.State,
                     City = viewdata.City,
                     Zipcode = viewdata.ZipCode,
-                    Street= viewdata.Street,
+                    Street = viewdata.Street,
                     Regionid = region.Regionid,
                     Intdate = date,
                     Intyear = year,
@@ -616,14 +636,14 @@ namespace HelloDocAdmin.Repositories
 
                 };
                 _context.Requestclients.Add(Requestclient);
-                 _context.SaveChanges();
+                _context.SaveChanges();
                 var Requestbusiness = new Requestbusiness
                 {
                     Requestid = id2,
                     Businessid = id1
                 };
                 _context.Requestbusinesses.Add(Requestbusiness);
-                 _context.SaveChanges();
+                _context.SaveChanges();
                 ENC encyptdecypt = new ENC();
 
                 string encyptemail = encyptdecypt.EnryptString(viewdata.Email);
@@ -659,6 +679,20 @@ namespace HelloDocAdmin.Repositories
 
                 if (_email.SendMail(viewdata.Email, "New Patient Account Creation", emailContent))
                 {
+                    Emaillog el = new Emaillog();
+                    el.Action = 2;
+                    el.Confirmationnumber = ConfirmationNumber;
+                    el.Sentdate = DateTime.Now;
+                    el.Createdate = DateTime
+                         .Now;
+                    el.Emailtemplate = "first";
+                    el.Senttries = 1;
+                    el.Subjectname = "New Patient Account Creation";
+                    el.Requestid = Request.Requestid;
+                    el.Roleid = 4;
+                    el.Emailid = Request.Email;
+                    _context.Emaillogs.Add(el);
+
                     Requeststatuslog rsl = new Requeststatuslog();
                     rsl.Status = 1;
                     rsl.Createddate = DateTime.Now;

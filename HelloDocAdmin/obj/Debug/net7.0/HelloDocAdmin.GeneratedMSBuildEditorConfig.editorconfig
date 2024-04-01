@@ -184,6 +184,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5TaXRlXFBoeXNpY2lhblxQaHlzaWNpYW5BZGRFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Projects/Hello Doc Admin/HelloDocAdmin/Views/AdminSite/Physician/ProviderOnCall.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5TaXRlXFBoeXNpY2lhblxQcm92aWRlck9uQ2FsbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Projects/Hello Doc Admin/HelloDocAdmin/Views/AdminSite/Physician/Scheduling.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5TaXRlXFBoeXNpY2lhblxTY2hlZHVsaW5nLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -200,12 +204,32 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5TaXRlXFByb3ZpZGVyTG9jYXRpb25cSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Projects/Hello Doc Admin/HelloDocAdmin/Views/AdminSite/Records/BlockHistory.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5TaXRlXFJlY29yZHNcQmxvY2tIaXN0b3J5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/Hello Doc Admin/HelloDocAdmin/Views/AdminSite/Records/EmailLogs.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5TaXRlXFJlY29yZHNcRW1haWxMb2dzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/Hello Doc Admin/HelloDocAdmin/Views/AdminSite/Records/PatientRecords.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5TaXRlXFJlY29yZHNcUGF0aWVudFJlY29yZHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Projects/Hello Doc Admin/HelloDocAdmin/Views/AdminSite/Records/SearchPatient.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5TaXRlXFJlY29yZHNcU2VhcmNoUGF0aWVudC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Projects/Hello Doc Admin/HelloDocAdmin/Views/AdminSite/Records/SearchRecord.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5TaXRlXFJlY29yZHNcU2VhcmNoUmVjb3JkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/Hello Doc Admin/HelloDocAdmin/Views/AdminSite/Records/_BlockHistoryData.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5TaXRlXFJlY29yZHNcX0Jsb2NrSGlzdG9yeURhdGEuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/Hello Doc Admin/HelloDocAdmin/Views/AdminSite/Records/_emaillogslist.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5TaXRlXFJlY29yZHNcX2VtYWlsbG9nc2xpc3QuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Projects/Hello Doc Admin/HelloDocAdmin/Views/AdminSite/Records/_PatientsPartials.cshtml]

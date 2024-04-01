@@ -1,0 +1,173 @@
+﻿@using static HelloDocAdmin.Entity.ViewModels.AdminSite.Constant;
+@{
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+    var enumData = from Status e in Enum.GetValues(typeof(Status))
+                   select new
+                   {
+                       ID = (int)e,
+                       Name = e.ToString()
+                   };
+    var reqtype = from RequestType e in Enum.GetValues(typeof(RequestType))
+                  select new
+                  {
+                      ID = (int)e,
+                      Name = e.ToString()
+                  };
+    var AccountType = from AccountType e in Enum.GetValues(typeof(AccountType))
+                  select new
+                  {
+                      ID = (int)e,
+                      Name = e.ToString()
+                  };
+}
+
+<div class="container-fluid">
+    <div class="card bg-transparent border-0">
+        <div class="card-header d-flex justify-content-between  border-0  bg-transparent p-1  mt-3 mb-2">
+            <div class="text-start d-flex align-items-center">
+                <h5 class="mt-2 bold"><b> Email Logs (Gmail)</b></h5>
+
+            </div>
+            @* <div class="text-end">
+            <a asp-controller="Dashboard" asp-action="Index"
+            class="btn btn-info btn-back">
+            <i class="fa-solid fa-share mx-2"></i>Export Data To Excel
+            </a>
+            </div>*@
+        </div>
+
+        <div class="card-body rounded shadow">
+            <div class="row mt-3 mb-4">
+
+                <div class="col-md-2 ">
+
+
+                    <div class="input-control w-100 ">
+                        <select class="input-outline input-outline-select inp asp  inp-dis" id="accounttype" data-allow-clear="true" tabindex="-1" asp-items="@(new SelectList(AccountType, "ID", "Name"))" data-control="select2" data-placeholder="Select Level">
+                            <option value="0">Account Type</option>
+                        </select>
+                    </div>
+
+
+                </div>
+                <div class="col-md-2 ">
+
+                    <div class="inputs-control ">
+                        <input placeholder=" " id="ReciverName" class="input-outline w-100 inp admin-input " type="text">
+                        <label class="inputs-lable">Reciver Name</label>
+                    </div>
+
+
+                </div>
+                <div class="col-md-2 ">
+
+                    <div class="inputs-control ">
+                        <input placeholder=" " id="email" class="input-outline w-100 inp admin-input " type="text">
+                        <label class="inputs-lable">Email</label>
+                    </div>
+
+
+                </div>
+                <div class="col-md-2 ">
+
+                    <div class="inputs-control  ">
+
+                        <input placeholder=" " id="CreatedDate" class="input-outline w-100 inp form-control-sm " type="date">
+                        <label class="inputs-lable-dob">Created Date</label>
+                    </div>
+
+
+                </div>
+                <div class="col-md-2 ">
+
+                    <div class="inputs-control  ">
+
+                        <input placeholder=" " id="SendDate" class="input-outline w-100 inp form-control-sm " type="date">
+                        <label class="inputs-lable-dob">Send Date</label>
+                    </div>
+
+
+                </div>
+                <div class="col-md-2 ">
+
+                    <div class="text-end mt-2">
+                        <button onclick="getfilterdata()" id="save1" class="btn  btn-outline-info  mx-2 ">
+                            Search
+                        </button>
+                        <button onclick="clearInputs()" class="btn  btn-outline-danger  mx-2 ">
+                            Clear
+                        </button>
+                    </div>
+
+
+                </div>
+            </div>
+           
+            <div class="loding-div">
+                <div class="bro" id="BRO" style="height:100%;width:100%;position:absolute;background-color:black;opacity:0.2;z-index:1">
+                </div>
+                <div class="loading" id="Loading"></div>
+            </div>
+            <div id="SearchResult">
+            </div>
+        </div>
+    </div>
+
+</div>
+<script>
+    $(function () {
+        $(".loding-div").show();
+        getfilterdata();
+        $(".loding-div").hide();
+
+    });
+</script>
+<script>
+
+    function getfilterdata() {
+        $(".loding-div").show();
+        var accounttype = $('#accounttype').val();
+        var ReciverName = $('#ReciverName').val();
+        var email = $('#email').val();
+        var CreatedDate = $('#CreatedDate').val();
+        var SendDate = $('#SendDate').val();
+
+        var pagesize = $('#SizeSelect').val();
+        var currentpage = $('#crt-page').val();
+
+        $.ajax({
+            url: "/Records/EmailLogsData",
+            type: "GET",
+            data: {
+                email: email,
+                accounttype: accounttype,
+                ReciverName: ReciverName,
+                CreatedDate: CreatedDate,
+                SendDate:SendDate,
+                currentpage: currentpage,
+                pagesize: pagesize
+            },
+            success: function (response) {
+                $(".loding-div").hide();
+                $('#SearchResult').html(response);
+            },
+            error: function () {
+                $(".loding-div").hide();
+                alert("error");
+            }
+        });
+    }
+
+    function getpage(index) {
+        $("#crt-page").val(index);
+
+    }
+    function clearInputs() {
+        $('#FirstName').val('');
+        $('#LastName').val('');
+        $('#phonenumber').val('');
+        $('#email').val('');
+
+    }
+
+</script>

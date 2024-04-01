@@ -6,21 +6,9 @@ using HelloDocAdmin.Entity.ViewModels.AdminSite;
 using HelloDocAdmin.Repositories.Interface;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.IdentityModel.Tokens;
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Runtime.Intrinsics.Arm;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Xsl;
-using static HelloDocAdmin.Entity.ViewModels.AdminSite.Constant;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace HelloDocAdmin.Repositories
 {
@@ -61,7 +49,7 @@ namespace HelloDocAdmin.Repositories
                 PhoneNumber = l.Phonenumber,
                 PatientNotes = l.Notes,
                 Email = l.Email,
-                physicianID=n.Physicianid,
+                physicianID = n.Physicianid,
                 RequestTypeID = n.Requesttypeid,
                 Address = l.Street + "," + l.City + "," + l.State,
                 Room = l.Address,
@@ -115,7 +103,7 @@ namespace HelloDocAdmin.Repositories
             {
                 Requestnote notes = _context.Requestnotes.FirstOrDefault(E => E.Requestid == RequestID);
 
-                if(notes != null)
+                if (notes != null)
                 {
                     if (physiciannotes != null)
                     {
@@ -183,7 +171,7 @@ namespace HelloDocAdmin.Repositories
 
         public List<DashboardRequestModel> GetRequests(string Status)
         {
-          
+
 
             List<int> priceList = Status.Split(',').Select(int.Parse).ToList();
 
@@ -213,52 +201,52 @@ namespace HelloDocAdmin.Repositories
                                                        ProviderName = p.Firstname + " " + p.Lastname,
                                                        PhoneNumber = rc.Phonenumber,
                                                        Address = rc.Address + ", " + rc.Street + ", " + rc.City + ", " + rc.State + ", " + rc.Zipcode,
-                                                      
+
                                                        ProviderID = req.Physicianid,
                                                        RequestorPhoneNumber = req.Phonenumber
                                                    }).ToList();
 
 
-           
+
             return allData;
         }
-        public async Task<Dashboarddatamodel> GetRequestsbyfilter(string Status,  string search="", int region=0, int requesttype=0, int currentpage = 1,int pagesize=5)
+        public async Task<Dashboarddatamodel> GetRequestsbyfilter(string Status, string search = "", int region = 0, int requesttype = 0, int currentpage = 1, int pagesize = 5)
         {
             Dashboarddatamodel dm = new Dashboarddatamodel();
 
             List<int> priceList = Status.Split(',').Select(int.Parse).ToList();
 
-           IQueryable<DashboardRequestModel> allData = (from req in _context.Requests
-                                                   join reqClient in _context.Requestclients
-                                                   on req.Requestid equals reqClient.Requestid into reqClientGroup
-                                                   from rc in reqClientGroup.DefaultIfEmpty()
-                                                   join phys in _context.Physicians
-                                                   on req.Physicianid equals phys.Physicianid into physGroup
-                                                   from p in physGroup.DefaultIfEmpty()
-                                                   join reg in _context.Regions
-                                                  on rc.Regionid equals reg.Regionid into RegGroup
-                                                   from rg in RegGroup.DefaultIfEmpty()
-                                                   where priceList.Contains(req.Status)
-                                                   orderby req.Createddate descending
-                                                   select new DashboardRequestModel
-                                                   {
-                                                       RequestID = req.Requestid,
-                                                       RequestTypeID = req.Requesttypeid,
-                                                       Requestor = req.Firstname + " " + req.Lastname,
-                                                       PatientName = rc.Firstname + " " + rc.Lastname,
-                                                       Dob = new DateOnly((int)rc.Intyear, DateTime.ParseExact(rc.Strmonth, "MMMM", new CultureInfo("en-US")).Month, (int)rc.Intdate),
-                                                       RequestedDate = req.Createddate,
-                                                       Email = rc.Email,
-                                                       RegionID=rc.Regionid,
-                                                       Region = rg.Name,
-                                                       ProviderName = p.Firstname + " " + p.Lastname,
-                                                       PhoneNumber = rc.Phonenumber,
-                                                       Address = rc.Address + ", " + rc.Street + ", " + rc.City + ", " + rc.State + ", " + rc.Zipcode,
-                                                      
-                                                       ProviderID = req.Physicianid,
-                                                       RequestorPhoneNumber = req.Phonenumber
-                                                   });
-           
+            IQueryable<DashboardRequestModel> allData = (from req in _context.Requests
+                                                         join reqClient in _context.Requestclients
+                                                         on req.Requestid equals reqClient.Requestid into reqClientGroup
+                                                         from rc in reqClientGroup.DefaultIfEmpty()
+                                                         join phys in _context.Physicians
+                                                         on req.Physicianid equals phys.Physicianid into physGroup
+                                                         from p in physGroup.DefaultIfEmpty()
+                                                         join reg in _context.Regions
+                                                        on rc.Regionid equals reg.Regionid into RegGroup
+                                                         from rg in RegGroup.DefaultIfEmpty()
+                                                         where priceList.Contains(req.Status)
+                                                         orderby req.Createddate descending
+                                                         select new DashboardRequestModel
+                                                         {
+                                                             RequestID = req.Requestid,
+                                                             RequestTypeID = req.Requesttypeid,
+                                                             Requestor = req.Firstname + " " + req.Lastname,
+                                                             PatientName = rc.Firstname + " " + rc.Lastname,
+                                                             Dob = new DateOnly((int)rc.Intyear, DateTime.ParseExact(rc.Strmonth, "MMMM", new CultureInfo("en-US")).Month, (int)rc.Intdate),
+                                                             RequestedDate = req.Createddate,
+                                                             Email = rc.Email,
+                                                             RegionID = rc.Regionid,
+                                                             Region = rg.Name,
+                                                             ProviderName = p.Firstname + " " + p.Lastname,
+                                                             PhoneNumber = rc.Phonenumber,
+                                                             Address = rc.Address + ", " + rc.Street + ", " + rc.City + ", " + rc.State + ", " + rc.Zipcode,
+
+                                                             ProviderID = req.Physicianid,
+                                                             RequestorPhoneNumber = req.Phonenumber
+                                                         });
+
 
             if (region != 0)
             {
@@ -269,13 +257,13 @@ namespace HelloDocAdmin.Repositories
                 allData = allData.Where(r => r.RequestTypeID == requesttype);
             }
             if (!search.IsNullOrEmpty())
-              
+
             {
                 allData = allData.Where(r => r.PatientName.ToLower().Contains(search.ToLower()));
             }
-            dm.TotalPage= (int)Math.Ceiling((double)allData.Count() / pagesize)  ;
+            dm.TotalPage = (int)Math.Ceiling((double)allData.Count() / pagesize);
             allData = allData.OrderByDescending(x => x.RequestedDate).Skip((currentpage - 1) * pagesize).Take(pagesize);
-            dm.requestList= allData.ToList();
+            dm.requestList = allData.ToList();
             dm.pageSize = pagesize;
             int i = 0;
             foreach (var item in dm.requestList)
@@ -303,13 +291,13 @@ namespace HelloDocAdmin.Repositories
 
             dm.CurrentPage = currentpage;
 
-            
+
 
 
 
             return dm;
         }
-        public  ViewNotesModel getNotesByID(int id)
+        public ViewNotesModel getNotesByID(int id)
         {
             var rsa = (from rs in _context.Requeststatuslogs
                        join py in _context.Physicians on rs.Physicianid equals py.Physicianid into pyGroup
@@ -318,7 +306,7 @@ namespace HelloDocAdmin.Repositories
                        from p in pGroup.DefaultIfEmpty()
                        join a in _context.Admins on rs.Adminid equals a.Adminid into aGroup
                        from a in aGroup.DefaultIfEmpty()
-                       where rs.Requestid == id && (rs.Transtoadmin!=null || rs.Transtophysicianid !=null || rs.Status==2) 
+                       where rs.Requestid == id && (rs.Transtoadmin != null || rs.Transtophysicianid != null || rs.Status == 2)
                        select new TransfernotesModel
                        {
                            TransPhysician = p.Firstname,
@@ -335,17 +323,17 @@ namespace HelloDocAdmin.Repositories
 
                        }).ToList();
 
-            var req=_context.Requests.FirstOrDefault(W=>W.Requestid == id);
-            var requestlog = _context.Requeststatuslogs.Where(E => E.Requestid == id &&( (E.Transtophysician != null) || (E.Transtoadmin != null)));
-            var cancelnotes = _context.Requeststatuslogs.Where(E => E.Requestid == id && ( (E.Status == 3) || (E.Status == 7)));
+            var req = _context.Requests.FirstOrDefault(W => W.Requestid == id);
+            var requestlog = _context.Requeststatuslogs.Where(E => E.Requestid == id && ((E.Transtophysician != null) || (E.Transtoadmin != null)));
+            var cancelnotes = _context.Requeststatuslogs.Where(E => E.Requestid == id && ((E.Status == 3) || (E.Status == 7)));
             var model = _context.Requestnotes.FirstOrDefault(E => E.Requestid == id);
             ViewNotesModel allData = new ViewNotesModel();
-             if (model == null)
+            if (model == null)
             {
                 allData.Requestid = id;
-              
+
                 allData.Physiciannotes = "-";
-                allData.Administrativenotes ="-";
+                allData.Administrativenotes = "-";
                 allData.Adminnotes = "-";
             }
             else
@@ -357,11 +345,11 @@ namespace HelloDocAdmin.Repositories
                 allData.Administrativenotes = model.Administrativenotes;
                 allData.Adminnotes = model.Adminnotes;
             }
-          
+
             List<TransfernotesModel> list = new List<TransfernotesModel>();
             foreach (var e in cancelnotes)
             {
-              
+
                 list.Add(new TransfernotesModel
                 {
 
@@ -373,9 +361,9 @@ namespace HelloDocAdmin.Repositories
                     Requeststatuslogid = e.Requeststatuslogid,
                     Transtoadmin = e.Transtoadmin,
                     Transtophysicianid = e.Transtophysicianid,
-                  
 
-                }) ;
+
+                });
             }
             allData.cancelnotes = list;
 
@@ -404,17 +392,34 @@ namespace HelloDocAdmin.Repositories
         {
 
 
-            _email.SendMail(email, "Add New Request", "HIMANSHU");
+            if (_email.SendMail(email, "Add New Request", "HIMANSHU"))
+            {
+                Emaillog el = new Emaillog();
+                el.Action = 3;
+
+                el.Sentdate = DateTime.Now;
+                el.Createdate = DateTime
+                     .Now;
+                el.Emailtemplate = "first";
+                el.Senttries = 1;
+                el.Subjectname = "Add New Request";
+
+                el.Roleid = 2;
+                el.Emailid = email;
+
+                _context.Emaillogs.Add(el);
+                _context.SaveChanges();
+            }
 
             return true;
         }
         #region Assign_Provider
-        public async Task<bool> AssignProvider(int RequestId, int ProviderId, string notes,string id)
+        public async Task<bool> AssignProvider(int RequestId, int ProviderId, string notes, string id)
         {
             var admindata = _context.Admins.FirstOrDefault(E => E.Aspnetuserid == id);
             var request = await _context.Requests.FirstOrDefaultAsync(req => req.Requestid == RequestId);
             request.Physicianid = ProviderId;
-           
+
             request.Status = 2;
             _context.Requests.Update(request);
             _context.SaveChanges();
@@ -459,7 +464,7 @@ namespace HelloDocAdmin.Repositories
                     {
                         Requestid = Requestid,
                         Filename = UploadFile.FileName,
-                        Isdeleted= bt,
+                        Isdeleted = bt,
                         Createddate = DateTime.Now,
                     };
                     _context.Requestwisefiles.Add(requestwisefile);
@@ -480,7 +485,7 @@ namespace HelloDocAdmin.Repositories
 
         public ViewDocumentsModel ViewDocument(int id)
         {
-          
+
             BitArray bt = new BitArray(1);
             bt.Set(0, false);
             ViewDocumentsModel alldata = new ViewDocumentsModel();
@@ -491,7 +496,7 @@ namespace HelloDocAdmin.Repositories
                          from phys in physicianGroup.DefaultIfEmpty()
                          join admin in _context.Admins on requestWiseFile.Adminid equals admin.Adminid into adminGroup
                          from adm in adminGroup.DefaultIfEmpty()
-                         where request.Requestid == id && requestWiseFile.Isdeleted==bt
+                         where request.Requestid == id && requestWiseFile.Isdeleted == bt
                          select new
                          {
 
@@ -510,8 +515,8 @@ namespace HelloDocAdmin.Repositories
                     Createddate = item.Createddate,
                     Filename = item.Filename,
                     Uploader = item.Uploader,
-                    RequestWiseFileID=item.Requestwisefileid
-                   
+                    RequestWiseFileID = item.Requestwisefileid
+
                 });
 
             }
@@ -527,7 +532,7 @@ namespace HelloDocAdmin.Repositories
         }
 
 
-        public bool CancelCase(int RequestID, string Note, string CaseTag,string id)
+        public bool CancelCase(int RequestID, string Note, string CaseTag, string id)
         {
             try
             {
@@ -537,8 +542,8 @@ namespace HelloDocAdmin.Repositories
                 {
                     requestData.Casetag = CaseTag;
                     requestData.Status = 3;
-                    requestData.Modifieddate=DateTime.Now;
-             
+                    requestData.Modifieddate = DateTime.Now;
+
                     _context.Requests.Update(requestData);
                     _context.SaveChanges();
 
@@ -547,7 +552,7 @@ namespace HelloDocAdmin.Repositories
                         Requestid = RequestID,
                         Notes = Note,
                         Status = 3,
-                        Adminid=admindata.Adminid,
+                        Adminid = admindata.Adminid,
                         Createddate = DateTime.Now
                     };
                     _context.Requeststatuslogs.Add(rsl);
@@ -562,7 +567,8 @@ namespace HelloDocAdmin.Repositories
             }
 
         }
-        public bool BlockCase(int RequestID, string Note){
+        public bool BlockCase(int RequestID, string Note)
+        {
 
             try
             {
@@ -575,7 +581,7 @@ namespace HelloDocAdmin.Repositories
                     _context.SaveChanges();
                     Blockrequest blc = new Blockrequest
                     {
-                        Requestid = requestData.Requestid.ToString(),
+                        Requestid = requestData.Requestid,
                         Phonenumber = requestData.Phonenumber,
                         Email = requestData.Email,
                         Reason = Note,
@@ -594,12 +600,12 @@ namespace HelloDocAdmin.Repositories
                 }
             }
 
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return false;
             }
-           
-           
+
+
         }
 
     }

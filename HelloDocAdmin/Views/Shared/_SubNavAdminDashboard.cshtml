@@ -30,8 +30,8 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link  dropdown-toggle @(path.StartsWith("/Physician") ? "active" : "") " data-bs-toggle="dropdown" style="cursor:pointer" aria-expanded="false">Provider</a>
                     <ul class="dropdown-menu border-0">
-                        <li><a class="dropdown-item @(path.StartsWith("/Physician") ? "active" : "") " asp-action="Index" asp-controller="Physician"> Provider </a></li>
-                        <li><a class="dropdown-item @(path.StartsWith("/Scheduling") ? "active" : "") " asp-action="Scheduling" asp-controller="Physician">Scheduling</a></li>
+                        <li><a class="dropdown-item @(path.EndsWith("/Physician") ? "active" : "") " asp-action="Index" asp-controller="Physician"> Provider </a></li>
+                        <li><a class="dropdown-item @(path.EndsWith("/Scheduling") || path.EndsWith("/ProviderOncall") ? "active" : "") " asp-action="Scheduling" asp-controller="Physician">Scheduling</a></li>
                         <li><a class="dropdown-item " href="#">Invoicing</a></li>
                     </ul>
                 </li>
@@ -55,11 +55,10 @@
                         Recoard
                     </a>
                     <ul class="dropdown-menu border-0">
-                        <li><a class="dropdown-item @(path.EndsWith("/Records") ? "active" : "") " asp-action="SearchRecord" asp-controller="Records"> Search Recoard </a></li>
-                        <li><a class="dropdown-item @(path.EndsWith("/Records") ? "active" : "") " asp-action="PatientRecord" asp-controller="Records"> Patient Recoard </a></li>
-
-                        <li><a class="dropdown-item @(path.EndsWith("/UserAccess") ? "active" : "") " asp-action="UserAccess" asp-controller="Access">User Access</a></li>
-                        <li><a class="dropdown-item " href="#">Invoicing</a></li>
+                        <li><a class="dropdown-item @(path.EndsWith("/SearchRecord") ? "active" : "") " asp-action="SearchRecord" asp-controller="Records"> Search Recoard </a></li>
+                        <li><a class="dropdown-item @(path.EndsWith("/PatientRecord") ? "active" : "") " asp-action="PatientRecord" asp-controller="Records"> Patient Recoard </a></li>
+                        <li><a class="dropdown-item @(path.EndsWith("/EmailLogs") ? "active" : "") " asp-action="EmailLogs" asp-controller="Records"> Email Logs </a></li>
+                        <li><a class="dropdown-item @(path.EndsWith("/BlockHistory") ? "active" : "") " asp-action="BlockHistory" asp-controller="Records"> Block History </a></li>
                     </ul>
                 </li>
          

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 
 namespace HelloDocAdmin.Entity.Models;
 
@@ -16,7 +14,7 @@ public partial class Blockrequest
 
     public string? Reason { get; set; }
 
-    public string Requestid { get; set; } = null!;
+    public int Requestid { get; set; }
 
     public string? Ip { get; set; }
 

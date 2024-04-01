@@ -62,8 +62,7 @@
                             <th scope="col">Provider Name</th>
                             <th scope="col">Role</th>
                             <th scope="col">On Call Status</th>
-                            <th scope="col">Status</th>
-                          
+                            <th scope="col">Status</th>                          
                             <th scope="col">Actions</th>
                         </tr>
                     </thead>
@@ -88,11 +87,9 @@
 
                                     <button data-bs-toggle="modal" data-bs-id="@item.Physicianid" data-bs-email="@item.Email" data-bs-target="#myModal" class="btn btn-outline-info btn-sm document-button mx-1">
                                         Contact
-
                                     </button>
                                     <a asp-action="PhysicianProfile" asp-controller="Physician" asp-route-id="@item.Physicianid" class="btn btn-outline-info btn-sm document-button mx-1">
                                         Edit
-
                                     </a>
                                 </td>
                             </tr>

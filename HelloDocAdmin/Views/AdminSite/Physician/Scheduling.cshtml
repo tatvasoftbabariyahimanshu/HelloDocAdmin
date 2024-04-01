@@ -9,31 +9,28 @@
                    };
 };
 <style>
-    .day-box{
-        border:1px solid gray;
+    .day-box {
+        border: 1px solid gray;
         background-color: #6d6e70 !important;
         color: white !important;
-       
-
     }
 
-    .day-active {
-        background-color: antiquewhite !important;
-    }
-    .sch-div
-    {
-        margin-top:1px;
-        min-height:25px;
+
+    .sch-div {
+        margin-top: 1px;
+        min-height: 25px;
         border: 1px solid gray;
-       
     }
 
     .sch-div-day {
         margin-top: 1px;
         min-height: 25px;
-        border: 1px solid gray;
-        background-color: #fcaef5 ;
-        
+        border: 0.8px solid gray;
+        background-color: #fcaef5 !important;
+    }
+
+    .day-active {
+        background-color: antiquewhite !important;
     }
 </style>
 <div class="container">
@@ -65,7 +62,7 @@
                 </div>
                 <div class="text-end d-flex">
 
-                    <a class="btn mx-2  btn-info text-white" asp-action="PhysicianProfile" asp-controller="Physician">
+                    <a class="btn mx-2  btn-info text-white" asp-action="ProviderOncall" asp-controller="Physician">
                         <span class="addnewlg">
                             Provider on call
                         </span>
@@ -89,7 +86,7 @@
                        data-form-id="formEdit_UMS"
                        data-url='@Url.Action("_CreateShift", "Physician")'
                        data-modal-size="lg">Add New Shift  </a>
-                    
+
                 </div>
             </div>
             <div class="d-flex mt-4 justify-content-between">
@@ -98,15 +95,15 @@
                 <div class="d-flex">
                     <div>
 
-                    <svg class="bd-placeholder-img rounded me-2" width="20" height="20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#f4c894"></rect></svg>
-                    Pendding Shift    
+                        <svg class="bd-placeholder-img rounded me-2" width="20" height="20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#f4c894"></rect></svg>
+                        Pendding Shift
                     </div>
                     <div class="mx-2">
 
                         <svg class="bd-placeholder-img rounded me-2" width="20" height="20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#ceedce"></rect></svg>
                         Approved Shift
                     </div>
-                
+
                 </div>
             </div>
             <div class="d-flex justify-content-between mt-3">
@@ -119,113 +116,210 @@
                         <button type="button" class="btn btn-info rounded-circle" id="nextMonthBtn">&gt;</button>
                     </div>
                     <div class="btn-group" role="group" id="week-nav" aria-label="Month selection">
-                        <button type="button" class="btn btn-info rounded-circle " id="prevMonthBtn">&lt;</button>
+                        <button type="button" class="btn btn-info rounded-circle " id="calendar-prev">&lt;</button>
                         <span class=" mx-2 mt-2" id=""><i class="fa fa-calendar" aria-hidden="true"></i></span>
-                        <button type="button" class="btn btn-info rounded-circle" id="nextMonthBtn">&gt;</button>
+                        <button type="button" class="btn btn-info rounded-circle" id="calendar-next">&gt;</button>
+                    </div>
+                    <div class="btn-group" role="group" id="day-nav" aria-label="Month selection">
+                        <button type="button" class="btn btn-info rounded-circle " id="calendar-prev123">&lt;</button>
+                        <span class=" mx-2 mt-2" id=""><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                        <button type="button" class="btn btn-info rounded-circle" id="calendar-next123">&gt;</button>
                     </div>
                 </div>
 
                 <div class="d-flex">
                     <nav class="container-fluid pt-2">
                         <div class="nav  nav-underline text-white" id="nav-tab" role="tablist">
-                            <button class="btn btn-outline-info" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-day"
+                            <button class="btn btn-outline-info" id="day" data-bs-toggle="tab" onclick="showDaybutton()" data-bs-target="#nav-day"
                                     type="button" role="tab" aria-controls="nav-home" aria-selected="false" tabindex="-1">
-                               Day
+                                Day
                             </button>
-                            <button class="btn btn-outline-info " onclick="showweekbutton()" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-week" type="button"
+                            <button class="btn btn-outline-info " id="week" onclick="showweekbutton()"  data-bs-toggle="tab" data-bs-target="#nav-week" type="button"
                                     role="tab" aria-controls="nav-profile" aria-selected="false" tabindex="-1">
-                               Week
+                                Week
                             </button>
                             <button onclick="showmonthbutton()" class="btn btn-outline-info active " id="nav-month-tab" data-bs-toggle="tab" data-bs-target="#nav-month" type="button"
-                                    role="tab" aria-controls="nav-month" aria-selected="true" >
+                                    role="tab" aria-controls="nav-month" aria-selected="true">
                                 month
                             </button>
 
                         </div>
                     </nav><script>
                               $("#week-nav").hide();
-                              function showmonthbutton()
-                              {
+                              $("#day-nav").hide();
+                              function showmonthbutton() {
                                   $("#month-nav").show();
                                   $("#week-nav").hide();
+                                  $("#day-nav").hide();
                               }
                               function showweekbutton() {
                                   $("#month-nav").hide();
                                   $("#week-nav").show();
+                                  $("#day-nav").hide();
+                              }
+                              function showDaybutton() {
+                                  $("#month-nav").hide();
+                                  $("#week-nav").hide();
+                                  $("#day-nav").show();
                               }
                     </script>
 
-                    
+
 
                 </div>
 
             </div>
             <div class="tab-content mt-5 " id="nav-tabContent">
-                <div class="tab-pane fade  " id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                   @* <partial name="_DashboardRequest.cshtml" />*@
+                <div class="tab-pane fade  " id="nav-day" role="tabpanel" aria-labelledby="nav-day-tab">
+                   <div id="daycontainer" >
+                        <div class="schedule">
+                            <table style="width:100%;" class="table employee-schedules">
+                                <thead class="employee-schedules-thead">
+                                    <tr class=" ">
+                                        <td class="title table-text day-box">Staf</td>
+
+                                        <td class="title table-text day-box" >12A</td>
+                                        <td class="title table-text day-box">1A</td>
+                                        <td class="title table-text day-box">2A</td>
+                                        <td class="title table-text day-box">3A</td>
+                                        <td class="title table-text day-box">4A</td>
+                                        <td class="title table-text day-box">5A</td>
+                                        <td class="title table-text day-box">6A</td>
+                                        <td class="title table-text day-box">7A</td>
+                                        <td class="title table-text day-box">8A</td>
+                                        <td class="title table-text day-box">9A</td>
+                                        <td class="title table-text day-box">10A</td>
+
+                                        <td class="title table-text day-box">11A</td>
+
+                                        <td class="title table-text day-box">12p</td>
+
+                                        <td class="title table-text day-box">2p</td>
+
+                                        <td class="title table-text day-box">3p</td>
+
+                                        <td class="title table-text day-box">4p</td>
+
+                                        <td class="title table-text day-box">5p</td>
+
+                                        <td class="title table-text day-box">6p</td>
+
+                                        <td class="title table-text day-box">7p</td>
+
+                                        <td class="title table-text day-box">8p</td>
+
+                                        <td class="title table-text day-box">9p</td>
+
+                                        <td class="title table-text day-box">10p</td>
+
+                                        <td class="title table-text day-box">11p</td>
+
+
+
+                                    </tr>
+                                   <tr class="Converage">
+                                    <th class="table-text border-1  sch-div-day">Converage</th>
+
+                                    <td class="table-text border-1  sch-div-day" ></td>
+                                        <td class="table-text border-1  sch-div-day"></td>
+                                    <td class="table-text border-1  sch-div-day" ></td>
+                                        <td class="table-text border-1  sch-div-day"></td>
+                                    <td class="table-text border-1  sch-div-day" ></td>
+                                    <td class="table-text border-1  sch-div-day" ></td>
+                                    <td class="table-text border-1  sch-div-day" ></td>
+                                    <td class="table-text border-1  sch-div-day" ></td>
+                                    <td class="table-text border-1  sch-div-day" ></td>
+                                    <td class="table-text border-1  sch-div-day" ></td>
+                                    <td class="table-text border-1  sch-div-day" ></td>
+                                    <td class="table-text border-1  sch-div-day" ></td>
+                                    <td class="table-text border-1  sch-div-day" ></td>
+                                    <td class="table-text border-1  sch-div-day" ></td>
+                                    <td class="table-text border-1  sch-div-day" ></td>
+                                    <td class="table-text border-1  sch-div-day" ></td>
+                                    <td class="table-text border-1  sch-div-day" ></td>
+                                    <td class="table-text border-1  sch-div-day" ></td>
+                                    <td class="table-text border-1  sch-div-day" ></td>
+                                    <td class="table-text border-1  sch-div-day" ></td>
+
+                                    <td class="table-text border-1  sch-div-day" ></td>
+                                    <td class="table-text border-1  sch-div-day" ></td>
+                                    <td class="table-text border-1  sch-div-day" ></td>
+                                  
+                                    
+
+
+                                    </tr>
+                                </thead>
+                                <tbody class=" employee-schedules-table">
+                                </tbody>
+                            </table>
+                        </div>
+                     
+                    </div>
+                  
                 </div>
-                <div class="tab-pane fade  " id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-                  <div style="display:none" id="weekviewcontainer" class="active">
+                <div class="tab-pane fade  " id="nav-week" role="tabpanel" aria-labelledby="nav-week-tab">
+                    <div id="weekviewcontainer" class="active">
 
-        <table style="width:100%;">
-            <thead>
-                <tr class="weekhead">
-                    <td>Staf</td>
+                        <table style="width:100%;" class="table">
+                            <thead>
+                                <tr class="@*weekhead*@ ">
+                                    <td class="title table-text day-box">Staf</td>
 
-                    <td class="title" data-name="Sun">Sun</td>
+                                    <td class="title table-text day-box" data-name="Sun">Sun</td>
 
-                    <td class="title" data-name="Mon">Mon</td>
-
-
-                    <td class="title" data-name="Tue">Tue</td>
+                                    <td class="title table-text day-box" data-name="Mon">Mon</td>
 
 
-                    <td class="title" data-name="Wed">Wed</td>
+                                    <td class="title table-text day-box" data-name="Tue">Tue</td>
 
 
-                    <td class="title" data-name="Thu">Thu</td>
-
-                    <td class="title" data-name="Fri">Fri</td>
-
-                    <td class="title" data-name="Sat">Sat</td>
+                                    <td class="title table-text day-box" data-name="Wed">Wed</td>
 
 
+                                    <td class="title table-text day-box" data-name="Thu">Thu</td>
 
-                </tr>
-                <tr class="Converage">
-                    <th>Converage</th>
+                                    <td class="title table-text day-box" data-name="Fri">Fri</td>
 
-                    <td class="" data-name="Sun">0/24</td>
-
-                    <td class="" data-name="Mon">0/24</td>
+                                    <td class="title table-text day-box" data-name="Sat">Sat</td>
 
 
-                    <td class="" data-name="Tue">0/24</td>
+
+                                </tr>
+                                <tr class="Converage">
+                                    <th class="table-text border-1  sch-div-day">Converage</th>
+
+                                    <td class="table-text border-1  sch-div-day" data-name="Sun">0/24</td>
+
+                                    <td class=" table-text border-1  sch-div-day" data-name="Mon">0/24</td>
 
 
-                    <td class="" data-name="Wed">0/24</td>
+                                    <td class=" table-text border-1  sch-div-day" data-name="Tue">0/24</td>
 
 
-                    <td class="" data-name="Thu">0/24</td>
-
-                    <td class="" data-name="Fri">0/24</td>
-
-                    <td class="" data-name="Sat">0/24</td>
+                                    <td class=" table-text border-1  sch-div-day" data-name="Wed">0/24</td>
 
 
-                </tr>
-            </thead>
-            <tbody class="main">
-            </tbody>
-        </table>
-    </div>
+                                    <td class=" table-text border-1  sch-div-day" data-name="Thu">0/24</td>
+
+                                    <td class="table-text border-1  sch-div-day" data-name="Fri">0/24</td>
+
+                                    <td class="table-text border-1  sch-div-day" data-name="Sat">0/24</td>
+
+
+                                </tr>
+                            </thead>
+                            <tbody class="main">
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 <div class="tab-pane fade show  active" id="nav-month" role="tabpanel" aria-labelledby="nav-month-tab">
                     <div id="calendar" class="mt-4"></div>
                 </div>
 
             </div>
-          
+
 
         </div>
     </div>
@@ -238,13 +332,89 @@
 <script>
     var currentYear, currentMonth;
     let extractedDataArray = [];
+    var providerList = [];
+    function getProviderList() {
+        //var regionId = $('#fregion').val();
+        //if (regionId === '-1') {
+        var regionId = null; // Set regionId to null if the selected value is -1
+        //}
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("PhysicianAll", "Physician")',
+
+            dataType: "json",
+            success: function (response) {
+             
+                providerList = [];
+
+                response.forEach(function (item) {
+                    var dayList = [];
+                    if (item.dayList) {
+                        item.dayList.forEach(function (dayItem) {
+
+                            var dayItemObj = {
+                                shiftid: dayItem.shiftid,
+                                physicianid: dayItem.physicianid,
+                                physicianName: dayItem.physicianName,
+                                physicianPhoto: dayItem.physicianPhoto,
+                                regionid: dayItem.regionid,
+                                regionname: dayItem.regionName,
+                                startdate: dayItem.startdate,
+
+                                shiftdate: dayItem.shiftDate,
+                                starttime: dayItem.starttime,
+                                endtime: dayItem.endtime,
+                                isrepeat: dayItem.isrepeat,
+                                checkWeekday: dayItem.checkWeekday,
+                                repeatupto: dayItem.repeatupto,
+                                status: dayItem.status,
+                                dayList: dayItem.dayList,
+                                submit: dayItem.submit
+                            };
+                            dayList.push(dayItemObj);
+                        });
+                    }
+                    var providerObj = {
+                        shiftid: item.shiftid,
+                        id: item.physicianid,
+                        name: item.physicianName,
+                        photo: item.physicianPhoto,
+                        regionid: item.regionid,
+                        startdate: item.startdate,
+                        shiftdate: item.shiftdate,
+                        starttime: item.starttime,
+                        endtime: item.endtime,
+                        isrepeat: item.isrepeat,
+                        checkWeekday: item.checkWeekday,
+                        repeatupto: item.repeatupto,
+                        status: item.status,
+                        dayList: dayList,
+                        submit: item.submit
+                    };
+                    providerList.push(providerObj);
+                });
+              
+                //if (x == 2) {
+                //    $('#week').click();
+
+                //} else if (x == 3) {
+                //    $('#day').click();
+                //}
+            },
+            error: function () {
+                // Handle error
+                console.error("Error fetching provider list");
+            }
+        });
+    }
+    getProviderList();
     const calendarDiv = document.getElementById('calendar');
     const month_year = document.getElementById('Month_year');
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
 
     function GetShiftForMonth(year, month) {
-        console.log("for:" + year + " " + month);
+    
 
         $.ajax({
             type: "GET",
@@ -296,17 +466,456 @@
         });
     }
 
+    document.getElementById("week").addEventListener("click", () => {
+        x = 2;
+       
+        $('#weekviewcontainer').show();
+      
+
+        // Show week view
+        // You can implement the week view logic here
+        console.log("Week view clicked");
+
+        // Check if the week view container already exists
+        if ($('#weekviewcontainer').length > 0) {
+            // Define prototype methods to calculate the first day of the week and get the week number
+            Date.prototype.GetFirstDayOfWeek = function () {
+                return new Date(this.setDate(this.getDate() - this.getDay() + (this.getDay() == 0 ? -6 : 1)));
+            };
+            Date.prototype.getWeek = function () {
+                var onejan = new Date(this.getFullYear(), 0, 1);
+                return Math.ceil((((this - onejan) / 86400000) + onejan.getDay() + 1) / 7);
+            };
+
+            // Initialize variables and retrieve current date information
+            var nav = 0;
+            var cnav = 0;
+            var inc = 1;
+            var dec = 1;
+            var wnav = 0;
+            var wlnav = 0;
+            var nd = new Date();
+            var ndate = nd.getDate();
+            var nday = nd.getDay();
+            var weekOfMonth = Math.ceil((ndate - 1 - nday) / 7);
+            nav = weekOfMonth;
+            var fdweek = nd.GetFirstDayOfWeek();
+            var getweekdt = nd.GetFirstDayOfWeek();
+
+
+            // Define click event handler for the previous button
+            $('#calendar-prev').click(function () {
+                if (x == 2) {
+                    if (nav == 5) {
+                        wnav = 5;
+                    }
+                    nav--;
+                    if (nav == -1) {
+                        nav = 4;
+                        fdweek.setDate(fdweek.getDate() - 5);
+                        getweekdt.setDate(getweekdt.getDate() - 5);
+                        inc = 0;
+                        dec = 1;
+                        cnav--;
+                    } else {
+                        fdweek.setDate(fdweek.getDate() - 12);
+                        getweekdt.setDate(getweekdt.getDate() - 12);
+                    }
+                    loadWeekCalendar();
+                }
+                // Decrement week index
+
+            });
+
+            // Define click event handler for the next button
+            $('#calendar-next').click(function () {
+                if (x == 2) {
+                    nav++;
+                    wlnav = 5;
+                    if ($('thead th[data-week="5"]').length > 0) {
+                        wlnav = 6;
+                    }
+                    if (nav == wlnav) {
+                        nav = 0;
+                        fdweek.setDate(fdweek.getDate() - 5);
+                        getweekdt.setDate(getweekdt.getDate() - 5);
+                        dec = 0;
+                        inc = 1;
+                        cnav++;
+                    } else {
+                        fdweek.setDate(fdweek.getDate() + 2);
+                        getweekdt.setDate(getweekdt.getDate() + 2);
+                        wnav = 5;
+                    }
+                    loadWeekCalendar();
+                    wnav = 0;
+                }
+
+            });
+
+            $(document).on('click', '.view-all-btn-week', function () {
+                // Clear modal body content
+                $('.modal-body').empty();
+
+                // Set modal title
+                // Get the index associated with the clicked button
+                let shiftdate = new Date($(this).data('shiftdate'));
+                let index = parseInt($(this).data('index'));
+
+                $('#model-head').html(shiftdate.getDate() + ' / ' + months[shiftdate.getMonth()] + ' / ' + shiftdate.getFullYear());
+
+                const matchingDates = providerList[index].dayList.filter(item => {
+                    const rshiftdate = new Date(item.shiftdate);
+                    return shiftdate.getDate() == rshiftdate.getDate() && shiftdate.getMonth() == rshiftdate.getMonth() + 1 && shiftdate.getFullYear() == rshiftdate.getFullYear();
+                });
+
+                matchingDates.forEach((item, index) => {
+                    // Construct HTML for request details
+                    const requestHTML = `<div class="d-flex justify-content-between my-1 p-2 ${'model-Status-' + item.status}" >
+                                                                            <div>
+                                                                            <div class="table-text">Physician Name: ${item.physicianName}</div>
+                                                                                        <div  class="table-text">Start Time: ${item.starttime}</div>
+                                                                                <div  class="table-text">End Time: ${item.endtime}</div>
+                                                                            </div>
+                                                                            <div>
+                                                                                      <a data-form-id="formEdit_UMS"
+                                                                                    data-url='@Url.Action("_EditShift", "Physician")?id=${item.shiftid}'
+                                                                                    class="js-stkModal-btn btn btn-info text-white">Edit</a>
+                                                                                 </div>
+                                                                            </div>`;
+
+                    // Append request details to modal body
+                    $('.modal-body').append(requestHTML);
+                });
+
+                // Open the modal
+                $('#exampleModal').modal('show');
+            });
+
+
+            function loadWeekCalendar() {
+                x = 2;
+                var tbody = document.querySelector('.main');
+                tbody.innerHTML = "";
+
+                if (tbody) {
+
+                    for (var i = 0; i < providerList.length; i++) {
+                        var row = document.createElement('tr');
+
+                        for (var j = 0; j < 8; j++) {
+                            var cell = document.createElement('td');
+                            cell.classList.add("border-1");
+                            cell.classList.add("text-start");
+                            cell.classList.add("mx-2");
+                            cell.classList.add("table-text");
+                            if (j === 0) {
+                                var image = document.createElement('img');
+                                image.classList.add("img-fluid");
+                                image.classList.add("mx-2");
+                                image.classList.add("rounded");
+                                image.style.height = "30px";
+                                image.src = '/Upload/Physician/' + providerList[i].id + '/' + providerList[i].photo;
+                                image.alt = providerList[i].name;
+                                cell.appendChild(image);
+                                cell.appendChild(document.createTextNode(providerList[i].name));
+
+
+                            } else {
+
+                                const currentDate = new Date();
+                                const cellDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() + j - 3);
+
+                                const matchingDates = providerList[i].dayList.filter(item => {
+                                    const shiftdate = new Date(item.shiftdate);
+                                    console.log(providerList[i].dayList);
+                                    return fdweek.getDate() + j - 2 == shiftdate.getDate() && fdweek.getMonth() + 1 == shiftdate.getMonth() + 1 && fdweek.getFullYear() == shiftdate.getFullYear();
+                                });
+
+                                if (matchingDates.length > 0) {
+
+                                    if (matchingDates.length <= 2) {
+                                        matchingDates.forEach((item, index) => {
+                                            cell.classList.add('p-0');
+
+
+                                            cell.innerHTML += `<a data-form-id="formEdit_UMS" data-url="@Url.Action("_EditShift", "Physician")?id=${item.shiftid}" class="mt-1 d-block text-dark rounded text-center  table-text js-stkModal-btn Status-${item.status}">${item.starttime} - ${item.endtime}</a>`;
+                                        });
+                                    } else {
+                                        let buttonId = `viewAllButton_${i}${j}`;
+                                        for (let i = 0; i < 2; i++) {
+                                            const item = matchingDates[i];
+                                            cell.classList.add('p-0');
+                                            cell.innerHTML += `<a data-form-id="formEdit_UMS" data-url="@Url.Action("_EditShift", "Physician")?id=${item.shiftid}" class="mt-1 d-block text-dark rounded table-text  text-center js-stkModal-btn Status-${item.status}">${item.starttime} - ${item.endtime}</a>`;
+                                        }
+                                        const newdate = new Date(fdweek.getFullYear(), fdweek.getMonth() + 1, fdweek.getDate() + j - 2);
+
+                                        cell.innerHTML += `<div type="button" id="${buttonId}" data-bs-toggle="modal" data-bs-target="#exampleModal" data-shiftdate="${newdate}" data-index="${i}" class="btn btn-sm btn-info btn-pill w-100 text-white rounded view-all-btn-week">View All</div>`;
+                                    }
+                                    const count = matchingDates.length;
+                                }
+
+                            }
+                            row.appendChild(cell);
+                        }
+                        tbody.appendChild(row);
+                    }
+                }
+
+
+                const formatDate = new Intl.DateTimeFormat("en", { day: "2-digit" });
+                const headwdate = new Intl.DateTimeFormat("en", { year: 'numeric', month: 'short', day: 'numeric' });
+                var options = { weekday: 'short', year: 'numeric', month: 'long', day: 'numeric' };
+                const dt = new Date();
+                if (cnav !== 0) { dt.setMonth(new Date().getMonth() + cnav); }
+                const year = dt.getFullYear();
+                const month = dt.getMonth();
+                const day = dt.getDate();
+                const week = dt.getWeek();
+                const firstDayOfMonth = new Date(year, month, 1).toLocaleDateString('en-US', options);
+                const lastDayOfMonth = new Date(year, month + 1, 0).toLocaleDateString('en-US', options);
+                var firstday = firstDayOfMonth.split(',')[0];
+                var lastday = lastDayOfMonth.split(',')[0];
+                var daytype = new Array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat');
+                var i = daytype.indexOf(firstday);
+                var j = daytype.indexOf(lastday) + 1;
+                var removefirst = daytype.slice(0, i);
+                var removelast = daytype.slice(j, daytype.length);
+                $('td,th').css("background-color", "");
+                const firstweek = new Date(year, month, 1).getWeek();
+                const lastweek = new Date(year, month + 1, 0).getWeek();
+
+                var used = new Date(year, month, 1).getDay() + new Date(year, month + 1, 0).getDate();
+                var numofweeks = Math.ceil(used / 7);
+
+                removefirst.forEach(removefirstcol);
+                removelast.forEach(removelastcol);
+                function removefirstcol(item, index) { $('td[data-week="0"][data-name="' + item + '"').css({ "background-image": "none", "background-color": "#c9c9c9", "cursor": "not-allowed" }); }
+                function removelastcol(item, index) {
+                    if ($('thead th[data-week="5"]').length > 0) {
+                        $('td[data-week="5"][data-name="' + item + '"').css({ "background-image": "none", "background-color": "#c9c9c9", "cursor": "not-allowed" });
+                    } else {
+                        $('td[data-week="4"][data-name="' + item + '"').css({ "background-image": "none", "background-color": "#c9c9c9", "cursor": "not-allowed" });
+                    }
+                }
+                if (nav === 4 && $('thead th[data-week="5"]').length > 0 && wnav != 5) { nav = 5; }
+                $('th[data-week="' + nav + '"').css({ "background-image": "none", "background-color": "#fff" });
+                $('td[data-week="' + nav + '"').css({ "background-image": "none", "background-color": "#fff" });
+                if (removelast.length === 0) {
+                    if (inc === 0) {
+                        fdweek.setDate(fdweek.getDate() - 7);
+                        getweekdt.setDate(getweekdt.getDate() - 7);
+                        inc++;
+                    }
+                }
+                if (removefirst.length === 0) {
+                    if (dec === 0) {
+                        fdweek.setDate(fdweek.getDate() + 7);
+                        getweekdt.setDate(getweekdt.getDate() + 7);
+                        dec++;
+                    }
+                }
+
+                const fweekdt = headwdate.format(getweekdt.setDate(getweekdt.getDate() - 1));
+                const lweekdt = headwdate.format(getweekdt.setDate(getweekdt.getDate() + 6));
+                var fmondt = fweekdt.split(' ')[0];
+                var lmondt = lweekdt.split(' ')[0];
+                var fdaydt = fweekdt.split(' ')[1];
+                fdaydt = fdaydt.split(',')[0];
+                var ldaydt = lweekdt.split(' ')[1];
+                var fyeardt = fweekdt.split(',')[1];
+                var lyeardt = lweekdt.split(',')[1];
+
+                if (fyeardt == lyeardt && fmondt == lmondt) { $('#Month_year').html(`<h3>` + fmondt + " " + fdaydt + " - " + ldaydt + fyeardt + `</h3>`); }
+                if (fyeardt == lyeardt && fmondt != lmondt) { $('#Month_year').html(`<h3>` + fmondt + " " + fdaydt + " - " + lmondt + " " + ldaydt + fyeardt + `</h3>`); }
+                if (fyeardt != lyeardt && fmondt != lmondt) { $('#Month_year').html(`<h3>` + fweekdt + " - " + lweekdt + `</h3>`); }
+                $('.title[data-name="Sun"').html("Sun - " + formatDate.format(fdweek.setDate(fdweek.getDate() - 1)));
+                $('.title[data-name="Mon"').html("Mon " + formatDate.format(fdweek.setDate(fdweek.getDate() + 1)));
+                $('.title[data-name="Tue"').html("Tue " + formatDate.format(fdweek.setDate(fdweek.getDate() + 1)));
+                $('.title[data-name="Wed"').html("Wed " + formatDate.format(fdweek.setDate(fdweek.getDate() + 1)));
+                $('.title[data-name="Thu"').html("Thu " + formatDate.format(fdweek.setDate(fdweek.getDate() + 1)));
+                $('.title[data-name="Fri"').html("Fri " + formatDate.format(fdweek.setDate(fdweek.getDate() + 1)));
+                $('.title[data-name="Sat"').html("Sat " + formatDate.format(fdweek.setDate(fdweek.getDate() + 1)));
+            }
+
+
+            loadWeekCalendar();
+        }
+    });
+    document.getElementById("day").addEventListener("click", () => {
+       
+    
+        $('#daycontainer').show();
+        $('#weekviewcontainer').hide();
+
+        x = 3;
+        // Define variables for current date and month
+        let currentDate = new Date();
+       
+        let currentMonth = currentDate.getMonth();
+
+        // Event listener for the "Next" button
+        $('#calendar-next123').on('click', function () {
+           
+
+                currentDate.setDate(currentDate.getDate() + 1);
+
+                updateEmployeeSchedules();
+          
+
+        });
+
+        $('#calendar-prev123').on('click', function () {
+          
+                currentDate.setDate(currentDate.getDate() - 1);
+
+                updateEmployeeSchedules();
+            
+        });
+
+        updateEmployeeSchedules();
+
+        function updateEmployeeSchedules() {
+            $('#Month_year').text(currentDate.toLocaleDateString('en-US', { month: 'short', year: 'numeric', day: 'numeric' }));
+
+
+            $('#daycontainer .schedule .employee-schedules tbody').empty();
+            const employeeSchedulesContainer = document.querySelector('.employee-schedules tbody');
+            const shiftArrays = [];
+         
+            for (let index = 0; index < providerList.length; index++) {
+                const employee = providerList[index];
+                const employeeRow = document.createElement('tr');
+                const employeeCell = document.createElement('td');
+
+
+               
+
+                var image = document.createElement('img');
+                image.classList.add("img-fluid");
+                image.classList.add("mx-2");
+                image.classList.add("rounded");
+                image.style.height = "30px";
+                image.src = '/Upload/Physician/' + employee.id + '/' + employee.photo;
+                image.alt = employee.name;
+                employeeCell.appendChild(image);
+                employeeCell.classList.add("table-text");
+                employeeCell.appendChild(document.createTextNode(employee.name));
+                const shiftArray = Array(24).fill(0);
+                employeeRow.appendChild(employeeCell);
+                const cellDate = new Date(currentDate);
+
+                const matchingDates = providerList[index].dayList.filter(item => {
+                    const shiftdate = new Date(item.shiftdate);
+                    return cellDate.getDate() === shiftdate.getDate() &&
+                        cellDate.getMonth() === shiftdate.getMonth() &&
+                        cellDate.getFullYear() === shiftdate.getFullYear()
+                });
+            
+
+                const timeRanges = matchingDates.map(item => {
+                    const startTime = item.starttime;
+                    const endTime = item.endtime;
+                    let status = 0; // Default status is 0 (not available)
+                    const shiftid = item.shiftid;
+                    const regionname = item.regionname;
+                    console.log(item);
+                    // Check the status of the shift
+                    if (item.status === 1) {
+                       
+                        status = 1; // Available
+                    } else if (item.status === 0) {
+                        status = 0.5; // Partially available
+                    }
+
+                    return { startTime, endTime, status, shiftid, regionname };
+                });
+                const hoursArray = Array(24).fill(0);
+                const shiftidArray = Array(24).fill(0);
+                const regionArray = Array(24).fill(0);
+
+                timeRanges.forEach(({ startTime, endTime, status, shiftid, regionname }) => {
+                    // Parse start and end times to obtain hours
+                    const startParts = startTime.split(' ')[0].split(':');
+                    const endParts = endTime.split(' ')[0].split(':');
+
+                    // Extract hours
+                    const startHour = parseInt(startParts[0]);
+                    console.log(startParts);
+                    console.log(startHour);
+                    const endHour = parseInt(endParts[0]);
+                    console.log(endParts);
+                    console.log(endHour);
+                    // Determine the value to store based on status
+                    const valueToStore = status;
+                  
+
+                    for (let hour = startHour; hour <= endHour; hour++) {
+                        shiftidArray[hour] = shiftid;
+                    }
+
+                    // Loop through hours and mark the corresponding index in the array if it falls within the range
+                    for (let hour = startHour; hour <= endHour; hour++) {
+                        hoursArray[hour] = valueToStore;
+                        regionArray[hour] = regionname;
+                    }
+                    console.log(hoursArray);
+                });
+
+           
+
+                shiftArrays.push(shiftArray);
+
+                for (let i = 0; i < 24; i++) {
+
+                    const hour = i < 12 ? i === 0 ? 12 : i : i === 12 ? 12 : i - 12;
+                    const amPm = i < 12 ? 'AM' : 'PM';
+                    const timeSlot = document.createElement('td');
+                    timeSlot.classList.add("border-1");
+                    timeSlot.classList.add("text-start");
+                    timeSlot.classList.add("mx-2");
+                    timeSlot.classList.add("table-text");
+                    if (hoursArray[i] === 1 || hoursArray[i] === 0.5) {
+                        const startTime = i;
+                        let endTime = i;
+                        const currentShiftId = shiftidArray[i];
+
+                        // Find the end time for the continuous slot
+                        while (endTime < 23 && (hoursArray[endTime + 1] === 1 || hoursArray[endTime + 1] === 0.5) && shiftidArray[endTime + 1] === currentShiftId) {
+                            endTime++;
+                        }
+                        const colspan = endTime - startTime + 1;
+                        timeSlot.colSpan = colspan;
+
+                        (hoursArray[i] == 0.5) ? hoursArray[i] = 0 : hoursArray[i]; // just for color of the shift change the class name for that !
+                   
+                        timeSlot.innerHTML += `<a data-form-id="formEdit_UMS" data-url="@Url.Action("_EditShift", "Physician")?id=${shiftidArray[i]}" class="mt-1 d-block text-dark js-stkModal-btn table-text text-center  Status-1">${startTime} To ${endTime} </a>`;
+                        timeSlot.classList.add('p-0');
+                            (hoursArray[i] == 0) ? hoursArray[i] = 0.5 : hoursArray[i];
+                            // Skip the next cells as they are merged
+                            i = endTime;
+                        
+                  }
+                    else {
+                        timeSlot.textContent = '';
+                        timeSlot.classList.add('shift');
+                    }
+                  
+                    employeeRow.appendChild(timeSlot);
+                }
+                employeeSchedulesContainer.appendChild(employeeRow);
+            }
+        }
+
+        // Update the employee schedules table
+        updateEmployeeSchedules();
+    });
+
+
     let currentDate1 = new Date();
     const month1 = currentDate1.getMonth();
 
     GetShiftForMonth(currentDate1.getFullYear(), month1 + 1);
-
-
-   
-    
-
-
-
     function generateCalendar(year, month) {
         const monthName = months[month];
 
@@ -324,17 +933,17 @@
 
         for (let i = 0; i < firstDayOfMonth; i++) {
             calendarHTML += `<td>
-                     <div class="sch-div">
-                    </div>
-                     <div class="sch-div">
-                </div>
-                     <div class="sch-div">
-                </div>
-                         <div class="sch-div">
-                    </div>
-                             <div class="sch-div">
-                    </div>
-           </td>`;
+                                                 <div class="sch-div">
+                                                </div>
+                                                 <div class="sch-div">
+                                            </div>
+                                                 <div class="sch-div">">
+                                            </div>
+                                                     <div class="sch-div">
+                                                </div>
+                                                         <div class="sch-div">
+                                                </div>
+                                       </td>`;
             dayCount++;
         }
 
@@ -369,55 +978,56 @@
                 dayCount = 0;
             }
             calendarHTML += `<td class="table-text">
-                    <div class=" ${isToday} sch-div-day text-center">
+                                                <div class=" ${isToday} sch-div-day text-center">
 
-            ${day}
+                                        ${day}
 
-            </div>
-                <div class="sch-div ${Status.length > 0 ? 'Status-' + Status[0] : ''}">
-                    <a data-form-id="formEdit_UMS"
-                                        data-url='@Url.Action("_EditShift", "Physician")?id=${ProviderNames.length > 0 ? ProviderNames[0].shiftid : ''}'
-                    class="js-stkModal-btn  " >${ProviderNames.length > 0 ? ProviderNames[0].name : ''}</a>
-            </div>
-                <div class="sch-div ${Status.length > 1 ? 'Status-' + Status[1] : ''}">
-                <a
-                    data-form-id="formEdit_UMS"
-                                            data-url='@Url.Action("_EditShift", "Physician")?id=${ProviderNames.length > 1 ? ProviderNames[1].shiftid : ''}'class="js-stkModal-btn  " >${ProviderNames.length > 1 ? ProviderNames[1].name : ''}</a>
-            </div>
-                <div class="sch-div ${Status.length > 2 ? 'Status-' + Status[2] : ''}">
-                    <a data-form-id="formEdit_UMS"
-                                            data-url='@Url.Action("_EditShift", "Physician")?id=${ProviderNames.length > 2 ? ProviderNames[2].shiftid : ''}'
-                    class="js-stkModal-btn " >${ProviderNames.length > 2 ? ProviderNames[2].name : ''}</a>
-            </div>
-            <div class="sch-div">
-                            <div type="button"  id="${buttonId}" data-bs-toggle="modal" data-bs-target="${ProviderNames.length > 3 ? '#exampleModal' : ''}" data-month="${month}" data-year="${year}" data-index="${day}" class="${Status.length > 3 ? 'btn btn-info w-100 text-white rounded-0 view-all-btn' : ''}">${ProviderNames.length > 3 ? 'View All' : ''}</div>
+                                        </div>
+                                            <div class="sch-div ${Status.length > 0 ? 'Status-' + Status[0] : ''}">
+                                                <a data-form-id="formEdit_UMS"
+                                                                    data-url='@Url.Action("_EditShift", "Physician")?id=${ProviderNames.length > 0 ? ProviderNames[0].shiftid : ''}'
+                                                class="js-stkModal-btn  " >${ProviderNames.length > 0 ? ProviderNames[0].name : ''}</a>
+                                        </div>
+                                            <div class="sch-div ${Status.length > 1 ? 'Status-' + Status[1] : ''}">
+                                            <a
+                                                data-form-id="formEdit_UMS"
+                                                                        data-url='@Url.Action("_EditShift", "Physician")?id=${ProviderNames.length > 1 ? ProviderNames[1].shiftid : ''}'class="js-stkModal-btn  " >${ProviderNames.length > 1 ? ProviderNames[1].name : ''}</a>
+                                        </div>
+                                            <div class="sch-div ${Status.length > 2 ? 'Status-' + Status[2] : ''}">
+                                                <a data-form-id="formEdit_UMS"
+                                                                        data-url='@Url.Action("_EditShift", "Physician")?id=${ProviderNames.length > 2 ? ProviderNames[2].shiftid : ''}'
+                                                class="js-stkModal-btn " >${ProviderNames.length > 2 ? ProviderNames[2].name : ''}</a>
+                                        </div>
+                                        <div class="sch-div">
+                                                        <div type="button"  id="${buttonId}" data-bs-toggle="modal" data-bs-target="${ProviderNames.length > 3 ? '#exampleModal' : ''}" data-month="${month}" data-year="${year}" data-index="${day}" class="${Status.length > 3 ? 'btn btn-info w-100 text-white rounded-0 view-all-btn' : ''}">${ProviderNames.length > 3 ? 'View All' : ''}</div>
 
-                    </div>
-            </td>`;
+                                                </div>
+                                        </td>`;
             dayCount++;
         }
 
         for (let i = dayCount; i < 7; i++) {
             calendarHTML += `<td>
-                 <div class="sch-div">
-                        </div>
-                     <div class="sch-div">
-                    </div >
-                         <div class="sch-div">
-                    </div>
-                                 <div class="sch-div">
-                        </div>
-                                     <div class="sch-div">
-                        </div></td>`;
+                                             <div class="sch-div">
+                                                    </div>
+                                                 <div class="sch-div">
+                                                </div >
+                                                     <div class="sch-div">
+                                                </div>
+                                                             <div class="sch-div">
+                                                    </div>
+                                                                 <div class="sch-div">
+                                                    </div></td>`;
         }
 
         calendarHTML += `</tr></tbody></table></div>`;
         calendarDiv.innerHTML = calendarHTML;
     }
 
-
-
    
+
+
+
     function initializeCalendar(year, month) {
         console.log("Initializing calendar...");
         if (month == null || year == null) {
@@ -458,32 +1068,35 @@
         let index = parseInt($(this).data('index'));
         let month = parseInt($(this).data('month'));
         let year = parseInt($(this).data('year'));
-        $('#model-head').html(index + ' / ' + months[month] +' / ' + year);
-        
+        $('#model-head').html(index + ' / ' + months[month] + ' / ' + year);
+
         let foundItem = extractedDataArray.find(o => parseInt(o.date) === index);
         let dayDataArrayfinal = foundItem ? foundItem.dayDataArray : [];
 
-     
+
         $('.modal-body').empty();
 
-       
+
         dayDataArrayfinal.forEach(item => {
-            let shiftDetails = ` <a data-form-id="formEdit_UMS"
-                                                data-url='@Url.Action("_EditShift", "Physician")?id=${ item.shiftid }'
-                            class="js-stkModal-btn dropdown-item fs-6 " >
-                                                        <div class=" my-1 p-2 ${'model-Status-' + item.status}" >
-                        <div>Physician Name: ${item.physicianName}</div>
-                        <div>Start Time: ${item.startTime}</div>
-                        <div>End Time: ${item.endTime}</div>
-                        <div>
-                        </a>
-                        `;
+            let shiftDetails =
+                `<div class="d-flex justify-content-between my-1 p-2 ${'model-Status-' + item.status}" >
+                                                                                    <div>
+                                                                                        <div class="table-text">Physician Name: ${item.physicianName}</div>
+                                                                                                    <div  class="table-text">Start Time: ${item.startTime}</div>
+                                                                                            <div  class="table-text">End Time: ${item.endTime}</div>
+                                                                                    </div>
+                                                                                    <div>
+                                                                                              <a data-form-id="formEdit_UMS"
+                                                                                            data-url='@Url.Action("_EditShift", "Physician")?id=${item.shiftid}'
+                                                                                            class="js-stkModal-btn btn btn-info text-white">Edit</a>
+                                                                                         </div>
+                                                                                    </div>`;
             $('.modal-body').append(shiftDetails);
         });
     });
 
-  
-   
+
+
 </script>
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">

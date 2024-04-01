@@ -88,6 +88,20 @@ namespace HelloDocAdmin.Repositories
 
                 if (_email.SendMail(Email, "New Patient Account Creation", emailContent))
                 {
+                    Emaillog el = new Emaillog();
+                    el.Action = 5;
+
+                    el.Sentdate = DateTime.Now;
+                    el.Createdate = DateTime
+                         .Now;
+                    el.Emailtemplate = "first";
+                    el.Senttries = 1;
+                    el.Subjectname = "New Patient Account Creation";
+
+                    el.Roleid = 4;
+                    el.Emailid = Email;
+                    _context.Emaillogs.Add(el);
+                    _context.SaveChanges();
                     return true;
                 }
                 else

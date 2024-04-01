@@ -46,8 +46,48 @@ namespace HelloDocAdmin.Controllers.AdminSite
             PatientHistory sr = await _searchrecords.Patienthistorybyfilter(firstname, lastname, email, phonenumber, currentpage, pagesize);
             return PartialView("../AdminSite/Records/_PatientsPartials", sr);
         }
+        public async Task<IActionResult> PatientRecords(int UserID, int pagesize = 5, int currentpage = 1)
+        {
+            PatientRecordsView sr = await _searchrecords.PatientRecordsViewBy(UserID, currentpage, pagesize);
+            return View("../AdminSite/Records/PatientRecords", sr);
+        }
+        public IActionResult EmailLogs()
+        {
+            return View("../AdminSite/Records/EmailLogs");
+        }
+        public async Task<IActionResult> EmailLogsData(int accounttype, string email, string ReciverName, DateTime CreatedDate, DateTime SendDate, int pagesize = 5, int currentpage = 1)
+        {
+            EmailRecords sr = await _searchrecords.EmailLogs(accounttype, email, ReciverName, CreatedDate, SendDate, pagesize, currentpage);
+            return PartialView("../AdminSite/Records/_emaillogslist", sr);
+        }
+        public IActionResult BlockHistory()
+        {
+            return View("../AdminSite/Records/BlockHistory");
+        }
+        public async Task<IActionResult> BlockHistoryData(string name, string email, string phonenumber, DateTime CreatedDate, int pagesize = 5, int currentpage = 1)
+        {
+            BlockRequest sr = await _searchrecords.BlockHistory(name, email, phonenumber, CreatedDate, pagesize, currentpage);
+            return PartialView("../AdminSite/Records/_BlockHistoryData", sr);
+        }
+        public async Task<IActionResult> UnBlock(int RequestId)
+        {
 
 
+            bool UnBlock = await _searchrecords.UnBlock(RequestId, CV.LoggedUserID());
+            if (UnBlock)
+            {
+                _notyf.Success("UnBlock Request Successfully");
+
+            }
+            else
+            {
+                _notyf.Error("UnBlock Request Canceled");
+
+            }
+
+            return View("../AdminSite/Records/BlockHistory");
+
+        }
 
     }
 }

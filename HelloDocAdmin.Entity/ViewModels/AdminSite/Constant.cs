@@ -1,19 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HelloDocAdmin.Entity.ViewModels.AdminSite
+﻿namespace HelloDocAdmin.Entity.ViewModels.AdminSite
 {
     public class Constant
     {
         public enum RequestType
         {
             Business = 4,
-            Patient=1,
-            Family=2,
-            Concierge=3
+            Patient = 1,
+            Family = 2,
+            Concierge = 3
         }
 
         public enum AdminDashStatus
@@ -36,11 +30,16 @@ namespace HelloDocAdmin.Entity.ViewModels.AdminSite
             Pending = 1, Active, NotActive
 
         }
-            public enum AccountType
-            {
-                All = 1, Admin, Physician,
-                Patient
-            }
+        public enum AccountType
+        {
+            All = 1, Admin, Physician,
+            Patient
+        }
+        public enum Action1
+        {
+            Sendorder = 1, Request, SendLink, SendAgreement, Forgot, NewRegistration
+
+        }
 
     }
 }

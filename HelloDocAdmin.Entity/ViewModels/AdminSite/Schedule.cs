@@ -6,8 +6,9 @@
 
         public int Physicianid { get; set; }
         public string? PhysicianName { get; set; }
+        public string? PhysicianPhoto { get; set; }
         public int Regionid { get; set; }
-
+        public string? RegionName { get; set; }
 
         public int ShiftDetailsID { get; set; }
 

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "QTNI9Qr4pojkErkGnZAh81z8vcnmRbK2WhmYwG6E2zQ=",
+  "Hash": "CuloQG+1eI+ecYzGeI133Ccyb59AIw+kV5+zOS/Ohrw=",
   "Source": "HelloDocAdmin",
   "BasePath": "_content/HelloDocAdmin",
   "Mode": "Default",
@@ -6579,6 +6579,23 @@
       "OriginalItemSpec": "wwwroot\\Upload\\Physician\\16\\sdfdsf-20240313043306-Signature.png"
     },
     {
+      "Identity": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\Physician\\17\\-202403290947-Photo.jfif",
+      "SourceId": "HelloDocAdmin",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\",
+      "BasePath": "_content/HelloDocAdmin",
+      "RelativePath": "Upload/Physician/17/-202403290947-Photo.jfif",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Upload\\Physician\\17\\-202403290947-Photo.jfif"
+    },
+    {
       "Identity": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\Physician\\17\\Agreementdoc.pdf",
       "SourceId": "HelloDocAdmin",
       "SourceType": "Discovered",
@@ -6645,6 +6662,40 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Upload\\Physician\\17\\shreyans-20240313043534-Photo.jpg"
+    },
+    {
+      "Identity": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\Physician\\18\\-202403290929-Signature.png",
+      "SourceId": "HelloDocAdmin",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\",
+      "BasePath": "_content/HelloDocAdmin",
+      "RelativePath": "Upload/Physician/18/-202403290929-Signature.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Upload\\Physician\\18\\-202403290929-Signature.png"
+    },
+    {
+      "Identity": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\Physician\\18\\-202403290947-Photo.jfif",
+      "SourceId": "HelloDocAdmin",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\",
+      "BasePath": "_content/HelloDocAdmin",
+      "RelativePath": "Upload/Physician/18/-202403290947-Photo.jfif",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Upload\\Physician\\18\\-202403290947-Photo.jfif"
     },
     {
       "Identity": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\Physician\\18\\Agreementdoc.pdf",
@@ -6832,6 +6883,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Upload\\Physician\\2\\-202403260448-Photo.png"
+    },
+    {
+      "Identity": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\Physician\\2\\-202403290947-Photo.jfif",
+      "SourceId": "HelloDocAdmin",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\",
+      "BasePath": "_content/HelloDocAdmin",
+      "RelativePath": "Upload/Physician/2/-202403290947-Photo.jfif",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Upload\\Physician\\2\\-202403290947-Photo.jfif"
     },
     {
       "Identity": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\Physician\\2\\Agreementdoc.pdf",
@@ -7106,6 +7174,23 @@
       "OriginalItemSpec": "wwwroot\\Upload\\Physician\\22\\123-202403200446-Signature.png"
     },
     {
+      "Identity": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\Physician\\23\\-202403290947-Photo.jfif",
+      "SourceId": "HelloDocAdmin",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\",
+      "BasePath": "_content/HelloDocAdmin",
+      "RelativePath": "Upload/Physician/23/-202403290947-Photo.jfif",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Upload\\Physician\\23\\-202403290947-Photo.jfif"
+    },
+    {
       "Identity": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\Physician\\23\\Agreementdoc.pdf",
       "SourceId": "HelloDocAdmin",
       "SourceType": "Discovered",
@@ -7376,6 +7461,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Upload\\Physician\\7\\-202403141208-Signature.png"
+    },
+    {
+      "Identity": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\Physician\\7\\-202403290946-Photo.jfif",
+      "SourceId": "HelloDocAdmin",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\",
+      "BasePath": "_content/HelloDocAdmin",
+      "RelativePath": "Upload/Physician/7/-202403290946-Photo.jfif",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Upload\\Physician\\7\\-202403290946-Photo.jfif"
     },
     {
       "Identity": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\Physician\\7\\Agreementdoc.pdf",
@@ -8141,6 +8243,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Upload\\req_34\\8145760_3816471 (1) (1) (1).jpg"
+    },
+    {
+      "Identity": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\req_35\\download (1).jfif",
+      "SourceId": "HelloDocAdmin",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\",
+      "BasePath": "_content/HelloDocAdmin",
+      "RelativePath": "Upload/req_35/download (1).jfif",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Upload\\req_35\\download (1).jfif"
     },
     {
       "Identity": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\req_4\\11116016_415.jpg",

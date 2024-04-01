@@ -23,5 +23,7 @@ namespace HelloDocAdmin.Repositories.Interface
         public Task<bool> EditShift(Schedule s, string AdminID);
         public Task<bool> UpdateStatusShift(string s, string AdminID);
         public Task<bool> DeleteShift(string s, string AdminID);
+        public Task<List<Schedule>> PhysicianAll1();
+        public Task<List<Physicians>> PhysicianOnCall(int? region);
     }
 }

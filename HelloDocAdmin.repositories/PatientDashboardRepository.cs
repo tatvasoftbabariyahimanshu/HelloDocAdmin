@@ -1,26 +1,18 @@
 ﻿using HelloDocAdmin.Entity.Data;
 using HelloDocAdmin.Entity.Models;
+using HelloDocAdmin.Entity.ViewModel.PatientSite;
 using HelloDocAdmin.Entity.ViewModels.AdminSite;
 using HelloDocAdmin.Entity.ViewModels.PatientSite;
 using HelloDocAdmin.Repositories.PatientInterface;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Reflection.Emit;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Collections;
 using Microsoft.AspNetCore.Http;
-using System.Net.Mail;
+using System.Collections;
+using System.Globalization;
 using System.Net;
-using HelloDocAdmin.Entity.ViewModel.PatientSite;
-using Microsoft.AspNetCore.Identity;
+using System.Net.Mail;
 
 namespace HelloDocAdmin.Repositories
 {
-    public class PatientDashboardRepository:IPatientDashboardRepository
+    public class PatientDashboardRepository : IPatientDashboardRepository
     {
 
         private readonly ApplicationDbContext _context;
@@ -36,7 +28,7 @@ namespace HelloDocAdmin.Repositories
             BitArray bt = new BitArray(1);
             bt.Set(0, false);
             var UserIDForRequest = _context.Users.FirstOrDefault(r => r.Aspnetuserid == UserID);
-            ViewDashboardDataModel model = new ViewDashboardDataModel();  
+            ViewDashboardDataModel model = new ViewDashboardDataModel();
             if (UserIDForRequest != null)
             {
                 int date = UserIDForRequest.Intdate;
@@ -53,7 +45,7 @@ namespace HelloDocAdmin.Repositories
                 model.State = UserIDForRequest.State;
                 model.City = UserIDForRequest.City;
                 model.Zipcode = UserIDForRequest.Zipcode;
-              
+
                 model.BirthDate = birthDate;
 
             }
@@ -66,7 +58,7 @@ namespace HelloDocAdmin.Repositories
 
                 if (doc != null)
                 {
-                    int numberOfDocs = _context.Requestwisefiles.Where(u => u.Requestid == request.Requestid && u.Isdeleted==bt).Count();
+                    int numberOfDocs = _context.Requestwisefiles.Where(u => u.Requestid == request.Requestid && u.Isdeleted == bt).Count();
                     list.Add(request.Requestid, numberOfDocs);
                 }
             }
@@ -140,11 +132,11 @@ namespace HelloDocAdmin.Repositories
                     }
                     var requestwisefile = new Requestwisefile
                     {
- 
+
                         Requestid = Requestid,
                         Filename = UploadFile.FileName,
                         Isdeleted = bt,
-           
+
                         Createddate = DateTime.Now,
                     };
                     _context.Requestwisefiles.Add(requestwisefile);
@@ -216,6 +208,22 @@ namespace HelloDocAdmin.Repositories
                 mailMessage.To.Add(email)
 ;
                 client.Send(mailMessage);
+
+                Emaillog el = new Emaillog();
+                el.Action = 2;
+
+                el.Sentdate = DateTime.Now;
+                el.Createdate = DateTime
+                     .Now;
+                el.Emailtemplate = "first";
+                el.Senttries = 1;
+                el.Subjectname = "New Patient Account Creation";
+                el.Requestid = RequestID;
+                el.Roleid = 4;
+                el.Emailid = email;
+                _context.Emaillogs.Add(el);
+                _context.SaveChanges();
+
                 foreach (var attachment in mailMessage.Attachments)
                 {
                     attachment.Dispose();
@@ -305,7 +313,7 @@ namespace HelloDocAdmin.Repositories
                     Lastname = viewdata.LastName,
                     Email = viewdata.Email,
                     Userid = isexist.Userid,
-                    Createduserid= isexist.Userid,
+                    Createduserid = isexist.Userid,
                     Phonenumber = viewdata.PhoneNumber,
                     Confirmationnumber = ConfirmationNumber,
                     Createddate = DateTime.Now,
@@ -353,7 +361,7 @@ namespace HelloDocAdmin.Repositories
                     City = viewdata.City,
                     Street = viewdata.Street,
                     Zipcode = viewdata.ZipCode,
-                    Regionid=region.Regionid,
+                    Regionid = region.Regionid,
                     Intdate = date,
                     Intyear = year,
                     Strmonth = monthName,
@@ -375,7 +383,7 @@ namespace HelloDocAdmin.Repositories
             {
                 return false;
             }
-           
+
         }
         #endregion
         #region CreateNewRequestForME
@@ -402,7 +410,7 @@ namespace HelloDocAdmin.Repositories
                     Createddate = DateTime.Now,
                     Createduserid = isexist.Userid,
                     Confirmationnumber = ConfirmationNumber,
-                   
+
                     Isurgentemailsent = new BitArray(1)
 
                 };
@@ -429,7 +437,7 @@ namespace HelloDocAdmin.Repositories
                     Street = viewdata.Street,
                     Zipcode = viewdata.ZipCode,
                     Regionid = region.Regionid,
-                   
+
                     Intdate = date,
                     Intyear = year,
                     Strmonth = monthName
@@ -455,7 +463,7 @@ namespace HelloDocAdmin.Repositories
                         Requestid = Request.Requestid,
                         Filename = viewdata.UploadImage,
                         Createddate = DateTime.Now,
-                        Isdeleted=bt
+                        Isdeleted = bt
                     };
                     _context.Requestwisefiles.Add(requestwisefile);
                     _context.SaveChanges();
@@ -496,6 +504,20 @@ namespace HelloDocAdmin.Repositories
 
                 if (_email.SendMail(viewdata.Email, "New Patient Account Creation", emailContent))
                 {
+                    Emaillog el = new Emaillog();
+                    el.Action = 2;
+                    el.Confirmationnumber = ConfirmationNumber;
+                    el.Sentdate = DateTime.Now;
+                    el.Createdate = DateTime
+                         .Now;
+                    el.Emailtemplate = "first";
+                    el.Senttries = 1;
+                    el.Subjectname = "New Patient Account Creation";
+                    el.Requestid = Request.Requestid;
+                    el.Roleid = 4;
+                    el.Emailid = Request.Email;
+                    _context.Emaillogs.Add(el);
+                    _context.SaveChanges();
                     Requeststatuslog rsl = new Requeststatuslog();
                     rsl.Status = 1;
                     rsl.Createddate = DateTime.Now;
@@ -543,7 +565,7 @@ namespace HelloDocAdmin.Repositories
                     userToUpdate.Intdate = date;
                     userToUpdate.Intyear = year;
                     userToUpdate.Strmonth = monthName;
-                    
+
                     userToUpdate.Modifiedby = id;
                     userToUpdate.Modifieddate = DateTime.Now;
 

@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 
 namespace HelloDocAdmin.Entity.Models;
 
 public partial class Emaillog
 {
-    public decimal Emaillogid { get; set; }
+    public int Emaillogid { get; set; }
 
     public string Emailtemplate { get; set; } = null!;
 
@@ -28,7 +26,7 @@ public partial class Emaillog
 
     public DateTime Createdate { get; set; }
 
-    public DateTime? Sentdate { get; set; }
+    public DateTime Sentdate { get; set; }
 
     public BitArray? Isemailsent { get; set; }
 

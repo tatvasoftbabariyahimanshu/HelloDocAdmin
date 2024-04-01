@@ -303,6 +303,20 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
             return PartialView("../AdminSite/Physician/_EditShift", schedule);
         }
+        public async Task<IActionResult> ProviderOncall(int? regionId)
+        {
+            TempData["Status"] = TempData["Status"];
+            ViewBag.RegionComboBox = await _combobox.RegionComboBox();
+            List<Physicians> v = await _phyrepo.PhysicianOnCall(regionId);
+            if (regionId != null)
+            {
+                return Json(v);
+            }
+            return View("../AdminSite/Physician/ProviderOnCall", v);
+
+
+
+        }
 
         #endregion
         #region _CreateShiftPost
@@ -368,6 +382,35 @@ namespace HelloDocAdmin.Controllers.AdminSite
             return RedirectToAction("Index");
         }
         #endregion
+        #region PhysicianAll
+        public async Task<IActionResult> PhysicianAll(int? region)
+        {
+
+
+            var v = await _phyrepo.PhysicianAll1();
+
+            //if (region != null)
+            //{
+            //    v = await _schedulingRepository.PhysicianByRegion(region);
+
+            //}
+
+            return Json(v);
+        }
+        #endregion
+        //#region Provider_on_call
+        //public async Task<IActionResult> ProviderOnCall(int? regionId)
+        //{
+        //    TempData["Status"] = TempData["Status"];
+        //    ViewBag.RegionComboBox = await _.RegionComboBox();
+        //    List<Physicians> v = await _schedulingRepository.PhysicianOnCall(regionId);
+        //    if (regionId != null)
+        //    {
+        //        return Json(v);
+        //    }
+        //    return View("../AdminViews/Schedule/ProviderOnCall", v);
+        //}
+        //#endregion
 
     }
 }
