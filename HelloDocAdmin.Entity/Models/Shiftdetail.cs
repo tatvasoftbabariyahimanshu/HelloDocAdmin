@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 
 namespace HelloDocAdmin.Entity.Models;
 
@@ -23,6 +21,7 @@ public partial class Shiftdetail
     public BitArray Isdeleted { get; set; } = null!;
 
     public string? Modifiedby { get; set; }
+
 
     public DateTime? Modifieddate { get; set; }
 

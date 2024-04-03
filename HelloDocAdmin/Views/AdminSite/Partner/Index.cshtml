@@ -75,7 +75,7 @@
                                 <td scope="col" class="table-text">@item.BusinessContact</td>
                                 <td scope="col" class="table-text d-flex">
 
-                                    <a class="btn  btn-sm btn-outline-danger mx-2" asp-action="DeleteVendor" asp-controller="Vendor" asp-route-vendorid="@item.VendorID">Delete</a>
+                                    <a class="btn  btn-sm btn-outline-danger mx-2" onclick="confirm('Delete vendor @item.VendorName')" asp-action="DeleteVendor" asp-controller="Vendor" asp-route-vendorid="@item.VendorID">Delete</a>
                                     <a class="btn btn-sm btn-outline-info" asp-action="VendorAddEdit" asp-controller="Vendor" asp-route-vendorid="@item.VendorID"> Edit</a>
 
 

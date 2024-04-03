@@ -1,0 +1,132 @@
+﻿@using static HelloDocAdmin.Entity.ViewModels.AdminSite.Constant;
+@{
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+    var enumData = from AdminStatus e in Enum.GetValues(typeof(AdminStatus))
+                   select new
+                   {
+                       ID = (int)e,
+                       Name = e.ToString()
+                   };
+}
+
+<div class="container">
+    <div class="card bg-transparent border-0">
+        <div class="card-header d-flex justify-content-between  border-0  bg-transparent p-1  mt-3 mb-2">
+            <div class="text-start d-flex align-items-center">
+                <h5 class="mt-2"><b> Requested Shift</b></h5>
+
+            </div>
+            <div class="text-end">
+                <a asp-controller="Physician" asp-action="Scheduling"
+                   class="btn btn-outline-info btn-back">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                         fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                              d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5" />
+                    </svg>Back
+                </a>
+            </div>
+        </div>
+
+        <div class="card-body rounded shadow">
+            <div class="d-flex justify-content-between">
+                <div class="dropdown text-start ">
+
+                    <select class="input-outline input-outline-select data-allow-clear="true" tabindex="-1" onchange="getfilterdata()" id="Region" asp-items="@(new SelectList(ViewBag.RegionComboBox,"RegionId","RegionName"))" data-control="select2" data-placeholder="Select Level">
+                    <option value="0">All Region</option>
+                    </select>
+                </div>
+                <div class="text-end d-flex">
+                    <form method="post" >
+                        <input id="selectedids" name="selectedids" type="hidden" value=""/>
+                        <button type="submit" class="btn btn-success text-white" asp-action="VendorAddEdit" asp-controller="Vendor">
+                            <span class="addnewlg">
+                                Add Vendor
+                            </span>
+                            <span class="addnewsm">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2" />
+                                </svg>
+                            </span>
+                        </button>
+                        <button type="submit" class="btn btn-success text-white mx-2" asp-action="ApproveAll" asp-controller="Physician">
+                            <span class="addnewlg">
+                                Approve Selected
+                            </span>
+                            <span class="addnewsm">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2" />
+                                </svg>
+                            </span>
+                        </button>
+                        <button type="submit" class="btn btn-danger text-white " asp-action="DeleteAll" asp-controller="Physician">
+                            <span class="addnewlg">
+                                Delete Selected
+                            </span>
+                            <span class="addnewsm">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2" />
+                                </svg>
+                            </span>
+                        </button>
+                    </form>
+                    
+                </div>
+            </div>
+            <div class="loding-div">
+                <div class="bro" id="BRO" style="height:100%;width:100%;position:absolute;background-color:black;opacity:0.2;z-index:1">
+                </div>
+                <div class="loading" id="Loading"></div>
+            </div>
+            <div id="SearchResult">
+            </div>
+        </div>
+    </div>
+
+</div>
+<script>
+    $(function () {
+        $(".loding-div").show();
+        getfilterdata();
+        $(".loding-div").hide();
+
+    });
+</script>
+<script>
+
+    function getfilterdata() {
+        $(".loding-div").show();
+        var Region = $('#Region').val();
+    
+
+        var pagesize = $('#SizeSelect').val();
+        var currentpage = $('#crt-page').val();
+
+        $.ajax({
+            url: "/Physician/RequestedShiftData",
+            type: "GET",
+            data: {
+                Region: Region,
+                currentpage: currentpage,
+                pagesize: pagesize
+            },
+            success: function (response) {
+                $(".loding-div").hide();
+                $('#SearchResult').html(response);
+            },
+            error: function () {
+                $(".loding-div").hide();
+                alert("error");
+            }
+        });
+    }
+
+    function getpage(index) {
+        $("#crt-page").val(index);
+
+    }
+  
+
+</script>
+
+

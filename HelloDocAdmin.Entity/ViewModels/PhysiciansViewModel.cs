@@ -1,10 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace HelloDocAdmin.Entity.ViewModels
 {
@@ -16,17 +12,18 @@ namespace HelloDocAdmin.Entity.ViewModels
         public int Physicianid { get; set; }
 
         public string? Aspnetuserid { get; set; }
-        public string? UserName { get; set; }
+        public string UserName { get; set; }
         public string? PassWord { get; set; }
-        public string? Regionsid { get; set; }
+        public string Regionsid { get; set; }
 
-        public string Firstname { get; set; } = null!;
+        public string Firstname { get; set; }
 
-        public string? Lastname { get; set; }
+        public string Lastname { get; set; }
 
-        public string Email { get; set; } = null!;
+        [EmailAddress]
+        public string Email { get; set; }
 
-        public string? Mobile { get; set; }
+        public string Mobile { get; set; }
         public string? State { get; set; }
         public string? Zipcode { get; set; }
 
@@ -49,13 +46,13 @@ namespace HelloDocAdmin.Entity.ViewModels
         public bool Islicensedoc { get; set; }
 
 
-        public string? Address1 { get; set; }
+        public string Address1 { get; set; }
 
         public string? Address2 { get; set; }
 
-        public string? City { get; set; }
+        public string City { get; set; }
 
-        public int? Regionid { get; set; }
+        public int Regionid { get; set; }
 
 
         public string? Altphone { get; set; }
@@ -76,7 +73,7 @@ namespace HelloDocAdmin.Entity.ViewModels
 
         public BitArray? Isdeleted { get; set; }
 
-        public int? Roleid { get; set; }
+        public int Roleid { get; set; }
 
         public string? Npinumber { get; set; }
 

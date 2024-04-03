@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "CuloQG+1eI+ecYzGeI133Ccyb59AIw+kV5+zOS/Ohrw=",
+  "Hash": "cud2yJAM8Eyj2tZ+5fkdgp0C5nJxYL8u0jZavyvg9PY=",
   "Source": "HelloDocAdmin",
   "BasePath": "_content/HelloDocAdmin",
   "Mode": "Default",
@@ -6594,6 +6594,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Upload\\Physician\\17\\-202403290947-Photo.jfif"
+    },
+    {
+      "Identity": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\Physician\\17\\-202404021029-Signature.png",
+      "SourceId": "HelloDocAdmin",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\",
+      "BasePath": "_content/HelloDocAdmin",
+      "RelativePath": "Upload/Physician/17/-202404021029-Signature.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Upload\\Physician\\17\\-202404021029-Signature.png"
     },
     {
       "Identity": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\wwwroot\\Upload\\Physician\\17\\Agreementdoc.pdf",

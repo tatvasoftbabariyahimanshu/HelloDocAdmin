@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "Ghj1C0TMh1Mhg2Sys6Rxpo9hwx4iiDUOB2RV2ZMPFIgmq7+22mc+ws9xiC5pC8bwcP6Z3QegKlNSgZeifoTlLQ==",
+  "dgSpecHash": "UzIrF+nn2mn8ThgXIn8eWl/p3V73+V3QTD119xs2Htpx3/sHEoITVpb7uWh33wCi6DJQSBbxVe33NfLsfHunYw==",
   "success": true,
   "projectFilePath": "D:\\Projects\\Hello Doc Admin\\HelloDocAdmin\\HelloDocAdmin.csproj",
   "expectedPackageFiles": [
@@ -159,6 +159,8 @@
     "C:\\Users\\pci105\\.nuget\\packages\\system.collections\\4.3.0\\system.collections.4.3.0.nupkg.sha512",
     "C:\\Users\\pci105\\.nuget\\packages\\system.collections.concurrent\\4.3.0\\system.collections.concurrent.4.3.0.nupkg.sha512",
     "C:\\Users\\pci105\\.nuget\\packages\\system.collections.immutable\\6.0.0\\system.collections.immutable.6.0.0.nupkg.sha512",
+    "C:\\Users\\pci105\\.nuget\\packages\\system.collections.nongeneric\\4.3.0\\system.collections.nongeneric.4.3.0.nupkg.sha512",
+    "C:\\Users\\pci105\\.nuget\\packages\\system.collections.specialized\\4.3.0\\system.collections.specialized.4.3.0.nupkg.sha512",
     "C:\\Users\\pci105\\.nuget\\packages\\system.componentmodel.annotations\\5.0.0\\system.componentmodel.annotations.5.0.0.nupkg.sha512",
     "C:\\Users\\pci105\\.nuget\\packages\\system.composition\\6.0.0\\system.composition.6.0.0.nupkg.sha512",
     "C:\\Users\\pci105\\.nuget\\packages\\system.composition.attributedmodel\\6.0.0\\system.composition.attributedmodel.6.0.0.nupkg.sha512",
@@ -236,6 +238,7 @@
     "C:\\Users\\pci105\\.nuget\\packages\\system.windows.extensions\\6.0.0\\system.windows.extensions.6.0.0.nupkg.sha512",
     "C:\\Users\\pci105\\.nuget\\packages\\system.xml.readerwriter\\4.3.0\\system.xml.readerwriter.4.3.0.nupkg.sha512",
     "C:\\Users\\pci105\\.nuget\\packages\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512",
+    "C:\\Users\\pci105\\.nuget\\packages\\twilio\\7.0.3\\twilio.7.0.3.nupkg.sha512",
     "C:\\Users\\pci105\\.nuget\\packages\\xlparser\\1.5.2\\xlparser.1.5.2.nupkg.sha512"
   ],
   "logs": []

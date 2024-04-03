@@ -1,5 +1,6 @@
 ﻿using HelloDocAdmin.Entity.Data;
 using HelloDocAdmin.Entity.Models;
+using HelloDocAdmin.Entity.ViewModels;
 using HelloDocAdmin.Entity.ViewModels.AdminSite;
 using HelloDocAdmin.Repositories.Interface;
 using Microsoft.IdentityModel.Tokens;
@@ -271,6 +272,56 @@ namespace HelloDocAdmin.Repositories
 
             {
                 data = data.Where(r => r.Emailid.ToLower().Contains(email.ToLower()));
+            }
+
+            dm.TotalPage = (int)Math.Ceiling((double)data.Count() / pagesize);
+            data = data.Skip((currentpage - 1) * pagesize).Take(pagesize);
+            dm.List = data.ToList();
+
+            dm.pageSize = pagesize;
+            dm.CurrentPage = currentpage;
+            return dm;
+        }
+        public async Task<SMSLogs> SMSLogs(int accounttype, string phonenumber, string ReciverName, DateTime CreatedDate, DateTime SendDate, int pagesize = 5, int currentpage = 1)
+        {
+            SMSLogs dm = new SMSLogs();
+            IQueryable<SMSLogsData> data = (from req in _context.Smslogs
+
+
+                                            select new SMSLogsData
+                                            {
+                                                Recipient = _context.Aspnetusers.FirstOrDefault(e => e.Phonenumber == req.Mobilenumber).Username ?? null,
+                                                Confirmationnumber = req.Confirmationnumber,
+                                                Createdate = req.Createdate,
+                                                Smstemplate = req.Smstemplate,
+                                                Sentdate = (DateTime)req.Sentdate,
+                                                Roleid = req.Roleid,
+                                                Mobilenumber = req.Mobilenumber,
+                                                Senttries = req.Senttries,
+                                                Action = req.Action
+                                            }
+                                          );
+            if (accounttype != 0)
+            {
+                data = data.Where(r => r.Roleid == accounttype);
+            }
+            if (CreatedDate != default(DateTime))
+            {
+                data = data.Where(r => r.Createdate.Date == CreatedDate.Date);
+            }
+            if (SendDate != default(DateTime))
+            {
+                data = data.Where(r => r.Sentdate.Date == SendDate.Date);
+            }
+            if (!ReciverName.IsNullOrEmpty())
+
+            {
+                data = data.Where(r => r.Recipient.ToLower().Contains(ReciverName.ToLower()));
+            }
+            if (!phonenumber.IsNullOrEmpty())
+
+            {
+                data = data.Where(r => r.Mobilenumber.ToLower().Contains(phonenumber.ToLower()));
             }
 
             dm.TotalPage = (int)Math.Ceiling((double)data.Count() / pagesize);

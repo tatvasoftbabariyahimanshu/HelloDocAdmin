@@ -115,7 +115,7 @@
                 <div class="modal-body">
                     <h5 class="modal-title " id="exampleModalLabel"> Select communication Way  <span class="text-info" id="patientname"> </span></h5>
                     <input type="hidden" name="email" id="email" />
-                    <input type="hidden" name="id" id="id" />
+                    <input type="hidden" name="id" id="phyid" />
                     <div class="mb-4 mx-3">
                         <div class="form-check p-2 ">
                             <input class="form-check-input" value="1" type="radio" name="way" id="flexRadioDefault1">
@@ -204,6 +204,7 @@
             const email = button.getAttribute('data-bs-email')
             // If necessary, you could initiate an Ajax request here
             // and then do the updating in a callback.
+            document.getElementById('phyid').value = button.getAttribute('data-bs-id')
 
             // Update the modal's content.
             const modalTitle = exampleModal.querySelector('#id')

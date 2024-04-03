@@ -36,7 +36,7 @@
                         <div class=" mb-3">
                             <div class="input-control w-100 mt-3">
                                 <select class="input-outline input-outline-select inp  " required  asp-for="Profession" data-allow-clear="true" tabindex="-1"  asp-items="@(new SelectList(ViewBag.ProfessionType,"HealthprofessionalID","ProfessionName"))" data-control="select2" data-placeholder="Select Level">
-                                    <option value="0">Select Profession Type</option>
+                                    <option value="">Select Profession Type</option>
                                 </select>
                             </div>
 
@@ -87,7 +87,7 @@
                             <input placeholder=" "  asp-for="Businesscontact" class="input-outline w-100 inp " type="text">
                             <label class="inputs-lable">Businesscontact</label>
                         </div>
-                        <span asp-validation-for="Businesscontact" class="err-msg"></span>
+                        <span asp-validation-for="Businesscontact" class="err-msg" ></span>
                     </div>
                 </div>
                 <div class="col-md-6 mt-2">

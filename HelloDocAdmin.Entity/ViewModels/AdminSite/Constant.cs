@@ -37,7 +37,7 @@
         }
         public enum Action1
         {
-            Sendorder = 1, Request, SendLink, SendAgreement, Forgot, NewRegistration
+            Sendorder = 1, Request, SendLink, SendAgreement, Forgot, NewRegistration, contact
 
         }
 

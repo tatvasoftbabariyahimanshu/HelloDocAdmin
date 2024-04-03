@@ -188,6 +188,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5TaXRlXFBoeXNpY2lhblxQcm92aWRlck9uQ2FsbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Projects/Hello Doc Admin/HelloDocAdmin/Views/AdminSite/Physician/RequestedShift.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5TaXRlXFBoeXNpY2lhblxSZXF1ZXN0ZWRTaGlmdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Projects/Hello Doc Admin/HelloDocAdmin/Views/AdminSite/Physician/Scheduling.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5TaXRlXFBoeXNpY2lhblxTY2hlZHVsaW5nLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -198,6 +202,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/Projects/Hello Doc Admin/HelloDocAdmin/Views/AdminSite/Physician/_EditShift.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5TaXRlXFBoeXNpY2lhblxfRWRpdFNoaWZ0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/Hello Doc Admin/HelloDocAdmin/Views/AdminSite/Physician/_RequestedshiftsList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5TaXRlXFBoeXNpY2lhblxfUmVxdWVzdGVkc2hpZnRzTGlzdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Projects/Hello Doc Admin/HelloDocAdmin/Views/AdminSite/ProviderLocation/Index.cshtml]
@@ -224,6 +232,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5TaXRlXFJlY29yZHNcU2VhcmNoUmVjb3JkLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Projects/Hello Doc Admin/HelloDocAdmin/Views/AdminSite/Records/SMSLogs.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5TaXRlXFJlY29yZHNcU01TTG9ncy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Projects/Hello Doc Admin/HelloDocAdmin/Views/AdminSite/Records/_BlockHistoryData.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5TaXRlXFJlY29yZHNcX0Jsb2NrSGlzdG9yeURhdGEuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -238,6 +250,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/Projects/Hello Doc Admin/HelloDocAdmin/Views/AdminSite/Records/_requestPartials.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5TaXRlXFJlY29yZHNcX3JlcXVlc3RQYXJ0aWFscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/Hello Doc Admin/HelloDocAdmin/Views/AdminSite/Records/_smslogslist.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5TaXRlXFJlY29yZHNcX3Ntc2xvZ3NsaXN0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Projects/Hello Doc Admin/HelloDocAdmin/Views/Home/Index.cshtml]

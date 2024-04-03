@@ -195,6 +195,28 @@ namespace HelloDocAdmin.Repositories
                     _context.Emaillogs.Add(el);
                     _context.SaveChanges();
                 }
+                _email.msgbody = "New Order arrived";
+                _email.tophone = "8849999677";
+                if (_email.sendsms())
+                {
+                    Smslog el = new Smslog();
+                    el.Action = 1;
+
+                    el.Sentdate = DateTime.Now;
+                    el.Createdate = DateTime
+                         .Now;
+                    el.Smstemplate = "first";
+                    el.Mobilenumber = data.BusinessContact;
+
+                    el.Senttries = 1;
+
+
+                    el.Roleid = 2;
+
+
+                    _context.Smslogs.Add(el);
+                    _context.SaveChanges();
+                }
                 return true;
             }
             catch (Exception ex)

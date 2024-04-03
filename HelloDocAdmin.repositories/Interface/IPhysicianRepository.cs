@@ -25,5 +25,8 @@ namespace HelloDocAdmin.Repositories.Interface
         public Task<bool> DeleteShift(string s, string AdminID);
         public Task<List<Schedule>> PhysicianAll1();
         public Task<List<Physicians>> PhysicianOnCall(int? region);
-    }
+        public Task<RequestedShift> RequestedShiftData(int Region, int pagesize = 5, int currentpage = 1);
+        public bool ApproveShiftAll(string selectedids, string id);
+        public bool DeleteShiftAll(string selectedids, string id);
+    };
 }

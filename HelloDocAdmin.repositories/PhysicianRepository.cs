@@ -585,7 +585,7 @@ namespace HelloDocAdmin.Repositories
                                             select new PhysiciansViewModel
                                             {
                                                 UserName = asp.Username,
-                                                Roleid = r.Roleid,
+                                                Roleid = (int)r.Roleid,
                                                 Status = r.Status,
                                                 notificationid = nof.Id,
                                                 Createddate = r.Createddate,
@@ -597,7 +597,7 @@ namespace HelloDocAdmin.Repositories
                                                 Businessname = r.Businessname,
                                                 Businesswebsite = r.Businesswebsite,
                                                 City = r.City,
-                                                Regionid = r.Regionid,
+                                                Regionid = (int)r.Regionid,
                                                 Mobile = r.Mobile,
                                                 Zipcode = r.Zip,
                                                 Medicallicense = r.Medicallicense,
@@ -1048,5 +1048,90 @@ namespace HelloDocAdmin.Repositories
             return pl;
         }
         #endregion
+
+
+        public bool ApproveShiftAll(string selectedids, string id)
+        {
+            //try
+            //{
+            List<int> priceList = selectedids.Split(',').Select(int.Parse).ToList();
+            foreach (int item in priceList)
+            {
+                var data = _context.Shiftdetails.FirstOrDefault(e => e.Shiftdetailid == item);
+                data.Status = 1;
+                data.Modifieddate = DateTime.Now;
+                data.Modifiedby = id;
+                _context.Shiftdetails.Update(data);
+                _context.SaveChanges();
+
+            }
+            return true;
+            //}
+            //catch (Exception ex)
+            //{
+            //    return false;
+            //}
+
+        }
+        public bool DeleteShiftAll(string selectedids, string id)
+        {
+            try
+            {
+                List<int> priceList = selectedids.Split(',').Select(int.Parse).ToList();
+                foreach (var item in priceList)
+                {
+                    var data = _context.Shiftdetails.FirstOrDefault(e => e.Shiftdetailid == item);
+                    data.Status = 1;
+                    data.Modifieddate = DateTime.Now;
+                    data.Modifiedby = id;
+                    _context.Shiftdetails.Update(data);
+                    _context.SaveChanges();
+
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+
+        }
+
+        public async Task<RequestedShift> RequestedShiftData(int Region, int pagesize = 5, int currentpage = 1)
+        {
+            RequestedShift dm = new RequestedShift();
+            IQueryable<ShiftDetailData> data = (from shift in _context.Shiftdetails
+                                                where shift.Status == 0
+                                                select new ShiftDetailData
+                                                {
+                                                    Status = shift.Status,
+                                                    Endtime = shift.Endtime,
+                                                    Regionid = shift.Regionid,
+                                                    Starttime = shift.Starttime,
+                                                    Shiftdate = shift.Shiftdate,
+                                                    Shiftid = shift.Shiftid,
+                                                    Shiftdetailid = shift.Shiftdetailid,
+                                                    PhysicianName = _context.Physicians.FirstOrDefault(e => e.Physicianid == _context.Shifts.FirstOrDefault(j => j.Shiftid == shift.Shiftid).Physicianid).Firstname,
+
+                                                }
+
+                                                );
+
+
+            if (Region != 0)
+            {
+                data = data.Where(r => r.Regionid == Region);
+            }
+            dm.TotalPage = (int)Math.Ceiling((double)data.Count() / pagesize);
+            data = data.Skip((currentpage - 1) * pagesize).Take(pagesize);
+
+
+            dm.List = data.ToList();
+            dm.pageSize = pagesize;
+            dm.CurrentPage = currentpage;
+
+
+            return dm;
+        }
     }
 }

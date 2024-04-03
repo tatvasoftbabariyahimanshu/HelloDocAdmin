@@ -60,6 +60,15 @@ namespace HelloDocAdmin.Controllers.AdminSite
             EmailRecords sr = await _searchrecords.EmailLogs(accounttype, email, ReciverName, CreatedDate, SendDate, pagesize, currentpage);
             return PartialView("../AdminSite/Records/_emaillogslist", sr);
         }
+        public IActionResult SMSLogs()
+        {
+            return View("../AdminSite/Records/SMSLogs");
+        }
+        public async Task<IActionResult> SMSLogsData(int accounttype, string phonenumber, string ReciverName, DateTime CreatedDate, DateTime SendDate, int pagesize = 5, int currentpage = 1)
+        {
+            SMSLogs sr = await _searchrecords.SMSLogs(accounttype, phonenumber, ReciverName, CreatedDate, SendDate, pagesize, currentpage);
+            return PartialView("../AdminSite/Records/_smslogslist", sr);
+        }
         public IActionResult BlockHistory()
         {
             return View("../AdminSite/Records/BlockHistory");
