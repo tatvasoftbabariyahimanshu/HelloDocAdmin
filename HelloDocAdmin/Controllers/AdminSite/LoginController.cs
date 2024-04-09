@@ -1,17 +1,12 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
-using DocumentFormat.OpenXml.InkML;
+using HelloDocAdmin.Controllers.Authenticate;
 using HelloDocAdmin.Entity.Data;
-using HelloDocAdmin.Entity.Models;
 using HelloDocAdmin.Entity.ViewModels.Authentication;
 using HelloDocAdmin.Repositories;
 using HelloDocAdmin.Repositories.Interface;
 using HelloDocAdmin.Repositories.PatientInterface;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json.Linq;
-using System.Net;
 using Microsoft.AspNetCore.Http.Extensions;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HelloDocAdmin.Controllers.AdminSite
 {
@@ -23,7 +18,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
         private readonly ILoginRepository _loginRepository;
         private readonly IJWTService _jwtservice;
         private readonly IPatientRequestRepository _patientRequestRepository;
-         public LoginController(ApplicationDbContext context, EmailConfiguration email, INotyfService notyf,ILoginRepository loginRepository, IJWTService jwtservice,IPatientRequestRepository patientRequestRepository)
+        public LoginController(ApplicationDbContext context, EmailConfiguration email, INotyfService notyf, ILoginRepository loginRepository, IJWTService jwtservice, IPatientRequestRepository patientRequestRepository)
         {
             _context = context;
             _email = email;
@@ -32,7 +27,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
             _jwtservice = jwtservice;
             _patientRequestRepository = patientRequestRepository;
         }
-       
+
         public IActionResult Index()
         {
             return View("../AdminSite/Login/Index");
@@ -48,22 +43,24 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
                     var jwttoken = _jwtservice.GenerateJWTAuthetication(admin);
                     Response.Cookies.Append("jwt", jwttoken);
-              
-                    Response.Cookies.Append("Status","1");
+
+                    Response.Cookies.Append("Status", "1");
                     Response.Cookies.Append("StatusText", "New");
 
 
 
                     _notyf.Success("Login is successfully..");
-                    if(admin.Role=="Admin")
-                    return RedirectToAction("Index", "Dashboard");
+                    if (admin.Role == "Admin")
+                        return RedirectToAction("Index", "Dashboard");
                     else if (admin.Role == "Patient")
-                    return RedirectToAction("Index", "PatientDashboard");
+                        return RedirectToAction("Index", "PatientDashboard");
                     else
                         return RedirectToAction("Index", "Dashboard");
                 }
                 else
                 {
+                    ModelState.AddModelError("Email", "Enter Registered Email...");
+                    ModelState.AddModelError("Password", "Enter Correct Password");
                     _notyf.Error("Invalid Email or Password..");
                     return View("../AdminSite/Login/Index", vm);
                 }
@@ -103,19 +100,19 @@ namespace HelloDocAdmin.Controllers.AdminSite
             }
             else
             {
-                return View("../AdminSite/Login/ForgotPassword",fp);
+                return View("../AdminSite/Login/ForgotPassword", fp);
             }
-           
+
         }
         public IActionResult SavePassword(ChangePassModel cpm)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                
+
                 ENC eNC = new ENC();
-            
-               cpm.Email=eNC.DecryptString(cpm.Email);
-                if(_loginRepository.savepass(cpm))
+
+                cpm.Email = eNC.DecryptString(cpm.Email);
+                if (_loginRepository.savepass(cpm))
                 {
                     _notyf.Success("Password Changes Successfully...");
                     return RedirectToAction("Index");
@@ -133,7 +130,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
             }
         }
 
-       
+
         public async Task<IActionResult> AccessDenide()
         {
             return View("../AdminSite/Login/AccessDenide");
@@ -145,14 +142,14 @@ namespace HelloDocAdmin.Controllers.AdminSite
         [HttpGet]
         public async Task<IActionResult> ChangePassword(string email, string datetime)
         {
-            ENC sn=new ENC();
-            var currentUrl =Request.GetDisplayUrl();
+            ENC sn = new ENC();
+            var currentUrl = Request.GetDisplayUrl();
             Console.WriteLine(currentUrl);
-            ChangePassModel cpm =new ChangePassModel();
+            ChangePassModel cpm = new ChangePassModel();
             cpm.Email = sn.DecryptString(email);
             TimeSpan time = DateTime.Now - sn.DecryptDate(datetime);
 
-            if(!_loginRepository.islinkexist(currentUrl))
+            if (!_loginRepository.islinkexist(currentUrl))
             {
                 if (time.TotalHours > 24)
                 {
@@ -167,16 +164,16 @@ namespace HelloDocAdmin.Controllers.AdminSite
             {
                 return View("../AdminSite/Login/LinkExpired");
             }
-         
-            
+
+
         }
         public async Task<IActionResult> NewRegsiter(string mail, string datetime)
         {
             ENC sn = new ENC();
-            NewRegistration cpm=new NewRegistration
-           {
-               Email= sn.DecryptString(mail),
-           };
+            NewRegistration cpm = new NewRegistration
+            {
+                Email = sn.DecryptString(mail),
+            };
             TimeSpan time = DateTime.Now - sn.DecryptDate(datetime);
 
             if (time.TotalHours > 24)
@@ -187,10 +184,10 @@ namespace HelloDocAdmin.Controllers.AdminSite
             else
             {
 
-                return View("../AdminSite/Login/RegisterNew",cpm);
+                return View("../AdminSite/Login/RegisterNew", cpm);
             }
 
-            
+
         }
         public async Task<IActionResult> Logout()
         {
@@ -203,13 +200,13 @@ namespace HelloDocAdmin.Controllers.AdminSite
         {
             if (ModelState.IsValid)
             {
-               if(_patientRequestRepository.CheckUserExist(cpm.Email))
+                if (_patientRequestRepository.CheckUserExist(cpm.Email))
                 {
 
                     _notyf.Success("User Alredy Exist...");
                     return View("../AdminSite/Login/RegisterNew", cpm);
                 }
-              
+
                 if (_loginRepository.saveuser(cpm))
                 {
                     _notyf.Success("User Created  Successfully...");
@@ -226,6 +223,19 @@ namespace HelloDocAdmin.Controllers.AdminSite
             {
                 _notyf.Error("Add Valid Details");
                 return View("../AdminSite/Login/RegisterNew", cpm);
+            }
+        }
+
+
+        public bool isAccessGranted(string manuname)
+        {
+            if (_loginRepository.isAccessGranted((int)CV.LoggedUserRoleID(), manuname))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 

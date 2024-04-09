@@ -1,25 +1,19 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
-using HelloDocAdmin.Entity.Data;
-using HelloDocAdmin.Entity.Models;
 using HelloDocAdmin.Entity.ViewModel.PatientSite;
 using HelloDocAdmin.Repositories.PatientInterface;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections;
-using System.Globalization;
-using System.Net;
 
 namespace HelloDocAdmin.Controllers.PatientSite
 {
     public class PatientRequestController : Controller
     {
-  
+
         private IPatientRequestRepository _patientrequestrepo;
         private readonly INotyfService _notyf;
- 
+
         public PatientRequestController(IPatientRequestRepository patientrequestrepo, INotyfService notyf)
         {
-           
+
             this._patientrequestrepo = patientrequestrepo;
             _notyf = notyf;
 
@@ -54,6 +48,13 @@ namespace HelloDocAdmin.Controllers.PatientSite
                 }
                 else
                 {
+                    if (_patientrequestrepo.UserIsBlocked(viewdata.Email))
+                    {
+                        _notyf.Information("Email Is Blocked By Admin");
+                        ModelState.AddModelError("Email", "Email Is Blocked By Admin");
+                        return View("../PatientSite/Request/PatientRequestForm", viewdata);
+                    }
+
                     bool val = _patientrequestrepo.CreatePatientRequest(viewdata);
                     if (val)
                     {
@@ -66,8 +67,8 @@ namespace HelloDocAdmin.Controllers.PatientSite
                         return View("../PatientSite/Request/PatientRequestForm", viewdata);
                     }
                 }
-              
-             
+
+
 
             }
             else

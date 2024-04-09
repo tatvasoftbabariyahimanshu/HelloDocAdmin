@@ -1,19 +1,15 @@
-﻿using AspNetCore;
-using AspNetCoreHero.ToastNotification.Abstractions;
-using DocumentFormat.OpenXml.Drawing;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using HelloDocAdmin.Controllers.Authenticate;
 using HelloDocAdmin.Entity.Data;
-using HelloDocAdmin.Entity.Models;
+using HelloDocAdmin.Entity.ViewModel.PatientSite;
 using HelloDocAdmin.Entity.ViewModels;
 using HelloDocAdmin.Entity.ViewModels.AdminSite;
-using HelloDocAdmin.Repositories;
 using HelloDocAdmin.Repositories.Interface;
 using Microsoft.AspNetCore.Mvc;
-using System.Drawing;
 
 namespace HelloDocAdmin.Controllers.AdminSite
 {
-    [CustomAuthorization("Admin")]
+    [CustomAuthorization("Admin,Physician")]
     public class ActionController : Controller
     {
         private IActionRepository _actionrepo;
@@ -47,11 +43,11 @@ namespace HelloDocAdmin.Controllers.AdminSite
         }
         public IActionResult ViewDocuments(int id)
         {
-            if(TempData["Mail"]!=null)
+            if (TempData["Mail"] != null)
             {
                 _notyf.Success(TempData["Mail"].ToString());
             }
-          
+
             ViewDocumentsModel sm = _dashboardrepo.ViewDocument(id);
             return View("../AdminSite/Action/ViewDocuments", sm);
         }
@@ -120,10 +116,13 @@ namespace HelloDocAdmin.Controllers.AdminSite
             }
             return RedirectToAction("Index", "Dashboard");
         }
+
+
+
         #region AssignProvider
         public async Task<IActionResult> AssignProvider(int requestid, int ProviderId, string Notes)
         {
-            if (await _dashboardrepo.AssignProvider(requestid, ProviderId, Notes,CV.LoggedUserID()))
+            if (await _dashboardrepo.AssignProvider(requestid, ProviderId, Notes, CV.LoggedUserID()))
             {
                 _notyf.Success("Physician Assigned successfully...");
             }
@@ -138,13 +137,28 @@ namespace HelloDocAdmin.Controllers.AdminSite
         #region TransferProvider
         public async Task<IActionResult> TransferProvider(int requestid, int ProviderId, string Notes)
         {
-            if (await _actionrepo.TransferProvider(requestid, ProviderId, Notes,CV.LoggedUserID()))
+            if (await _actionrepo.TransferProvider(requestid, ProviderId, Notes, CV.LoggedUserID()))
             {
                 _notyf.Success("Physician Transfered successfully...");
             }
             else
             {
                 _notyf.Error("Physician Not Transfered...");
+            }
+
+            return RedirectToAction("Index", "Dashboard");
+        }
+        #endregion
+        #region TransferProvider
+        public async Task<IActionResult> TransferToAdmin(int requestid, string Notes)
+        {
+            if (await _actionrepo.TransferToAdmin(requestid, Notes, CV.LoggedUserID()))
+            {
+                _notyf.Success("Case is Transfered To Admin...");
+            }
+            else
+            {
+                _notyf.Error("Not Transfered...");
             }
 
             return RedirectToAction("Index", "Dashboard");
@@ -180,13 +194,12 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
         }
         #endregion
-
         #region _CancelCase
         public IActionResult CancelCase(int RequestId, string Note, string CaseTag)
         {
 
 
-            bool CancelCase = _dashboardrepo.CancelCase(RequestId, Note, CaseTag,CV.LoggedUserID());
+            bool CancelCase = _dashboardrepo.CancelCase(RequestId, Note, CaseTag, CV.LoggedUserID());
             if (CancelCase)
             {
                 _notyf.Success("Case Canceled Successfully");
@@ -223,36 +236,36 @@ namespace HelloDocAdmin.Controllers.AdminSite
         #endregion
         #region Delete Doc
 
-        public IActionResult DeleteallDoc(string path,int RequestID)
+        public IActionResult DeleteallDoc(string path, int RequestID)
         {
 
 
 
             List<int> pathList = path.Split(',').Select(int.Parse).ToList();
-            for(var i=0;i<pathList.Count;i++)
+            for (var i = 0; i < pathList.Count; i++)
             {
-              
+
                 bool data = _actionrepo.DeleteDoc(pathList[i]);
-           
+
 
 
                 if (data)
                 {
-       
+
                     _notyf.Success("File deleted successfully.");
                 }
                 else
                 {
-                  
+
                     _notyf.Error("File does not exist.");
                     return RedirectToAction("ViewDocuments", new { id = RequestID });
                 }
             }
 
-      
 
-                _notyf.Success("Documet Deleted Successfully");
-           
+
+            _notyf.Success("Documet Deleted Successfully");
+
 
             return RedirectToAction("ViewDocuments", new { id = RequestID });
 
@@ -262,24 +275,24 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
 
 
-           
-
-                bool data = _actionrepo.SendAllMailDoc(path,RequestID);
 
 
+            bool data = _actionrepo.SendAllMailDoc(path, RequestID);
 
-                if (data)
-                {
 
-                    _notyf.Success("mail Sended with Document successfully.");
-                }
-                else
-                {
 
-                    _notyf.Error("mail not sended.");
-                    return RedirectToAction("ViewDocuments", new { id = RequestID });
-                }
-            
+            if (data)
+            {
+
+                _notyf.Success("mail Sended with Document successfully.");
+            }
+            else
+            {
+
+                _notyf.Error("mail not sended.");
+                return RedirectToAction("ViewDocuments", new { id = RequestID });
+            }
+
 
 
 
@@ -290,16 +303,16 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
         }
 
-        public IActionResult DeleteDoc(int RequestWiseFileID, int RequestID,string path)
+        public IActionResult DeleteDoc(int RequestWiseFileID, int RequestID, string path)
         {
 
 
-            
+
             bool data = _actionrepo.DeleteDoc(RequestWiseFileID);
             if (data)
             {
-               
-            
+
+
                 _notyf.Success("Documet Deleted Successfully");
             }
             else
@@ -330,12 +343,11 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
         }
         #endregion
-
         #region order_action
         public async Task<IActionResult> Order(int id)
         {
 
-            List<HealthprofessionaltypeCombobox> cs =await _combobox.healthprofessionaltype();
+            List<HealthprofessionaltypeCombobox> cs = await _combobox.healthprofessionaltype();
             ViewBag.ProfessionType = cs;
             ViewSendOrderModel data = new ViewSendOrderModel
             {
@@ -351,7 +363,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
             return Task.FromResult<IActionResult>(Json(v));
         }
 
-        public Task<IActionResult> SelectProfessionalByID (int VendorID)
+        public Task<IActionResult> SelectProfessionalByID(int VendorID)
         {
 
             var v = _actionrepo.SelectProfessionlByID(VendorID);
@@ -361,14 +373,14 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
         public IActionResult SendOrder(ViewSendOrderModel sm)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                bool data=_actionrepo.SendOrder(sm,CV.LoggedUserID());
-                if(data)
+                bool data = _actionrepo.SendOrder(sm, CV.LoggedUserID());
+                if (data)
                 {
                     _notyf.Success("Order Created  successfully...");
                     _notyf.Information("Mail is sended to Vendor successfully...");
-                     return RedirectToAction("Index", "Dashboard");
+                    return RedirectToAction("Index", "Dashboard");
                 }
                 else
                 {
@@ -386,14 +398,11 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
 
         #endregion
-
-
-
         #region Clear_case
-          public IActionResult ClearCase(int RequestID)
+        public IActionResult ClearCase(int RequestID)
         {
-             bool sm=_actionrepo.ClearCase(RequestID,CV.LoggedUserID());
-            if(sm)
+            bool sm = _actionrepo.ClearCase(RequestID, CV.LoggedUserID());
+            if (sm)
             {
                 _notyf.Success("Case Cleared...");
                 _notyf.Warning("You can not show Cleared Case ...");
@@ -402,21 +411,18 @@ namespace HelloDocAdmin.Controllers.AdminSite
             {
                 _notyf.Error("there is some error in deletion...");
             }
-            return RedirectToAction("Index", "Dashboard", new { Status="4,5" });
+            return RedirectToAction("Index", "Dashboard", new { Status = "4,5" });
         }
 
         #endregion
-
-
-
         #region Close Case
 
 
         public IActionResult CloseCase(int RequestID)
         {
 
-            ViewCloseCaseModel vc=_actionrepo.CloseCaseData(RequestID);
-            return View("../AdminSite/Action/CloseCase",vc);
+            ViewCloseCaseModel vc = _actionrepo.CloseCaseData(RequestID);
+            return View("../AdminSite/Action/CloseCase", vc);
         }
         public IActionResult CloseCaseUnpaid(int RequestID)
         {
@@ -424,7 +430,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
             if (sm)
             {
                 _notyf.Success("Case Closed...");
-                     _notyf.Information("You can see Closed case in unpaid State...");
+                _notyf.Information("You can see Closed case in unpaid State...");
 
             }
             else
@@ -436,10 +442,28 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
 
         #endregion
+        #region Accept Case
 
 
 
+        public IActionResult AcceptRequest(int requestID)
+        {
+            bool sm = _actionrepo.AcceptCase(requestID);
+            if (sm)
+            {
+                _notyf.Success("Request Accepted");
 
+
+            }
+            else
+            {
+                _notyf.Error("there is some error in Accepting...");
+            }
+            return RedirectToAction("Index", "Dashboard", new { Status = "2" });
+        }
+
+
+        #endregion
         #region Encounter
 
         #region ACTION-ENCOUNTER VIEW
@@ -448,7 +472,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
             EncounterViewModel model = _actionrepo.GetEncounterDetailsByRequestID(RequestID);
 
-            return View("../AdminSite/Action/Encounter",model);
+            return View("../AdminSite/Action/Encounter", model);
         }
         #endregion
         public IActionResult EncounterEdit(EncounterViewModel model)
@@ -456,7 +480,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
 
 
-            bool data = _actionrepo.EditEncounterDetails(model,CV.LoggedUserID());
+            bool data = _actionrepo.EditEncounterDetails(model, CV.LoggedUserID());
             if (data)
             {
 
@@ -468,7 +492,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
                 _notyf.Error("Encounter Changes Not Saved");
             }
 
-            return RedirectToAction("EncounterView", new { RequestID=model.Requesid });
+            return RedirectToAction("EncounterView", new { RequestID = model.Requesid });
 
         }
 
@@ -476,10 +500,10 @@ namespace HelloDocAdmin.Controllers.AdminSite
         public IActionResult Finalize(EncounterViewModel model)
         {
             bool data = _actionrepo.EditEncounterDetails(model, CV.LoggedUserID());
-            if(data)
+            if (data)
             {
-              bool final=_actionrepo.CaseFinalized(model,CV.LoggedUserID());
-                if(final)
+                bool final = _actionrepo.CaseFinalized(model, CV.LoggedUserID());
+                if (final)
                 {
                     _notyf.Success("Case Is Finalized");
                     return RedirectToAction("Index", "Dashboard", new { Status = "6" });
@@ -487,20 +511,85 @@ namespace HelloDocAdmin.Controllers.AdminSite
                 else
                 {
                     _notyf.Success("Case Is not Finalized");
-                return View("../AdminSite/Action/Encounter", model);
+                    return View("../AdminSite/Action/Encounter", model);
                 }
-          
+
             }
             else
             {
                 _notyf.Success("Case Is not Finalized");
                 return View("../AdminSite/Action/Encounter", model);
             }
-           
+
         }
         #endregion
 
         #endregion
+        #region Create New Request
+
+        public IActionResult CreateNewRequest()
+        {
+            return View("../AdminSite/Action/CreateNewRequest");
+        }
+        public IActionResult CreateNewRequestPost(ViewPatientRequest data)
+        {
+            if (ModelState.IsValid)
+            {
+                bool apr = _actionrepo.CreateNewRequestPost(data, CV.LoggedUserID());
+                if (apr)
+                {
+                    _notyf.Success("Request Created....!");
+                    return RedirectToAction("Index", "Dashboard");
+                }
+                else
+                {
+                    _notyf.Error("Request Not Created....!");
+                    return View("../AdminSite/Action/CreateNewRequest");
+                }
+            }
+            else
+            {
+                _notyf.Error("Data Invalid....!");
+                return View("../AdminSite/Action/CreateNewRequest");
+            }
+
+        }
+
+        #endregion
+
+
+        public IActionResult HouseCall(int requestID)
+        {
+
+            bool data = _actionrepo.houseCall(requestID, CV.LoggedUserID());
+            if (data)
+            {
+                _notyf.Success("Request Status Changed To House Call");
+            }
+            else
+            {
+                _notyf.Error("Request Status Not Changed To House Call");
+
+            }
+
+            return RedirectToAction("Index", "Dashboard");
+        }
+        public IActionResult Consult(int requestID)
+        {
+
+            bool data = _actionrepo.Consult(requestID, CV.LoggedUserID());
+            if (data)
+            {
+                _notyf.Success("Request Concluded...");
+            }
+            else
+            {
+                _notyf.Error("Request Not Concluded...");
+
+            }
+
+            return RedirectToAction("Index", "Dashboard");
+        }
 
 
 

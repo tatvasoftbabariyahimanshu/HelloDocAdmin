@@ -5,7 +5,7 @@
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Confirm Block</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form asp-action="BlockCase" asp-controller="Action">
+            <form asp-action="BlockCase" asp-controller="Action" onsubmit="return onsmt_CC()">
                 <input type="hidden" value="" id="RequestID_Input_ModelBlockCase" name="RequestId" />
 
                 <div class="modal-body">
@@ -14,7 +14,7 @@
                     <input value="" type="hidden" name="requestid" id="requestid" />
                 
                     <div class="inputs-control w-100 mt-2">
-                        <textarea id="changenote" placeholder=" " name="Note" rows="5" class="input-outline w-100  " type="text"></textarea>
+                        <textarea id="changenote_cc" placeholder=" " name="Note" rows="5" class="input-outline w-100  " type="text"></textarea>
 
                         <label class="inputs-lable inputs-lable-textarea " id="notedata">Notes for Block</label>
                     </div>
@@ -27,3 +27,42 @@
         </div>
     </div>
 </div>
+<script>
+    function onsmt_CC() {
+      
+
+        // Prevent default form submission
+
+        // Reset error messages
+        let errorMessages = document.querySelectorAll(".err-msg");
+        errorMessages.forEach(function (element) {
+            element.textContent = ""; // Clear any existing error messages
+        });
+
+        // Validation flag
+        let isValid = true;
+
+        // Validate Startdate
+        let changenote_cc = document.getElementById("changenote_cc");
+        if (!changenote_cc.value) {
+            let errorMessage = "write some Notes!!!";
+            displayErrorMessage(changenote_cc, errorMessage);
+            isValid = false;
+        }
+        
+
+
+        if (isValid) {
+
+
+            return true;
+        }
+        else {
+
+
+            return false;
+        }
+    }
+
+
+</script>

@@ -11,7 +11,7 @@ using Newtonsoft.Json;
 
 namespace HelloDocAdmin.Controllers.AdminSite
 {
-    [CustomAuthorization("Admin")]
+    [CustomAuthorization("Admin,Physician")]
     public class PhysicianController : Controller
     {
         private IDashboardRepository _dashboardrepo;
@@ -306,6 +306,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
         #endregion
         #endregion
 
+        [CustomAuthorization("Admin")]
 
         #region Scheduling
         #region _CreateShift
@@ -353,12 +354,13 @@ namespace HelloDocAdmin.Controllers.AdminSite
                 _notyf.Success("Shift Created Successfully...");
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Scheduling");
         }
         #endregion
 
 
         #endregion
+        [CustomAuthorization("Admin,Physician")]
         public async Task<IActionResult> GetShiftForMonth(int? month)
         {
             var v = await _phyrepo.GetShift((int)month);

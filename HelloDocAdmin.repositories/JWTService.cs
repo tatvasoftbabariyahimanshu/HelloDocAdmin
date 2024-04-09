@@ -32,7 +32,8 @@ namespace HelloDocAdmin.Repositories
                 new Claim(ClaimTypes.Name, userinfo.Username),
                 new Claim(JwtHeaderParameterNames.Jku, userinfo.FirstName),
                 new Claim(JwtHeaderParameterNames.Kid, Guid.NewGuid().ToString()),
-                new Claim(ClaimTypes.NameIdentifier, userinfo.Username)
+                new Claim(ClaimTypes.NameIdentifier, userinfo.Username),
+                  new Claim("RoleID", userinfo.RoleID.ToString()),
             };
 
 

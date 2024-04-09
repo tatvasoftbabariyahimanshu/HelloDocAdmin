@@ -5,22 +5,24 @@
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Send Mail To  Patient for Submitting request</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form asp-action="SendLink" asp-controller="Action">
+            <form asp-action="SendLink" asp-controller="Action" onsubmit="return onsmt_send()">
                 <div class="modal-body">
                     <div class="inputs-control ">
-                        <input placeholder=" " name="firstname" class="input-outline w-100 inp edit-frm" type="text" required >
+                        <input placeholder=" " name="firstname" id="firstname_send" class="input-outline w-100 inp edit-frm" type="text" >
                         <label class="inputs-lable">First name</label>
                     </div>
                     <div class="inputs-control mt-2 ">
-                        <input placeholder=" " name="lastname" class="input-outline w-100 inp edit-frm" type="text" required>
+                        <input placeholder=" " name="lastname" id="lastname_send" class="input-outline w-100 inp edit-frm" type="text" >
                         <label class="inputs-lable">Last name</label>
                     </div>
+                    <div class="inputs-control mt-2 ">
                     <div class=" form-floating mt-2">
-                        <input id="phone4" placeholder="Mobile" name="phonenumber" type="tel" class=" telephone input-outline w-100 inp align-items-center edit-frm" required />
+                        <input id="phone4" placeholder="Mobile"  name="phonenumber" type="tel" class=" telephone input-outline w-100 inp align-items-center edit-frm"  />
 
                     </div>
+                    </div>
                     <div class="inputs-control mt-2 ">
-                        <input placeholder=" " name="email" class="input-outline w-100 inp edit-frm" type="email" required>
+                        <input placeholder=" " name="email" id="email_send" class="input-outline w-100 inp edit-frm" type="email" >
                         <label class="inputs-lable">Email</label>
                     </div>
                 </div>
@@ -39,5 +41,61 @@
         utilsScript:
             "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
     });
+
+</script>
+
+
+<script>
+    function onsmt_send() {
+
+
+        
+        let errorMessages = document.querySelectorAll(".err-msg");
+        errorMessages.forEach(function (element) {
+            element.textContent = ""; // Clear any existing error messages
+        });
+
+      
+        let isValid = true;
+
+        
+        let firstname_send = document.getElementById("firstname_send");
+        if (!firstname_send.value) {
+            let errorMessage = "Email is required.";
+            displayErrorMessage(firstname_send, errorMessage);
+            isValid = false;
+        }
+
+        let lastname_send = document.getElementById("lastname_send");
+        if (!lastname_send.value) {
+            let errorMessage = "Last name  is required.";
+            displayErrorMessage(lastname_send, errorMessage);
+            isValid = false;
+        }
+        let phone4 = document.getElementById("phone4");
+        if (!phone4.value) {
+            let errorMessage = "phone  is required.";
+            displayErrorMessage(phone4, errorMessage);
+            isValid = false;
+        }
+        let email_send = document.getElementById("email_send");
+        if (!email_send.value) {
+            let errorMessage = "Email is required.";
+            displayErrorMessage(email_send, errorMessage);
+            isValid = false;
+        }
+
+        if (isValid) {
+
+
+            return true;
+        }
+        else {
+
+
+            return false;
+        }
+    }
+
 
 </script>

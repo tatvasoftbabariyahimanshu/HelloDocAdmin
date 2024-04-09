@@ -15,8 +15,8 @@
 
 }
 
-
 <div class="container">
+
     <div class="card bg-transparent border-0">
         <div class="card-header d-flex justify-content-between  border-0  bg-transparent p-1  mt-3 mb-2">
             <div class="text-start d-flex align-items-center">
@@ -34,7 +34,7 @@
                 </a>
             </div>
         </div>
-
+        
         <div class="card-body rounded shadow">
             <div class="d-flex justify-content-between">
                 <div class="dropdown text-start ">
@@ -71,8 +71,19 @@
                     
                 </div>
             </div>
+            <div class="middle loding-div position-absolute  top-20" style="left:50%;">
+                <div class="bar bar1"></div>
+                <div class="bar bar2"></div>
+                <div class="bar bar3"></div>
+                <div class="bar bar4"></div>
+                <div class="bar bar5"></div>
+                <div class="bar bar6"></div>
+                <div class="bar bar7"></div>
+                <div class="bar bar8"></div>
+            </div>
+
             <div class="table-responsive">
-                <table class="table table-responsive mt-3 p-3">
+                <table id="myTable" class="table table-responsive mt-3 p-3">
                     <thead class=" text-start tablehead">
                         <tr>
                             <th scope="col">Account Type</th>
@@ -83,6 +94,7 @@
                         </tr>
                     </thead>
                     <tbody class="table-group-divider mx-5">
+                       
                         @foreach (var item in Model)
                         {
                             <tr class="@Enum.GetName(typeof(AccountType), item.accounttype)">
@@ -90,18 +102,18 @@
                                 <td scope="row" data-label="Created Date" class="table-text"> @item.FirstName</td>
                                 <td scope="row" data-label="Created Date" class="table-text"> @item.Mobile</td>
                                @* <td scope="row" data-label="Created Date">  @Enum.GetName(typeof(AdminStatus), item.status)</td>*@
-                                <td scope="row" data-label="Created Date" class="table-text"> @item.status)</td>
+                                <td scope="row" data-label="Created Date" class="table-text"> @item.status Request</td>
                                 <td class="mobile-hide" data-label="Document">
                                     @if (item.isAdmin)
                                     {
                                         <a asp-action="AdminProfile" asp-controller="Access" asp-route-id="@item.aspnetuserid" class="btn btn-outline-info btn-sm document-button mx-1">
-                                            Edit a
+                                            Edit 
                                         </a>
                                     }
                                     else
                                     {
                                         <a asp-action="PhysicianProfile" asp-controller="Physician" asp-route-id="@item.UserID" class="btn btn-outline-info btn-sm document-button mx-1">
-                                            Edit p
+                                            Edit 
                                         </a>
                                     }
 
@@ -116,11 +128,22 @@
     </div>
 
 </div>
+<script>
+    setTimeout(function () { $(".loding-div").hide() }, 500);
+</script>
+<script>
+    $(document).ready(function () {
+        $('#myTable')
+            .dataTable({
+                "responsive": true,
+
+            });
+    });
+</script>
 <script type="text/javascript">
 
-
     $('#accounttype').on('change', function () {
-        console.log(56);
+       
         var Accounttype = $("#accounttype").val();
         console.log($("#accounttype").val());
         if (Accounttype == 2) {
@@ -128,6 +151,7 @@
             $('.Physician').hide();
             $('#adminAccount').show();
             $('#providerAccount').hide();
+
         } else if (Accounttype == 3) {
             $('.Admin').hide();
             $('.Physician').show();

@@ -51,6 +51,18 @@
                 </div>
             </div>
             <div class="table-responsive  dashboard-tbl mt-3 ">
+                <div class="middle loding-div position-absolute  top-50" style="left:50%;z-index:99">
+                    <div class="bar bar1"></div>
+                    <div class="bar bar2"></div>
+                    <div class="bar bar3"></div>
+                    <div class="bar bar4"></div>
+                    <div class="bar bar5"></div>
+                    <div class="bar bar6"></div>
+                    <div class="bar bar7"></div>
+                    <div class="bar bar8"></div>
+                </div>
+
+              
                 <table id="myTable" class="table table-responsive">
                     <thead class=" text-start tablehead">
                         <tr>
@@ -75,7 +87,8 @@
                                 <td scope="col" class="table-text">@item.BusinessContact</td>
                                 <td scope="col" class="table-text d-flex">
 
-                                    <a class="btn  btn-sm btn-outline-danger mx-2" onclick="confirm('Delete vendor @item.VendorName')" asp-action="DeleteVendor" asp-controller="Vendor" asp-route-vendorid="@item.VendorID">Delete</a>
+                                    <a class="btn btn-sm btn-outline-danger mx-2"
+                                       onclick="confirmDelete('@item.VendorID')">Delete</a>
                                     <a class="btn btn-sm btn-outline-info" asp-action="VendorAddEdit" asp-controller="Vendor" asp-route-vendorid="@item.VendorID"> Edit</a>
 
 
@@ -85,6 +98,7 @@
                         }
                     </tbody>
                 </table>
+                
             </div>
         </div>
     </div>
@@ -92,3 +106,35 @@
 </div>
 
 
+<script>
+    setTimeout(function () { $(".loding-div").hide() }, 500);
+</script>
+<script>
+    $(document).ready(function () {
+        $('#myTable')
+            .dataTable({
+                "responsive": true,
+              
+            });
+    });
+</script>
+
+
+<script>
+    function confirmDelete(vendorId) {
+        Swal.fire({
+            title: "Delete Vendor ?",
+            showDenyButton: false,
+            showCancelButton: true,
+            confirmButtonText: "Yes",
+            denyButtonText: `Don't delete`
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = '/Vendor/DeleteVendor?vendorid=' + vendorId;
+            }
+          
+
+            
+        });
+    }
+</script>

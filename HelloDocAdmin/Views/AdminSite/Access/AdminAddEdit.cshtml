@@ -53,6 +53,9 @@
                                 <input placeholder=" " asp-for="ASP_UserName" class="input-outline w-100 inp "  type="text">
                                 <label class="inputs-lable">UserName</label>
                             </div>
+                            <span asp-validation-for="ASP_UserName" class="err-msg">
+
+                            </span>
 
                         </div>
                     </div>
@@ -62,7 +65,9 @@
                                 <input placeholder=" " asp-for="ASP_Password" class="input-outline w-100 inp " type="text">
                                 <label class="inputs-lable">password</label>
                             </div>
+                            <span asp-validation-for="ASP_Password" class="err-msg">
 
+                            </span>
                         </div>
                     </div>
                    @* <div class="col-md-6 mt-2">
@@ -80,9 +85,12 @@
                         <div class=" mb-2">
                             <div class="input-control w-100 ">
                                 <select class="input-outline input-outline-select inp  " asp-for="ASP_RoleID"   data-allow-clear="true" tabindex="-1" onchange="myFunction_prof()" id="ProfessionType" asp-items="@(new SelectList(ViewBag.userrolecombobox,"RoleID","Name"))" data-control="select2" data-placeholder="Select Level">
-                                    <option>Role</option>
+                                    <option value="">Role</option>
                                 </select>
                             </div>
+                            <span asp-validation-for="ASP_RoleID" class="err-msg">
+
+                            </span>
                         </div>
                     </div>
             </div>
@@ -102,7 +110,9 @@
                                 <input placeholder=" " asp-for="User_FirtName" class="input-outline w-100 inp admin-input " type="text">
                                 <label class="inputs-lable">FirstName</label>
                             </div>
+                            <span asp-validation-for="User_FirtName" class="err-msg">
 
+                            </span>
                         </div>
                     </div>
 
@@ -112,23 +122,32 @@
                                 <input placeholder=" " asp-for="User_LastName" class="input-outline w-100 inp admin-input " type="text">
                                 <label class="inputs-lable">LastName</label>
                             </div>
+                            <span asp-validation-for="User_LastName" class="err-msg">
 
+                            </span>
                         </div>
                     </div>
                     <div class="col-md-6 mt-2">
                         <div class=" mb-3">
                             <div class="inputs-control ">
-                                <input placeholder=" " asp-for="User_Email" class="input-outline w-100 inp admin-input " type="text">
+                                <input placeholder=" " asp-for="User_Email" id="email" class="input-outline w-100 inp admin-input " type="text">
                                 <label class="inputs-lable">Email</label>
                             </div>
+                            <span asp-validation-for="User_Email" class="err-msg">
+
+                            </span>
                         </div>
                     </div>
                     <div class="col-md-6 mt-2">
                         <div class=" mb-3">
                             <div class="inputs-control ">
-                                <input placeholder=" " asp-for="User_Email" class="input-outline w-100 inp  admin-input" type="text">
+                                <input placeholder=" " asp-for="User_Email" id="confirmemail" class="input-outline w-100 inp  admin-input" type="text">
                                 <label class="inputs-lable">ConfirmEmail</label>
                             </div>
+                            <span asp-validation-for="User_Email" class="err-msg">
+
+                            </span>
+                            <span id="confirm-check" class="err-msg"></span>
                         </div>
                     </div>
                     <div class="col-md-6 mt-2">
@@ -137,6 +156,9 @@
                                 <input id="phone" asp-for="User_PhoneNumber" placeholder="Mobile" type="text" class=" telephone input-outline admin-input w-100 inp align-items-center " />
                                 <span class="err-msg"></span>
                             </div>
+                            <span asp-validation-for="User_PhoneNumber" class="err-msg">
+
+                            </span>
                         </div>
                     </div>
                     <div class="col-md-6 mt-2 d-flex justify-content-around flex-wrap">
@@ -163,9 +185,10 @@
                             </div>
                         }
                     </div>
+                  
                 </div>
             <div class="mt-2">
-                <h6> <b>Mailing and billing Information</b></h6>
+                <h6> <b>mailing and billing information</b></h6>
             </div>
 
                 <div class="row">
@@ -177,6 +200,9 @@
                             </div>
 
                         </div>
+                        <span asp-validation-for="Address1" class="err-msg">
+
+                        </span>
                     </div>
 
                     <div class="col-md-6 mt-2">
@@ -185,7 +211,8 @@
                                 <input placeholder=" " asp-for="Address2" class="input-outline w-100 inp  mail-billing-imp" type="text">
                                 <label class="inputs-lable">Address2</label>
                             </div>
-
+                            <span asp-validation-for="Address2" class="err-msg">
+                            </span>
                         </div>
                     </div>
                     <div class="col-md-6 mt-2">
@@ -194,15 +221,21 @@
                                 <input placeholder=" " asp-for="City" class="input-outline w-100 inp  mail-billing-imp" type="text">
                                 <label class="inputs-lable">City</label>
                             </div>
+                            <span asp-validation-for="City" class="err-msg">
+
+                            </span>
                         </div>
                     </div>
                     <div class="col-md-6 mt-2">
                         <div class=" mb-3">
                             <div class="input-control w-100">
                                 <select class="input-outline input-outline-select inp mail-billing-imp" asp-for="RegionID" data-allow-clear="true" tabindex="-1" onchange="myFunction1()" id="region2" asp-items="@(new SelectList(ViewBag.RegionComboBox,"RegionId","RegionName"))" data-control="select2" data-placeholder="Select Level">
-                                    <option>All Region</option>
+                                    <option value="">All Region</option>
                                 </select>
                             </div>
+                            <span asp-validation-for="RegionID" class="err-msg">
+                            </span>
+                           
                         </div>
                     </div>
                     <div class="col-md-6 mt-2">
@@ -219,17 +252,19 @@
                                 <input id="phone2" asp-for="User_PhoneNumber" placeholder="Mobile" type="tel" class=" telephone input-outline mail-billing-imp w-100 inp align-items-center " />
                                 <span class="err-msg"></span>
                             </div>
+                            <span asp-validation-for="User_PhoneNumber" class="err-msg">
+
+                            </span>
                         </div>
                     </div>
                 </div>
-                <div class="text-end">
-                   
-                    <button type="submit"  class="btn  btn-outline-info btn-submit mx-2 ">
+                <div class="text-end">                  
+                    <button type="submit" id="save"  class="btn  btn-outline-info btn-submit mx-2 ">
                         save
                     </button>
-                    <button id="cancel1"  class="btn  btn-outline-danger ">
+                    <a id="cancel1" class="btn btn-outline-danger " asp-action="UserAccess" asp-controller="Access">
                         cancel
-                    </button>
+                    </a>
                 </div>
 
 
@@ -244,6 +279,24 @@
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
 <script>
+
+    $(document).ready(function () {
+        // Function to enable/disable save button based on email and confirm email match
+        function toggleSaveButton() {
+            var email = $("#email").val();
+            var confirmEmail = $("#confirmemail").val();
+            if (email === confirmEmail) {
+                $("#save").prop("disabled", false);
+                $('#confirm-check').html("");
+            } else {
+                $('#confirm-check').html("Email and Confirm Email should be same");
+                $("#save").prop("disabled", true);
+            }
+        }
+
+        // Call toggleSaveButton when confirm email field changes
+        $("#confirmemail").on("input", toggleSaveButton);
+    });
     const phoneInputField = document.querySelector("#phone");
 
     const phoneInput = window.intlTelInput(phoneInputField, {

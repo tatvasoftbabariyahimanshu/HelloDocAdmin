@@ -1,18 +1,12 @@
 ﻿using HelloDocAdmin.Entity.Data;
 using HelloDocAdmin.Entity.Models;
-using HelloDocAdmin.Entity.ViewModel;
 using HelloDocAdmin.Entity.ViewModels.AdminSite;
 using HelloDocAdmin.Repositories.Interface;
 using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HelloDocAdmin.Repositories
 {
-    public class AdminProfile:IAdminProfile
+    public class AdminProfile : IAdminProfile
     {
 
         private readonly ApplicationDbContext _context;
@@ -27,30 +21,30 @@ namespace HelloDocAdmin.Repositories
 
         public ViewAdminProfileModel GetDetailsForAdminProfile(string id)
         {
-            
-            var aspnetuserdata=_context.Aspnetusers.FirstOrDefault(e=>e.Id== id);
+
+            var aspnetuserdata = _context.Aspnetusers.FirstOrDefault(e => e.Id == id);
             ViewAdminProfileModel model = new ViewAdminProfileModel
             {
-                ASP_UserName=aspnetuserdata.Username,
-                ASP_Password=aspnetuserdata.Passwordhash
-                
+                ASP_UserName = aspnetuserdata.Username,
+                ASP_Password = aspnetuserdata.Passwordhash
+
             };
             var admindata = _context.Admins.FirstOrDefault(e => e.Aspnetuserid == id);
 
-            model.ASP_Status = admindata.Status;
-            model.ASP_RoleID=admindata.Roleid;
+            model.ASP_Status = (short)admindata.Status;
+            model.ASP_RoleID = (int)admindata.Roleid;
 
-            var listdata= _context.Adminregions.Where(e => e.Adminid == admindata.Adminid).ToList();
+            var listdata = _context.Adminregions.Where(e => e.Adminid == admindata.Adminid).ToList();
             List<int> regionComboBoxes = new List<int>();
 
             foreach (var region in listdata)
             {
-                var rgn=_context.Regions.FirstOrDefault(e => e.Regionid == region.Regionid);
+                var rgn = _context.Regions.FirstOrDefault(e => e.Regionid == region.Regionid);
                 regionComboBoxes.Add(
                    region.Regionid
                     );
             }
-            model.AdminReqionList=regionComboBoxes;
+            model.AdminReqionList = regionComboBoxes;
 
             model.User_PhoneNumber = admindata.Mobile;
             model.User_Email = admindata.Email;
@@ -60,14 +54,14 @@ namespace HelloDocAdmin.Repositories
             model.Address2 = admindata.Address2;
             model.City = admindata.City;
             model.zip = admindata.Zip;
-            model.AspnetUserID=admindata.Aspnetuserid;
+            model.AspnetUserID = admindata.Aspnetuserid;
             model.RegionID = (int)admindata.Regionid;
 
             return model;
         }
 
-        
-        public  bool Edit_Admin_Profile(ViewAdminProfileModel vm,string id)
+
+        public bool Edit_Admin_Profile(ViewAdminProfileModel vm, string id)
         {
             try
             {
@@ -126,7 +120,7 @@ namespace HelloDocAdmin.Repositories
             }
 
         }
-        public bool Edit_Billing_Info(ViewAdminProfileModel vm,string id)
+        public bool Edit_Billing_Info(ViewAdminProfileModel vm, string id)
         {
             try
             {
@@ -152,7 +146,7 @@ namespace HelloDocAdmin.Repositories
                         _context.Admins.Update(DataForChange);
                         _context.SaveChanges();
 
-      
+
                         return true;
                     }
                     else
@@ -170,7 +164,7 @@ namespace HelloDocAdmin.Repositories
 
 
 
-        public bool ChangePassword(string password,string id)
+        public bool ChangePassword(string password, string id)
         {
             var hasher = new PasswordHasher<string>();
 
@@ -189,7 +183,8 @@ namespace HelloDocAdmin.Repositories
         }
 
 
-        public bool AddAdmin(ViewAdminProfileModel data,string id) {
+        public bool AddAdmin(ViewAdminProfileModel data, string id)
+        {
             try
             {
                 if (data != null)
@@ -206,7 +201,7 @@ namespace HelloDocAdmin.Repositories
                         Modifieddate = DateTime.Now,
                         Id = Guid.NewGuid().ToString()
 
-                };
+                    };
                     _context.Aspnetusers.Add(user);
                     _context.SaveChanges();
 
@@ -221,17 +216,26 @@ namespace HelloDocAdmin.Repositories
                         Address1 = data.Address1,
                         Address2 = data.Address2,
                         Status = data.ASP_Status,
-                        Roleid=data.ASP_RoleID,
+                        Roleid = data.ASP_RoleID,
                         City = data.City,
                         Regionid = data.RegionID,
                         Zip = data.zip,
-                       
                         Createdby = id,
                         Createddate = DateTime.Now,
                         Modifiedby = id,
                         Modifieddate = DateTime.Now,
 
                     };
+
+
+                    Aspnetuserrole asprl = new Aspnetuserrole()
+                    {
+                        Roleid = "1",
+                        Userid = user.Id,
+
+                    };
+                    _context.Aspnetuserroles.Add(asprl);
+                    _context.SaveChanges();
                     _context.Admins.Add(admin);
                     _context.SaveChanges();
                     Admin DataForChange = _context.Admins.FirstOrDefault(e => e.Aspnetuserid == admin.Aspnetuserid);
@@ -260,17 +264,17 @@ namespace HelloDocAdmin.Repositories
                 {
                     return false;
                 }
-               
+
             }
             catch (Exception ex)
             {
                 return false;
             }
-            
-        
-        
-        
-        
+
+
+
+
+
         }
         public bool EditAdmin(ViewAdminProfileModel data, string id)
         {
@@ -278,15 +282,15 @@ namespace HelloDocAdmin.Repositories
             {
                 if (data != null)
                 {
-                    Aspnetuser asp=_context.Aspnetusers.FirstOrDefault(E=>E.Id==data.AspnetUserID);
+                    Aspnetuser asp = _context.Aspnetusers.FirstOrDefault(E => E.Id == data.AspnetUserID);
                     asp.Username = data.ASP_UserName;
                     asp.Modifieddate = DateTime.Now;
                     _context.Aspnetusers.Update(asp);
-                     _context.SaveChanges();
+                    _context.SaveChanges();
 
 
 
-                    Admin adm=_context.Admins.FirstOrDefault(E=>E.Aspnetuserid==data.AspnetUserID);
+                    Admin adm = _context.Admins.FirstOrDefault(E => E.Aspnetuserid == data.AspnetUserID);
 
                     adm.Address1 = data.Address1;
                     adm.Address2 = data.Address2;
@@ -297,15 +301,18 @@ namespace HelloDocAdmin.Repositories
                     adm.Mobile = data.User_PhoneNumber;
                     adm.Regionid = data.RegionID;
                     adm.Roleid = data.ASP_RoleID;
-                    adm.Status=data.ASP_Status;
+                    adm.Status = data.ASP_Status;
                     adm.City = data.City;
                     adm.Zip = data.zip;
                     adm.Modifiedby = id;
-                    adm.Modifieddate = DateTime.Now;    
+                    adm.Modifieddate = DateTime.Now;
 
 
                     _context.Admins.Update(adm);
                     _context.SaveChanges();
+
+
+
 
                     Admin DataForChange = _context.Admins.FirstOrDefault(e => e.Aspnetuserid == adm.Aspnetuserid);
                     List<Adminregion> dataforregion = _context.Adminregions.Where(e => e.Adminid == DataForChange.Adminid).ToList();

@@ -76,7 +76,7 @@
                     <div class="col-md-4 mt-2">
                         <div class=" mb-2">
                             <div class="inputs-control ">
-                                <input placeholder=" " name"="Password" class="input-outline w-100 inp " type="text">
+                                <input placeholder=" " name="Password" class="input-outline w-100 inp " type="text">
                                 <label class="inputs-lable">password</label>
                             </div>
 
@@ -95,8 +95,8 @@
                     <div class="col-md-4 mt-2">
                         <div class=" mb-2">
                             <div class="input-control w-100">
-                                <select class="input-outline input-outline-select inp  asp inp-dis " asp-for="Roleid" required data-allow-clear="true" tabindex="-1" onchange="myFunction_prof()" id="ProfessionType" asp-items="@(new SelectList(ViewBag.userrolecombobox,"RoleID","Name"))" data-control="select2" data-placeholder="Select Level">
-                                    <option>Role</option>
+                                <select class="input-outline input-outline-select inp  asp inp-dis " asp-for="Roleid" required data-allow-clear="true" tabindex="-1" onchange="myFunction_prof()"  asp-items="@(new SelectList(ViewBag.userrolecombobox,"RoleID","Name"))" data-control="select2" data-placeholder="Select Level">
+                                    <option value="">Role</option>
                                 </select>
                             </div>
                         </div>
@@ -617,7 +617,7 @@
                         {
                             if (Model.Aspnetuserid == null || Model.Physicianid == null)
                             {
-                                <a asp-action="DeletePhysician" asp-controller="Physician" asp-route-PhysicianID="@Model.Physicianid" class="btn  btn-danger ">
+                                <a onclick="confirmDelete('@Model.Physicianid')"  class="btn  btn-danger ">
                                     Delete Account
                                 </a>
                             }
@@ -635,9 +635,25 @@
 </div>
 @section Scripts
     {
+      
 
     <script type="text/javascript">
+        function confirmDelete(Physicianid) {
+            Swal.fire({
+                title: "Delete Physician ?",
+                showDenyButton: false,
+                showCancelButton: true,
+                confirmButtonText: "Yes",
+                denyButtonText: `Don't delete`
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '/Physician/DeletePhysician?PhysicianID=' + Physicianid;
+                }
 
+
+
+            });
+        }
         $(function () {
           
 

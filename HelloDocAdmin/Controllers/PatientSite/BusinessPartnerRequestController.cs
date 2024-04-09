@@ -35,9 +35,16 @@ namespace HelloDocAdmin.Controllers.PatientSite
                 }
                 else
                 {
+                    if (_patientrequestrepo.UserIsBlocked(viewdata.Email))
+                    {
+                        _notyf.Information("Email Is Blocked By Admin");
+                        ModelState.AddModelError("Email", "Email Is Blocked By Admin");
+                        return View("../PatientSite/Request/BusinessPartnerRequestForm", viewdata);
+                    }
                     bool val = _patientrequestrepo.BusinessPartnerRequest(viewdata);
                     if (val)
                     {
+
                         _notyf.Success("Business Partner Request is Submited");
                         return RedirectToAction("Index", "Request");
                     }

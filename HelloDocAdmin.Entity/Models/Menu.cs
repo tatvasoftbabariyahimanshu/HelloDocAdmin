@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace HelloDocAdmin.Entity.Models;
+﻿namespace HelloDocAdmin.Entity.Models;
 
 public partial class Menu
 {
     public int Menuid { get; set; }
 
-    public string Name { get; set; } = null!;
+    public string Name { get; set; }
 
     public short Accounttype { get; set; }
 

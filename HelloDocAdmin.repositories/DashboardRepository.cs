@@ -24,11 +24,21 @@ namespace HelloDocAdmin.Repositories
             _email = email;
         }
 
-        public int GetRequestNumberByStatus(string status)
+        public int GetRequestNumberByStatus(string status, string id)
         {
-            List<short> priceList = status.Split(',').Select(short.Parse).ToList();
+            var data = _context.Physicians.FirstOrDefault(e => e.Aspnetuserid == id);
 
-            int n = _context.Requests.Count(E => priceList.Contains((short)E.Status));
+            List<short> priceList = status.Split(',').Select(short.Parse).ToList();
+            int n = 0;
+            if (data != null)
+            {
+                n = _context.Requests.Count(E => priceList.Contains((short)E.Status) && (E.Physicianid == data.Physicianid));
+            }
+            else
+            {
+                n = _context.Requests.Count(E => priceList.Contains((short)E.Status));
+            }
+
 
             return n;
         }
@@ -297,6 +307,96 @@ namespace HelloDocAdmin.Repositories
 
             return dm;
         }
+
+
+        public async Task<Dashboarddatamodel> GetRequestsbyfilterForPhy(string Status, string PhyUserID, string search = "", int region = 0, int requesttype = 0, int currentpage = 1, int pagesize = 5)
+        {
+            Dashboarddatamodel dm = new Dashboarddatamodel();
+
+            List<int> priceList = Status.Split(',').Select(int.Parse).ToList();
+
+            IQueryable<DashboardRequestModel> allData = (from req in _context.Requests
+                                                         join reqClient in _context.Requestclients
+                                                         on req.Requestid equals reqClient.Requestid into reqClientGroup
+                                                         from rc in reqClientGroup.DefaultIfEmpty()
+                                                         join phys in _context.Physicians
+                                                         on req.Physicianid equals phys.Physicianid into physGroup
+                                                         from p in physGroup.DefaultIfEmpty()
+                                                         join reg in _context.Regions
+                                                        on rc.Regionid equals reg.Regionid into RegGroup
+                                                         from rg in RegGroup.DefaultIfEmpty()
+                                                         where priceList.Contains(req.Status) && req.Physicianid == _context.Physicians.FirstOrDefault(e => e.Aspnetuserid == PhyUserID).Physicianid
+                                                         orderby req.Createddate descending
+                                                         select new DashboardRequestModel
+                                                         {
+                                                             RequestID = req.Requestid,
+                                                             RequestTypeID = req.Requesttypeid,
+                                                             Requestor = req.Firstname + " " + req.Lastname,
+                                                             PatientName = rc.Firstname + " " + rc.Lastname,
+                                                             Dob = new DateOnly((int)rc.Intyear, DateTime.ParseExact(rc.Strmonth, "MMMM", new CultureInfo("en-US")).Month, (int)rc.Intdate),
+                                                             RequestedDate = req.Createddate,
+                                                             Email = rc.Email,
+                                                             RegionID = rc.Regionid,
+                                                             Region = rg.Name,
+                                                             ProviderName = p.Firstname + " " + p.Lastname,
+                                                             PhoneNumber = rc.Phonenumber,
+                                                             Address = rc.Address + ", " + rc.Street + ", " + rc.City + ", " + rc.State + ", " + rc.Zipcode,
+                                                             Status = req.Status,
+                                                             ProviderID = req.Physicianid,
+                                                             RequestorPhoneNumber = req.Phonenumber
+                                                         });
+
+
+            if (region != 0)
+            {
+                allData = allData.Where(r => r.RegionID == region);
+            }
+            if (requesttype != 0)
+            {
+                allData = allData.Where(r => r.RequestTypeID == requesttype);
+            }
+            if (!search.IsNullOrEmpty())
+
+            {
+                allData = allData.Where(r => r.PatientName.ToLower().Contains(search.ToLower()));
+            }
+            dm.TotalPage = (int)Math.Ceiling((double)allData.Count() / pagesize);
+            allData = allData.OrderByDescending(x => x.RequestedDate).Skip((currentpage - 1) * pagesize).Take(pagesize);
+            dm.requestList = allData.ToList();
+            dm.pageSize = pagesize;
+            int i = 0;
+            foreach (var item in dm.requestList)
+            {
+                item.Notes = item.Notes ?? new List<string>(); // Initialize Notes if null
+                var rsa = (from rs in _context.Requeststatuslogs
+                           join py in _context.Physicians on rs.Physicianid equals py.Physicianid into pyGroup
+                           from py in pyGroup.DefaultIfEmpty()
+                           join p in _context.Physicians on rs.Transtophysicianid equals p.Physicianid into pGroup
+                           from p in pGroup.DefaultIfEmpty()
+                           join a in _context.Admins on rs.Adminid equals a.Adminid into aGroup
+                           from a in aGroup.DefaultIfEmpty()
+                           where rs.Requestid == item.RequestID && (rs.Transtoadmin != null || rs.Transtophysicianid != null || rs.Status == 2)
+                           select rs.Notes).ToList();
+
+                foreach (var slt in rsa)
+                {
+                    item.Notes.Add(slt);
+                }
+
+                dm.requestList[i].Notes = item.Notes;
+                i++;
+            }
+
+
+            dm.CurrentPage = currentpage;
+
+
+
+
+
+            return dm;
+        }
+
         public ViewNotesModel getNotesByID(int id)
         {
             var rsa = (from rs in _context.Requeststatuslogs
@@ -396,17 +496,14 @@ namespace HelloDocAdmin.Repositories
             {
                 Emaillog el = new Emaillog();
                 el.Action = 3;
-
                 el.Sentdate = DateTime.Now;
                 el.Createdate = DateTime
                      .Now;
                 el.Emailtemplate = "first";
                 el.Senttries = 1;
                 el.Subjectname = "Add New Request";
-
                 el.Roleid = 2;
                 el.Emailid = email;
-
                 _context.Emaillogs.Add(el);
                 _context.SaveChanges();
             }
@@ -441,25 +538,19 @@ namespace HelloDocAdmin.Repositories
             var admindata = _context.Admins.FirstOrDefault(E => E.Aspnetuserid == id);
             var request = await _context.Requests.FirstOrDefaultAsync(req => req.Requestid == RequestId);
             request.Physicianid = ProviderId;
-
-            request.Status = 2;
+            request.Status = 1;
             _context.Requests.Update(request);
             _context.SaveChanges();
-
             Requeststatuslog rsl = new Requeststatuslog();
             rsl.Requestid = RequestId;
             rsl.Physicianid = ProviderId;
             rsl.Notes = notes;
-
             rsl.Createddate = DateTime.Now;
-            rsl.Status = 2;
+            rsl.Status = 1;
             rsl.Adminid = admindata.Adminid;
             _context.Requeststatuslogs.Update(rsl);
             _context.SaveChanges();
-
             return true;
-
-
         }
         #endregion
         public bool UploadDoc(int Requestid, IFormFile? UploadFile)

@@ -35,6 +35,12 @@ namespace HelloDocAdmin.Controllers.PatientSite
                 }
                 else
                 {
+                    if (_patientrequestrepo.UserIsBlocked(viewdata.Email))
+                    {
+                        _notyf.Information("Email Is Blocked By Admin");
+                        ModelState.AddModelError("Email", "Email Is Blocked By Admin");
+                        return View("../PatientSite/Request/FamilyFriendRequestForm", viewdata);
+                    }
                     bool val = _patientrequestrepo.CreateFamilyFriend(viewdata);
                     if (val)
                     {

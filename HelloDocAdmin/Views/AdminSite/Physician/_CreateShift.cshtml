@@ -7,7 +7,7 @@
     </button>
 </div>
 <div class=" modal-body container-fluid">
-    <form id="formAddEditSave_UMS" data-ajax="true" data-ajax-method="post" class="row"
+    <form id="formAddEditSave_UMS"  class="row" onsubmit="return  onsmt()"
         
           asp-action="_CreateShiftPost" asp-controller="Physician">
           <input type="hidden" asp-for="Shiftid"/>
@@ -15,11 +15,10 @@
             <div class="mb-3">
                 <div class="input-control w-100">
                     <select class="input-outline input-outline-select inp " asp-for="Regionid" data-allow-clear="true" tabindex="-1" onchange="myFunction3()" id="region2" asp-items="@(new SelectList(ViewBag.RegionComboBox,"RegionId","RegionName"))" data-control="select2" data-placeholder="Select Level">
-                        <option>All Region</option>
+                        <option value="">All Region</option>
                     </select>
                 </div>
             </div>
-
         </div>
         <div class="col-md-12 mt-2">
             <div class="mb-3">
@@ -28,59 +27,38 @@
                         <option value="">All Provider</option>
                     </select>
                 </div>
-
             </div>
             </div>
         <div class="col-md-12 mt-2">
             <div class="mb-3">
                 <div class="inputs-control ">
-
-                    <input placeholder=" " asp-for="Startdate" id="StartDate" class="input-outline w-100 inp form-control-sm "
-                    
-               
-                        
-                    
-                    
-                    
-                    type="date" >
+                    <input placeholder=" " asp-for="Startdate" id="StartDate" class="input-outline w-100 inp form-control-sm "      
+                    type="date" />
                     <label class="inputs-lable-dob">Startdate</label>
                 </div>
 
             </div>
         </div>
-        <div class="row">
-
             <div class="col-md-6">
                 <div class="inputs-control ">
-
                     <input placeholder=" " id="StartTime" asp-for="Starttime"  class="input-outline w-100 inp form-control-sm " name="Starttime" type="time">
                     <label class="inputs-lable-dob">Starttime</label>
                 </div>
-
             </div>
             <div class="col-md-6">
                 <div class="inputs-control ">
-
                     <input placeholder=" " id="EndTime" asp-for="Endtime" class="input-outline w-100 inp form-control-sm " name="Endtime" type="time">
                     <label class="inputs-lable-dob">Endtime</label>
                 </div>
-
             </div>
-           
-           
-            
-
-        </div>
         <div class="col-md-6  my-4">
             <div class="form-check form-switch">
                 <label class="form-check-label" for="flexSwitchCheckDefault">Repeat</label>
                 <input class="form-check-input" asp-for="Isrepeat" type="checkbox" onchange="toggleCheckboxes()"  id="flexSwitchCheckDefault">
             </div>
         </div>
-
         <label class="my-1" for="Sunday">Repeat Days</label>
         <input type="hidden" asp-for="checkWeekday" id="checkWeekday" />
-
         <div class="col-md-12 row form-floating">
             <div class="col-md-3 ">
                 <div class="form-check mx-2">
@@ -126,17 +104,15 @@
             </div>
 
         </div>
-        <div class="col-md-6 form-floating  my-2">
+        <div class="col-md-6 form-floating  my-4">
             <div class="input-control w-100 mt-3">
                 <select class="input-outline w-100 inp form-control-sm " disabled asp-for="Repeatupto" required data-allow-clear="true" tabindex="-1" id="Refile" data-control="select2" data-placeholder="Select Level">
                     <option>1</option>
                     <option>2</option>
                     <option>3</option>
                 </select>
-            </div>
-           
+            </div>           
             <label class="inputs-lable-dob " for="Sunday">Repeat End</label>
-
         </div>
         <hr class="form-button-divider" />
         @{
@@ -151,8 +127,8 @@
 
         <div class="row">
             <div class="offset-md-4 col-md-8">
-                <input type="submit" value="Save" class="btn btn-info text-white js-btn-modal-form-submit" />
-                <button type="button" class="btn btn-outline-info " data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" value="Save" class="btn btn-info text-white "> Save</button>
+                <button type="button" class="btn btn-outline-info " id="cancel"  data-bs-dismiss="modal">Cancel</button>
             </div>
         </div>
     </form>
@@ -230,5 +206,111 @@
             }
         });
     }
+
+
+
+
+     function onsmt () {
+       
+       
+        // Prevent default form submission
+       
+        // Reset error messages
+        let errorMessages = document.querySelectorAll(".err-msg");
+        errorMessages.forEach(function (element) {
+            element.textContent = ""; // Clear any existing error messages
+        });
+
+        // Validation flag
+        let isValid = true;
+
+        // Validate Startdate
+        let startDateInput = document.getElementById("StartDate");
+        if (!startDateInput.value) {
+            let errorMessage = "Start Date is required.";
+            displayErrorMessage(startDateInput, errorMessage);
+            isValid = false;
+        }
+
+        // Validate Starttime
+        let startTimeInput = document.getElementById("StartTime");
+        if (!startTimeInput.value) {
+            let errorMessage = "Start Time is required.";
+            displayErrorMessage(startTimeInput, errorMessage);
+            isValid = false;
+        }
+
+        // Validate Endtime
+        let endTimeInput = document.getElementById("EndTime");
+        if (!endTimeInput.value) {
+            let errorMessage = "End Time is required.";
+            displayErrorMessage(endTimeInput, errorMessage);
+            isValid = false;
+        }
+
+        if (endTimeInput.value < startTimeInput.value) {
+            let errorMessage = "End Time is alway grater than  Start Time.";
+            displayErrorMessage(endTimeInput, errorMessage);
+            isValid = false;
+        }
+
+        var  diff = endTimeInput.value - startTimeInput.value;
+        let startTime = new Date("1970-01-01T" + startTimeInput.value);
+        let endTime = new Date("1970-01-01T" + endTimeInput.value);
+
+        // Calculate the time difference in milliseconds
+        let timeDiff = endTime - startTime;
+
+        // Convert milliseconds to hours and minutes
+        let hours = Math.floor(timeDiff / 3600000); // 1 hour = 3600000 milliseconds
+        let minutes = Math.floor((timeDiff % 3600000) / 60000); // 1 minute = 60000 milliseconds
+      
+        if (hours<1) {
+            let errorMessage = "Shift will be minimum of 1 hours.";
+            displayErrorMessage(endTimeInput, errorMessage);
+            isValid = false;
+        }
+       
+        let regionSelect = document.getElementById("region2");
+        if (!regionSelect.value) {
+            let errorMessage = "Region is required.";
+            displayErrorMessage(regionSelect, errorMessage);
+            isValid = false;
+        }
+
+        // Validate Physicianid (Select field)
+        let physicianSelect = document.getElementById("provider");
+        if (!physicianSelect.value) {
+            let errorMessage = "Physician is required.";
+            displayErrorMessage(physicianSelect, errorMessage);
+            isValid = false;
+        }
+
+        // If all validations pass, submit the form
+        if (isValid) {
+            
+            $('#cancel').click();
+            return true;
+        }
+        else{
+            
+          
+            return false;
+        }
+    }
+
+    function displayErrorMessage(inputElement, message) {
+        // Find the parent div of the input
+        let parentDiv = inputElement.closest(".inputs-control") || inputElement.closest(".input-control");
+
+        // Create a span element for the error message
+        let errorMessageElement = document.createElement("span");
+        errorMessageElement.className = "err-msg";
+        errorMessageElement.textContent = message;
+
+        // Append error message to the parent div
+        parentDiv.appendChild(errorMessageElement);
+    }
+
 
 </script>

@@ -1,11 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Filters;
-using System.Security.Claims;
-using System.IdentityModel.Tokens.Jwt;
-using HelloDocAdmin.Entity.ViewModels.Authentication;
+﻿using HelloDocAdmin.Entity.ViewModels.Authentication;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Text;
-using System.Configuration;
 
 namespace HelloDocAdmin.Controllers.Authenticate
 {
@@ -19,8 +17,8 @@ namespace HelloDocAdmin.Controllers.Authenticate
         }
         public static CookieModel getmodel(string token)
         {
-            
-             
+
+
             JwtSecurityToken jwtSecurityToken = null;
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.UTF8.GetBytes("Himanshubabariyahimanshubabariyahimanshubabariya");
@@ -36,6 +34,9 @@ namespace HelloDocAdmin.Controllers.Authenticate
 
             // Corrected access to the validatedToken
             jwtSecurityToken = (JwtSecurityToken)validatedToken;
+            string roleIdString = jwtSecurityToken.Claims.FirstOrDefault(c => c.Type == "RoleID").Value;
+
+            int roleId = int.Parse(roleIdString);
 
             CookieModel cookieModel = new CookieModel()
             {
@@ -44,6 +45,10 @@ namespace HelloDocAdmin.Controllers.Authenticate
                 role = jwtSecurityToken.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value,
 
                 UserName = jwtSecurityToken.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name).Value,
+
+                RoleID = roleId,
+
+
             };
 
 
@@ -55,7 +60,7 @@ namespace HelloDocAdmin.Controllers.Authenticate
         {
             string? token = _httpContextAccessor.HttpContext.Request.Cookies["jwt"];
             CookieModel sm = getmodel(token);
-           
+
             return sm.UserName;
         }
 
@@ -86,6 +91,13 @@ namespace HelloDocAdmin.Controllers.Authenticate
             CookieModel sm = getmodel(token);
 
             return sm.role;
+        }
+        public static int? LoggedUserRoleID()
+        {
+            string token = _httpContextAccessor.HttpContext.Request.Cookies["jwt"];
+            CookieModel sm = getmodel(token);
+
+            return sm.RoleID;
         }
     }
 }

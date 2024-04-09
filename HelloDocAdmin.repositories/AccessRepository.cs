@@ -3,17 +3,12 @@ using HelloDocAdmin.Entity.Models;
 using HelloDocAdmin.Entity.ViewModels.AdminSite;
 using HelloDocAdmin.Repositories.Interface;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 
 namespace HelloDocAdmin.Repositories
 {
-    public  class AccessRepository:IAccessRepository
+    public class AccessRepository : IAccessRepository
     {
         private readonly ApplicationDbContext _context;
         private readonly EmailConfiguration _email;
@@ -24,11 +19,11 @@ namespace HelloDocAdmin.Repositories
             _email = email;
         }
         #region GetRoleAccessDetails
-        public  List<Role> GetRoleAccessDetails()
+        public List<Role> GetRoleAccessDetails()
         {
             BitArray bt = new BitArray(1);
             bt.Set(0, false);
-            List<Role> v =  _context.Roles.Where(e=>e.Isdeleted==bt).ToList();
+            List<Role> v = _context.Roles.Where(e => e.Isdeleted == bt).ToList();
 
             return v;
 
@@ -36,9 +31,9 @@ namespace HelloDocAdmin.Repositories
         #endregion
 
         #region GetRoleByMenus
-        public  RolesModel GetRoleByMenus(int roleid)
+        public RolesModel GetRoleByMenus(int roleid)
         {
-            return  _context.Roles
+            return _context.Roles
                         .Where(r => r.Roleid == roleid)
                         .Select(r => new RolesModel
                         {
@@ -59,7 +54,7 @@ namespace HelloDocAdmin.Repositories
         }
         #endregion
 
-     
+
 
         #region PostRoleMenu
         public async Task<bool> PostRoleMenu(RolesModel role, string Menusid, string ID)
@@ -78,7 +73,7 @@ namespace HelloDocAdmin.Repositories
                     r.Accounttype = role.Accounttype;
                     r.Createdby = ID;
                     r.Createddate = DateTime.Now;
-                  
+
                     r.Isdeleted = bt;
                     _context.Roles.Add(r);
                     _context.SaveChanges();
@@ -181,11 +176,11 @@ namespace HelloDocAdmin.Repositories
 
         public bool DeleteAccess(int id)
         {
-            BitArray bt=new BitArray(1);
+            BitArray bt = new BitArray(1);
             bt.Set(0, true);
             try
             {
-                Role rn =_context.Roles.FirstOrDefault(E=>E.Roleid==id);
+                Role rn = _context.Roles.FirstOrDefault(E => E.Roleid == id);
                 rn.Isdeleted = bt;
                 _context.Roles.Update(rn);
                 _context.SaveChanges();
@@ -198,7 +193,7 @@ namespace HelloDocAdmin.Repositories
             }
         }
         #region GetProfileAll
-        public async Task<List<ViewUserAccess>>  GetAllUserDetails()
+        public async Task<List<ViewUserAccess>> GetAllUserDetails()
         {
 
 
@@ -216,9 +211,9 @@ namespace HelloDocAdmin.Repositories
                                              isAdmin = admin != null ? true : false,
                                              UserID = admin != null ? admin.Adminid : (physician != null ? physician.Physicianid : null),
                                              accounttype = admin != null ? 2 : (physician != null ? 3 : null),
-                                             status = admin != null ? admin.Status : (physician != null ? physician.Status : null),
+                                             status = admin != null ? 0 : (physician != null ? (short?)_context.Requests.Count(e => e.Physicianid == physician.Physicianid) : null),
                                              Mobile = admin != null ? admin.Mobile : (physician != null ? physician.Mobile : null),
-                                             aspnetuserid=user.Id
+                                             aspnetuserid = user.Id
                                          }
                                      ).ToListAsync();
             return v;

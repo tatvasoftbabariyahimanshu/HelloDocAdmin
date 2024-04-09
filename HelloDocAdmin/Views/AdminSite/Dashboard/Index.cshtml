@@ -3,8 +3,9 @@
 }
 @using HelloDocAdmin.Controllers.Authenticate;
 <script>
-
+   
     function getfilterdata() {
+        $(".loding-div").show();
         var currentpage = $('#crt-page').val();
         var region = $('#region').val();
         var search ="" + $('#myInput').val() ;
@@ -43,7 +44,10 @@
 
             },
             success: function (response) {
+                setTimeout(function () { $(".loding-div").hide() }, 500);
                 $('#SearchResult').html(response);
+               
+               
             },
             error: function () {
                 alert("error");
@@ -56,13 +60,15 @@
     
     }
     </script>
-<div class="loding-div">
+
+@*<div class="loding-div">
     <div class="bro" id="BRO" style="height:100%;width:100%;position:absolute;background-color:black;opacity:0.2;z-index:1">
     </div>
     <div class="loading" id="Loading"></div>
-</div>
+</div>*@
 
 <div class="container-fluid p-4 ">
+    
     <partial name="_UpperTab.cshtml" />
     <div class="card bg-transparent p-1 border-0 ">
         <div class="card-header p-2  d-flex justify-content-between  border-0  bg-transparent  mt-2">
@@ -83,12 +89,37 @@
 
             </div>
         </div>
-        <div class="card-body rounded shadow-lg m-2 ">
+        <div class="card-body rounded shadow-lg m-2" >
+           
+          
             <partial name="../Action/Partialdash/_SearchFilter.cshtml" />
+           
+           <div class="position-relative " >
 
-    <div id="SearchResult">
 
-   </div>
+               
+
+              <div class="middle loding-div position-absolute  top-50" style="left:50%;">
+                        <div class="bar bar1"></div>
+                        <div class="bar bar2"></div>
+                        <div class="bar bar3"></div>
+                        <div class="bar bar4"></div>
+                        <div class="bar bar5"></div>
+                        <div class="bar bar6"></div>
+                        <div class="bar bar7"></div>
+                        <div class="bar bar8"></div>
+                    </div>
+                   
+             
+                <div id="SearchResult">
+               
+
+
+            </div>
+                
+               
+               </div>
+   
            
 </div>
 
@@ -100,11 +131,11 @@
 <script>
  
     $(function () {
-        $(".loding-div").show();
+        
         
       
         getfilterdata();
-        $(".loding-div").hide();
+       
       
     });
 
@@ -113,7 +144,18 @@
    
 
 
+      function displayErrorMessage(inputElement, message) {
+        // Find the parent div of the input
+        let parentDiv = inputElement.closest(".inputs-control") || inputElement.closest(".input-control");
 
+        // Create a span element for the error message
+        let errorMessageElement = document.createElement("span");
+        errorMessageElement.className = "err-msg";
+        errorMessageElement.textContent = message;
+
+        // Append error message to the parent div
+        parentDiv.after(errorMessageElement);
+    }
 
 
 

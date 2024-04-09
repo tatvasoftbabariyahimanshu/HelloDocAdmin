@@ -5,14 +5,14 @@
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Transfer Request</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form asp-action="TransferProvider" asp-controller="Action">
+            <form asp-action="TransferProvider" asp-controller="Action" onsubmit="return onsmt_TC()">
                 <div class="modal-body">
                     <h6 class="modal-title">to assign  this request,select and search another physician.</h6>
 
                     <input type="hidden" name="requestid" id="RequestID_Input_ModelTransferCase" />
                     <div class="mb-3">
                         <div class="input-control w-100 mt-3">
-                            <select class="input-outline input-outline-select " required name="region" data-allow-clear="true" tabindex="-1" onchange="myFunction2()" id="region3" asp-items="@(new SelectList(ViewBag.RegionComboBox,"RegionId","RegionName"))" data-control="select2" data-placeholder="Select Level">
+                            <select class="input-outline input-outline-select "  name="region" data-allow-clear="true" tabindex="-1" onchange="myFunction2()" id="region3" asp-items="@(new SelectList(ViewBag.RegionComboBox,"RegionId","RegionName"))" data-control="select2" data-placeholder="Select Level">
                                 <option value="">All Region</option>
                             </select>
                         </div>
@@ -20,14 +20,14 @@
                     </div>
                     <div class="mb-3">
                         <div class="input-control w-100 mt-3">
-                            <select class="input-outline input-outline-select" required name="ProviderId" data-allow-clear="true" tabindex="-1" id="provider2" data-control="select2" data-placeholder="Select Level">
+                            <select class="input-outline input-outline-select"  name="ProviderId" data-allow-clear="true" tabindex="-1" id="provider2" data-control="select2" data-placeholder="Select Level">
                                 <option value="">All Provider</option>
                             </select>
                         </div>
 
                     </div>
                     <div class="inputs-control w-100 mt-2">
-                        <textarea id="changenote" placeholder=" " name="Notes" rows="5" class="input-outline w-100 fs-6 " type="text"></textarea>
+                        <textarea id="changenote_tc" placeholder=" " name="Notes" rows="5" class="input-outline w-100 fs-6 " type="text"></textarea>
 
                         <label class="inputs-lable inputs-lable-textarea fs-6" id="notedata">Notes</label>
                     </div>
@@ -68,5 +68,62 @@
             }
         });
     }
+
+</script>
+<script>
+    function onsmt_TC() {
+
+
+        // Prevent default form submission
+
+        // Reset error messages
+        let errorMessages = document.querySelectorAll(".err-msg");
+        errorMessages.forEach(function (element) {
+            element.textContent = ""; // Clear any existing error messages
+        });
+
+        // Validation flag
+        let isValid = true;
+
+        // Validate Startdate
+        let region3 = document.getElementById("region3");
+        if (!region2.value) {
+            let errorMessage = "region is required.";
+            displayErrorMessage(region3, errorMessage);
+            isValid = false;
+        }
+
+        // Validate Starttime
+        //let changenote = document.getElementById("changenote");
+        //if (!changenote.value) {
+        //    let errorMessage = "changenote  is required.";
+        //    displayErrorMessage(changenote, errorMessage);
+        //    isValid = false;
+        //}
+        let provider2 = document.getElementById("provider2");
+        if (!provider2.value) {
+            let errorMessage = "provider  is required.";
+            displayErrorMessage(provider2, errorMessage);
+            isValid = false;
+        }
+        let changenote_ac = document.getElementById("changenote_tc");
+        if (!changenote_ac.value) {
+            let errorMessage = "Write Some Notes.";
+            displayErrorMessage(changenote_ac, errorMessage);
+            isValid = false;
+        }
+
+        if (isValid) {
+
+
+            return true;
+        }
+        else {
+
+
+            return false;
+        }
+    }
+
 
 </script>

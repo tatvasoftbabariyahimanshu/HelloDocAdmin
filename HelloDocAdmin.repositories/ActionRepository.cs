@@ -1,5 +1,6 @@
 ﻿using HelloDocAdmin.Entity.Data;
 using HelloDocAdmin.Entity.Models;
+using HelloDocAdmin.Entity.ViewModel.PatientSite;
 using HelloDocAdmin.Entity.ViewModels.AdminSite;
 using HelloDocAdmin.Repositories.Interface;
 using Microsoft.EntityFrameworkCore;
@@ -150,6 +151,78 @@ namespace HelloDocAdmin.Repositories
             }
 
         }
+        public bool houseCall(int RequestID, string id)
+        {
+            try
+            {
+
+                var requestData = _context.Requests.FirstOrDefault(e => e.Requestid == RequestID);
+                if (requestData != null)
+                {
+
+                    requestData.Status = 5;
+                    requestData.Modifieddate = DateTime.Now;
+                    _context.Requests.Update(requestData);
+                    _context.SaveChanges();
+
+                    Requeststatuslog rsl = new Requeststatuslog
+                    {
+                        Requestid = RequestID,
+
+
+                        Status = 5,
+
+                        Createddate = DateTime.Now,
+
+                    };
+                    _context.Requeststatuslogs.Add(rsl);
+                    _context.SaveChanges();
+                    return true;
+                }
+                else { return false; }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+
+        }
+        public bool Consult(int RequestID, string id)
+        {
+            try
+            {
+
+                var requestData = _context.Requests.FirstOrDefault(e => e.Requestid == RequestID);
+                if (requestData != null)
+                {
+
+                    requestData.Status = 6;
+                    requestData.Modifieddate = DateTime.Now;
+                    _context.Requests.Update(requestData);
+                    _context.SaveChanges();
+
+                    Requeststatuslog rsl = new Requeststatuslog
+                    {
+                        Requestid = RequestID,
+
+
+                        Status = 6,
+
+                        Createddate = DateTime.Now,
+
+                    };
+                    _context.Requeststatuslogs.Add(rsl);
+                    _context.SaveChanges();
+                    return true;
+                }
+                else { return false; }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+
+        }
         public Healthprofessional SelectProfessionlByID(int VendorID)
         {
             return _context.Healthprofessionals.FirstOrDefault(e => e.Vendorid == VendorID);
@@ -247,6 +320,40 @@ namespace HelloDocAdmin.Repositories
             rsl.Createddate = DateTime.Now;
             rsl.Transtophysicianid = ProviderId;
             rsl.Status = 2;
+            _context.Requeststatuslogs.Add(rsl);
+            _context.SaveChanges();
+
+            return true;
+
+
+
+
+
+        }
+        public async Task<bool> TransferToAdmin(int RequestId, string notes, string id)
+        {
+            BitArray bt = new BitArray(1);
+            bt.Set(0, true);
+
+            var request = await _context.Requests.FirstOrDefaultAsync(req => req.Requestid == RequestId);
+
+            request.Status = 1;
+            request.Modifieddate = DateTime.Now;
+            request.Physicianid = null;
+            _context.Requests.Update(request);
+            _context.SaveChanges();
+
+            Requeststatuslog rsl = new Requeststatuslog();
+            rsl.Requestid = RequestId;
+            rsl.Transtoadmin = bt;
+
+            rsl.Notes = notes;
+            rsl.Createddate = DateTime.Now;
+
+            rsl.Createddate = DateTime.Now;
+            rsl.Physicianid = null;
+
+            rsl.Status = 1;
             _context.Requeststatuslogs.Add(rsl);
             _context.SaveChanges();
 
@@ -373,6 +480,41 @@ namespace HelloDocAdmin.Repositories
             }
 
         }
+        public bool AcceptCase(int RequestID)
+        {
+            try
+            {
+                var requestData = _context.Requests.FirstOrDefault(e => e.Requestid == RequestID);
+                if (requestData != null)
+                {
+
+                    requestData.Status = 2;
+                    requestData.Modifieddate = DateTime.Now;
+
+                    _context.Requests.Update(requestData);
+                    _context.SaveChanges();
+
+                    Requeststatuslog rsl = new Requeststatuslog
+                    {
+                        Requestid = RequestID,
+
+
+                        Status = 2,
+                        Createddate = DateTime.Now
+
+                    };
+                    _context.Requeststatuslogs.Add(rsl);
+                    _context.SaveChanges();
+                    return true;
+                }
+                else { return false; }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+
+        }
 
 
 
@@ -465,7 +607,8 @@ namespace HelloDocAdmin.Repositories
         {
             //try
             //{
-            var admindata = _context.Admins.FirstOrDefault(e => e.Aspnetuserid == id);
+
+
             if (Data.EncounterID == 0)
             {
                 Encounterform enc = new Encounterform
@@ -496,7 +639,7 @@ namespace HelloDocAdmin.Repositories
                     Skin = Data.Skin,
                     Temp = Data.Temp,
                     TreatmentPlan = Data.Treatment,
-                    Adminid = admindata.Adminid,
+                    Physicianid = _context.Physicians.FirstOrDefault(E => E.Aspnetuserid == id).Physicianid,
                     Created = DateTime.Now,
                     Modified = DateTime.Now,
 
@@ -539,7 +682,7 @@ namespace HelloDocAdmin.Repositories
                     encdetails.Skin = Data.Skin;
                     encdetails.Temp = Data.Temp;
                     encdetails.TreatmentPlan = Data.Treatment;
-                    encdetails.Adminid = admindata.Adminid;
+                    encdetails.Physicianid = _context.Physicians.FirstOrDefault(E => E.Aspnetuserid == id).Physicianid;
                     encdetails.Modified = DateTime.Now;
                     _context.Encounterforms.Update(encdetails);
                     _context.SaveChanges();
@@ -579,13 +722,13 @@ namespace HelloDocAdmin.Repositories
                 _context.Requests.Update(final);
                 _context.SaveChanges();
 
-                var admindata = _context.Admins.FirstOrDefault(e => e.Aspnetuserid == id);
+
                 Requeststatuslog rs = new Requeststatuslog
                 {
                     Requestid = final.Requestid,
                     Status = 6,
                     Createddate = DateTime.Now,
-                    Adminid = admindata.Adminid
+                    Physicianid = _context.Physicians.FirstOrDefault(E => E.Aspnetuserid == id).Physicianid
 
 
                 };
@@ -600,6 +743,139 @@ namespace HelloDocAdmin.Repositories
             }
 
 
+        }
+
+
+        public bool CreateNewRequestPost(ViewPatientRequest viewdata, string id)
+        {
+            BitArray bt = new BitArray(1);
+            bt.Set(0, false);
+            try
+            {
+                var region = _context.Regions.FirstOrDefault(u => u.Name == viewdata.State.Trim().ToLower().Replace(" ", ""));
+                int requests = _context.Requests.Where(u => u.Createddate == DateTime.Now.Date).Count();
+                string ConfirmationNumber = string.Concat(region.Abbreviation, viewdata.FirstName.Substring(0, 2).ToUpper(), viewdata.LastName.Substring(0, 2).ToUpper(), viewdata.LastName.Substring(0, 2).ToUpper(), requests.ToString("D" + 4));
+                var Request = new Request
+                {
+                    Requesttypeid = 2,
+                    Status = 1,
+                    Firstname = viewdata.FirstName,
+                    Lastname = viewdata.LastName,
+                    Email = viewdata.Email,
+
+                    Phonenumber = viewdata.PhoneNumber,
+                    Createddate = DateTime.Now,
+                    Confirmationnumber = ConfirmationNumber,
+                    Isurgentemailsent = new BitArray(1)
+
+                };
+                _context.Requests.Add(Request);
+                _context.SaveChanges();
+
+                int monthnum = viewdata.BirthDate.Month;
+                string monthName = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(monthnum);
+                int date = viewdata.BirthDate.Day;
+                int year = viewdata.BirthDate.Year;
+
+                var Requestclient = new Requestclient
+                {
+                    Request = Request,
+                    Requestid = Request.Requestid,
+                    Notes = viewdata.Symptoms,
+                    Firstname = viewdata.FirstName,
+                    Lastname = viewdata.LastName,
+                    Phonenumber = viewdata.PhoneNumber,
+                    Email = viewdata.Email,
+                    State = viewdata.State,
+                    City = viewdata.City,
+                    Address = viewdata.RoomSite,
+                    Street = viewdata.Street,
+                    Zipcode = viewdata.ZipCode,
+                    Regionid = region.Regionid,
+                    Intdate = date,
+                    Intyear = year,
+                    Strmonth = monthName
+
+                };
+                _context.Requestclients.Add(Requestclient);
+                _context.SaveChanges();
+
+                Requestnote rnt = new Requestnote();
+                rnt.Adminnotes = viewdata.AdminNotes;
+                rnt.Requestid = Request.Requestid;
+                rnt.Createdby = id;
+                rnt.Createddate = DateTime.Now;
+                rnt.Modifieddate = DateTime.Now;
+                _context.Requestnotes.Add(rnt);
+                _context.SaveChanges();
+
+                ENC encyptdecypt = new ENC();
+
+                string encyptemail = encyptdecypt.EnryptString(viewdata.Email);
+                string encyptdatetime = encyptdecypt.EncryptDate(DateTime.Now);
+
+                string link = $"https://localhost:44376/Login/RegisterNew?email={encyptemail}&datetime={encyptdatetime}";
+                string emailContent = @"
+        <!DOCTYPE html>
+        <html lang=""en"">
+        <head>
+         <meta charset=""UTF-8"">
+         <meta name=""viewport"" content=""width=device-width, initial-scale=1.0"">
+         <title>Patient Registration</title>
+        </head>
+        <body>
+         <div style=""background-color: #f5f5f5; padding: 20px;"">
+         <h2>Welcome to Our Healthcare Platform!</h2>
+        <p>Dear Patient ,</p>
+        <p>Your request for a patient account has been successfully created. To complete your registration, please follow the steps below:</p>
+        <ol>
+            <li>Click the following link to register:</li>
+             <p><a href=""https://localhost:44376/Login/RegisterNew?email=" + encyptemail + "&datetime=" + encyptdatetime + @""">Patient Registration</a></p>
+            <li>Follow the on-screen instructions to complete the registration process.</li>
+        </ol>
+        <p>If you have any questions or need further assistance, please don't hesitate to contact us.</p>
+        <p>Thank you,</p>
+        <p>The Healthcare Team</p>
+        </div>
+        </body>
+        </html>
+        ";
+
+                if (_email.SendMail(viewdata.Email, "New Patient Account Creation", emailContent))
+                {
+                    Emaillog el = new Emaillog();
+                    el.Action = 2;
+                    el.Confirmationnumber = ConfirmationNumber;
+                    el.Sentdate = DateTime.Now;
+                    el.Createdate = DateTime
+                         .Now;
+                    el.Emailtemplate = "first";
+                    el.Senttries = 1;
+                    el.Subjectname = "New Patient Account Creation";
+                    el.Requestid = Request.Requestid;
+                    el.Roleid = 4;
+                    el.Emailid = Request.Email;
+                    _context.Emaillogs.Add(el);
+
+
+                    Requeststatuslog rsl = new Requeststatuslog();
+                    rsl.Status = 1;
+                    rsl.Createddate = DateTime.Now;
+                    rsl.Notes = viewdata.AdminNotes;
+                    rsl.Requestid = Request.Requestid;
+                    _context.Requeststatuslogs.Add(rsl);
+                    _context.SaveChanges();
+
+                    return true;
+
+
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
 
         #endregion

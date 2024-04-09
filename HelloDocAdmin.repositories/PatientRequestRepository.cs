@@ -27,6 +27,15 @@ namespace HelloDocAdmin.Repositories
             }
             return false;
         }
+        public bool UserIsBlocked(string? Email)
+        {
+            var aspnetuser = _context.Blockrequests.SingleOrDefault(x => x.Email == Email);
+            if (aspnetuser != null)
+            {
+                return true;
+            }
+            return false;
+        }
 
 
         #region Patient Request Create

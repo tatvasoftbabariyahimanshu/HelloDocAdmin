@@ -9,10 +9,11 @@ namespace HelloDocAdmin.Controllers.Authenticate
 {
     public class CustomAuthorization : ActionFilterAttribute, IAuthorizationFilter
     {
-       
-        private readonly    string _role;
-        public CustomAuthorization( string role="") {
-            this._role=role;
+
+        private readonly List<string> _role;
+        public CustomAuthorization(string role = "")
+        {
+            _role = role.Split(',').ToList();
         }
         public void OnAuthorization(AuthorizationFilterContext filterContext)
         {
@@ -40,14 +41,30 @@ namespace HelloDocAdmin.Controllers.Authenticate
                 filterContext.Result = new RedirectResult("~/Login");
                 return;
             }
+            bool flage = false;
+            foreach (var role in _role)
+            {
 
-            if (string.IsNullOrWhiteSpace(_role) || roles.Value != _role)
+                if (string.IsNullOrWhiteSpace(role) || roles.Value != role)
+                {
+
+                    flage = false;
+                }
+                else
+                {
+                    flage = true;
+                    break;
+                }
+            }
+
+            //if (string.IsNullOrWhiteSpace(_role) || roles.Value != _role)
+            if (flage == false)
             {
                 filterContext.Result = new RedirectResult("~/Login/AccessDenide");
 
             }
         }
 
-    
+
     }
 }

@@ -202,6 +202,7 @@
     function Delete_all() {
         var dtr_alldelete = "";
         var allcheckbox = document.getElementsByClassName('doc-checkbox');
+       
         var alllinks = document.getElementsByClassName('dlt-link');
         console.log(allcheckbox.length);
         var length1=0;
@@ -210,6 +211,20 @@
         {
             length1+=1;
         }
+        }
+        if (length1 < 1) {
+
+
+            Swal.fire({
+                title: "Select Documents!! ",
+                showDenyButton: false,
+                showCancelButton: false,
+                confirmButtonText: "ok",
+
+            })
+
+            return ;
+
         }
         console.log(length1);
         for (var i = 0; i < allcheckbox.length; i++) { // Use < instead of <=
@@ -245,6 +260,8 @@
                 alert("error");
             }
         });
+
+
     }
 
 
@@ -261,6 +278,20 @@
             }
         }
         console.log(length1);
+        if (length1 < 1) {
+
+
+            Swal.fire({
+                title: "Select Documents!! ",
+                showDenyButton: false,
+                showCancelButton: false,
+                confirmButtonText: "ok",
+
+            })
+
+            return;
+
+        }
         for (var i = 0; i < allcheckbox.length; i++) { // Use < instead of <=
             if (allcheckbox[i].checked && length1 > 0) {
 

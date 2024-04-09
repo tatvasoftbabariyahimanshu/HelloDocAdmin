@@ -1,4 +1,5 @@
 ﻿using HelloDocAdmin.Entity.Data;
+using HelloDocAdmin.Entity.Models;
 using HelloDocAdmin.Entity.ViewModels.AdminSite;
 using HelloDocAdmin.Repositories.Interface;
 using System;
@@ -34,7 +35,9 @@ namespace HelloDocAdmin.Repositories
                     Name=item.Physicianname,
                     Latitude=item.Latitude,
                     Longitude=item.Longitude,
-                    Address=item.Address
+                    Address=item.Address,
+                    ImgPath=_context.Physicians.FirstOrDefault(e=>e.Physicianid==item.Physicianid).Photo,
+                    PhysicianID=item.Physicianid
 
                 });
             }

@@ -1,16 +1,21 @@
-﻿<div class="bd-example">
+﻿@using HelloDocAdmin.Controllers.Authenticate;
+<div class="bd-example">
     <a class="btn btn-info text-white btn-info-dsh " data-bs-toggle="modal" data-bs-target="#sendlink" role="button">
         <i class="fa-solid fa-paper-plane"></i>
         <span class="btn-text">
             Send Link
         </span>
     </a>
-    <button class="btn btn-info text-white btn-info-dsh" type="submit">
+    <a asp-action="CreateNewRequest" asp-controller="Action"  class="btn btn-info text-white btn-info-dsh" >
         <i class="bi bi-file-earmark-plus"></i>
         <span class="btn-text">
             Create Request
         </span>
-    </button>
+    </a>
+   @if(CV.LoggedUserRole()=="Admin")
+    {
+        
+   
     <a asp-action="DownloadExcel"  asp-controller="Report" asp-route-status="@TempData["CurrentStatusinlist"]" class="btn btn-info btn-info-dsh text-white" type="submit">
         <i class="fa-solid fa-share"></i>
         <span class="btn-text">
@@ -29,4 +34,5 @@
             Request Support
         </span>
     </a>
+    }
 </div>

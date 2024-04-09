@@ -64,9 +64,8 @@
                     <td scope="col" class="table-text">@item.AdminNote</td>
                     <td scope="col" class="table-text">@item.PatientNote</td>
                     <td scope="col" class="table-text">
-                    <button onclick="getfilterdata()"  class="btn btn-sm btn-outline-info  mx-2 ">
-                     Delete
-                    </button>
+                        <a class="btn btn-sm btn-outline-danger mx-2"
+                           onclick="confirmDelete('@item.RequestID')">Delete</a>
                     </td>
 </tr>
            
@@ -114,3 +113,22 @@
     </div>
 
 </div>
+
+<script>
+    function confirmDelete(requestID) {
+        Swal.fire({
+            title: "Delete Request  ?",
+            showDenyButton: false,
+            showCancelButton: true,
+            confirmButtonText: "Yes",
+            denyButtonText: `Don't delete`
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = '/Records/Delete?RequestId=' + requestID;
+            }
+
+
+
+        });
+    }
+</script>

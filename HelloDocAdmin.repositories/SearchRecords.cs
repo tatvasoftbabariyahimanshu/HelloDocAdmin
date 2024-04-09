@@ -4,6 +4,7 @@ using HelloDocAdmin.Entity.ViewModels;
 using HelloDocAdmin.Entity.ViewModels.AdminSite;
 using HelloDocAdmin.Repositories.Interface;
 using Microsoft.IdentityModel.Tokens;
+using System.Collections;
 
 namespace HelloDocAdmin.Repositories
 {
@@ -23,7 +24,8 @@ namespace HelloDocAdmin.Repositories
         {
             RequestRecords dm = new RequestRecords();
 
-
+            BitArray bt = new BitArray(1);
+            bt.Set(0, false);
 
             IQueryable<SearchRecordView> allData = (from req in _context.Requests
                                                     join reqClient in _context.Requestclients
@@ -38,7 +40,7 @@ namespace HelloDocAdmin.Repositories
                                                     join nts in _context.Requestnotes
                                                     on req.Requestid equals nts.Requestid into ntsgrp
                                                     from nt in ntsgrp.DefaultIfEmpty()
-
+                                                    where req.Isdeleted == bt
 
                                                     orderby req.Createddate descending
                                                     select new SearchRecordView
@@ -47,15 +49,16 @@ namespace HelloDocAdmin.Repositories
                                                         PatientName = req.Firstname + " " + req.Lastname,
                                                         RequestID = req.Requestid,
                                                         DateOfService = req.Createddate,
-                                                        PhoneNumber = rc.Phonenumber ?? "",
-                                                        Email = rc.Email ?? "",
+                                                        PhoneNumber = rc.Phonenumber ?? "-",
+                                                        Email = rc.Email ?? "-",
                                                         Address = rc.Address + "," + rc.City + " " + rc.Zipcode,
                                                         RequestTypeID = req.Requesttypeid,
                                                         Status = req.Status,
-                                                        PhysicianName = p.Firstname + " " + p.Lastname ?? "",
-                                                        AdminNote = nt != null ? nt.Adminnotes ?? "" : "",
-                                                        PhysicianNote = nt != null ? nt.Physiciannotes ?? "" : "",
-                                                        PatientNote = rc.Notes ?? ""
+                                                        PhysicianName = p.Firstname + "-" + p.Lastname ?? "-",
+                                                        AdminNote = nt != null ? nt.Adminnotes ?? "-" : "-",
+                                                        PhysicianNote = nt != null ? nt.Physiciannotes ?? "-" : "-",
+                                                        PatientNote = rc.Notes ?? "-",
+                                                        Zip = rc.Zipcode
                                                     });
 
 
@@ -201,9 +204,9 @@ namespace HelloDocAdmin.Repositories
                                                {
                                                    RequestID = rc.Requestid,
                                                    ClientName = rc.Firstname + " " + rc.Lastname,
-                                                   ConfirmationNumber = req.Confirmationnumber,
+                                                   ConfirmationNumber = req.Confirmationnumber ?? "-",
                                                    CreatedDate = req.Createddate,
-                                                   ProviderName = phys.Firstname + " " + phys.Lastname,
+                                                   ProviderName = phys.Firstname ?? "-" + " " + phys.Lastname ?? "-",
                                                    StatusID = req.Status,
                                                    Modifieddate = req.Modifieddate,
                                                }
@@ -239,7 +242,7 @@ namespace HelloDocAdmin.Repositories
                                              select new Emaillogdata
                                              {
                                                  Recipient = _context.Aspnetusers.FirstOrDefault(e => e.Email == req.Emailid).Username ?? null,
-                                                 Confirmationnumber = req.Confirmationnumber,
+                                                 Confirmationnumber = req.Confirmationnumber ?? "-",
                                                  Createdate = req.Createdate,
                                                  Emailtemplate = req.Emailtemplate,
                                                  Filepath = req.Filepath,
@@ -291,7 +294,7 @@ namespace HelloDocAdmin.Repositories
                                             select new SMSLogsData
                                             {
                                                 Recipient = _context.Aspnetusers.FirstOrDefault(e => e.Phonenumber == req.Mobilenumber).Username ?? null,
-                                                Confirmationnumber = req.Confirmationnumber,
+                                                Confirmationnumber = req.Confirmationnumber ?? "-",
                                                 Createdate = req.Createdate,
                                                 Smstemplate = req.Smstemplate,
                                                 Sentdate = (DateTime)req.Sentdate,
@@ -416,5 +419,30 @@ namespace HelloDocAdmin.Repositories
                 return false;
             }
         }
+
+
+
+        public bool Delete(int RequestID, string id)
+        {
+            try
+            {
+                BitArray bt = new BitArray(1);
+                bt.Set(0, true);
+                Request re = _context.Requests.FirstOrDefault(e => e.Requestid == RequestID);
+                re.Isdeleted = bt;
+
+                re.Modifieddate = DateTime.Now;
+
+                _context.Requests.Update(re);
+                _context.SaveChanges();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
     }
 }

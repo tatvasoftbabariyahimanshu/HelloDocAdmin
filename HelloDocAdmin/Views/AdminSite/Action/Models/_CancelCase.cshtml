@@ -6,7 +6,7 @@
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Confirm Concellation</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form asp-action="CancelCase" asp-controller="Action">
+            <form asp-action="CancelCase" asp-controller="Action" onsubmit="return onsmt_bc()">
             <input type="hidden"  id="RequestID_Input_ModelCancelCase" name="RequestId"/>
 
             <div class="modal-body">
@@ -15,22 +15,66 @@
                    
                     <div class="mb-4 mt-3">
                         <div class="input-control w-100">
-                            <select name="CaseTag" class="input-outline input-outline-select " required data-allow-clear="true" tabindex="-1" id="Region"  asp-items="@(new SelectList(ViewBag.CaseReasonComboBox,"CaseReasonId","CaseReasonName"))" data-control="select2" data-placeholder="Cancel Reason">
-                            <option>Cancel Reason</option>
+                            <select name="CaseTag" class="input-outline input-outline-select " data-allow-clear="true" tabindex="-1" id="CaseReasonId" asp-items="@(new SelectList(ViewBag.CaseReasonComboBox,"CaseReasonId","CaseReasonName"))" data-control="select2" data-placeholder="Cancel Reason">
+                            <option value="">Cancel Reason</option>
                         </select>
                         </div>
                     </div>
                     <div class="inputs-control w-100 mt-2">
-                        <textarea id="changenote" placeholder=" " name="Note" rows="5" class="input-outline w-100  " type="text"></textarea>
+                        <textarea id="changenotes_bc" placeholder=" " name="Note" rows="5" class="input-outline w-100  " type="text"></textarea>
 
                         <label class="inputs-lable inputs-lable-textarea " id="notedata">Notes</label>
                     </div>
                 </div>
             <div class="modal-footer">
-                <button type="submit" class=" btn btn-info text-white">Confirm</button>
+                    <input type="submit" class=" btn btn-info text-white" value="Confirm" />
                 <a  class="btn btn-outline-info" data-bs-dismiss="modal">Close</a>
             </div>
             </form>
         </div>
     </div>
 </div>
+<script>
+    function onsmt_bc() {
+     
+
+        // Prevent default form submission
+
+        // Reset error messages
+        let errorMessages = document.querySelectorAll(".err-msg");
+        errorMessages.forEach(function (element) {
+            element.textContent = ""; // Clear any existing error messages
+        });
+
+        // Validation flag
+        let isValid = true;
+
+        // Validate Startdate
+        let CaseReasonId = document.getElementById("CaseReasonId");
+        if (!CaseReasonId.value) {
+            let errorMessage = "Select Cancel Reason!!!";
+            displayErrorMessage(CaseReasonId, errorMessage);
+            isValid = false;
+        }
+        let changenotes_bc = document.getElementById("changenotes_bc");
+        if (!CaseReasonId.value) {
+            let errorMessage = "write some Notes !!!";
+            displayErrorMessage(changenotes_bc, errorMessage);
+            isValid = false;
+        }
+  
+
+        if (isValid) {
+
+
+            return true;
+        }
+        else {
+
+
+            return false;
+        }
+    }
+
+  
+</script>

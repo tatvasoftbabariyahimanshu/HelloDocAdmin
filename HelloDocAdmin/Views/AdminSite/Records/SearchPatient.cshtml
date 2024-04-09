@@ -78,12 +78,27 @@
                     Clear
                 </button>
             </div>
-            <div class="loding-div">
-                <div class="bro" id="BRO" style="height:100%;width:100%;position:absolute;background-color:black;opacity:0.2;z-index:1">
+            <div class="position-relative ">
+
+
+
+
+                <div class="middle loding-div position-absolute  top-50" style="left:50%;">
+                    <div class="bar bar1"></div>
+                    <div class="bar bar2"></div>
+                    <div class="bar bar3"></div>
+                    <div class="bar bar4"></div>
+                    <div class="bar bar5"></div>
+                    <div class="bar bar6"></div>
+                    <div class="bar bar7"></div>
+                    <div class="bar bar8"></div>
                 </div>
-                <div class="loading" id="Loading"></div>
-            </div>
-            <div id="SearchResult">
+
+
+                <div id="SearchResult">
+                </div>
+
+
             </div>
         </div>
     </div>
@@ -91,9 +106,9 @@
 </div>
 <script>
     $(function () {
-        $(".loding-div").show();
+        
         getfilterdata();
-        $(".loding-div").hide();
+   
 
     });
 </script>
@@ -121,11 +136,11 @@
                 pagesize: pagesize
             },
             success: function (response) {
-                $(".loding-div").hide();
+                setTimeout(function () { $(".loding-div").hide() }, 500);
                 $('#SearchResult').html(response);
             },
             error: function () {
-                $(".loding-div").hide();
+              
                 alert("error");
             }
         });

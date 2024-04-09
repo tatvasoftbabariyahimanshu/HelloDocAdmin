@@ -13,6 +13,9 @@ namespace HelloDocAdmin.Entity.ViewModels.AdminSite
         public decimal? Longitude { get; set; }
         public string Name { get; set; }
 
+        public string ImgPath { get; set; }
         public string Address { get; set; }
+
+        public int PhysicianID { get; set; }
     }
 }

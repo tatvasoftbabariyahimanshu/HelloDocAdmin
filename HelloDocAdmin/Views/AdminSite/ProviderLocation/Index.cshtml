@@ -12,6 +12,13 @@
         width: 50vw;
         margin: 4rem auto;
     }
+
+    .marker-img {
+        background-size: cover;
+        width: 55px;
+        height: 55px;
+        border-radius: 50%;
+    }
 </style>
 <div class="container">
     <div class="card bg-transparent border-0">
@@ -32,8 +39,24 @@
             </div>
         </div>
 
-        <div class="card-body rounded shadow">
-            <div class="card w-100" id="mapAreash"></div>
+        <div class="card-body rounded shadow ">
+            <div class="position-relative ">
+            <div class="middle z-2 loding-div position-absolute  top-50" style="left:50%;">
+                <div class="bar bar1"></div>
+                <div class="bar bar2"></div>
+                <div class="bar bar3"></div>
+                <div class="bar bar4"></div>
+                <div class="bar bar5"></div>
+                <div class="bar bar6"></div>
+                <div class="bar bar7"></div>
+                <div class="bar bar8"></div>
+            </div>
+            <div class="card w-100 " id="mapAreash">
+                
+
+
+            </div>
+            </div>
         </div>
     </div>
 
@@ -45,13 +68,13 @@
 <script>
     const APIKey = "bmULYKyU2sYwUF1NFjiJ6Fdc3OrqHyWo";
 
-    var Lagos = { lat: 20.5937, lng: 78.9629 };
+    var Lagos = { lat: 23.0225, lng: 72.5714 };
 
     var map = tt.map({
         key: APIKey,
         container: "mapAreash",
         center: Lagos,
-        zoom: 5
+        zoom: 6
     });
 
 
@@ -71,14 +94,21 @@
             sites.push({
                 lat: @location.Latitude,
                 lng: @location.Longitude,
-                name: '@location.Name'
+                name: '@location.Name',
+                photo: '/Upload/Physician/@location.PhysicianID/@location.ImgPath',
+           
+            physicianid: @location.PhysicianID,
             });
             </text>
         }
-    
+        setTimeout(function () { $(".loding-div").hide() }, 1000);
         sites.forEach(function (site) {
-            var marker = new tt.Marker().setLngLat([site.lng, site.lat]).addTo(map);
-            var popup = new tt.Popup({ anchor: 'top' }).setHTML("<b>" + site.name + "</b>");
+        var element = document.createElement("div")
+        element.id = "marker" + site.physicianid;
+        element.style.backgroundImage = 'url("' + site.photo + '")';
+        element.classList.add('marker-img');
+        var marker = new tt.Marker({ element: element }).setLngLat([site.lng, site.lat]).addTo(map);
+        var popup = new tt.Popup({ anchor: 'top' }).setHTML("<b>" + site.name + "</b>");
             marker.setPopup(popup).togglePopup();
         });
 
@@ -94,9 +124,10 @@
             key: APIKey,
             query: document.querySelector("#query").value
         });
-
+       
         if (response.results) {
             moveMapTo(response.results[0].position);
+           
         }
     }
 

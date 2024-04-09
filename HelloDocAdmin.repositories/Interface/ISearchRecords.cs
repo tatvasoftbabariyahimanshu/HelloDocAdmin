@@ -17,5 +17,6 @@ namespace HelloDocAdmin.Repositories.Interface
         public Task<BlockRequest> BlockHistory(string name, string email, string phonenumber, DateTime CreatedDate, int pagesize = 5, int currentpage = 1);
 
         public Task<bool> UnBlock(int RequestID, string id);
+        public bool Delete(int RequestID, string id);
     }
 }

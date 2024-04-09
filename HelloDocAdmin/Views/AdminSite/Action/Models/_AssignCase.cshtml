@@ -5,14 +5,14 @@
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Assign Physician </h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form asp-action="AssignProvider" asp-controller="Action">
+            <form asp-action="AssignProvider" asp-controller="Action" onsubmit="return onsmt()">
                 <div class="modal-body">
                     <h6 class="modal-title" >to assign  this request,select and search another physician.</h6>
 
                     <input type="hidden"  name="requestid" id="RequestID_Input_ModelAssignCase" />
                     <div class="mb-3">
                         <div class="input-control w-100 mt-3">
-                            <select required class="input-outline input-outline-select "  name="region" data-allow-clear="true" tabindex="-1" onchange="myFunction1()" id="region2" asp-items="@(new SelectList(ViewBag.RegionComboBox,"RegionId","RegionName"))" data-control="select2" data-placeholder="Select Level">
+                            <select  class="input-outline input-outline-select "  name="region" data-allow-clear="true" tabindex="-1" onchange="myFunction1()" id="region2" asp-items="@(new SelectList(ViewBag.RegionComboBox,"RegionId","RegionName"))" data-control="select2" data-placeholder="Select Level">
                             <option value="">All Region</option>
                         </select>
                         </div>
@@ -20,21 +20,21 @@
                     </div>
                     <div class="mb-3">
                         <div class="input-control w-100 mt-3">
-                            <select class="input-outline input-outline-select" required name="ProviderId" data-allow-clear="true" tabindex="-1" id="provider" data-control="select2" data-placeholder="Select Level">
+                            <select class="input-outline input-outline-select"  name="ProviderId" data-allow-clear="true" tabindex="-1" id="provider" data-control="select2" data-placeholder="Select Level">
                             <option value="">All Provider</option>
                         </select>
                         </div>
 
                     </div>
                     <div class="inputs-control w-100 mt-2">
-                        <textarea id="changenote"  placeholder=" " name="Notes" rows="5" class="input-outline w-100 fs-6 " type="text"></textarea>
+                        <textarea id="changenote_ac" placeholder=" " name="Notes" rows="5" class="input-outline w-100 fs-6 " type="text"></textarea>
 
                         <label class="inputs-lable inputs-lable-textarea fs-6" id="notedata">Notes</label>
                     </div>
 
                 </div>
                 <div class="modal-footer">
-                    <input type="submit" class=" btn btn-info text-white" value="Assign" >
+                    <input type="submit" class=" btn btn-info text-white" value="Assign" />
                     <button type="button" class="btn btn-outline-info" data-bs-dismiss="modal">Close</button>
                 </div>
             </form>
@@ -57,7 +57,7 @@
             success: function (response) {
 
                 console.log(response);
-                var s = '<option value="-1">Please Select</option>';
+                var s = '';
                 for (var i = 0; i < response.length; i++) {
                     s += '<option value="' + response[i].physicianid + '">' + response[i].firstname + ' ' + response[i].lastname + '</option>';
                 }
@@ -69,4 +69,61 @@
         });
     }
 
+</script>
+<script>
+    function onsmt() {
+
+      
+        // Prevent default form submission
+
+        // Reset error messages
+        let errorMessages = document.querySelectorAll(".err-msg");
+        errorMessages.forEach(function (element) {
+            element.textContent = ""; // Clear any existing error messages
+        });
+
+        // Validation flag
+        let isValid = true;
+
+        // Validate Startdate
+        let region2 = document.getElementById("region2");
+        if (!region2.value) {
+            let errorMessage =  "Please Select Region";
+            displayErrorMessage(region2, errorMessage);
+            isValid = false;
+        }
+
+        // Validate Starttime
+        //let changenote = document.getElementById("changenote");
+        //if (!changenote.value) {
+        //    let errorMessage = "changenote  is required.";
+        //    displayErrorMessage(changenote, errorMessage);
+        //    isValid = false;
+        //}
+        let provider = document.getElementById("provider");
+        if (!provider.value) {
+            let errorMessage = "Please Select Provider.";
+            displayErrorMessage(provider, errorMessage);
+            isValid = false;
+        }
+        let changenote_ac = document.getElementById("changenote_ac");
+        if (!changenote_ac.value) {
+            let errorMessage = "Notes is required.";
+            displayErrorMessage(changenote_ac, errorMessage);
+            isValid = false;
+        }
+      
+        if (isValid) {
+
+        
+            return true;
+        }
+        else {
+
+
+            return false;
+        }
+    }
+
+   
 </script>

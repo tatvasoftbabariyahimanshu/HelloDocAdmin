@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HelloDocAdmin.Entity.ViewModels.Authentication
+﻿namespace HelloDocAdmin.Entity.ViewModels.Authentication
 {
     public class UserInfo
     {
@@ -16,6 +10,7 @@ namespace HelloDocAdmin.Entity.ViewModels.Authentication
         public string? Username { get; set; }
         public string? Role { get; set; }
 
+        public int? RoleID { get; set; }
         public string? AspUserID { get; set; }
     }
 }

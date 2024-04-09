@@ -10,22 +10,82 @@
 };
 <style>
     .day-box {
-        border: 1px solid gray;
+       
+    }
+
+  /*  .table-text {
+        height: 100px;
+        
+    }
+    */ .view-all-btn
+    {
+        text-align: center;
+        font-size:1rem;
+    }
+    .sch-div {
+        text-align: center;
+        width:100%;
+    }
+
+         a {
+            text-decoration: none;
+        }
+
+    .day-box {
+       
+        text-align: center;
+      
+        border: 0.5px solid #e6e6e6;
         background-color: #6d6e70 !important;
         color: white !important;
     }
 
 
     .sch-div {
+       
         margin-top: 1px;
-        min-height: 25px;
-        border: 1px solid gray;
+       
+        border: 0.5px solid #e6e6e6;
+        
     }
 
     .sch-div-day {
+        font-size: 1rem;
+        text-align: center;
+        margin-top: 1px;
+      
+        
+        border: 0.5px solid #e6e6e6;
+        background-color: #fcaef5 !important;
+    }
+
+    .day-box-month {
+        text-align: center;
+        width: calc(100% / 7);
+        border: 0.5px solid #e6e6e6;
+        background-color: #6d6e70 !important;
+        color: white !important;
+        min-width: 165px;
+    }
+
+
+    .sch-div-month {
+        text-align: center;
+        height: 43px;
         margin-top: 1px;
         min-height: 25px;
-        border: 0.8px solid gray;
+        min-width: 165px;
+        border: 0.5px solid #e6e6e6;
+    }
+
+    .sch-div-day-month {
+        font-size: 1rem;
+        text-align: center;
+        margin-top: 1px;
+        height: 43px;
+        min-height: 25px;
+        min-width: 165px;
+        border: 0.5px solid #e6e6e6;
         background-color: #fcaef5 !important;
     }
 
@@ -85,7 +145,7 @@
                     <a class="btn btn-info text-white js-stkModal-btn mx-2"
                        data-form-id="formEdit_UMS"
                        data-url='@Url.Action("_CreateShift", "Physician")'
-                       data-modal-size="lg">Add New Shift  </a>
+                      >Add New Shift  </a>
 
                 </div>
             </div>
@@ -138,7 +198,7 @@
                                     role="tab" aria-controls="nav-profile" aria-selected="false" tabindex="-1">
                                 Week
                             </button>
-                            <button onclick="showmonthbutton()" class="btn btn-outline-info active " id="nav-month-tab" data-bs-toggle="tab" data-bs-target="#nav-month" type="button"
+                            <button onclick="showmonthbutton()" class="btn btn-outline-info active " id="month" data-bs-toggle="tab" data-bs-target="#nav-month" type="button"
                                     role="tab" aria-controls="nav-month" aria-selected="true">
                                 month
                             </button>
@@ -193,6 +253,7 @@
                                         <td class="title table-text day-box">11A</td>
                                         <td class="title table-text day-box">12p</td>
 
+                                        <td class="title table-text day-box">1P</td>
                                         <td class="title table-text day-box">2p</td>
 
                                         <td class="title table-text day-box">3p</td>
@@ -219,6 +280,7 @@
                                     <tr class="Converage">
                                         <th class="table-text border-1  sch-div-day">Converage</th>
 
+                                        <td class="table-text border-1  sch-div-day"></td>
                                         <td class="table-text border-1  sch-div-day"></td>
                                         <td class="table-text border-1  sch-div-day"></td>
                                         <td class="table-text border-1  sch-div-day"></td>
@@ -326,7 +388,18 @@
 </div>
 
 
+<script>
+    document.getElementById("month").addEventListener("click", () => {
 
+        let currentDate = new Date();
+      year = currentDate.getFullYear();
+       month = currentDate.getMonth();
+        const months2 = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        const monthName = months2[month];
+        $('#Month_year').html(`<h3>${monthName} ${year}</h3>`);
+    
+    });
+    </script>
 
 <script>
     var currentYear, currentMonth;
@@ -410,6 +483,7 @@
     const calendarDiv = document.getElementById('calendar');
     const month_year = document.getElementById('Month_year');
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
 
 
     function GetShiftForMonth(year, month) {
@@ -638,14 +712,14 @@
                                             cell.classList.add('p-0');
 
 
-                                            cell.innerHTML += `<a data-form-id="formEdit_UMS" data-url="@Url.Action("_EditShift", "Physician")?id=${item.shiftid}" class="mt-1 d-block text-dark rounded text-center  table-text js-stkModal-btn Status-${item.status}">${item.starttime} - ${item.endtime}</a>`;
+                                            cell.innerHTML += `<a data-form-id="formEdit_UMS" data-url="@Url.Action("_EditShift", "Physician")?id=${item.shiftid}" class="m-1 d-block text-dark rounded text-center  table-text js-stkModal-btn Status-${item.status}">${item.starttime} - ${item.endtime}</a>`;
                                         });
                                     } else {
                                         let buttonId = `viewAllButton_${i}${j}`;
                                         for (let i = 0; i < 2; i++) {
                                             const item = matchingDates[i];
                                             cell.classList.add('p-0');
-                                            cell.innerHTML += `<a data-form-id="formEdit_UMS" data-url="@Url.Action("_EditShift", "Physician")?id=${item.shiftid}" class="mt-1 d-block text-dark rounded table-text  text-center js-stkModal-btn Status-${item.status}">${item.starttime} - ${item.endtime}</a>`;
+                                            cell.innerHTML += `<a data-form-id="formEdit_UMS" data-url="@Url.Action("_EditShift", "Physician")?id=${item.shiftid}" class="m-1 d-block text-dark rounded table-text  text-center js-stkModal-btn Status-${item.status}">${item.starttime} - ${item.endtime}</a>`;
                                         }
                                         const newdate = new Date(fdweek.getFullYear(), fdweek.getMonth() + 1, fdweek.getDate() + j - 2);
 
@@ -745,6 +819,7 @@
 
     document.getElementById("day").addEventListener("click", () => {
 
+       
 
         $('#daycontainer').show();
         $('#weekviewcontainer').hide();
@@ -777,7 +852,8 @@
         updateEmployeeSchedules();
 
         function updateEmployeeSchedules() {
-            $('#Month_year').text(currentDate.toLocaleDateString('en-US', { month: 'short', year: 'numeric', day: 'numeric' }));
+            const formattedDate = `<h3>${currentDate.toLocaleDateString('en-US', { month: 'short', year: 'numeric', day: 'numeric' })}</h3>`;
+            $('#Month_year').html(formattedDate);
 
 
             $('#daycontainer .schedule .employee-schedules tbody').empty();
@@ -785,6 +861,10 @@
             const shiftArrays = [];
 
             for (let index = 0; index < providerList.length; index++) {
+
+
+
+
                 const employee = providerList[index];
                 const employeeRow = document.createElement('tr');
                 const employeeCell = document.createElement('td');
@@ -813,11 +893,12 @@
                         cellDate.getFullYear() === shiftdate.getFullYear()
                 });
 
-
+              
                 const timeRanges = matchingDates.map(item => {
-                    const startTime = item.starttime;
-
-                    const endTime = item.endtime;
+                    let startTime = item.starttime;
+                   
+                    let endTime = item.endtime;
+                   
                     let status = 0; // Default status is 0 (not available)
                     const shiftid = item.shiftid;
                     const regionname = item.regionname;
@@ -833,6 +914,8 @@
                     return { startTime, endTime, status, shiftid, regionname };
                 });
                 const hoursArray = Array(24).fill(0);
+                const gettime = Array(24).fill(0);
+             
                 const shiftidArray = Array(24).fill(0);
                 const regionArray = Array(24).fill(0);
 
@@ -840,12 +923,17 @@
                     // Parse start and end times to obtain hours
                     const startParts = startTime.split(' ')[0].split(':');
                     const endParts = endTime.split(' ')[0].split(':');
+                   
 
                     // Extract hours
                     const startHour = parseInt(startParts[0]);
                     console.log(startParts);
                     console.log(startHour);
-                    const endHour = parseInt(endParts[0]);
+                    let endHour = parseInt(endParts[0]);
+                   console.log("endpart", endParts[1]);
+                    if (parseInt(endParts[1]) != 0) {
+                        endHour = endHour+1;
+                   }
                     console.log(endParts);
                     console.log(endHour);
                     // Determine the value to store based on status
@@ -859,6 +947,19 @@
                     // Loop through hours and mark the corresponding index in the array if it falls within the range
                     for (let hour = startHour; hour <= endHour; hour++) {
                         hoursArray[hour] = valueToStore;
+                        if (hour == startHour)
+                        {
+
+                        gettime[hour]=startTime;
+                        }
+                        if (hour == endHour)
+                        {
+                            gettime[hour] = endTime;
+                        }
+                       
+
+                        
+                       
                         regionArray[hour] = regionname;
                     }
                     console.log(hoursArray);
@@ -891,8 +992,8 @@
 
                         (hoursArray[i] == 0.5) ? hoursArray[i] = 0 : hoursArray[i]; // just for color of the shift change the class name for that !
 
-                        timeSlot.innerHTML += `<a data-form-id="formEdit_UMS" data-url="@Url.Action("_EditShift", "Physician")?id=${shiftidArray[i]}" class="mt-1 d-block text-dark js-stkModal-btn table-text text-center  Status-1">${startTime} To ${endTime} </a>`;
-                        timeSlot.classList.add('p-0');
+                        timeSlot.innerHTML += `<a data-form-id="formEdit_UMS" data-url="@Url.Action("_EditShift", "Physician")?id=${shiftidArray[i]}"  class="mt-1 d-block  text-dark js-stkModal-btn table-text text-center  Status-1">${gettime[i]} To ${gettime[colspan+(i-1)]} </a>`;
+                        timeSlot.classList.add('p-3');
                         (hoursArray[i] == 0) ? hoursArray[i] = 0.5 : hoursArray[i];
                         // Skip the next cells as they are merged
                         i = endTime;
@@ -913,39 +1014,40 @@
         updateEmployeeSchedules();
     });
 
-
+   
     let currentDate1 = new Date();
     const month1 = currentDate1.getMonth();
 
     GetShiftForMonth(currentDate1.getFullYear(), month1 + 1);
     function generateCalendar(year, month) {
         const monthName = months[month];
-
+        $('#Month_year').html(`<h3>${monthName} ${year}</h3>`);
         let daysInMonth = new Date(year, month + 1, 0).getDate();
         let firstDayOfMonth = new Date(year, month, 1).getDay();
-        month_year.innerHTML = `<h3>${monthName} ${year}</h3>`;
+       
+        //month_year.innerHTML = `<h3>${monthName} ${year}</h3>`;
 
         // Clear previous calendar HTML
         calendarDiv.innerHTML = "";
 
-        let calendarHTML = `<div class="table-responsive"><table class="table"><thead class="text-center"><tr>`;
+        let calendarHTML = `<div class="table-responsive"><table class="table table-bordered"><thead class="text-center"><tr>`;
         calendarHTML += `<th scope="col" class="day-box">SUN</th><th scope="col" class="day-box">MON</th><th scope="col" class="day-box">TUE</th><th scope="col"  class="day-box">WED</th>`;
         calendarHTML += `<th scope="col" class="day-box">THU</th><th scope="col" class="day-box">FRI</th><th scope="col" class="day-box">SAT</th></tr></thead><tbody><tr>`;
         let dayCount = 0;
 
         for (let i = 0; i < firstDayOfMonth; i++) {
-            calendarHTML += `<td>
-                                                     <div class="sch-div">
+            calendarHTML += `<td class="p-1">
+                                                             <div class="sch-div-month m-1">
+                                                        </div>
+                                                                 <div class="sch-div-month m-1">
                                                     </div>
-                                                     <div class="sch-div">
-                                                </div>
-                                                     <div class="sch-div">">
-                                                </div>
-                                                         <div class="sch-div">
+                                                                 <div class="sch-div-month m-1">
                                                     </div>
-                                                             <div class="sch-div">
-                                                    </div>
-                                           </td>`;
+                                                                     <div class="sch-div-month m-1">
+                                                        </div>
+                                                                         <div class="sch-div-month m-1">
+                                                        </div>
+                                               </td>`;
             dayCount++;
         }
 
@@ -979,52 +1081,53 @@
                 calendarHTML += `</tr><tr>`;
                 dayCount = 0;
             }
-            calendarHTML += `<td class="table-text">
-                                                    <div class=" ${isToday} sch-div-day text-center">
+            calendarHTML += `<td class="table-text  p-1">
+                            <div class="m-1 ${isToday} sch-div-day-month text-center">
+                            ${day}
+                        </div>
+                                <div class="sch-div-month m-1 p-1 ">
+                            <a data-form-id="formEdit_UMS"
+                                data-url='@Url.Action("_EditShift", "Physician")?id=${ProviderNames.length > 0 ? ProviderNames[0].shiftid : ''}'
+                                class="js-stkModal-btn table-text  ${Status.length > 0 ? 'Status-' + Status[0] : ''}" >${ProviderNames.length > 0 ? ProviderNames[0].name : ''}</a>
+                        </div>
+                                <div class="sch-div-month m-1 p-1 ">
+                            <a data-form-id="formEdit_UMS"
+                                data-url='@Url.Action("_EditShift", "Physician")?id=${ProviderNames.length > 1 ? ProviderNames[1].shiftid : ''}'
+                                class="js-stkModal-btn table-text ${Status.length > 1 ? 'Status-' + Status[1] : ''}" >${ProviderNames.length > 1 ? ProviderNames[1].name : ''}</a>
+                        </div>
+                                    <div class="sch-div-month m-1 p-1 ">
+                            <a data-form-id="formEdit_UMS"
+                                data-url='@Url.Action("_EditShift", "Physician")?id=${ProviderNames.length > 2 ? ProviderNames[2].shiftid : ''}'
+                                    class="js-stkModal-btn table-text ${Status.length > 2 ? 'Status-' + Status[2] : ''}" >${ProviderNames.length > 2 ? ProviderNames[2].name : ''}</a>
+                        </div>
+                                <div class="sch-div-month month m-1">
+                            <a id="${buttonId}" data-bs-toggle="modal" data-bs-target="${ProviderNames.length > 3 ? '#exampleModal' : ''}" data-month="${month}" data-year="${year}" data-index="${day}" class="${Status.length > 3 ? 'btn btn-sm btn-info w-100 h-100 text-white rounded-0 view-all-btn' : ''}">${ProviderNames.length > 3 ? 'View All' : ''}</a>
+                        </div>
+                    </td>`;
 
-                                            ${day}
-
-                                            </div>
-                                                <div class="sch-div ${Status.length > 0 ? 'Status-' + Status[0] : ''}">
-                                                    <a data-form-id="formEdit_UMS"
-                                                                        data-url='@Url.Action("_EditShift", "Physician")?id=${ProviderNames.length > 0 ? ProviderNames[0].shiftid : ''}'
-                                                    class="js-stkModal-btn  " >${ProviderNames.length > 0 ? ProviderNames[0].name : ''}</a>
-                                            </div>
-                                                <div class="sch-div ${Status.length > 1 ? 'Status-' + Status[1] : ''}">
-                                                <a
-                                                    data-form-id="formEdit_UMS"
-                                                                            data-url='@Url.Action("_EditShift", "Physician")?id=${ProviderNames.length > 1 ? ProviderNames[1].shiftid : ''}'class="js-stkModal-btn  " >${ProviderNames.length > 1 ? ProviderNames[1].name : ''}</a>
-                                            </div>
-                                                <div class="sch-div ${Status.length > 2 ? 'Status-' + Status[2] : ''}">
-                                                    <a data-form-id="formEdit_UMS"
-                                                                            data-url='@Url.Action("_EditShift", "Physician")?id=${ProviderNames.length > 2 ? ProviderNames[2].shiftid : ''}'
-                                                    class="js-stkModal-btn " >${ProviderNames.length > 2 ? ProviderNames[2].name : ''}</a>
-                                            </div>
-                                            <div class="sch-div">
-                                                            <div type="button"  id="${buttonId}" data-bs-toggle="modal" data-bs-target="${ProviderNames.length > 3 ? '#exampleModal' : ''}" data-month="${month}" data-year="${year}" data-index="${day}" class="${Status.length > 3 ? 'btn btn-info w-100 text-white rounded-0 view-all-btn' : ''}">${ProviderNames.length > 3 ? 'View All' : ''}</div>
-
-                                                    </div>
-                                            </td>`;
             dayCount++;
         }
 
         for (let i = dayCount; i < 7; i++) {
-            calendarHTML += `<td>
-                                                 <div class="sch-div">
+            calendarHTML += `<td class="p-1">
+                                                                         <div class="sch-div-month month m-1">
+                                                            </div>
+                                                                     <div class="sch-div-month month m-1">
                                                         </div>
-                                                     <div class="sch-div">
-                                                    </div >
-                                                         <div class="sch-div">
-                                                    </div>
-                                                                 <div class="sch-div">
+                                                                         <div class="sch-div-month month m-1">
                                                         </div>
-                                                                     <div class="sch-div">
-                                                        </div></td>`;
+                                                                         <div class="sch-div-month month m-1">
+                                                            </div>
+                                                                                 <div class="sch-div-month month m-1">
+                                                            </div>
+                                                   </td>`;
         }
 
         calendarHTML += `</tr></tbody></table></div>`;
         calendarDiv.innerHTML = calendarHTML;
+   
     }
+
 
 
 
@@ -1096,7 +1199,7 @@
             $('.modal-body').append(shiftDetails);
         });
     });
-
+   
 
 
 </script>

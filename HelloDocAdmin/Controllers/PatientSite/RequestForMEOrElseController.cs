@@ -1,12 +1,12 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using HelloDocAdmin.Controllers.Authenticate;
 using HelloDocAdmin.Entity.ViewModel.PatientSite;
 using HelloDocAdmin.Repositories.PatientInterface;
 using Microsoft.AspNetCore.Mvc;
-using HelloDocAdmin.Controllers.Authenticate;
 namespace HelloDocAdmin.Controllers.PatientSite
 {
     public class RequestForMEOrElseController : Controller
-    { 
+    {
         private IPatientRequestRepository _patientrequestrepo;
         private IPatientDashboardRepository _patientDashrepo;
         private readonly INotyfService _notyf;
@@ -21,7 +21,7 @@ namespace HelloDocAdmin.Controllers.PatientSite
         public IActionResult RequestForME()
         {
             ViewPatientRequest model = _patientDashrepo.GetDataForME(CV.LoggedUserID());
-            return View("../PatientSite/PatientDashboard/RequestForME",model);
+            return View("../PatientSite/PatientDashboard/RequestForME", model);
         }
         public IActionResult RequestForSomeOneElse()
         {
@@ -30,7 +30,7 @@ namespace HelloDocAdmin.Controllers.PatientSite
         }
 
         #region CreateForME
-        public  IActionResult CreateForME(ViewPatientRequest viewdata)
+        public IActionResult CreateForME(ViewPatientRequest viewdata)
         {
             if (ModelState.IsValid)
             {
@@ -43,6 +43,12 @@ namespace HelloDocAdmin.Controllers.PatientSite
                 }
                 else
                 {
+                    if (_patientrequestrepo.UserIsBlocked(viewdata.Email))
+                    {
+                        _notyf.Information("Email Is Blocked By Admin");
+                        ModelState.AddModelError("Email", "Email Is Blocked By Admin");
+                        return View("../PatientSite/PatientDashboard/RequestForME", viewdata);
+                    }
                     bool val = _patientDashrepo.CreateNewRequestForME(viewdata);
                     if (val)
                     {
@@ -80,6 +86,12 @@ namespace HelloDocAdmin.Controllers.PatientSite
                 }
                 else
                 {
+                    if (_patientrequestrepo.UserIsBlocked(viewdata.Email))
+                    {
+                        _notyf.Information("Email Is Blocked By Admin");
+                        ModelState.AddModelError("Email", "Email Is Blocked By Admin");
+                        return View("../PatientSite/PatientDashboard/RequestForsomeone_else", viewdata);
+                    }
                     bool val = _patientDashrepo.CreateNewRequestForSomeOneElse(viewdata);
                     if (val)
                     {

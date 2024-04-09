@@ -13,10 +13,26 @@
 @model HelloDocAdmin.Entity.ViewModels.AdminSite.PatientRecordsView
 <div class="container-fluid">
     <div class="card bg-transparent border-0">
+        <div class="middle loding-div position-absolute  top-50" style="left:50%;">
+            <div class="bar bar1"></div>
+            <div class="bar bar2"></div>
+            <div class="bar bar3"></div>
+            <div class="bar bar4"></div>
+            <div class="bar bar5"></div>
+            <div class="bar bar6"></div>
+            <div class="bar bar7"></div>
+            <div class="bar bar8"></div>
+        </div>
         <div class="card-header d-flex justify-content-between  border-0  bg-transparent p-1  mt-3 mb-2">
             <div class="text-start d-flex align-items-center">
                 <h5 class="mt-2 bold"><b> Patient Records</b></h5>
 
+            </div>
+           <div class="text-end">
+                <a asp-controller="Records" asp-action="PatientRecord"
+            class="btn btn-outline-info btn-back">
+            <i class="fa-solid fa-share mx-2"></i>Back
+            </a>
             </div>
            
         </div>
@@ -113,3 +129,6 @@
     </div>
 
 </div>
+<script>
+    setTimeout(function () { $(".loding-div").hide() }, 500);
+</script>

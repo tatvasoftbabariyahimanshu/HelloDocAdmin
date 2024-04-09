@@ -1,10 +1,4 @@
-﻿using HelloDocAdmin.Entity.Models;
-using HelloDocAdmin.Entity.ViewModels.Authentication;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using HelloDocAdmin.Entity.ViewModels.Authentication;
 
 namespace HelloDocAdmin.Repositories.Interface
 {
@@ -16,5 +10,7 @@ namespace HelloDocAdmin.Repositories.Interface
         public bool savepass(ChangePassModel cpm);
         public bool saveuser(NewRegistration cpm);
         public bool islinkexist(string pwdModified);
+
+        public bool isAccessGranted(int RoleID, string manuname);
     }
 }

@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HelloDocAdmin.Controllers.AdminSite
 {
-    [CustomAuthorization("Admin")]
+    [CustomAuthorization("Admin,Physician")]
     public class DashboardController : Controller
     {
         private IDashboardRepository _dashboardrepo;
@@ -22,7 +22,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
 
 
-        [CustomAuthorization("Admin")]
+
         public async Task<IActionResult> Index()
         {
 
@@ -30,12 +30,12 @@ namespace HelloDocAdmin.Controllers.AdminSite
             ViewBag.RegionComboBox = await _combobox.RegionComboBox();
             ViewBag.CaseReasonComboBox = await _combobox.CaseReasonComboBox();
             DashboardCardsModel model = new DashboardCardsModel();
-            model.PandingRequests = _dashboardrepo.GetRequestNumberByStatus("2");
-            model.NewRequests = _dashboardrepo.GetRequestNumberByStatus("1");
-            model.ActiveRequests = _dashboardrepo.GetRequestNumberByStatus("4,5");
-            model.ConcludeRequests = _dashboardrepo.GetRequestNumberByStatus("6");
-            model.ToCloseRequests = _dashboardrepo.GetRequestNumberByStatus("3,7,8");
-            model.UnpaidRequests = _dashboardrepo.GetRequestNumberByStatus("9");
+            model.PandingRequests = _dashboardrepo.GetRequestNumberByStatus("2", CV.LoggedUserID());
+            model.NewRequests = _dashboardrepo.GetRequestNumberByStatus("1", CV.LoggedUserID());
+            model.ActiveRequests = _dashboardrepo.GetRequestNumberByStatus("4,5", CV.LoggedUserID());
+            model.ConcludeRequests = _dashboardrepo.GetRequestNumberByStatus("6", CV.LoggedUserID());
+            model.ToCloseRequests = _dashboardrepo.GetRequestNumberByStatus("3,7,8", CV.LoggedUserID());
+            model.UnpaidRequests = _dashboardrepo.GetRequestNumberByStatus("9", CV.LoggedUserID());
 
             return View("../AdminSite/Dashboard/Index", model);
         }
@@ -63,9 +63,18 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
 
             List<DashboardRequestModel> requests = _dashboardrepo.GetRequests(Status);
+            Dashboarddatamodel dm = new Dashboarddatamodel();
 
 
-            Dashboarddatamodel dm = await _dashboardrepo.GetRequestsbyfilter(Status, search, region, requesttype, currentpage, pagesize);
+            if (CV.LoggedUserRole() == "Admin")
+            {
+
+                dm = await _dashboardrepo.GetRequestsbyfilter(Status, search, region, requesttype, currentpage, pagesize);
+            }
+            else
+            {
+                dm = await _dashboardrepo.GetRequestsbyfilterForPhy(Status, CV.LoggedUserID(), search, region, requesttype, currentpage, pagesize);
+            }
 
 
             TempData["CurrentStatusinlist"] = Status;

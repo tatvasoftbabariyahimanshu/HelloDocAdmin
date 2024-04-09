@@ -4,98 +4,104 @@
 
 @{
     ViewData["Title"] = "_UpperTab";
-  }
-@model DashboardCardsModel
+}
+@model DashboardCardsModel;  
 
-  ﻿
-    <input type="hidden" value="" id="cr-status"/>
-       
-        <div class="tab p-2 ">
-            <div class="row tb">
-           
-                <div class="col-lg-2 col-md-4 col-sm-4   col-4 ">
+
+
+
+
+﻿
+<input type="hidden" value="" id="cr-status" />
+<div class="tab p-2 ">
+    <div class="row tb">
+
+        <div class="col-lg-2 col-md-4 col-sm-4   col-4 ">
             <button type="submit" onclick="actAlrt(1)    " value="1" name="Status" class="btn alert alert-primary
 
 @{
 if(CV.CurrentStatus()=="1")
                     {
-                        @Html.Raw("active")
+                            @Html.Raw("active")
                     }
 }
 
 btn-outline-primary w-100 text-start  text-uppercase  a-primary t-tab">
-                    <div class="d-inline-flex">
-                        <i class="fa-solid fa-circle-plus me-2 align-self-center d-none d-sm-block"></i>
-                        NEW
-                    </div>
-                        <div>
-                            <b class="fw-bold fs-3 bord-number mx-1">   @Model.NewRequests</b>
-                        </div>
-                    </button>
+                <div class="d-inline-flex">
+                    <i class="fa-solid fa-circle-plus me-2 align-self-center d-none d-sm-block"></i>
+                    NEW
                 </div>
+                <div>
+                    <b class="fw-bold fs-3 bord-number mx-1">   @Model.NewRequests</b>
+                </div>
+            </button>
+        </div>
         <div class="col-lg-2 col-md-4 col-4 position-relative">
-                <button type="submit" value="2" onclick="actAlrt(2) " name="Status" class="btn alert
+            <button type="submit" value="2" onclick="actAlrt(2) " name="Status" class="btn alert
 @{
 if(CV.CurrentStatus()=="2")
                     {
-                            @Html.Raw("active")
+                                @Html.Raw("active")
                     }
 }
 alert-info btn-outline-info w-100 text-start text-uppercase   a-info t-tab">
-                    <div class="d-inline-flex">
-                        <i class="fa-solid fa-user-clock me-2 align-self-center d-none d-sm-block"></i>
-                        PENDING
-                    </div>
-                        <div>
-                            <b class="fw-bold fs-3 mx-1 bord-number">@Model.PandingRequests</b>
-                        </div>
-                    </button>
+                <div class="d-inline-flex">
+                    <i class="fa-solid fa-user-clock me-2 align-self-center d-none d-sm-block"></i>
+                    PENDING
                 </div>
+                <div>
+                    <b class="fw-bold fs-3 mx-1 bord-number">@Model.PandingRequests</b>
+                </div>
+            </button>
+        </div>
         <div class="col-lg-2 col-md-4 col-sm-4 col-4 position-relative">
-                    <button type="submit" value="4,5" onclick="actAlrt(3)" name="Status" class="btn
+            <button type="submit" value="4,5" onclick="actAlrt(3)" name="Status" class="btn
 @{
 if(CV.CurrentStatus()=="4,5")
                     {
-                            @Html.Raw("active")
+                                @Html.Raw("active")
                     }
 }
 alert alert-success btn-outline-success w-100 text-start text-uppercase  a-success t-tab">
-                    <div class="d-inline-flex">
-                        <i class="fa-solid fa-circle-check me-2 align-self-center d-none d-sm-block"></i>
-                        ACTIVE
-                    </div>
-                        <div>
-                            <b class="fw-bold fs-3 mx-1 bord-number">@Model.ActiveRequests</b>
-                        </div>
-                    </button>
-
+                <div class="d-inline-flex">
+                    <i class="fa-solid fa-circle-check me-2 align-self-center d-none d-sm-block"></i>
+                    ACTIVE
                 </div>
+                <div>
+                    <b class="fw-bold fs-3 mx-1 bord-number">@Model.ActiveRequests</b>
+                </div>
+            </button>
+
+        </div>
         <div class="col-lg-2 col-md-4 col-sm-4 col-4 position-relative">
-                    <button type="submit" value="6" onclick="actAlrt(4)" name="Status" class="btn
+            <button type="submit" value="6" onclick="actAlrt(4)" name="Status" class="btn
 
 @{
 if(CV.CurrentStatus()=="6")
                     {
-                            @Html.Raw("active")
+           @Html.Raw("active")
                     }
 }
 alert alert-warning  btn-outline-warning w-100 text-start text-uppercase  a-warning t-tab">
-                    <div class="d-inline-flex">
-                        <i class="fa-solid fa-clock-rotate-left me-2 align-self-center d-none d-sm-block"></i>
-                        CONCLUDE
-                    </div>
-                        <div>
-                            <b class="fw-bold fs-3 mx-1 bord-number">@Model.ConcludeRequests</b>
-                        </div>
-                    </button>
+                <div class="d-inline-flex">
+                    <i class="fa-solid fa-clock-rotate-left me-2 align-self-center d-none d-sm-block"></i>
+                    CONCLUDE
                 </div>
-        <div class="col-lg-2 col-md-4 col-sm-4 col-4 position-relative">
-                    <button type="submit" value="3,7,8" onclick="actAlrt(5)" name="Status" class="btn alert alert-danger
+                <div>
+                    <b class="fw-bold fs-3 mx-1 bord-number">@Model.ConcludeRequests</b>
+                </div>
+            </button>
+        </div>
+
+        @if (CV.LoggedUserRole() == "Admin")
+        {
+            <div class="col-lg-2 col-md-4 col-sm-4 col-4 position-relative">
+                <button type="submit" value="3,7,8" onclick="actAlrt(5)" name="Status" class="btn alert alert-danger
 
 @{
 if(CV.CurrentStatus()=="3,7,8")
                     {
-                            @Html.Raw("active")
+                                    @Html.Raw("active")
                     }
 }
 
@@ -104,18 +110,18 @@ btn-outline-danger w-100 text-start text-uppercase  a-danger t-tab">
                         <i class="fa-solid fa-user-xmark me-2 align-self-center d-none d-sm-block"></i>
                         TO CLOSE
                     </div>
-                        <div>
-                            <b class="fw-bold fs-3 mx-1 bord-number">@Model.ToCloseRequests</b>
-                        </div>
-                    </button>
-                </div>
-        <div class="col-lg-2 col-md-4 col-sm-4  col-4  position-relative">
-                    <button type="submit" value="9" onclick="actAlrt(6)" name="Status" class="btn 
+                    <div>
+                        <b class="fw-bold fs-3 mx-1 bord-number">@Model.ToCloseRequests</b>
+                    </div>
+                </button>
+            </div>
+            <div class="col-lg-2 col-md-4 col-sm-4  col-4  position-relative">
+                <button type="submit" value="9" onclick="actAlrt(6)" name="Status" class="btn
 
 @{
 if(CV.CurrentStatus()=="9")
                     {
-                            @Html.Raw("active")
+                                    @Html.Raw("active")
                     }
 }
 alert alert-success btn-outline-success w-100 text-start text-uppercase  a-success t-tab">
@@ -123,28 +129,23 @@ alert alert-success btn-outline-success w-100 text-start text-uppercase  a-succe
                         <i class="fa-solid fa-circle-dollar-to-slot me-2 align-self-center d-none d-sm-block"></i>
                         UNPAID
                     </div>
-                        <div>
-                            <b class="fw-bold fs-3 mx-1 bord-number">@Model.UnpaidRequests</b>
-                        </div>
-                    </button>
-                </div>
+                    <div>
+                        <b class="fw-bold fs-3 mx-1 bord-number">@Model.UnpaidRequests</b>
+                    </div>
+                </button>
             </div>
-        </div>
+        }
 
+    </div>
+</div>
+<script>
 
-  
-
-   <script>
-
-    function actAlrt(value)
-    {
+    function actAlrt(value) {
         var items = document.getElementsByClassName("alert");
-        if(value==1)
-        {
+        if (value == 1) {
             $('#cr-status').val('1');
         }
-        else if (value == 2)
-        {
+        else if (value == 2) {
             $('#cr-status').val('2');
         }
         else if (value == 3) {
@@ -160,20 +161,19 @@ alert alert-success btn-outline-success w-100 text-start text-uppercase  a-succe
             $('#cr-status').val('9');
         }
 
-        for(var i=0;i<items.length;i++){
+        for (var i = 0; i < items.length; i++) {
 
-            if(i==value-1)
-            {
+            if (i == value - 1) {
                 items[i].classList.add("active");
-              
+
 
             }
-            else{
+            else {
                 items[i].classList.remove("active");
             }
         }
         getfilterdata();
     }
 
-    </script>
+</script>
 

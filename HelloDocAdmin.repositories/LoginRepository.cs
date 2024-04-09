@@ -20,11 +20,12 @@ namespace HelloDocAdmin.Repositories
 
 
         public async Task<UserInfo> CheckAccessLogin(LoginViewModel vm)
+
         {
             try
             {
-                var user = await _context.Aspnetusers.FirstOrDefaultAsync(u => u.Email == vm.Email);
-                var admindata = _context.Admins.FirstOrDefault(u => u.Aspnetuserid == user.Id);
+                var user = _context.Aspnetusers.FirstOrDefault(u => u.Email == vm.Email);
+
                 UserInfo admin = new UserInfo();
                 if (user != null)
                 {
@@ -42,19 +43,41 @@ namespace HelloDocAdmin.Repositories
 
 
                         admin.Username = user.Username;
-                        admin.FirstName = admindata.Firstname ?? string.Empty;
-                        admin.LastName = admindata.Lastname ?? string.Empty;
+                        admin.FirstName = admin.FirstName ?? string.Empty;
+                        admin.LastName = admin.LastName ?? string.Empty;
                         admin.Role = datarole.Name;
                         admin.Email = user.Email;
-                        //admin.UserId = admindata.Adminid ?? null;
+
                         admin.AspUserID = user.Id;
+
+
+                        if (admin.Role == "Admin")
+                        {
+                            var admindata = _context.Admins.FirstOrDefault(u => u.Aspnetuserid == user.Id);
+                            admin.UserId = admindata.Adminid;
+                            admin.RoleID = (int)admindata.Roleid;
+                        }
+                        else if (admin.Role == "Patient")
+                        {
+                            var admindata2 = _context.Users.FirstOrDefault(u => u.Aspnetuserid == user.Id);
+
+
+
+                        }
+                        else
+                        {
+                            var admindata = _context.Physicians.FirstOrDefault(u => u.Aspnetuserid == user.Id);
+
+                            admin.RoleID = (int)admindata.Roleid;
+
+                        }
 
                         return admin;
                     }
                 }
                 else
                 {
-                    return admin;
+                    return admin = null;
                 }
             }
             catch (Exception ex)
@@ -62,7 +85,6 @@ namespace HelloDocAdmin.Repositories
                 return null;
             }
         }
-
 
         public bool sendmailforresetpass(string Email)
         {
@@ -226,5 +248,25 @@ namespace HelloDocAdmin.Repositories
                 return false;
             }
         }
+
+
+
+        public bool isAccessGranted(int roleId, string menuName)
+        {
+            // Get the list of menu IDs associated with the role
+            IQueryable<int> menuIds = _context.Rolemenus
+                                            .Where(e => e.Roleid == roleId)
+                                            .Select(e => e.Menuid);
+
+            // Check if any menu with the given name exists in the list of menu IDs
+            bool accessGranted = _context.Menus
+                                         .Any(e => menuIds.Contains(e.Menuid) && e.Name == menuName);
+
+            return accessGranted;
+        }
+
+
+
+
     }
 }

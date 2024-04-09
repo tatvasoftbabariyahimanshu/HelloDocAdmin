@@ -194,6 +194,13 @@ namespace HelloDocAdmin.Repositories
                         _context.Physicians.Update(DataForChange);
                         _context.Aspnetusers.Update(U);
                         _context.SaveChanges();
+
+
+
+
+
+
+
                         return true;
                     }
                     else
@@ -267,7 +274,15 @@ namespace HelloDocAdmin.Repositories
                             }
 
                         }
+
+
+                        Aspnetuser asp = _context.Aspnetusers.FirstOrDefault(item => item.Id == DataForChange.Aspnetuserid);
+                        asp.Email = vm.Email;
+                        asp.Modifieddate = vm.Modifieddate;
+                        _context.Aspnetusers.Update(asp);
                         _context.SaveChanges();
+
+
                         return true;
                     }
                     else
@@ -535,6 +550,14 @@ namespace HelloDocAdmin.Repositories
                         _context.SaveChanges();
 
                     }
+                    Aspnetuserrole asprl = new Aspnetuserrole()
+                    {
+                        Roleid = "3",
+                        Userid = Aspnetuser.Id,
+
+                    };
+                    _context.Aspnetuserroles.Add(asprl);
+                    _context.SaveChanges();
 
                     Physicianlocation pl = new Physicianlocation();
                     pl.Physicianid = Physician.Physicianid;

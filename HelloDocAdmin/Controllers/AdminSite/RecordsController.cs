@@ -97,6 +97,25 @@ namespace HelloDocAdmin.Controllers.AdminSite
             return View("../AdminSite/Records/BlockHistory");
 
         }
+        public async Task<IActionResult> Delete(int RequestId)
+        {
+
+
+            bool UnBlock = _searchrecords.Delete(RequestId, CV.LoggedUserID());
+            if (UnBlock)
+            {
+                _notyf.Success(" Request Deleted Successfully");
+
+            }
+            else
+            {
+                _notyf.Error("Request Not Deleted ");
+
+            }
+
+            return RedirectToAction("SearchRecord");
+
+        }
 
     }
 }

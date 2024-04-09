@@ -9,7 +9,7 @@
 
            
             
-            <form asp-action="SendAgreement" asp-controller="SendAgreement">
+            <form asp-action="SendAgreement" asp-controller="SendAgreement" onsubmit="return onsmt_sendAgree()">
                 <div class="modal-body">
                     <div class="" id="typediv">
                     </div>
@@ -18,11 +18,12 @@
                     </p>
                     <input id="RequestID_sendAgreement" placeholder=" "  name="requestid" type="hidden">
                     <div class="inputs-control mt-2 ">
-                        <input id="Phonenumber_sendAgreement" placeholder=" " required name="phonenumber" class="input-outline w-100 inp edit-frm" type="text">
+                        <input id="Phonenumber_sendAgreement" placeholder=" "  name="phonenumber" class="input-outline w-100 inp edit-frm" type="text">
                         <label class="inputs-lable">Phone Number</label>
                     </div>
                     <div class="inputs-control mt-2 ">
-                        <input id="Email_sendAgreement" placeholder=" " required name="email" class="input-outline w-100 inp edit-frm" type="email">
+                        
+                        <input id="Email_sendAgreement" placeholder=" "  name="email" class="input-outline w-100 inp edit-frm" type="email">
                         <label class="inputs-lable">Email</label>
                     </div>
                 </div>
@@ -41,5 +42,48 @@
         utilsScript:
             "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
     });
+
+</script>
+<script>
+    function onsmt_sendAgree() {
+
+
+
+        let errorMessages = document.querySelectorAll(".err-msg");
+        errorMessages.forEach(function (element) {
+            element.textContent = ""; 
+        });
+
+
+        let isValid = true;
+
+
+        let Phonenumber_sendAgreement = document.getElementById("Phonenumber_sendAgreement");
+        if (!Phonenumber_sendAgreement.value) {
+            let errorMessage = "Phone Number is required.";
+            displayErrorMessage(Phonenumber_sendAgreement, errorMessage);
+            isValid = false;
+        }
+
+        let Email_sendAgreement = document.getElementById("Email_sendAgreement");
+        if (!Email_sendAgreement.value) {
+            let errorMessage = "Email  is required.";
+            displayErrorMessage(Email_sendAgreement, errorMessage);
+            isValid = false;
+        }
+      
+
+        if (isValid) {
+
+
+            return true;
+        }
+        else {
+
+
+            return false;
+        }
+    }
+
 
 </script>
