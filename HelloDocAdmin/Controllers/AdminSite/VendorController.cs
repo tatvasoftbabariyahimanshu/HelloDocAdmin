@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HelloDocAdmin.Controllers.AdminSite
 {
-    [CustomAuthorization("Admin")]
+    [CustomAuthorization("Admin", "Vendor")]
     public class VendorController : Controller
     {
         private IActionRepository _actionrepo;
@@ -32,33 +32,37 @@ namespace HelloDocAdmin.Controllers.AdminSite
         public async Task<IActionResult> Index()
         {
             List<HealthprofessionaltypeCombobox> cs = await _combobox.healthprofessionaltype();
-             ViewBag.ProfessionType = cs;
-            List<VendorListView> list = _vendorrepo.getallvendor();
-            return View("../AdminSite/Partner/Index",list);
+            ViewBag.Healthprofessionaltype = cs;
+            return View("../AdminSite/Partner/Index");
+        }
+        public async Task<IActionResult> VendorList(string? vendorName, int? healthproffesionID, int pagesize = 5, int currentpage = 1)
+        {
+            VendorData sr = _vendorrepo.getallvendor(vendorName, healthproffesionID, pagesize, currentpage);
+            return PartialView("../AdminSite/Partner/_VendorList", sr);
         }
         public async Task<IActionResult> VendorAddEdit(int vendorid)
         {
             List<HealthprofessionaltypeCombobox> cs = await _combobox.healthprofessionaltype();
             ViewBag.ProfessionType = cs;
-            if (vendorid!=null)
+            if (vendorid != null)
             {
                 Healthprofessional hp = _vendorrepo.gethelthprofessionaldetails(vendorid);
-                return View("../AdminSite/Partner/AddEditVendor",hp);
+                return View("../AdminSite/Partner/AddEditVendor", hp);
             }
             else
             {
                 return View("../AdminSite/Partner/AddEditVendor");
             }
-          
+
         }
 
 
         public async Task<IActionResult> DeleteVendor(int? vendorid)
         {
-            if(_vendorrepo.delete(vendorid))
+            if (_vendorrepo.delete(vendorid))
             {
                 _notyf.Success("Vendor Deleted successfully");
-              
+
             }
             else
             {
@@ -77,8 +81,19 @@ namespace HelloDocAdmin.Controllers.AdminSite
             {
                 if (model.Vendorid == null)
                 {
+                    if (_vendorrepo.isBusinessNameExist(model.Vendorname) > 0)
+                    {
+                        ModelState.AddModelError("Vendorname", "Business name is Already Taken!! choose another one");
+                        return View("../AdminSite/Partner/AddEditVendor", model);
+                    }
+                    if (_vendorrepo.isEmailExist(model.Email) > 0)
+                    {
+                        ModelState.AddModelError("Email", "Email is Already Taken!! choose another one");
+                        return View("../AdminSite/Partner/AddEditVendor", model);
+                    }
+
                     bool data = _vendorrepo.addVendor(model);
-                     if(data)
+                    if (data)
                     {
                         _notyf.Success("Vendor added successfully");
                         return RedirectToAction("Index");
@@ -92,6 +107,16 @@ namespace HelloDocAdmin.Controllers.AdminSite
                 else
                 {
                     bool data = _vendorrepo.EditVendor(model);
+                    if (_vendorrepo.isBusinessNameExist(model.Vendorname) > 1)
+                    {
+                        ModelState.AddModelError("Vendorname", "Business name is Already Taken!! choose another one");
+                        return View("../AdminSite/Partner/AddEditVendor", model);
+                    }
+                    if (_vendorrepo.isEmailExist(model.Email) > 1)
+                    {
+                        ModelState.AddModelError("Email", "Email is Already Taken!! choose another one");
+                        return View("../AdminSite/Partner/AddEditVendor", model);
+                    }
                     if (data)
                     {
                         _notyf.Success("Vendor Edited successfully");
@@ -105,7 +130,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
                 }
 
 
-               
+
             }
             else
             {

@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HelloDocAdmin.Controllers.AdminSite
 {
-    [CustomAuthorization("Admin")]
+    [CustomAuthorization("Admin", "MyProfile")]
     public class MyProfileController : Controller
     {
         private IDashboardRepository _dashboardrepo;
@@ -33,26 +33,29 @@ namespace HelloDocAdmin.Controllers.AdminSite
         [HttpPost]
         public IActionResult SaveAdministrationinfo(ViewAdminProfileModel vm)
         {
-
-
             vm.AdminReqionList = Request.Form["SelectedRegions"].Select(int.Parse).ToList();
-            bool data = _adminProfile.Edit_Admin_Profile(vm, CV.LoggedUserID());
-            if (data)
+            if (vm.AdminReqionList == null || !vm.AdminReqionList.Any())
+            {
+                _notyf.Error("Select at least one region!");
+                return RedirectToAction("Index");
+            }
+
+            bool isProfileEdited = _adminProfile.Edit_Admin_Profile(vm, CV.LoggedUserID());
+
+            if (isProfileEdited)
             {
                 _notyf.Success("Administration Information Changed...");
             }
             else
             {
-                _notyf.Error("Imformation not Changed properly...");
+                _notyf.Error("Information not changed properly...");
             }
 
             return RedirectToAction("Index");
         }
+
         public IActionResult EditBillingInfo(ViewAdminProfileModel vm)
         {
-
-
-
             bool data = _adminProfile.Edit_Billing_Info(vm, CV.LoggedUserID());
             if (data)
             {

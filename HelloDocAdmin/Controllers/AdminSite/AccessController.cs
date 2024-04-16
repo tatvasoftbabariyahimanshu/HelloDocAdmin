@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HelloDocAdmin.Controllers.AdminSite
 {
-    [CustomAuthorization("Admin")]
+    [CustomAuthorization("Admin", "Access")]
     public class AccessController : Controller
     {
         private IActionRepository _actionrepo;
@@ -34,6 +34,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
             _phyrepo = physician;
             _admin = adminProfile;
         }
+
 
         public IActionResult Index()
         {
@@ -87,18 +88,18 @@ namespace HelloDocAdmin.Controllers.AdminSite
         [HttpPost]
         public async Task<IActionResult> PostRoleMenu(RolesModel role, string Menusid)
         {
-            bool data = false;
             if (Menusid == null)
             {
                 _notyf.Warning("Select Menus!!!");
                 return View("../AdminSite/Access/CreateAccess", role);
             }
+
             if (ModelState.IsValid)
             {
+                bool data = false;
                 if (role.Roleid == null)
                 {
                     data = await _accesrepo.PostRoleMenu(role, Menusid, CV.LoggedUserID());
-
                 }
                 else
                 {
@@ -107,7 +108,6 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
                 if (data)
                 {
-
                     _notyf.Success("Role Added/Updated Successfully");
                 }
                 else
@@ -121,8 +121,6 @@ namespace HelloDocAdmin.Controllers.AdminSite
                 _notyf.Error("Enter valid details");
                 return View("../AdminSite/Access/CreateAccess", role);
             }
-
-
         }
         #endregion
 
@@ -130,11 +128,14 @@ namespace HelloDocAdmin.Controllers.AdminSite
         public async Task<IActionResult> UserAccess()
         {
 
-
-            List<ViewUserAccess> v = await _accesrepo.GetAllUserDetails();
-            return View("../AdminSite/Access/UserAccess", v);
+            return View("../AdminSite/Access/UserAccess");
         }
         #endregion
+        public async Task<IActionResult> AccessList(int? accounttype, int pagesize = 10, int currentpage = 1)
+        {
+            UserAccessData sr = await _accesrepo.GetAllUserDetails(accounttype, pagesize, currentpage);
+            return PartialView("../AdminSite/Access/_UserAccessList", sr);
+        }
         public async Task<IActionResult> PhysicianProfile(int? id)
         {
             //TempData["Status"] = TempData["Status"];
@@ -274,7 +275,11 @@ namespace HelloDocAdmin.Controllers.AdminSite
         #endregion
 
 
-
+        //public List<string> getManuByID(int RoleID)
+        //{
+        //    List<string> str = _accesrepo.getManuByID(RoleID);
+        //    return str;
+        //}
 
 
     }

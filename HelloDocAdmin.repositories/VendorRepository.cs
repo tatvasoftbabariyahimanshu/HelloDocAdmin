@@ -2,15 +2,8 @@
 using HelloDocAdmin.Entity.Models;
 using HelloDocAdmin.Entity.ViewModels.AdminSite;
 using HelloDocAdmin.Repositories.Interface;
-using Microsoft.AspNetCore.Http.Features;
-using Microsoft.EntityFrameworkCore;
-using System;
+using Microsoft.IdentityModel.Tokens;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace HelloDocAdmin.Repositories
 {
@@ -24,29 +17,45 @@ namespace HelloDocAdmin.Repositories
             _context = context;
             _email = email;
         }
-        public List<VendorListView> getallvendor()
+        public VendorData getallvendor(string? vendorname, int? helthprofessionaltype, int pagesize = 5, int currentpage = 1)
         {
             BitArray bt = new BitArray(1);
             bt.Set(0, false);
-            List<VendorListView> list = (from Vendor in _context.Healthprofessionals
-                                         join type in _context.Healthprofessionaltypes
-                                         on Vendor.Profession equals type.Healthprofessionalid
-                                         where Vendor.Isdeleted == bt
-                                         select new VendorListView
-                                         {
-                                             VendorID = Vendor.Vendorid,
-                                             Profession = type.Professionname,
-                                             BusinessContact = Vendor.Businesscontact ?? "",
-                                             Email = Vendor.Email,
-                                             FaxNumber = Vendor.Faxnumber,
-                                             PhoneNumber = Vendor.Phonenumber,
-                                             VendorName = Vendor.Vendorname,
+            VendorData dm = new VendorData();
 
-                                         }
+            IQueryable<VendorListView> data = (from Vendor in _context.Healthprofessionals
+                                               join type in _context.Healthprofessionaltypes
+                                               on Vendor.Profession equals type.Healthprofessionalid
+                                               where Vendor.Isdeleted == bt
+                                               select new VendorListView
+                                               {
+                                                   VendorID = Vendor.Vendorid,
+                                                   Profession = type.Professionname,
+                                                   BusinessContact = Vendor.Businesscontact ?? "",
+                                                   Email = Vendor.Email,
+                                                   FaxNumber = Vendor.Faxnumber,
+                                                   PhoneNumber = Vendor.Phonenumber,
+                                                   VendorName = Vendor.Vendorname,
+                                                   helthprofessiontypeID = type.Healthprofessionalid,
+
+                                               });
+            if (helthprofessionaltype != 0)
+            {
+                data = data.Where(r => r.helthprofessiontypeID == helthprofessionaltype);
+            }
+            if (!vendorname.IsNullOrEmpty())
+
+            {
+                data = data.Where(r => r.VendorName.ToLower().Contains(vendorname.ToLower()));
+            }
+            dm.TotalPage = (int)Math.Ceiling((double)data.Count() / pagesize);
+            data = data.Skip((currentpage - 1) * pagesize).Take(pagesize);
 
 
-                                         ).ToList();
-            return list;
+            dm.List = data.ToList();
+            dm.pageSize = pagesize;
+            dm.CurrentPage = currentpage;
+            return dm;
         }
         public Healthprofessional gethelthprofessionaldetails(int vendorid)
         {
@@ -66,7 +75,8 @@ namespace HelloDocAdmin.Repositories
                 _context.Healthprofessionals.Update(hp);
                 _context.SaveChanges();
                 return true;
-            }catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 return false;
             }
@@ -136,6 +146,17 @@ namespace HelloDocAdmin.Repositories
                 return false;
             }
 
+        }
+
+        public int isBusinessNameExist(string businessName)
+        {
+            int data = _context.Healthprofessionals.Count(e => e.Vendorname.ToLower().Equals(businessName.ToLower()));
+            return data;
+        }
+        public int isEmailExist(string Email)
+        {
+            int data = _context.Healthprofessionals.Count(e => e.Email.ToLower().Equals(Email.ToLower()));
+            return data;
         }
     }
 }

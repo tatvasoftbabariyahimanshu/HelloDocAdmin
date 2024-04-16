@@ -20,7 +20,7 @@ namespace HelloDocAdmin.Repositories
             _context = context;
             _email = email;
         }
-        public async Task<RequestRecords> GetRequestsbyfilterForRecords(short status, string patientname, int requesttype, DateTime startdate, DateTime enddate, string physicianname, string email, string phonenumber, int currentpage = 1, int pagesize = 5)
+        public async Task<RequestRecords> GetRequestsbyfilterForRecords(short status, string patientname, int requesttype, DateTime startdate, DateTime enddate, string physicianname, string email, string phonenumber, int currentpage = 1, int pagesize = 10)
         {
             RequestRecords dm = new RequestRecords();
 
@@ -40,7 +40,7 @@ namespace HelloDocAdmin.Repositories
                                                     join nts in _context.Requestnotes
                                                     on req.Requestid equals nts.Requestid into ntsgrp
                                                     from nt in ntsgrp.DefaultIfEmpty()
-                                                    where req.Isdeleted == bt
+
 
                                                     orderby req.Createddate descending
                                                     select new SearchRecordView
@@ -128,8 +128,93 @@ namespace HelloDocAdmin.Repositories
 
             return dm;
         }
+        public List<SearchRecordView> GetRequestsForReport(short? status, string? patientname, int? requesttype, DateTime startdate, DateTime enddate, string? physicianname, string? email, string? phonenumber)
+        {
+
+            BitArray bt = new BitArray(1);
+            bt.Set(0, false);
+            List<SearchRecordView> datalist = null;
+            IQueryable<SearchRecordView> allData = (from req in _context.Requests
+                                                    join reqClient in _context.Requestclients
+                                                    on req.Requestid equals reqClient.Requestid into reqClientGroup
+                                                    from rc in reqClientGroup.DefaultIfEmpty()
+                                                    join phys in _context.Physicians
+                                                    on req.Physicianid equals phys.Physicianid into physGroup
+                                                    from p in physGroup.DefaultIfEmpty()
+                                                    join reg in _context.Regions
+                                                    on rc.Regionid equals reg.Regionid into RegGroup
+                                                    from rg in RegGroup.DefaultIfEmpty()
+                                                    join nts in _context.Requestnotes
+                                                    on req.Requestid equals nts.Requestid into ntsgrp
+                                                    from nt in ntsgrp.DefaultIfEmpty()
+                                                    where req.Isdeleted == bt
+
+                                                    orderby req.Createddate descending
+                                                    select new SearchRecordView
+                                                    {
+                                                        Modifieddate = req.Modifieddate,
+                                                        PatientName = req.Firstname + " " + req.Lastname,
+                                                        RequestID = req.Requestid,
+                                                        DateOfService = req.Createddate,
+                                                        PhoneNumber = rc.Phonenumber ?? "-",
+                                                        Email = rc.Email ?? "-",
+                                                        Address = rc.Address + "," + rc.City + " " + rc.Zipcode,
+                                                        RequestTypeID = req.Requesttypeid,
+                                                        Status = req.Status,
+                                                        PhysicianName = p.Firstname + "-" + p.Lastname ?? "-",
+                                                        AdminNote = nt != null ? nt.Adminnotes ?? "-" : "-",
+                                                        PhysicianNote = nt != null ? nt.Physiciannotes ?? "-" : "-",
+                                                        PatientNote = rc.Notes ?? "-",
+                                                        Zip = rc.Zipcode
+                                                    });
 
 
+            if (status != 0)
+            {
+                allData = allData.Where(r => r.Status == status);
+            }
+            if (requesttype != 0)
+            {
+                allData = allData.Where(r => r.RequestTypeID == requesttype);
+            }
+            if (startdate != default(DateTime))
+            {
+                allData = allData.Where(r => r.DateOfService.Date >= startdate.Date);
+            }
+            if (enddate != default(DateTime))
+            {
+                allData = allData.Where(r => r.DateOfService.Date <= enddate.Date);
+            }
+            if (!patientname.IsNullOrEmpty())
+
+            {
+                allData = allData.Where(r => r.PatientName.ToLower().Contains(patientname.ToLower()));
+            }
+            if (!physicianname.IsNullOrEmpty())
+
+            {
+                allData = allData.Where(r => r.PhysicianName.ToLower().Contains(physicianname.ToLower()));
+            }
+            if (!email.IsNullOrEmpty())
+
+            {
+                allData = allData.Where(r => r.Email.ToLower().Contains(email.ToLower()));
+            }
+            if (!phonenumber.IsNullOrEmpty())
+
+            {
+                allData = allData.Where(r => r.PhoneNumber.ToLower().Contains(phonenumber.ToLower()));
+            }
+
+
+            allData = allData.OrderByDescending(x => x.DateOfService);
+
+            datalist = allData.ToList();
+
+
+
+            return datalist;
+        }
 
         public async Task<PatientHistory> Patienthistorybyfilter(string firstname, string lastname, string email, string phonenumber, int currentpage = 1, int pagesize = 5)
         {
@@ -209,6 +294,7 @@ namespace HelloDocAdmin.Repositories
                                                    ProviderName = phys.Firstname ?? "-" + " " + phys.Lastname ?? "-",
                                                    StatusID = req.Status,
                                                    Modifieddate = req.Modifieddate,
+                                                   isfinal = _context.Encounterforms.FirstOrDefault(e => e.Requestid == req.Requestid).Isfinalize
                                                }
                                              );
 
@@ -233,7 +319,7 @@ namespace HelloDocAdmin.Repositories
             return dm;
         }
 
-        public async Task<EmailRecords> EmailLogs(int accounttype, string email, string ReciverName, DateTime CreatedDate, DateTime SendDate, int pagesize = 5, int currentpage = 1)
+        public async Task<EmailRecords> EmailLogs(int accounttype, string email, string ReciverName, DateTime CreatedDate, DateTime SendDate, int pagesize = 10, int currentpage = 1)
         {
             EmailRecords dm = new EmailRecords();
             IQueryable<Emaillogdata> data = (from req in _context.Emaillogs
@@ -241,7 +327,8 @@ namespace HelloDocAdmin.Repositories
 
                                              select new Emaillogdata
                                              {
-                                                 Recipient = _context.Aspnetusers.FirstOrDefault(e => e.Email == req.Emailid).Username ?? null,
+                                                 Emaillogid = req.Emaillogid,
+                                                 Recipient = _context.Aspnetusers.FirstOrDefault(e => e.Email == req.Emailid).Username ?? _context.Requests.FirstOrDefault(e => e.Email == req.Emailid).Firstname,
                                                  Confirmationnumber = req.Confirmationnumber ?? "-",
                                                  Createdate = req.Createdate,
                                                  Emailtemplate = req.Emailtemplate,
@@ -293,6 +380,7 @@ namespace HelloDocAdmin.Repositories
 
                                             select new SMSLogsData
                                             {
+                                                Smslogid = req.Smslogid,
                                                 Recipient = _context.Aspnetusers.FirstOrDefault(e => e.Phonenumber == req.Mobilenumber).Username ?? null,
                                                 Confirmationnumber = req.Confirmationnumber ?? "-",
                                                 Createdate = req.Createdate,

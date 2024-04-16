@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title> - HELLO_DOC</title>
+    <link rel="stylesheet" href="/css/style.css?v=CBejH9M41uRRZanBGOAVFxKtO9ddTPs0ALvOWOnuRcg" />
+    <link rel="stylesheet" href="/css/bootstrap.min.css?v=pMEjVRQy8QqWW4qfcG06j57TbhVkYg9SDeZM31v-bck" />
+    <link rel="stylesheet" href="/css/site.css?v=yp06OeWNAWPkhICDF-9jZoapJCGcYVqOD6n2tDreVH8" />
+ 
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" />
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyARrk6kY-nnnSpReeWotnQxCAo_MoI4qbU"></script>
+    <script type="text/javascript" charset="utf8"
+            src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link href="/css/sweetalert2.css" rel="stylesheet" />
+<style>
+    body{
+            font-family: 'Poppins', sans-serif;
+
+    }
+</style>
+</head>
+<body data-bs-theme="">
+   
+    <nav class="navbar navbar-expand-lg">
+       
+        <div class="container-fluid">
+            <button class="btn navbar-toggler btn-outline-info" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            <img src="/images/Fig56. Patient site 1.png" class="img-fluid rounded-start  navbar-logo" alt="...">
+          
+            <div class="text-end">
+                <span class="username"> <b>Welcome!</b> admin </span>
+                <a class="btn btn-sm btn-outline-info mx-2" href="/Login/Logout">
+                    <span class="addnewlg">
+                        Logout <i class="fa-solid fa-right-from-bracket"></i>
+                    </span>
+                    <span class="addnewsm">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                    </span>
+                </a>
+                <button class=" btn-outline-info btn btn-sm " onclick="mode()">
+                    <span id="thm"> <i class="fa-solid fa-sun"></i></span>
+                    <span id="thm2"> <i class="fa-solid fa-moon"></i></span>
+                </button>
+            </div>
+         
+        </div>
+    </nav>
+
+    
+<style>
+    .dropdown-item.active{
+        background-color: #01BCE9;
+    }
+</style>
+
+<nav class="navbar navbar-expand-lg bg-body shadow  rounded">
+    <div class="container-fluid  p-2">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="nav navbar-nav nav-underline" id="nav-tab">
+                        <li class="nav-item">
+
+
+
+                            <a class="nav-link   " href="/Dashboard">
+                                Dashboard
+                            </a>
+
+
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " href="/ProviderLocation">
+                                Provider Location
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " href="/MyProfile">
+                                My Profile
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                           
+                                <a class="nav-link  dropdown-toggle active " data-bs-toggle="dropdown" style="cursor:pointer" aria-expanded="false">Provider</a>
+
+                            <ul class="dropdown-menu border-0">
+                                <li><a class="dropdown-item  " href="/Physician"> Physician </a></li>
+                                    <li><a class="dropdown-item  " href="/Physician/Scheduling">Scheduling</a></li>
+                                    <li><a class="dropdown-item " href="#">Invoicing</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " href="/Vendor">
+                                Partners
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle   " data-bs-toggle="dropdown" style="cursor:pointer" aria-expanded="false" href="/Access">
+                                Access
+                            </a>
+                            <ul class="dropdown-menu border-0">
+                                <li><a class="dropdown-item  " href="/Access"> Access </a></li>
+                                    <li><a class="dropdown-item  " href="/Access/UserAccess">User Access</a></li>
+
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle   " data-bs-toggle="dropdown" style="cursor:pointer" aria-expanded="false" href="/Records/SearchRecord">
+                                Recoard
+                            </a>
+
+                            <ul class="dropdown-menu border-0">
+                                    <li><a class="dropdown-item  " href="/Records/SearchRecord"> Search Recoard </a></li>
+                                    <li><a class="dropdown-item  " href="/Records/PatientRecord"> Patient Recoard </a></li>
+                                    <li><a class="dropdown-item  " href="/Records/SMSLogs"> SMS Logs </a></li>
+                                    <li><a class="dropdown-item  " href="/Records/EmailLogs"> Email Logs </a></li>
+                                <li><a class="dropdown-item  " href="/Records/BlockHistory"> Block History </a></li>
+                            </ul>
+                        </li>
+
+                </ul>
+            </div>
+
+    </div>
+   
+</nav>
+
+
+   
+        <main role="main" class="pb-3" style="min-height:1000px">
+            
+<style>
+    canvas#signature {
+        border: 2px solid black;
+    }
+
+    
+
+   
+</style>
+<div class="container">
+    <div class="card bg-transparent border-0">
+        <div class="card-header d-flex justify-content-between  border-0  bg-transparent p-1  mt-3 mb-2">
+            <div class="text-start d-flex align-items-center">
+                    <h5 class="mt-2"><b> Add Physician Account</b></h5>
+
+
+            </div>
+            <div class="text-end">
+                <a class="btn btn-outline-info btn-back" href="/Physician">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                         fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                              d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5" />
+                    </svg>Back
+                </a>
+            </div>
+        </div>
+
+        <div class="card-body rounded shadow">
+            
+                 <form id="addedit" class="row g-3" enctype="multipart/form-data" action="/Physician/PhysicianAddEdit" method="post">
+            <div class="mt-4 ">
+                    <input id="123" type="hidden" data-val="true" data-val-required="The Physicianid field is required." name="Physicianid" value="" />
+                <h6> <b>Account Information</b></h6>
+            </div>    
+                <div class="row">
+                    <div class="col-md-4 mt-2">
+                        <div class=" mb-2">
+                            <div class="inputs-control ">
+                                <input placeholder=" " class="input-outline inp-dis w-100 inp asp" type="text" data-val="true" data-val-required="The UserName field is required." id="UserName" name="UserName" value="">
+                                <label class="inputs-lable">UserName</label>
+                            </div>
+                            <span class="err-msg field-validation-valid" data-valmsg-for="UserName" data-valmsg-replace="true"></span>
+
+                        </div>
+                    </div>
+                    <div class="col-md-4 mt-2">
+                        <div class=" mb-2">
+                            <div class="inputs-control ">
+                                <input placeholder=" " name="Password" required class="input-outline w-100 inp " type="text">
+                                <label class="inputs-lable">password</label>
+                            </div>
+
+                        </div>
+                    </div>
+                 
+                    <input value="1" type="hidden" id="Status" name="Status" />
+                    <div class="col-md-4 mt-2">
+                        <div class=" mb-2">
+                            <div class="input-control w-100">
+                                <select class="input-outline input-outline-select inp  asp inp-dis " required data-allow-clear="true" tabindex="-1" onchange="myFunction_prof()" data-control="select2" data-placeholder="Select Level" data-val="true" data-val-required="The Roleid field is required." id="Roleid" name="Roleid">
+                                    <option value="">Role</option>
+                                <option value="24">PHY-Demo</option>
+</select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                 <div class="text-end editable" style="display:none">
+                        <button type="submit" class="btn-info btn text-white" id="saveasp" style="display:none" formaction="/Physician/EditAccountInfo">Save</button>
+                        <div class="btn btn-info text-white" id="editasp">edit</div>
+                        <div class="btn btn-info text-white" id="cancelasp">Cancel</div>
+                        <button class="text-end btn btn-outline-info " id="submitresetpass" formaction="/Physician/ResetPassword">Reset Password</button>
+                    </div>
+             
+
+            <div class="mt-2">
+                <h6> <b>Administration Information</b></h6>
+            </div>
+           
+                <div class="row">
+
+                    <div class="col-md-6 mt-2">
+                        <div class=" mb-3">
+                            <div class="inputs-control ">
+                                <input placeholder=" " class="input-outline w-100 inp admin-input " type="text" data-val="true" data-val-required="The Firstname field is required." id="Firstname" name="Firstname" value="">
+                                <label class="inputs-lable">FirstName</label>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mt-2">
+                        <div class=" mb-3">
+                            <div class="inputs-control ">
+                                <input placeholder=" " class="input-outline w-100 inp admin-input " type="text" data-val="true" data-val-required="The Lastname field is required." id="Lastname" name="Lastname" value="">
+                                <label class="inputs-lable">LastName</label>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-md-6 mt-2">
+                        <div class=" mb-3">
+                            <div class="inputs-control ">
+                                <input placeholder=" " class="input-outline w-100 inp admin-input " type="text" data-val="true" data-val-email="The Email field is not a valid e-mail address." data-val-required="The Email field is required." id="Email" name="Email" value="">
+                                <label class="inputs-lable">Email</label>
+                            </div>
+                        </div>
+                    </div>
+                   
+                    <div class="col-md-6 mt-2">
+                        <div class=" mb-3">
+                            <div class="inputs-control w-100 ">
+                                <input id="phone" placeholder="Mobile" type="text" class=" telephone input-outline admin-input w-100 inp  " data-val="true" data-val-required="The Mobile field is required." name="Mobile" value="" />
+                                <span class="err-msg"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mt-2">
+                        <div class=" mb-3">
+                            <div class="inputs-control ">
+                                <input placeholder=" " class="input-outline w-100 inp admin-input " type="text" id="Medicallicense" name="Medicallicense" value="">
+                                <label class="inputs-lable">Medicallicense</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mt-2">
+                   
+                        <div class=" mb-3">
+                            <div class="inputs-control ">
+                                <input placeholder=" " class="input-outline w-100 inp admin-input " type="text" id="Npinumber" name="Npinumber" value="">
+                                <label class="inputs-lable">Npinumber</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mt-2">
+                        <div class=" mb-3">
+                            <div class="inputs-control ">
+                                <input placeholder=" " class="input-outline w-100 inp admin-input " type="text" id="Syncemailaddress" name="Syncemailaddress" value="">
+                                <label class="inputs-lable">Syncemailaddress</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mt-2 d-flex justify-content-around flex-wrap">
+                        <input type="hidden" id="regionids" data-val="true" data-val-required="The Regionsid field is required." name="Regionsid" value="" />
+
+
+                                <div class="form-check mx-2">
+                                    <input class="form-check-input regionbox admin-input" value="3" type="checkbox" name="Region" id="flexCheckDefault">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                        East
+                                    </label>
+                                </div>
+                                <div class="form-check mx-2">
+                                    <input class="form-check-input regionbox admin-input" value="4" type="checkbox" name="Region" id="flexCheckDefault">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                        West
+                                    </label>
+                                </div>
+                                <div class="form-check mx-2">
+                                    <input class="form-check-input regionbox admin-input" value="5" type="checkbox" name="Region" id="flexCheckDefault">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                        Central
+                                    </label>
+                                </div>
+                                <div class="form-check mx-2">
+                                    <input class="form-check-input regionbox admin-input" value="1" type="checkbox" name="Region" id="flexCheckDefault">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                        gujarat
+                                    </label>
+                                </div>
+                                <div class="form-check mx-2">
+                                    <input class="form-check-input regionbox admin-input" value="2" type="checkbox" name="Region" id="flexCheckDefault">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                        uttar pradesh
+                                    </label>
+                                </div>
+                                <div class="form-check mx-2">
+                                    <input class="form-check-input regionbox admin-input" value="6" type="checkbox" name="Region" id="flexCheckDefault">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                        North
+                                    </label>
+                                </div>
+                                <div class="form-check mx-2">
+                                    <input class="form-check-input regionbox admin-input" value="7" type="checkbox" name="Region" id="flexCheckDefault">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                        South
+                                    </label>
+                                </div>
+                        
+                    </div>
+                </div>
+                    <div class="text-end editable" style="display:none">
+
+                        <a onclick="enable_disable_administration()" id="admin-input-edit" class="btn  btn-info text-white btn-submit ">
+                            Edit
+                        </a>
+                        <button type="submit" id="save-admindata" class="btn   btn-outline-info btn-submit mx-2 " formaction="/Physician/EditAdminInfo">
+                            save
+                        </button>
+                        <a id="cancel-admindata" class="btn  btn-outline-danger ">
+                            cancel
+                        </a>
+
+                    </div>
+                <script>
+
+                    $('#admin-input-edit').on('click', function (e) {
+                        $('.admin-input').prop('disabled', false);
+                        $('#save-admindata').show();
+                        $('#cancel-admindata').show();
+                        $('#admin-input-edit').hide();
+                    });
+                    $('#cancel-admindata').on('click', function (e) {
+                        $('.admin-input').prop('disabled', true);
+                        $('#save-admindata').hide();
+                        $('#cancel-admindata').hide();
+                        $('#admin-input-edit').show();
+                    });
+                </script>
+            <div class="mt-2">
+                <h6> <b>Mailing and billing Information</b></h6>
+            </div>
+           
+                <div class="row">
+                    <div class="col-md-6 mt-2">
+                        <div class=" mb-3">
+                            <div class="inputs-control ">
+                                <input placeholder=" " class="input-outline w-100 inp mail-billing-imp " type="text" data-val="true" data-val-required="The Address1 field is required." id="Address1" name="Address1" value="">
+                                <label class="inputs-lable">Address1</label>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-md-6 mt-2">
+                        <div class=" mb-3">
+                            <div class="inputs-control  ">
+                                <input placeholder=" " class="input-outline w-100 inp  mail-billing-imp" type="text" id="Address2" name="Address2" value="">
+                                <label class="inputs-lable">Address2</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mt-2">
+                        <div class=" mb-3">
+                            <div class="inputs-control ">
+                                <input placeholder=" " class="input-outline w-100 inp  mail-billing-imp" type="text" data-val="true" data-val-required="The City field is required." id="City" name="City" value="">
+                                <label class="inputs-lable">City</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mt-2">
+                        <div class=" mb-3">
+                            <div class="input-control w-100">
+                                <select class="input-outline input-outline-select inp mail-billing-imp" data-allow-clear="true" tabindex="-1" onchange="myFunction1()" id="region2" data-control="select2" data-placeholder="Select Level" data-val="true" data-val-required="The Regionid field is required." name="Regionid">
+                                    <option>All Region</option>
+                                <option value="3">East</option>
+<option value="4">West</option>
+<option value="5">Central</option>
+<option value="1">gujarat</option>
+<option value="2">uttar pradesh</option>
+<option value="6">North</option>
+<option value="7">South</option>
+</select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mt-2">
+                        <div class=" mb-3">
+                            <div class="inputs-control ">
+                                <input placeholder=" " class="input-outline w-100 inp  mail-billing-imp" type="text" id="Zipcode" name="Zipcode" value="">
+                                <label class="inputs-lable">Zip</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mt-2">
+                        <div class=" mb-3">
+                            <div class="inputs-control w-100 ">
+                                <input id="phone2" placeholder="Mobile" type="tel" class="mail-billing-imp telephone input-outline mail-billing-imp w-100 inp align-items-center " name="Altphone" value="" />
+                                <span class="err-msg"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    <div class="text-end editable" style="display:none">
+                        <a onclick="enable_disable_mailBilling()" id="edit-mail-billing" class="btn text-white  btn-info btn-submit ">
+                            Edit
+                        </a>
+                        <button type="submit" id="save-mail-billing" class="btn  btn-outline-info btn-submit mx-2 " formaction="/Physician/EditMailBilling">
+                            save
+                        </button>
+                        <a id="cancel-mail-billing" class="btn  btn-outline-danger ">
+                            cancel
+                        </a>
+                    </div>
+                    <script>
+                        $('#edit-mail-billing').on('click', function (e) {
+                        $('.mail-billing-imp').prop('disabled', false);
+                        $('#save-mail-billing').show();
+                        $('#cancel-mail-billing').show();
+                        $('#edit-mail-billing').hide();
+                        });
+                        $('#cancel-mail-billing').on('click', function (e) {
+                        $('.mail-billing-imp').prop('disabled', true);
+                        $('#save-mail-billing').hide();
+                        $('#cancel-mail-billing').hide();
+                        $('#edit-mail-billing').show();
+                        });
+                    </script>
+
+            <div class="mt-2">
+                <h6> <b>Provider Profile</b></h6>
+            </div>
+          
+                <div class="row">
+                    <div class="col-md-6 mt-2">
+                        <div class=" mb-3">
+                            <div class="inputs-control ">
+                                <input placeholder=" " class="input-outline w-100 inp provider-prof " type="text" data-val="true" data-val-required="The Businessname field is required." id="Businessname" name="Businessname" value="">
+                                <label class="inputs-lable">Businessname</label>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mt-2">
+                        <div class=" mb-3">
+                            <div class="inputs-control  ">
+                                <input placeholder=" " class="input-outline w-100 inp provider-prof" type="text" data-val="true" data-val-required="The Businesswebsite field is required." id="Businesswebsite" name="Businesswebsite" value="">
+                                <label class="inputs-lable">Businesswebsite</label>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-md-6 mt-2">
+
+                        <input type="file" id="file1" class="file1 file-uplode" name="PhotoFile">
+                            <div class="d-flex">
+                            <input placeholder="Photo" class="input-outline w-100 inp provider-prof" type="text" id="file-name1"
+                                       readonly="readonly">
+
+                            <input type="button" class="btn btn-upl1 btn-info  btn-submit provider-prof" value="uplode" style="color: white;">
+
+
+                            </div>
+                            
+
+                       
+                        <span class="err-msg" id="error-file"></span>
+                    </div>
+                    <div class="col-md-6 mt-2">
+                        <div class="d-flex">
+                            <input type="file" id="file2" class="file2 file-uplode" name="SignatureFile">
+                            <div class="d-flex w-100">
+                                <input placeholder="Signature" class="input-outline w-100 inp provider-prof" type="text" id="file-name2"
+                                       readonly="readonly">
+
+                                <input type="button" class="btn btn-upl2 btn-info  btn-submit provider-prof " value="uplode" style="color: white;">
+
+
+                            </div>
+
+                           
+                            <a class="btn btn-info mx-2 text-white provider-prof" id="create-signature-button">Create</a>
+                        </div>
+                      
+                    </div>
+                    <div class="col-md-6">
+                    </div>
+                    <div class="col-md-6">
+                        <div>
+                            <input type="hidden" id="signature-data" name="signatureData">
+                        </div>
+                        <div class=" d-flex">
+                            <img id="saved" alt="Signature" class="border border-1 border-success-subtle mx-3" style="display:none;" />
+                            <canvas id="signature-pad" width="300" height="200" style="display:none;"></canvas>
+
+                        </div>
+                        <div class="text-end mt-2 ">
+                            <div id="clear-button" class="btn btn-danger mt-0" style="display:none;">Clear</div>
+                            <div id="save-button" class="btn btn-success" style="display:none;" disabled>Save</div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-12 mt-2">
+                        <div class="inputs-control w-100 mt-2">
+                            <textarea id="changenote" placeholder=" " rows="5" class="input-outline w-100 provider-prof " type="text" name="Adminnotes">
+</textarea>
+
+                            <label class="inputs-lable inputs-lable-textarea " id="notedata">Adminnotes</label>
+                        </div>
+</div>
+                  
+                </div>
+                    <div class="text-end mt-2 editable" style="display:none">
+                        <a id="edit-provider-prof" class="btn  btn-outline-info btn-submit ">
+                            Edit
+                        </a>
+                        <button type="submit" id="save-provider-prof" class="btn  btn-outline-info btn-submit mx-2 " formaction="/Physician/EditProviderProfile">
+                            save
+                        </button>
+                        <button id="cancel-provider-prof" class="btn  btn-outline-danger ">
+                            cancel
+                        </button>
+                    </div>
+                    <script>
+                        $('#edit-provider-prof').on('click', function (e) {
+                        $('.provider-prof').prop('disabled', false);
+                        $('#save-provider-prof').show();
+                        $('#cancel-provider-prof').show();
+                        $('#edit-provider-prof').hide();
+                        $('#create-signature-button').prop('disabled', false);
+                        });
+                        $('#cancel-mail-billing').on('click', function (e) {
+                        $('.provider-prof').prop('disabled', true);
+                        $('#save-provider-prof').hide();
+                        $('#cancel-provider-prof').hide();
+                        $('#edit-provider-prof').show();
+                        $('#create-signature-button').prop('disabled', true);
+                        });
+                    </script>
+
+           
+            <hr /> 
+            <div class="mt-2">
+                <h6> <b>Onboarding</b></h6>
+
+            </div>
+
+
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-check mx-2">
+                                <input class="form-check-input agreement-checkbox" name="Isagreementdoc" type="checkbox" id="flexCheckDefault" data-val="true" data-val-required="The Isagreementdoc field is required." value="true">
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    Independent Contractor Agreement
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6 d-flex">
+                            <div class="inputWrapper">
+                                <input disabled class="fileInput btn btn-info" id="abc" asp-for="Agreementdoc" type="file" name="Agreementdoc" />
+                                <span class="btn btn-info text-white upload-button">Upload</span>
+                            </div>
+                            <a class="btn btn-info mx-2 text-white view-button" style="display:none;">View</a>
+
+                            <!-- Display uploaded file details -->
+                            <div class="file-details" style="display:none;">
+                                <p><span class="file-name"></span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-md-12 ">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-check mx-2">
+                                <input class="form-check-input agreement-checkbox" type="checkbox" id="Isbackgrounddoc" data-val="true" data-val-required="The Isbackgrounddoc field is required." name="Isbackgrounddoc" value="true">
+                                <label class="form-check-label" for="Isbackgrounddoc">
+                                    Background Check
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6 d-flex">
+                            <div class="inputWrapper">
+                                <input disabled class="fileInput btn btn-info" type="file" name="BackGrounddoc" id="BackGrounddoc" />
+                                <span class="btn btn-info text-white upload-button">Upload</span>
+                            </div>
+                            <a class="btn btn-info mx-2 text-white view-button" style="display:none;">View</a>
+
+                            <!-- Display uploaded file details -->
+                            <div class="file-details" style="display:none;">
+                                <p><span class="file-name"></span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 ">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-check mx-2">
+                                <input class="form-check-input agreement-checkbox" type="checkbox" id="flexCheckDefault" data-val="true" data-val-required="The Istrainingdoc field is required." name="Istrainingdoc" value="true">
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    HIPAA Compliance
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6 d-flex">
+                            <div class="inputWrapper">
+                                <input disabled class="fileInput btn btn-info" type="file" name="Trainingdoc" id="Trainingdoc" />
+                                <span class="btn btn-info text-white upload-button">Upload</span>
+                            </div>
+                            <a class="btn btn-info mx-2 text-white view-button" style="display:none;">View</a>
+
+                            <!-- Display uploaded file details -->
+                            <div class="file-details" style="display:none;">
+                                <p><span class="file-name"></span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 ">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-check mx-2">
+                                <input class="form-check-input agreement-checkbox" type="checkbox" id="Isnondisclosuredoc" data-val="true" data-val-required="The Isnondisclosuredoc field is required." name="Isnondisclosuredoc" value="true">
+                                <label class="form-check-label" for="Isnondisclosuredoc">
+                                    Non-disclosure Agreement
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6 d-flex">
+                            <div class="inputWrapper">
+                                <input disabled class="fileInput btn btn-info" type="file" name="NonDisclosuredoc" id="NonDisclosuredoc" />
+                                <span class="btn btn-info text-white upload-button">Upload</span>
+                            </div>
+                            <a class="btn btn-info mx-2 text-white view-button" style="display:none;">View</a>
+
+                            <!-- Display uploaded file details -->
+                            <div class="file-details" style="display:none;">
+                                <p><span class="file-name"></span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 ">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-check mx-2">
+                                <input class="form-check-input agreement-checkbox" type="checkbox" id="Islicensedoc" data-val="true" data-val-required="The Islicensedoc field is required." name="Islicensedoc" value="true">
+                                <label class="form-check-label" for="Islicensedoc">
+                                    License Document
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6 d-flex ">
+                            <div class="inputWrapper">
+                                <input disabled class="fileInput btn btn-info" type="file" name="Licensedoc" id="Licensedoc" />
+                                <span class="btn btn-info  text-white upload-button">Upload</span>
+                            </div>
+                            <a class="btn btn-info mx-2 text-white view-button" style="display:none;">View</a>
+
+                            <!-- Display uploaded file details -->
+                            <div class="file-details" style="display:none;">
+                                <p><span class="file-name"></span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            <hr/>
+                    <div class="text-end mt-2">
+
+                    
+
+            </div>
+            <input name="__RequestVerificationToken" type="hidden" value="CfDJ8DtpfHhdAr9IvUzQ650Gm1jHo_ZUpCB4dvBhdZsoMj_FzlI8bCXsCd1W0jC9zb00FgRI9r8K0L5Amj3qDS1QX0N7_zWyPQbDm0uJDP96_SIBiGMvo0yCskIjSRxk8kUMs-ZUsJNp-eEAL6lwPhYrjWI" /><input name="Isagreementdoc" type="hidden" value="false"><input name="Isbackgrounddoc" type="hidden" value="false"><input name="Istrainingdoc" type="hidden" value="false"><input name="Isnondisclosuredoc" type="hidden" value="false"><input name="Islicensedoc" type="hidden" value="false"></form>
+        </div>
+
+    </div>
+  
+</div>
+<div class="modal fade" id="RequestSubmitAdmin" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header  bg-info text-white">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Request To Administrator</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+          
+
+                <div class="modal-body">
+                    <h6 class="modal-title" > Need To Send Message to edit</h6>
+
+                    <input value="" type="hidden" name="requestid" id="requestid" />
+
+                    <div class="inputs-control w-100 mt-2">
+                        <textarea id="changenote_cc" placeholder=" " name="Note" rows="5" class="input-outline w-100  " type="text"></textarea>
+
+                        <label class="inputs-lable inputs-lable-textarea " id="notedata">Message</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class=" btn btn-info text-white">Send</button>
+                    <a class="btn btn-outline-info" data-bs-dismiss="modal">Close</a>
+                </div>
+            
+        </div>
+    </div>
+</div>
+
+        </main>
+    <div id="modal-placeholder"></div>
+    
+    <footer>
+        <div class="d-flex justify-content-end mt-2 mb-2 ">
+            <span class="d-flex ">
+                <a href="#" class="px-2 footer-text-sr">Tearms and condition </a>
+                <span class="footer-text-sr">|</span>
+                <a href="#" class="px-2 footer-text-sr">privicy policy</a>
+            </span>
+        </div>
+    </footer>
+   
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+    <script src="/js/site.js?v=4q1jwFhaPaZgr8WAUSrux6hAuh0XDg9kPS3xIVq36I0"></script>
+    <script src="/js/bootstrap.bundle.min.js?v=JDJ424DHaphTAZCH6UKdhuZNr9MC6j5HTngeLbi7vPs"></script>
+    <script src="/js/custom.js?v=JXSB0Y233epSIXyrf5Ip0u7WEm4wQSp37H6UvcHQPjY"></script>
+    <script src="/js/site.js?v=4q1jwFhaPaZgr8WAUSrux6hAuh0XDg9kPS3xIVq36I0"></script>
+    <script src="/plugins/mvc-jquery-ajax/jquery.unobtrusive-ajax.js"></script>
+    <script src="/plugins/mvc-jquery-validate/jquery.validate.js"></script>
+    <script src="/plugins/mvc-jquery-validate/jquery.validate.unobtrusive.js"></script>
+    <script src="/js/custom2/UI_Bootbox.js"></script>
+    <script src="/js/custom2/UI_ModalEvents.js"></script>
+    <script src="/js/custom2/UI_BlockUI.js"></script>
+    <script src="/js/custom2/InitMain.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+<link rel="stylesheet" href="/_content/AspNetCoreHero.ToastNotification/notyf.min.css">
+<script src="/_content/AspNetCoreHero.ToastNotification/notyf.min.js"></script>
+<script>
+    const notyf = new Notyf({"duration":10000,"position":{"x":"right","y":"top"},"dismissible":true,"ripple":true,"types":[{"type":"success","background":"#28a745"},{"type":"error","background":"#dc3545"},{"type":"warning","background":"orange","className":"text-dark","icon":{"className":"fa fa-warning text-dark","tagName":"i"}},{"type":"info","background":"#17a2b8","icon":{"className":"fa fa-info text-white","tagName":"i"}},{"type":"custom","background":"black"}]});
+</script>
+<script type="text/javascript">
+
+    function toastNotifySuccess(message, duration) {
+        if (duration) { notyf.success({ message: message, duration: duration }); }
+        else { notyf.success({ message: message }); }
+    }
+    function toastNotifyError(message, duration) {
+        if (duration) { notyf.error({ message: message, duration: duration }); }
+        else { notyf.error({ message: message }); }
+    }
+    function toastNotifyWarning(message, duration) {
+        if (duration) { notyf.open({ type: 'warning', message: message, duration: duration }); }
+        else { notyf.open({ type: 'warning', message: message }); }
+
+    }
+    function toastNotifyInformation(message, duration) {
+        if (duration) { notyf.open({ type: 'info', message: message, duration: duration }); }
+        else { notyf.open({ type: 'info', message: message }); }
+
+    }
+    function toastNotifyCustom(message, duration, color, iconClass) {
+
+        var lightOrDarkClassName = pickTextColorBasedOnBgColorAdvanced(color);
+        var iconClassName = iconClass.concat(' ').concat(lightOrDarkClassName);
+        if (duration) {
+            notyf.open({
+                type: 'custom',
+                message: message,
+                duration: duration,
+                className: lightOrDarkClassName,
+                background: color,
+                icon: {
+                    className: iconClassName,
+                    tagName: 'i'
+                }
+            });
+        }
+        else {
+            notyf.open({
+                type: 'custom',
+                message: message,
+                className: lightOrDarkClassName,
+                background: color,
+                icon: {
+                    className: iconClassName,
+                    tagName: 'i'
+                }
+            });
+        }
+
+    }
+    function colourNameToHex(colour) {
+        var colours = {
+            "aliceblue": "#f0f8ff", "antiquewhite": "#faebd7", "aqua": "#00ffff", "aquamarine": "#7fffd4", "azure": "#f0ffff",
+            "beige": "#f5f5dc", "bisque": "#ffe4c4", "black": "#000000", "blanchedalmond": "#ffebcd", "blue": "#0000ff", "blueviolet": "#8a2be2", "brown": "#a52a2a", "burlywood": "#deb887",
+            "cadetblue": "#5f9ea0", "chartreuse": "#7fff00", "chocolate": "#d2691e", "coral": "#ff7f50", "cornflowerblue": "#6495ed", "cornsilk": "#fff8dc", "crimson": "#dc143c", "cyan": "#00ffff",
+            "darkblue": "#00008b", "darkcyan": "#008b8b", "darkgoldenrod": "#b8860b", "darkgray": "#a9a9a9", "darkgreen": "#006400", "darkkhaki": "#bdb76b", "darkmagenta": "#8b008b", "darkolivegreen": "#556b2f",
+            "darkorange": "#ff8c00", "darkorchid": "#9932cc", "darkred": "#8b0000", "darksalmon": "#e9967a", "darkseagreen": "#8fbc8f", "darkslateblue": "#483d8b", "darkslategray": "#2f4f4f", "darkturquoise": "#00ced1",
+            "darkviolet": "#9400d3", "deeppink": "#ff1493", "deepskyblue": "#00bfff", "dimgray": "#696969", "dodgerblue": "#1e90ff",
+            "firebrick": "#b22222", "floralwhite": "#fffaf0", "forestgreen": "#228b22", "fuchsia": "#ff00ff",
+            "gainsboro": "#dcdcdc", "ghostwhite": "#f8f8ff", "gold": "#ffd700", "goldenrod": "#daa520", "gray": "#808080", "green": "#008000", "greenyellow": "#adff2f",
+            "honeydew": "#f0fff0", "hotpink": "#ff69b4",
+            "indianred ": "#cd5c5c", "indigo": "#4b0082", "ivory": "#fffff0", "khaki": "#f0e68c",
+            "lavender": "#e6e6fa", "lavenderblush": "#fff0f5", "lawngreen": "#7cfc00", "lemonchiffon": "#fffacd", "lightblue": "#add8e6", "lightcoral": "#f08080", "lightcyan": "#e0ffff", "lightgoldenrodyellow": "#fafad2",
+            "lightgrey": "#d3d3d3", "lightgreen": "#90ee90", "lightpink": "#ffb6c1", "lightsalmon": "#ffa07a", "lightseagreen": "#20b2aa", "lightskyblue": "#87cefa", "lightslategray": "#778899", "lightsteelblue": "#b0c4de",
+            "lightyellow": "#ffffe0", "lime": "#00ff00", "limegreen": "#32cd32", "linen": "#faf0e6",
+            "magenta": "#ff00ff", "maroon": "#800000", "mediumaquamarine": "#66cdaa", "mediumblue": "#0000cd", "mediumorchid": "#ba55d3", "mediumpurple": "#9370d8", "mediumseagreen": "#3cb371", "mediumslateblue": "#7b68ee",
+            "mediumspringgreen": "#00fa9a", "mediumturquoise": "#48d1cc", "mediumvioletred": "#c71585", "midnightblue": "#191970", "mintcream": "#f5fffa", "mistyrose": "#ffe4e1", "moccasin": "#ffe4b5",
+            "navajowhite": "#ffdead", "navy": "#000080",
+            "oldlace": "#fdf5e6", "olive": "#808000", "olivedrab": "#6b8e23", "orange": "#ffa500", "orangered": "#ff4500", "orchid": "#da70d6",
+            "palegoldenrod": "#eee8aa", "palegreen": "#98fb98", "paleturquoise": "#afeeee", "palevioletred": "#d87093", "papayawhip": "#ffefd5", "peachpuff": "#ffdab9", "peru": "#cd853f", "pink": "#ffc0cb", "plum": "#dda0dd", "powderblue": "#b0e0e6", "purple": "#800080",
+            "rebeccapurple": "#663399", "red": "#ff0000", "rosybrown": "#bc8f8f", "royalblue": "#4169e1",
+            "saddlebrown": "#8b4513", "salmon": "#fa8072", "sandybrown": "#f4a460", "seagreen": "#2e8b57", "seashell": "#fff5ee", "sienna": "#a0522d", "silver": "#c0c0c0", "skyblue": "#87ceeb", "slateblue": "#6a5acd", "slategray": "#708090", "snow": "#fffafa", "springgreen": "#00ff7f", "steelblue": "#4682b4",
+            "tan": "#d2b48c", "teal": "#008080", "thistle": "#d8bfd8", "tomato": "#ff6347", "turquoise": "#40e0d0",
+            "violet": "#ee82ee",
+            "wheat": "#f5deb3", "white": "#ffffff", "whitesmoke": "#f5f5f5",
+            "yellow": "#ffff00", "yellowgreen": "#9acd32"
+        };
+
+        if (typeof colours[colour.toLowerCase()] != 'undefined')
+            return colours[colour.toLowerCase()];
+
+        return false;
+    }
+    function pickTextColorBasedOnBgColorAdvanced(bgColor) {
+
+        var hexColor = colourNameToHex(bgColor);
+        var color = (bgColor.charAt(0) === '#') ? bgColor.substring(1, 7) : hexColor.substring(1, 7);
+        var r = parseInt(color.substring(0, 2), 16); // hexToR
+        var g = parseInt(color.substring(2, 4), 16); // hexToG
+        var b = parseInt(color.substring(4, 6), 16); // hexToB
+        var uicolors = [r / 255, g / 255, b / 255];
+        var c = uicolors.map((col) => {
+            if (col <= 0.03928) {
+                return col / 12.92;
+            }
+            return Math.pow((col + 0.055) / 1.055, 2.4);
+        });
+        var L = (0.2126 * c[0]) + (0.7152 * c[1]) + (0.0722 * c[2]);
+        return (L > 0.179) ? 'text-dark' : 'text-white';
+    }
+</script>
+    
+      
+
+    <script type="text/javascript">
+        function confirmDelete(Physicianid) {
+            Swal.fire({
+                title: "Delete Physician ?",
+                showDenyButton: false,
+                showCancelButton: true,
+                confirmButtonText: "Yes",
+                denyButtonText: `Don't delete`
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '/Physician/DeletePhysician?PhysicianID=' + Physicianid;
+                }
+
+
+
+            });
+        }
+        $(function () {
+          
+
+            var modelIsNull = false;
+
+            if (modelIsNull) {
+                $('.admin-input').prop('disabled', true);
+                $('.provider-prof').prop('disabled', true);
+                $('#save-provider-prof').hide();
+                $('#cancel-provider-prof').hide();
+                $('.mail-billing-imp').prop('disabled', true);
+                $('#save-mail-billing').hide();
+                $('#cancel-mail-billing').hide();
+                $('.editable').show();
+                $('#save-admindata').hide();
+                $('#cancel-admindata').hide();
+                $('.inp-dis').prop('disabled', true);
+                $('select').prop('disabled', true);
+                $('#saveasp').hide();
+                $('#cancelasp').hide();
+
+                //$('#editasp').hide();
+                //$('#submitresetpass').hide();
+
+            }
+            //else{
+            //    $('#saveasp').hide();
+            //    $('#cancelasp').hide();
+            //    $('#editasp').show();
+            //    $('#submitresetpass').show();
+            //}
+
+            $('#editasp').on('click', function (e) {
+                $('.asp').prop('disabled', false);
+                $('#saveasp').show();
+                $('#cancelasp').show();
+                $('#editasp').hide();
+            });
+            $('#cancelasp').on('click', function (e) {
+                $('.asp').prop('disabled', true);
+                $('#saveasp').hide();
+                $('#cancelasp').hide();
+                $('#editasp').show();
+            });
+
+
+
+            $('.regionbox').on('change', function () {
+                event.preventDefault();
+                let checkboxes = document.querySelectorAll('.regionbox:checked');
+                let regionIds = [];
+                checkboxes.forEach((checkbox) => {
+                    regionIds.push(checkbox.value);
+                });
+                document.querySelector('#regionids').value = regionIds.join(',');
+                console.log(document.querySelector('#regionids').value);
+            });
+
+            $('.agreement-checkbox').on('change', function () {
+                var isChecked = $(this).prop('checked');
+                var $fileInput = $(this).closest('.row').find('.fileInput');
+
+                console.log($fileInput);
+
+                $fileInput.prop('disabled', !isChecked);
+            });
+
+
+            $('.fileInput').on('change', function () {
+                var file = $(this)[0].files[0];
+                var $fileDetails = $(this).closest('.inputWrapper').siblings('.file-details');
+                var $viewButton = $(this).closest('.inputWrapper').siblings('.view-button');
+                console.log($viewButton);
+
+                if (file) {
+                    $viewButton.show();
+                    $fileDetails.show();
+                    $fileDetails.find('.file-name').text(file.name);
+                }
+            });
+
+            $('.view-button').on('click', function (e) {
+                var $fileInput = $(this).siblings('.inputWrapper').find('.fileInput')[0];
+                var file = $fileInput.files[0];
+                if (file) {
+                    var fileType = file.type;
+                    if (fileType === 'application/pdf') {
+                        // Handle PDF file view
+                        var link = document.createElement('a');
+                        link.href = e.target.result;
+                        link.download = file.name;
+                        document.body.appendChild(link)
+                            ;
+                        link.click();
+                        document.body.removeChild(link)
+                    } else {
+                        // Handle other file types (e.g., prompt download)
+                        alert('Download file: ' + file.name);
+                    }
+                }
+            });
+
+
+
+            var canvas = $('#signature-pad')[0];
+            var ctx = canvas.getContext('2d');
+            var drawing = false;
+            var strokes = [];
+            var saveButton = $('#save-button');
+            var signatureFileInput = $('#file2');
+
+            function scaleUp(c, scale) {
+
+                var newCanvas = $("<canvas>")
+                    .attr("width", c.width * scale)
+                    .attr("height", c.height * scale)[0];
+
+                var ctx2 = newCanvas.getContext("2d");
+                ctx2.imageSmoothingEnabled = false;
+                ctx2.drawImage(c, 0, 0, newCanvas.width, newCanvas.height);
+
+                var dataURL = newCanvas.toDataURL("image/png");
+                document.getElementById("saved").src = dataURL;
+
+            }
+
+            $('#create-signature-button').on('click', function () {
+                $('#create-signature-button').hide();
+                $('#clear-button').show();
+                $('#undo-button').show();
+                $('#save-button').show();
+
+                canvas.style.display = 'block';
+            });
+
+            $('#signature-pad').on('mousedown', function (e) {
+                drawing = true;
+                ctx.beginPath();
+                ctx.moveTo(e.clientX - canvas.getBoundingClientRect().left, e.clientY - canvas.getBoundingClientRect().top);
+            });
+
+            $('#signature-pad').on('mousemove', function (e) {
+                if (drawing) {
+                    ctx.lineTo(e.clientX - canvas.getBoundingClientRect().left, e.clientY - canvas.getBoundingClientRect().top);
+                    ctx.stroke();
+                }
+            });
+
+            $('#signature-pad').on('mouseup', function () {
+                if (drawing) {
+                    drawing = false;
+                    strokes.push(ctx.getImageData(0, 0, canvas.width, canvas.height));
+                    updateSaveButtonState();
+                }
+            });
+
+            $('#clear-button').on('click', function () {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                strokes = [];
+                updateSaveButtonState();
+            });
+
+            $('#save-button').on('click', function () {
+                $('#saved').show();
+                scaleUp(canvas, 1);
+                var dataURL = canvas.toDataURL("image/png");
+                $('#signature-data').val(dataURL); // Set the value of the hidden input field
+                $('#file-name2').val(dataURL);
+                // $('#save-form').submit(); // Submit the form
+            });
+
+            function updateSignatureFileInput() {
+                if (strokes.length > 0) {
+                    var dataURL = canvas.toDataURL("image/png");
+                    var blob = dataURLToBlob(dataURL);
+                    var file = new File([blob], "signature.png", { type: "image/png" });
+                    signatureFileInput.prop('files', [file]);
+                    saveButton.prop('disabled', false);
+                } else {
+                    saveButton.prop('disabled', true);
+                }
+            }
+
+            function dataURLToBlob(dataURL) {
+                var byteString = atob(dataURL.split(',')[1]);
+                var ab = new ArrayBuffer(byteString.length);
+                var ia = new Uint8Array(ab);
+                for (var i = 0; i < byteString.length; i++) {
+                    ia[i] = byteString.charCodeAt(i);
+                }
+                return new Blob([ab], { type: 'image/png' });
+            }
+
+            function updateSaveButtonState() {
+                if (strokes.length > 0) {
+                    var dataURL = canvas.toDataURL("image/png");
+                    var blob = dataURLToBlob(dataURL);
+                    var file = new File([blob], "signature.png", { type: "image/png" });
+                    var dataTransfer = new DataTransfer();
+                    dataTransfer.items.add(file);
+                    signatureFileInput.prop('files', dataTransfer.files);
+                    saveButton.prop('disabled', false);
+                } else {
+                    saveButton.prop('disabled', true);
+                }
+            }
+        });
+
+        window.onload = function () {
+            console.log("null  d");
+            if ("null" != "null") {
+                savealt("null")
+            }
+
+        };
+
+        const btn = document.querySelector('#submit');
+        const resetbtn = document.querySelector('#submitresetpass');
+        const billingbtn = document.querySelector('#submitbilling');
+
+        billingbtn.addEventListener('click', (event) => {
+            event.preventDefault();
+
+            Swal.fire({
+                title: "Do you want Reset PAssword  Changes ?",
+                showDenyButton: false,
+                showCancelButton: true,
+                confirmButtonText: "Yes",
+                denyButtonText: `Don't save`
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $('#billing').submit();
+                }
+                console.log(result);
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                    Swal.fire("Save Changes!", "", "success");
+                } else if (result.isDenied) {
+                    Swal.fire("Changes are not saved", "", "info");
+                }
+            });
+        });
+
+        resetbtn.addEventListener('click', (event) => {
+            event.preventDefault();
+
+            Swal.fire({
+                title: "Do you want Reset PAssword  Changes ?",
+                showDenyButton: false,
+                showCancelButton: true,
+                confirmButtonText: "Yes",
+                denyButtonText: `Don't save`
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $('#resetpass').submit();
+                }
+                console.log(result);
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                    Swal.fire("Save Changes!", "", "success");
+                } else if (result.isDenied) {
+                    Swal.fire("Changes are not saved", "", "info");
+                }
+            });
+        });
+
+        btn.addEventListener('click', (event) => {
+            event.preventDefault();
+            let checkboxes = document.querySelectorAll('input[name="Region"]:checked');
+            let regionIds = [];
+            checkboxes.forEach((checkbox) => {
+                regionIds.push(checkbox.value);
+            });
+            document.querySelector('#regionids').value = regionIds.join(',');
+            console.log(document.querySelector('#regionids').value);
+            Swal.fire({
+                title: "Do you want Save Changes ?",
+                showDenyButton: false,
+                showCancelButton: true,
+                confirmButtonText: "Yes",
+                denyButtonText: `Don't save`
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $('#profile').submit();
+                }
+                console.log(result);
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                    Swal.fire("Save Changes!", "", "success");
+                } else if (result.isDenied) {
+                    Swal.fire("Changes are not saved", "", "info");
+                }
+            });
+        });
+
+    </script>
+
+    
+</body>
+</html>

@@ -47,6 +47,22 @@ namespace HelloDocAdmin.Repositories
         }
         #endregion
 
+
+        public List<string> getManuByID(int RoleID)
+        {
+
+            List<Rolemenu> data = _context.Rolemenus.Where(r => r.Roleid == RoleID).ToList();
+
+
+            List<string> list = new List<string>();
+            foreach (var item in data)
+            {
+                string str = _context.Menus.FirstOrDefault(e => e.Menuid == item.Menuid).Name;
+                list.Add(str);
+            }
+            return list;
+        }
+
         #region GetMenusByAccount
         public async Task<List<Menu>> GetMenusByAccount(short Accounttype)
         {
@@ -193,11 +209,12 @@ namespace HelloDocAdmin.Repositories
             }
         }
         #region GetProfileAll
-        public async Task<List<ViewUserAccess>> GetAllUserDetails()
+        public async Task<UserAccessData> GetAllUserDetails(int? accounttype, int pagesize = 10, int currentpage = 1)
         {
-
-
-            List<ViewUserAccess> v = await (
+            BitArray bt = new BitArray(1);
+            bt.Set(0, false);
+            UserAccessData dm = new UserAccessData();
+            IQueryable<ViewUserAccess> data = (
                                          from user in _context.Aspnetusers
                                          join admin in _context.Admins on user.Id equals admin.Aspnetuserid into adminGroup
                                          from admin in adminGroup.DefaultIfEmpty()
@@ -215,8 +232,21 @@ namespace HelloDocAdmin.Repositories
                                              Mobile = admin != null ? admin.Mobile : (physician != null ? physician.Mobile : null),
                                              aspnetuserid = user.Id
                                          }
-                                     ).ToListAsync();
-            return v;
+                                     );
+            if (accounttype != 0)
+            {
+                data = data.Where(r => r.accounttype == accounttype);
+            }
+
+            dm.TotalPage = (int)Math.Ceiling((double)data.Count() / pagesize);
+            data = data.Skip((currentpage - 1) * pagesize).Take(pagesize);
+
+
+            dm.List = data.ToList();
+            dm.pageSize = pagesize;
+            dm.CurrentPage = currentpage;
+            return dm;
+
 
         }
         #endregion

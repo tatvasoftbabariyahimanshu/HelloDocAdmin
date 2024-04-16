@@ -9,10 +9,13 @@
 </div>
 
 <div class="modal-body container-fluid">
-    <form id="formAddEditSave_UMS" data-ajax="true" data-ajax-method="post" class="row"
-          data-ajax-success="OnSuccess(this.id,data, status, xhr);" data-ajax-failure="OnFailure(xhr, status, error);"
-          asp-action="_EditShiftPost" asp-controller="Physician">
-        <input type="hidden" asp-for="Shiftid" id="shiftid" />
+
+
+        <form id="formAddEditSave_UMS" class="row"
+              onsubmit="return  onsmt()"
+              asp-action="_EditShiftPost" asp-controller="Physician">
+            <input type="hidden" asp-for="Shiftid" id="shiftid" />
+  
     
 
 
@@ -25,16 +28,19 @@
                 </div>
             </div>
         </div>
-
-        <div class="col-md-12 mt-2">
-            <div class="mb-3">
-                <div class="input-control w-100">
-                    <select class="input-outline input-outline-select inp" disabled asp-for="Physicianid" data-allow-clear="true" tabindex="-1" id="provider" data-control="select2" data-placeholder="Select Level">
-                        <option value="">All Provider</option>
-                    </select>
+        @if( CV.LoggedUserRole()=="Admin")
+        {
+            <div class="col-md-12 mt-2">
+                <div class="mb-3">
+                    <div class="input-control w-100">
+                        <select class="input-outline input-outline-select inp" disabled asp-for="Physicianid" data-allow-clear="true" tabindex="-1" id="provider" data-control="select2" data-placeholder="Select Level">
+                            <option value="">All Provider</option>
+                        </select>
+                    </div>
                 </div>
             </div>
-        </div>
+        }
+       
 
         <div class="col-md-12 mt-2">
             <div class="mb-3">
@@ -71,14 +77,103 @@
 
         <div class="text-end mt-2">
             @*<div class="btn btn-info text-white btn-sm " onclick="myFunction()" id="retunrcall">Return</div>*@
-            <input id="save" style="display:none" type="submit" value="Save" class="btn btn-sm btn-info text-white js-btn-modal-form-submit" />
+            <input id="save" style="display:none" type="submit" value="Save" class="btn btn-sm btn-info text-white " />
             <div id="edit" onclick="toggleCheckboxes()" class="btn btn-info text-white btn-sm">Edit</div>
             <div id="delete" class="btn btn-danger btn-sm">Delete</div>
+            <button type="button" class="btn btn-outline-info btn-sm " id="cancel" data-bs-dismiss="modal">Return</button>
         </div>
     </form>
 </div>
 
 <script type="text/javascript">
+    function onsmt() {
+        
+
+        // Prevent default form submission
+
+        // Reset error messages
+        let errorMessages = document.querySelectorAll(".err-msg");
+        errorMessages.forEach(function (element) {
+            element.textContent = ""; // Clear any existing error messages
+        });
+
+        // Validation flag
+        let isValid = true;
+
+        // Validate Startdate
+        let StartDate = document.getElementById("StartDate");
+        if (!StartDate.value) {
+            let errorMessage = "Start Date is required.";
+            displayErrorMessage(StartDate, errorMessage);
+            isValid = false;
+        }
+
+        // Validate Starttime
+        let StartTime = document.getElementById("StartTime");
+        if (!StartTime.value) {
+            let errorMessage = "Start Time is required.";
+            displayErrorMessage(StartTime, errorMessage);
+            isValid = false;
+        }
+
+        // Validate Endtime
+        let EndTime = document.getElementById("EndTime");
+        if (!EndTime.value) {
+            let errorMessage = "End Time is required.";
+            displayErrorMessage(EndTime, errorMessage);
+            isValid = false;
+        }
+
+        if (EndTime.value < StartTime.value) {
+            let errorMessage = "End Time is alway grater than  Start Time.";
+            displayErrorMessage(EndTime, errorMessage);
+            isValid = false;
+        }
+
+        var diff = EndTime.value - StartTime.value;
+        let startTime = new Date("1970-01-01T" + StartTime.value);
+        let endTime = new Date("1970-01-01T" + EndTime.value);
+
+        // Calculate the time difference in milliseconds
+        let timeDiff = endTime - startTime;
+
+        // Convert milliseconds to hours and minutes
+        let hours = Math.floor(timeDiff / 3600000); // 1 hour = 3600000 milliseconds
+        let minutes = Math.floor((timeDiff % 3600000) / 60000); // 1 minute = 60000 milliseconds
+
+        if (hours < 1) {
+            let errorMessage = "Shift will be minimum of 1 hours.";
+            displayErrorMessage(EndTime, errorMessage);
+            isValid = false;
+        }
+
+      
+        // If all validations pass, submit the form
+        if (isValid) {
+
+            $('#cancel').click();
+            return true;
+        }
+        else {
+
+
+            return false;
+        }
+    }
+    function displayErrorMessage(inputElement, message) {
+        console.log("demo");
+        // Find the parent div of the input
+        let parentDiv = inputElement.closest(".inputs-control") || inputElement.closest(".input-control");
+
+        // Create a span element for the error message
+        let errorMessageElement = document.createElement("span");
+        errorMessageElement.className = "err-msg";
+        errorMessageElement.textContent = message;
+
+        // Append error message to the parent div
+        parentDiv.appendChild(errorMessageElement);
+    }
+
     function myFunction2() {
         var region = $("#region2").val();
         $.ajax({
@@ -179,5 +274,6 @@
             EndTime.disabled = true;
         }
     }
+   
 </script>
 

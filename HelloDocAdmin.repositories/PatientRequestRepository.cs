@@ -95,7 +95,14 @@ namespace HelloDocAdmin.Repositories
                     };
                     _context.Users.Add(User);
                     _context.SaveChanges();
+                    Aspnetuserrole asprl = new Aspnetuserrole()
+                    {
+                        Roleid = "4",
+                        Userid = Aspnetuser.Id,
 
+                    };
+                    _context.Aspnetuserroles.Add(asprl);
+                    _context.SaveChanges();
                     var Request = new Request
                     {
                         Requesttypeid = 1,
@@ -731,7 +738,7 @@ namespace HelloDocAdmin.Repositories
         #region Region Check
         public bool CkeckRegion(string? State)
         {
-            var region = _context.Regions.FirstOrDefault(u => u.Name == State.Trim().ToLower().Replace(" ", ""));
+            var region = _context.Regions.FirstOrDefault(u => u.Name == State.ToLower().Replace(" ", ""));
             if (region != null)
             {
                 return true;

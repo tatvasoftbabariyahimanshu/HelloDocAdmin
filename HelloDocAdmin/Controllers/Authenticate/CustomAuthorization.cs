@@ -1,6 +1,7 @@
 ﻿using HelloDocAdmin.Repositories.Interface;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using ServiceStack;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
@@ -11,11 +12,13 @@ namespace HelloDocAdmin.Controllers.Authenticate
     {
 
         private readonly List<string> _role;
-        public CustomAuthorization(string role = "")
+        private readonly string _manu;
+        public CustomAuthorization(string role = "", string? manu = "")
         {
             _role = role.Split(',').ToList();
+            _manu = manu;
         }
-        public void OnAuthorization(AuthorizationFilterContext filterContext)
+        public async void OnAuthorization(AuthorizationFilterContext filterContext)
         {
             var jwtservice = filterContext.HttpContext.RequestServices.GetService<IJWTService>();
 
@@ -35,7 +38,15 @@ namespace HelloDocAdmin.Controllers.Authenticate
             }
 
             var roles = jwtSecurityTokenHandler.Claims.FirstOrDefault(claiim => claiim.Type == ClaimTypes.Role);
+            List<string> str = null;
+            if (CV.LoggedUserRole() != "Patient")
+            {
 
+                int RoleID = jwtSecurityTokenHandler.Claims.FirstOrDefault(claiim => claiim.Type == "RoleID").Value.ToInt();
+                str = new List<string>();
+                var Accessrepo = filterContext.HttpContext.RequestServices.GetService<IAccessRepository>();
+                str = Accessrepo.getManuByID(RoleID);
+            }
             if (roles == null)
             {
                 filterContext.Result = new RedirectResult("~/Login");
@@ -57,12 +68,23 @@ namespace HelloDocAdmin.Controllers.Authenticate
                 }
             }
 
-            //if (string.IsNullOrWhiteSpace(_role) || roles.Value != _role)
-            if (flage == false)
-            {
-                filterContext.Result = new RedirectResult("~/Login/AccessDenide");
 
+
+
+
+            if (CV.LoggedUserRole() != "Patient")
+            {
+                if (flage == false || !str.Contains(_manu))
+                {
+                    filterContext.Result = new RedirectResult("~/Login/AccessDenide");
+
+                }
             }
+            //if (flage == false)
+            //{
+            //    filterContext.Result = new RedirectResult("~/Login/AccessDenide");
+
+            //}
         }
 
 

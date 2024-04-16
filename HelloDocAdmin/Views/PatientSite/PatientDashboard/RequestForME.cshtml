@@ -139,7 +139,7 @@
                 </div>
                 <div class="row mt-1">
                     <div class="col-md-6">
-                        <div class="inputs-control  mb-3">
+                        <div class="inputs-control  mb-3 mt-2">
                             <input placeholder=" " readonly asp-for="RoomSite" class="input-outline  w-100 inp" type="text">
                             <label class="inputs-lable">Room #/street (Optional)</label>
                         </div>
@@ -158,13 +158,13 @@
                     </>
 
                 </div>
-                <div class="card-footer border-0 bg-transparent text-end">
-                    <button type="submit" class="btn btn-outline-info btn-submit">
+                <div class="card-footer border-0 bg-transparent text-end mt-2">
+                        <button type="submit" class="btn btn-outline-info btn-submit submit">
                         submit
                     </button>
-                        <button class="btn btn-outline-danger btn-cancel " type="reset">
+                        <a asp-controller="PatientDashboard" asp-action="Index" class="btn btn-outline-danger btn-cancel " type="reset">
                             cancel
-                        </button>
+                        </a>
                 </div>
             </form>
 

@@ -32,11 +32,15 @@ namespace HelloDocAdmin.Controllers.Authenticate
 
             }, out SecurityToken validatedToken);
 
-            // Corrected access to the validatedToken
+
             jwtSecurityToken = (JwtSecurityToken)validatedToken;
             string roleIdString = jwtSecurityToken.Claims.FirstOrDefault(c => c.Type == "RoleID").Value;
+            int roleId = 0;
+            if (roleIdString != "")
+            {
 
-            int roleId = int.Parse(roleIdString);
+                roleId = int.Parse(roleIdString);
+            }
 
             CookieModel cookieModel = new CookieModel()
             {

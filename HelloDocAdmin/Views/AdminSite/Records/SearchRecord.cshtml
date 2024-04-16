@@ -23,7 +23,7 @@
 
             </div>
             <div class="text-end">
-                <a asp-controller="Dashboard" asp-action="Index"
+                <a onclick="getExelData()"
                    class="btn btn-info btn-back">
                     <i class="fa-solid fa-share mx-2"></i>Export Data To Excel
                 </a>
@@ -123,21 +123,23 @@
                     Clear
                 </button>
             </div>
-            <div class="position-relative ">
+            <div class="position-relative  ">
 
 
 
-
-                <div class="middle loding-div position-absolute  top-50" style="left:50%;">
-                    <div class="bar bar1"></div>
-                    <div class="bar bar2"></div>
-                    <div class="bar bar3"></div>
-                    <div class="bar bar4"></div>
-                    <div class="bar bar5"></div>
-                    <div class="bar bar6"></div>
-                    <div class="bar bar7"></div>
-                    <div class="bar bar8"></div>
+                <div class="loding-div w-100">
+                    <div class="middle loding-div position-absolute  top-50" style="left:50%;z-index:99">
+                        <div class="bar bar1"></div>
+                        <div class="bar bar2"></div>
+                        <div class="bar bar3"></div>
+                        <div class="bar bar4"></div>
+                        <div class="bar bar5"></div>
+                        <div class="bar bar6"></div>
+                        <div class="bar bar7"></div>
+                        <div class="bar bar8"></div>
+                    </div>
                 </div>
+                
 
 
                 <div id="SearchResult">
@@ -198,6 +200,31 @@
             }
         });
     }
+    function getExelData() {
+        var patientname = $('#patientname').val();
+        var status = $('#status').val();
+        var phonenumber = $('#phonenumber').val();
+        var email = $('#email').val();
+        var providername = $('#providername').val();
+        var enddate = $('#enddate').val();
+        var startdate = $('#startdate').val();
+        var requesttype = $('#requesttype').val();
+
+        // Construct the URL with parameters
+        var url = "/Report/getExelData?" +
+            "email=" + email +
+            "&phonenumber=" + phonenumber +
+            "&physicianname=" + providername +
+            "&patientname=" + patientname +
+            "&enddate=" + enddate +
+            "&startdate=" + startdate +
+            "&requesttype=" + requesttype +
+            "&status=" + status;
+
+        // Navigate to the constructed URL
+        window.location.href = url;
+    }
+
 
     function getpage(index) {
         $("#crt-page").val(index);

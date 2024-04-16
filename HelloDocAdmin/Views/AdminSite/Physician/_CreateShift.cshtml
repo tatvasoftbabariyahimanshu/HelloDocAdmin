@@ -20,15 +20,17 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-12 mt-2">
-            <div class="mb-3">
+        @if (CV.LoggedUserRole() == "Admin")
+        {
+            <div class="col-md-12 mt-2">
+                <div class="mb-3">
                 <div class="input-control w-100 ">
                     <select class="input-outline input-outline-select  inp" asp-for="Physicianid" data-allow-clear="true" tabindex="-1" id="provider" data-control="select2" data-placeholder="Select Level">
                         <option value="">All Provider</option>
                     </select>
                 </div>
             </div>
-            </div>
+            </div>}
         <div class="col-md-12 mt-2">
             <div class="mb-3">
                 <div class="inputs-control ">
@@ -277,15 +279,15 @@
             displayErrorMessage(regionSelect, errorMessage);
             isValid = false;
         }
-
-        // Validate Physicianid (Select field)
+   
         let physicianSelect = document.getElementById("provider");
+        if (physicianSelect) {
         if (!physicianSelect.value) {
             let errorMessage = "Physician is required.";
             displayErrorMessage(physicianSelect, errorMessage);
             isValid = false;
-        }
-
+        }}
+  
         // If all validations pass, submit the form
         if (isValid) {
             

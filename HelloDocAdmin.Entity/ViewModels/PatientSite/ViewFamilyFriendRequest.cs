@@ -5,7 +5,7 @@ namespace HelloDocAdmin.Entity.ViewModel.PatientSite
 {
     public class ViewFamilyFriendRequest
     {
-       
+
         public string FF_FirstName { get; set; }
         public string FF_LastName { get; set; }
         public string FF_PhoneNumber { get; set; }
@@ -16,8 +16,8 @@ namespace HelloDocAdmin.Entity.ViewModel.PatientSite
         public string? Id { get; set; } = null!;
         public string? Symptoms { get; set; }
         public string FirstName { get; set; }
-        
-       
+
+
         public string LastName { get; set; }
         public DateTime BirthDate { get; set; }
 

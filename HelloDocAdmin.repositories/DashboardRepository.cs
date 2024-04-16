@@ -220,7 +220,7 @@ namespace HelloDocAdmin.Repositories
 
             return allData;
         }
-        public async Task<Dashboarddatamodel> GetRequestsbyfilter(string Status, string search = "", int region = 0, int requesttype = 0, int currentpage = 1, int pagesize = 5)
+        public async Task<Dashboarddatamodel> GetRequestsbyfilter(string Status, string search = "", int region = 0, int requesttype = 0, int currentpage = 1, int pagesize = 10)
         {
             Dashboarddatamodel dm = new Dashboarddatamodel();
 
@@ -286,7 +286,7 @@ namespace HelloDocAdmin.Repositories
                            from p in pGroup.DefaultIfEmpty()
                            join a in _context.Admins on rs.Adminid equals a.Adminid into aGroup
                            from a in aGroup.DefaultIfEmpty()
-                           where rs.Requestid == item.RequestID && (rs.Transtoadmin != null || rs.Transtophysicianid != null || rs.Status == 2)
+                           where rs.Requestid == item.RequestID /*&& (rs.Transtoadmin != null || rs.Transtophysicianid != null || rs.Status == 2)*/
                            select rs.Notes).ToList();
 
                 foreach (var slt in rsa)
@@ -309,7 +309,7 @@ namespace HelloDocAdmin.Repositories
         }
 
 
-        public async Task<Dashboarddatamodel> GetRequestsbyfilterForPhy(string Status, string PhyUserID, string search = "", int region = 0, int requesttype = 0, int currentpage = 1, int pagesize = 5)
+        public async Task<Dashboarddatamodel> GetRequestsbyfilterForPhy(string Status, string PhyUserID, string search = "", int region = 0, int requesttype = 0, int currentpage = 1, int pagesize = 10)
         {
             Dashboarddatamodel dm = new Dashboarddatamodel();
 
@@ -343,7 +343,8 @@ namespace HelloDocAdmin.Repositories
                                                              Address = rc.Address + ", " + rc.Street + ", " + rc.City + ", " + rc.State + ", " + rc.Zipcode,
                                                              Status = req.Status,
                                                              ProviderID = req.Physicianid,
-                                                             RequestorPhoneNumber = req.Phonenumber
+                                                             RequestorPhoneNumber = req.Phonenumber,
+                                                             isfinal = _context.Encounterforms.FirstOrDefault(e => e.Requestid == req.Requestid).Isfinalize
                                                          });
 
 
@@ -636,10 +637,10 @@ namespace HelloDocAdmin.Repositories
             alldata.documentslist = doc;
             var req = _context.Requests.FirstOrDefault(r => r.Requestid == id);
 
-            alldata.Firstanme = req.Firstname;
+            alldata.Firstanme = req.Firstname ?? "";
             alldata.RequestID = req.Requestid;
-            alldata.ConfirmationNumber = req.Confirmationnumber;
-            alldata.Lastanme = req.Lastname;
+            alldata.ConfirmationNumber = req.Confirmationnumber ?? "";
+            alldata.Lastanme = req.Lastname ?? "";
             return alldata;
 
         }

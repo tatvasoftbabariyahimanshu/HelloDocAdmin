@@ -1,5 +1,190 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
 }
+@using HelloDocAdmin.Entity.ViewModels.AdminSite
+@model ViewDocumentsModel
+
+<div class="container">
+    <div class="card bg-transparent border-0">
+        <div class="card-header d-flex justify-content-between  border-0  bg-transparent p-1  mt-3 mb-2">
+            <div class="text-start d-flex align-items-center">
+                <h5 class="mt-2"><b>Conclude Care</b></h5>
+
+            </div>
+            <div class="text-end">
+                <a asp-controller="Dashboard" asp-action="Index"
+                   class="btn btn-outline-info btn-back">
+                    <i class="fa-solid fa-backward mx-1"></i>Back
+                </a>
+            </div>
+        </div>
+
+        <div class="card-body rounded shadow">
+            <div class="doc-text-card">Patient name</div>
+            <span class="d-flex align-items-center ">
+                <span class="Patient-name fs-4"><b>@Model.Firstanme @Model.Lastanme</b></span>
+             
+
+            </span>
+            <div class="d-flex justify-content-between">
+                <div class="mt-4">
+                <h6> <b>Encounter Forms</b></h6>
+                </div>
+                <div class="text-end">
+                    <button type="button" id="choosenfile" class="col  btn btn-info text-white" onclick="document.getElementById('files').click()">
+                        <i class="fa fa-cloud-upload"></i>
+                        <span class="d-none d-sm-inline">Upload</span>
+                    </button>
+                     <form method="post" asp-action="UploadDocumentsCC" asp-controller="Action" id="docform" enctype="multipart/form-data">
+                    <input id="files" type="file"  class="d-none  form-control doc_uploder" name="UploadFile">
+                    <input name="id" value="@Model.RequestID" class="d-none" />
+                    </form>
+                  
+                </div>
+                <script>
+                    $("#files").change(function () {
+                        filename = this.files[0].name;
+                        $('#docform').submit();
+                       
+                    });
+                    document.querySelector('form').addEventListener('submit', function (event) {
+                        var fileInput = document.getElementById('files');
+                        var fileName = fileInput.value;
+                        var allowedExtensions = /(\.pdf|\.doc|\.docx|\.jpg|\.jpeg|\.png|\.jped|\.webp)$/i;
+                        if (!allowedExtensions.exec(fileName)) {
+                            document.getElementById('error-file').innerText = 'Only PDF, DOC, JPG, JPEG, PNG, JPED, and WEBP files are allowed.';
+                            event.preventDefault();
+                        }
+                    });
+
+                </script>
+
+            </div>
+            
+            <div class="table-responsive mt-3 ">
+                <table class="table">
+                    <thead class="border-0">
+                        <tr class="table-secondary">
+
+                            <th scope="col" class="table-text-header px-3"> Document</th>
+
+
+                       
+                            <th scope="col" class="table-text-header   ">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item2 in Model.documentslist)
+                        {
+                            <tr>
+
+
+                                <td class="table-text   px-3 flnamae">
+
+
+                                    <span class="mx-2">
+                                        @item2.Filename
+                                    </span>
+                                </td>
+
+                             
+
+                                <td class="table-text  ">
+
+                                    <a class="btn btn-sm download-link  btn-outline-info document-button" download href="/Upload/req_@Model.RequestID/@item2.Filename">
+
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor"
+                                             class="bi bi-arrow-down-circle mx-1" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd"
+                                                  d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293z" />
+                                        </svg>
+                                    </a>
+
+                                    <a class="btn btn-sm   btn-outline-info " target="_blank" asp-action="DeleteDocCC" asp-controller="Action" asp-route-RequestWiseFileID="@item2.RequestWiseFileID" asp-route-RequestID="@Model.RequestID">
+
+                                        <i class="fa-solid fa-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+
+
+                    </tbody>
+
+
+                </table>
+            </div>
+            <div class="mt-4">
+                <h6 class="mb-2"> <b>Provider Notes </b></h6>
+                <form asp-action="ConcludeCarePost" onsubmit="return onsmt()" asp-controller="Action" class="row g-3 mt-2 " enctype="multipart/form-data">
+                  
+                    <input value="@Model.RequestID" name="RequestID" type="hidden">
+
+
+
+                    <div class="inputs-control w-100 mt-2">
+                        <textarea id="changenote_ac" placeholder=" " name="Notes" rows="5" class="input-outline w-100 " type="text"></textarea>
+
+                        <label class="inputs-lable inputs-lable-textarea" id="notedata">Physician Note</label>
+                    </div>
+                    <div class=" col-md-12 text-end my-5">
+
+                        <input id="submit" type="submit" class="btn btn-info text-white p-2" value="Conclude Care">
+                    </div>
+
+
+
+                </form>
+            </div>
+         
+        </div>
+    </div>
+
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('.flnamae').each(function () {
+            var fileName = $(this).text().trim();
+            if (fileName.endsWith('.pdf')) {
+                $(this).prepend('<i class="fa-solid fa-file-pdf" style="color: #be2323;font-size:1rem"></i> ');
+            } else if (fileName.endsWith('.doc') || fileName.endsWith('.docx')) {
+                $(this).prepend('<i class="fa-solid fa-file-doc" style="color: #74C0FC;font-size:1rem"></i> ');
+            } else if (fileName.endsWith('.jpg') || fileName.endsWith('.jpeg') || fileName.endsWith('.png') || fileName.endsWith('.gif')) {
+                $(this).prepend('<i class="fa-solid fa-images" style="color: #B197FC;font-size:1rem"></i> ');
+            }
+        });
+    });
+    function onsmt() {
+
+
+      
+        let errorMessages = document.querySelectorAll(".err-msg");
+        errorMessages.forEach(function (element) {
+            element.textContent = ""; 
+        });
+
+        let isValid = true;
+
+        let changenote_ac = document.getElementById("changenote_ac");
+        if (!changenote_ac.value) {
+            let errorMessage = "Erite Physician Notes!!!!!";
+            displayErrorMessage(changenote_ac, errorMessage);
+            isValid = false;
+        }
+
+
+      
+        if (isValid) {
+
+
+            return true;
+        }
+        else {
+
+
+            return false;
+        }
+    }
+
+</script>

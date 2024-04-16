@@ -1,5 +1,7 @@
 ﻿@using HelloDocAdmin.Entity.ViewModels.PatientSite
 @model ViewDashboardDataModel
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" /> 
+<script type="text/javascript" charset="utf8"  src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
 <div class="container-fluid mt-3">
     <h4 class="px-3">Medical History</h4>
     <div class="card m-2  bg-transparent border-0 p-2  ">
@@ -18,144 +20,43 @@
             </button>
         </div>
 
-        <div class="card-body  shadow p-0">
-            <div class="table-responsive dashboardTable">
-                <table class="table">
-                    <thead class="border-0">
-                        <tr class="table-secondary">
-
-                            <th scope="col" class="table-text-header px-3">
-                                Created
-                                Date
-                            </th>
-                            <th scope="col" class="table-text-header  px-3">Current Status</th>
-                            <th scope="col" class="table-text-header   text-center">Document</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model.requests)
-                        {
-                            <tr>
-                                <td class="table-text px-3">@item.Createddate</td>
-                                @if(@item.Status==1)
-                                {
-                                    <td class="table-text  px-3">New</td>
-                                }
-                                else if (@item.Status == 2)
-                                {
-                                    <td class="table-text  px-3">Pending</td>
-                                }
-                                else if (@item.Status == 4 || @item.Status==5)
-                                {
-                                    <td class="table-text  px-3">Active</td>
-                                }
-                                else if (@item.Status == 6)
-                                {
-                                    <td class="table-text  px-3">Conclude</td>
-                                }
-                                else if (@item.Status == 3 || @item.Status == 7 || @item.Status == 8)
-                                {
-                                    <td class="table-text  px-3">To Close</td>
-                                }
-                                else{
-                                    <td class="table-text  px-3">Unpaid</td>
-                                }
-                             
-
-                                <td class="table-text text-center ">
-                                    @{
-                                        if (Model.ids.ContainsKey(item.Requestid))
-                                        {
-                                            <a asp-action="Documents" asp-controller="PatientDashboard" asp-route-RequestID="@item.Requestid" class="btn btn-outline-info btn-sm document-button">
-                                                (@Model.ids[item.Requestid]) 
-                                                
-                                                Document
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor"
-                                                     class="bi bi-arrow-down-circle mx-1" viewBox="0 0 16 16">
-                                                    <path fill-rule="evenodd"
-                                                          d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293z" />
-                                                </svg>
-                                            </a>
-                                        }
-                                        else
-                                        {
-                                            <a asp-action="Documents" asp-controller="PatientDashboard" asp-route-RequestID="@item.Requestid" class="btn btn-outline-info btn-sm document-button">
-                                                (0)
-
-                                                Document
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor"
-                                                     class="bi bi-arrow-down-circle mx-1" viewBox="0 0 16 16">
-                                                    <path fill-rule="evenodd"
-                                                          d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293z" />
-                                                </svg>
-                                            </a>
-                                        }
-                                    }
-                                </td>
-                            </tr>
-                        }
+        <div class="card-body position-relative  shadow p-0">
+            <div class="position-relative ">
 
 
 
 
-                    </tbody>
-                </table>
-            </div>
-            @if (Model.requests != null)
-            {
-                <div class="accordion" id="accordionExample">
-                    @foreach (var item in Model.requests)
-                    {
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="headingOne">
-
-                                <button onclick="asp()" class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                    <img src="~/images/icons/watch.svg" /> Created date:@item.Createddate
-                                </button>
-                            </h2>
-                            <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                                <div class="accordion-body d-flex flex-column justify-content-between">
-                                    <div class="mb-1"><img src="~/images/icons/person-badge.svg" />  Provider :</div>
-                                    <div class="mb-2"><img src="~/images/icons/check-circle.svg" />  CurrentStatus : @item.Status</div>
-                                    <div class="row justify-content-center">
-                                        @{
-                                            if (Model.ids.ContainsKey(item.Requestid))
-                                            {
-                                                <a asp-action="Documents" asp-controller="PatientDashboard" asp-route-RequestID="@item.Requestid" class="btn btn-outline-info btn-sm document-button">
-                                                    (@Model.ids[item.Requestid]) Document
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor"
-                                                         class="bi bi-arrow-down-circle mx-1" viewBox="0 0 16 16">
-                                                        <path fill-rule="evenodd"
-                                                              d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293z" />
-                                                    </svg>
-                                                </a>
-                                            }
-                                            else
-                                            {
-                                                <a asp-action="Documents" asp-controller="PatientDashboard" asp-route-RequestID="@item.Requestid" class="btn btn-outline-info btn-sm document-button">
-                                                    (0)
-
-                                                    Document
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor"
-                                                         class="bi bi-arrow-down-circle mx-1" viewBox="0 0 16 16">
-                                                        <path fill-rule="evenodd"
-                                                              d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293z" />
-                                                    </svg>
-                                                </a>
-                                            }
-                                        }
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                       
-                    }
+                <div class="middle loding-div position-absolute  top-50" style="left:50%;z-index:99">
+                    <div class="bar bar1"></div>
+                    <div class="bar bar2"></div>
+                    <div class="bar bar3"></div>
+                    <div class="bar bar4"></div>
+                    <div class="bar bar5"></div>
+                    <div class="bar bar6"></div>
+                    <div class="bar bar7"></div>
+                    <div class="bar bar8"></div>
                 </div>
-            }
+
+
+                <div id="SearchResult">
+                </div>
+
+
+            </div>
+         
         </div>
     </div>
 
 </div>
+
+<script>
+    $(function () {
+
+        getfilterdata();
+
+
+    });
+</script>
 <script>
     var btn = document.getElementsByClassName("accordion-button");
     var btn1 = document.getElementsById("#collapseOne");
@@ -169,4 +70,43 @@
         btn1.removeClass("show");
                                 }
 </script>
+<script>
+    setTimeout(function () { $(".loding-div").hide() }, 500);
+</script>
+<script>
+
+    function getfilterdata() {
+        $(".loding-div").show();
+
+
+        var pagesize = $('#SizeSelect').val();
+        var currentpage = $('#crt-page').val();
+
+        $.ajax({
+            url: "/PatientDashboard/IndexList",
+            type: "GET",
+            data: {
+                
+                currentpage: currentpage,
+                pagesize: pagesize
+            },
+            success: function (response) {
+                setTimeout(function () { $(".loding-div").hide() }, 500);
+                $('#SearchResult').html(response);
+            },
+            error: function () {
+                $(".loding-div").hide();
+                alert("error");
+            }
+        });
+    }
+
+    function getpage(index) {
+        $("#crt-page").val(index);
+
+    }
+
+
+</script>
+
 

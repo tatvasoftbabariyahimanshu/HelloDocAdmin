@@ -3,11 +3,10 @@
 <script>
     $(document).ready(function (){
 
-        $(".inputs-control :input").prop("readonly", true);
+        $(".inputs-control :input").prop("disabled", true);
 
-        $("select").prop("readonly", true);
-            $("input").css("background-color", "#e9ecef");
-        $("select").css("background-color", "#e9ecef");
+        $("select").prop("disabled", true);
+           
         $("#save").css("display", "none");
         $("#cancel").css("display", "none");
         $('#cancel').click(function () {
@@ -97,7 +96,7 @@
                     </div>
                     <div class="col-md-5 password-hide">
                         <div class="inputs-control  mb-3">
-                            <input placeholder=" " asp-for="Email" class="input-outline w-100 inp" type="text" id="Email">
+                            <input placeholder=" " asp-for="Email"   class="input-outline w-100 inp" type="text" id="Email">
                             <label class="inputs-lable">Email</label>
                         </div>
                     </div>
@@ -190,10 +189,13 @@
 <script>
 
     function enable_disable() {
-        $(".inputs-control :input").prop("readonly", false);
-      
+        $(".inputs-control :input").prop("disabled", false);
+        $("select").prop("disabled", false);
+
         $("#save").prop("readonly", false);
         $("#cancel").prop("readonly", false);
+        $("#Email").prop("readonly", true);
+       
         $("#save").css("display", "block");
         $("#cancel").css("display", "block");
         $("#edit").css("display", "none");
@@ -221,8 +223,7 @@
         var State = document.getElementById('state').value;
         var ZipCode = document.getElementById('zipcode').value;
         var address = Street + City + State + ZipCode;
-        //console.log(address1);
-        //document.getElementById('gmap_canvas').src = address1;
+      
         var geocoder = new google.maps.Geocoder();
         geocoder.geocode({ address: address }, function (results, status) {
             if (status == "OK") {

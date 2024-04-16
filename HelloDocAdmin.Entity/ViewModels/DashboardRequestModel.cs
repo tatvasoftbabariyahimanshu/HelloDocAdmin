@@ -19,5 +19,8 @@
         public int? ProviderID { get; set; }
         public string? ProviderName { get; set; }
         public string? Region { get; set; }
+
+
+        public bool? isfinal { get; set; }
     }
 }

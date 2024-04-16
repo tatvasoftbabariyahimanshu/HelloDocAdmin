@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="~/css/bootstrap.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/HELLO_DOC.styles.css" asp-append-version="true" />
+    
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
@@ -18,8 +18,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyARrk6kY-nnnSpReeWotnQxCAo_MoI4qbU"></script>
-    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
-    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
     <style>
         body {
             font-family: 'Poppins', sans-serif;
@@ -27,7 +27,7 @@
     </style>
 </head>
 <body data-bs-theme="">
-    <nav class="navbar navbar-expand-lg     ">
+    <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
             <img src="~/images/Fig56. Patient site 1.png" class="img-fluid rounded-start mx-2 navbar-logo" alt="...">
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -37,6 +37,8 @@
                     </li>
                 </ul>
             </div>
+            <div class="text-end">
+
             <span class="username"> <b>Welcome!</b>   @CV.LoggedUserName()</span>
             <a class="btn btn-sm btn-outline-info mx-2" asp-action="Logout" asp-controller="Login">
                 <span class="addnewlg">
@@ -50,9 +52,11 @@
                 <span id="thm"> <i class="fa-solid fa-sun"></i></span>
                 <span id="thm2"> <i class="fa-solid fa-moon"></i></span>
             </button>
+            </div>
         </div>
     </nav>
     <main role="main" class="pb-3" style="min-height:100vh">
+        <div class="loading">Loading</div>
         @RenderBody()
     </main>
     <footer>
@@ -64,11 +68,23 @@
             </span>
         </div>
     </footer>
+    <script>
+        $(document).ready(function () {
+            $('.loading').hide();
+            $(".submit").click(function (e) {
+
+                $('.loading').show();
+            });
+
+
+        });
+    </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/bootstrap.bundle.min.js" asp-append-version="true"></script>
     <script src="~/js/custom.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
     @await Component.InvokeAsync("Notyf")
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>

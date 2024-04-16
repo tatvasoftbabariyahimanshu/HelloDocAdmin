@@ -429,6 +429,18 @@ namespace HelloDocAdmin.Repositories
                 {
                     client.Phonenumber = model.RC_PhoneNumber;
                     client.Email = model.RC_Email;
+
+
+                    client.Firstname = model.RC_FirstName;
+                    client.Lastname = model.RC_LastName;
+                    int monthnum = model.RC_Dob.Month;
+                    string monthName = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(monthnum);
+                    int date = model.RC_Dob.Day;
+                    int year = model.RC_Dob.Year;
+                    client.Intdate = date;
+                    client.Intyear = year;
+                    client.Strmonth = monthName;
+
                     _context.Requestclients.Update(client);
                     _context.SaveChangesAsync();
                     return true;
@@ -490,6 +502,7 @@ namespace HelloDocAdmin.Repositories
 
                     requestData.Status = 2;
                     requestData.Modifieddate = DateTime.Now;
+                    requestData.Accepteddate = DateTime.Now;
 
                     _context.Requests.Update(requestData);
                     _context.SaveChanges();
@@ -500,6 +513,7 @@ namespace HelloDocAdmin.Repositories
 
 
                         Status = 2,
+
                         Createddate = DateTime.Now
 
                     };
@@ -639,7 +653,7 @@ namespace HelloDocAdmin.Repositories
                     Skin = Data.Skin,
                     Temp = Data.Temp,
                     TreatmentPlan = Data.Treatment,
-                    Physicianid = _context.Physicians.FirstOrDefault(E => E.Aspnetuserid == id).Physicianid,
+                    Isfinalize = false,
                     Created = DateTime.Now,
                     Modified = DateTime.Now,
 
@@ -682,7 +696,8 @@ namespace HelloDocAdmin.Repositories
                     encdetails.Skin = Data.Skin;
                     encdetails.Temp = Data.Temp;
                     encdetails.TreatmentPlan = Data.Treatment;
-                    encdetails.Physicianid = _context.Physicians.FirstOrDefault(E => E.Aspnetuserid == id).Physicianid;
+                    encdetails.Isfinalize = false;
+
                     encdetails.Modified = DateTime.Now;
                     _context.Encounterforms.Update(encdetails);
                     _context.SaveChanges();
@@ -718,22 +733,22 @@ namespace HelloDocAdmin.Repositories
 
                 var final = _context.Requests.FirstOrDefault(e => e.Requestid == model.Requesid);
                 final.Modifieddate = DateTime.Now;
-                final.Status = 6;
+
                 _context.Requests.Update(final);
                 _context.SaveChanges();
 
 
-                Requeststatuslog rs = new Requeststatuslog
-                {
-                    Requestid = final.Requestid,
-                    Status = 6,
-                    Createddate = DateTime.Now,
-                    Physicianid = _context.Physicians.FirstOrDefault(E => E.Aspnetuserid == id).Physicianid
+                //Requeststatuslog rs = new Requeststatuslog
+                //{
+                //    Requestid = final.Requestid,
+
+                //    Createddate = DateTime.Now,
+                //    Physicianid = _context.Physicians.FirstOrDefault(E => E.Aspnetuserid == id).Physicianid
 
 
-                };
-                _context.Requeststatuslogs.Add(rs);
-                _context.SaveChanges();
+                //};
+                //_context.Requeststatuslogs.Add(rs);
+                //_context.SaveChanges();
 
                 return true;
             }
@@ -879,5 +894,85 @@ namespace HelloDocAdmin.Repositories
         }
 
         #endregion
+
+
+
+        #region ConcludeCase Post
+        public bool ConcludeCarePost(int RequestID, string Notes)
+        {
+            try
+            {
+                var requestData = _context.Requests.FirstOrDefault(e => e.Requestid == RequestID);
+                if (requestData != null)
+                {
+
+                    requestData.Status = 8;
+                    requestData.Modifieddate = DateTime.Now;
+
+                    _context.Requests.Update(requestData);
+                    _context.SaveChanges();
+
+                    Requeststatuslog rsl = new Requeststatuslog
+                    {
+                        Requestid = RequestID,
+
+
+                        Status = 8,
+                        Notes = Notes,
+
+                        Createddate = DateTime.Now
+
+                    };
+                    _context.Requeststatuslogs.Add(rsl);
+                    _context.SaveChanges();
+
+
+                    Requestnote data = _context.Requestnotes.FirstOrDefault(e => e.Requestid == RequestID);
+                    if (data != null)
+                    {
+                        data.Modifieddate = DateTime.Now;
+                        data.Createddate = DateTime.Now;
+                        data.Physiciannotes = Notes;
+                        _context.Requestnotes.Update(data);
+                        _context.SaveChanges();
+                    }
+
+
+                    return true;
+                }
+                else { return false; }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+
+        }
+
+        #endregion
+        public bool IsCaseFinialized(int RequestID)
+        {
+
+            if (_context.Encounterforms.Any(e => e.Requestid == RequestID))
+            {
+                if (_context.Encounterforms.FirstOrDefault(e => e.Requestid == RequestID).Isfinalize)
+
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+
+            }
+            else
+            {
+                return true;
+            }
+
+
+        }
     }
 }
+

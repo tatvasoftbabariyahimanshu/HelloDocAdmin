@@ -11,7 +11,7 @@ using Newtonsoft.Json;
 
 namespace HelloDocAdmin.Controllers.AdminSite
 {
-    [CustomAuthorization("Admin,Physician")]
+
     public class PhysicianController : Controller
     {
         private IDashboardRepository _dashboardrepo;
@@ -32,30 +32,28 @@ namespace HelloDocAdmin.Controllers.AdminSite
             _context = _apdb;
         }
         #region Info Provider
-        public async Task<IActionResult> Index(int? region)
+        [CustomAuthorization("Admin", "Physician")]
+        public async Task<IActionResult> Index()
         {
-            TempData["Status"] = TempData["Status"];
+
             ViewBag.RegionComboBox = await _combobox.RegionComboBox();
-            var v = await _phyrepo.PhysicianAll();
-            if (region == null || region == 0)
-            {
-                v = await _phyrepo.PhysicianAll();
 
-            }
-            else
-            {
-                v = await _phyrepo.PhysicianByRegion(region);
-                return Json(v);
-
-            }
-            return View("../AdminSite/Physician/Index", v);
+            return View("../AdminSite/Physician/Index");
         }
-        public IActionResult Scheduling()
+        [CustomAuthorization("Admin,Physician", "Physician")]
+        public async Task<IActionResult> PhysicianList(string? ProviderName, int? RegionID, int pagesize = 5, int currentpage = 1)
         {
-            ViewBag.RegionComboBox = _combobox.RegionComboBox();
+            PhysiciansData sr = await _phyrepo.PhysicianAll(ProviderName, RegionID, pagesize, currentpage);
+            return PartialView("../AdminSite/Physician/_physicianList", sr);
+        }
+        [CustomAuthorization("Admin,Physician", "Scheduling")]
+        public async Task<IActionResult> Scheduling()
+        {
+            ViewBag.RegionComboBox = await _combobox.RegionComboBox();
             return View("../AdminSite/Physician/Scheduling");
         }
         #region SendMessage
+        [CustomAuthorization("Admin", "Physician")]
         public async Task<IActionResult> SendMessage(int id, string? email, int? way, string? msg)
         {
             bool s;
@@ -67,7 +65,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
             else if (way == 1)
             {
 
-                _email.msgbody = "Admin wants to contact you!!!";
+                _email.msgbody = msg;
                 _email.tophone = "8849999677";
                 s = _email.sendsms();
                 if (s)
@@ -110,6 +108,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
         }
         #endregion
         #region ChangeNotificationPhysician
+        [CustomAuthorization("Admin", "Physician")]
         public async Task<IActionResult> ChangeNotificationPhysician(string changedValues)
         {
             Dictionary<int, bool> changedValuesDict = JsonConvert.DeserializeObject<Dictionary<int, bool>>(changedValues);
@@ -128,19 +127,21 @@ namespace HelloDocAdmin.Controllers.AdminSite
         }
         #endregion
         #region PhysicianProfile
+        [CustomAuthorization("Admin,Physician", "Physician")]
         public async Task<IActionResult> PhysicianProfile(int? id)
         {
-            //TempData["Status"] = TempData["Status"];
+
             ViewBag.RegionComboBox = await _combobox.RegionComboBox();
             ViewBag.userrolecombobox = await _combobox.RolelistProvider();
             if (id == null)
             {
                 ViewData["PhysicianAccount"] = "Add";
-                return View("../AdminSite/Physician/PhysicianAddEdit");
+                return View("../AdminSite/Physician/PhysicianAdd");
             }
             else
             {
                 ViewData["PhysicianAccount"] = "Edit";
+
                 PhysiciansViewModel v = await _phyrepo.GetPhysicianById((int)id);
                 return View("../AdminSite/Physician/PhysicianAddEdit", v);
 
@@ -151,12 +152,17 @@ namespace HelloDocAdmin.Controllers.AdminSite
         #endregion
         #region PhysicianAddEdit
         [HttpPost]
+        [CustomAuthorization("Admin", "Physician")]
         public async Task<IActionResult> PhysicianAddEdit(PhysiciansViewModel physicians)
         {
-            //TempData["Status"] = TempData["Status"];
+
+
+
             ViewBag.RegionComboBox = await _combobox.RegionComboBox();
             ViewBag.userrolecombobox = await _combobox.RolelistProvider();
-            // bool b = physicians.Isagreementdoc[0];
+
+
+
 
             if (ModelState.IsValid)
             {
@@ -169,14 +175,14 @@ namespace HelloDocAdmin.Controllers.AdminSite
                 else
                 {
                     _notyf.Error("Physician Not Added...");
-                    return View("../AdminSite/Physician/PhysicianAddEdit", physicians);
+                    return View("../AdminSite/Physician/PhysicianAdd", physicians);
                 }
 
             }
             else
             {
                 _notyf.Error("Physician Data not Valid...");
-                return View("../AdminSite/Physician/PhysicianAddEdit", physicians);
+                return View("../AdminSite/Physician/PhysicianAdd", physicians);
             }
 
 
@@ -185,6 +191,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
 
         #region Edit info
+        [CustomAuthorization("Admin", "Physician")]
         public async Task<IActionResult> EditAccountInfo(PhysiciansViewModel physicians)
         {
             ViewBag.RegionComboBox = await _combobox.RegionComboBox();
@@ -194,7 +201,14 @@ namespace HelloDocAdmin.Controllers.AdminSite
             if (data)
             {
                 _notyf.Success("Account Info Updated Successfully...");
-                return RedirectToAction("PhysicianProfile", new { id = physicians.Physicianid });
+                if (CV.LoggedUserRole() == "Admin")
+                {
+                    return RedirectToAction("PhysicianProfile", new { id = physicians.Physicianid });
+                }
+                else
+                {
+                    return RedirectToAction("GetPhysicianProfile");
+                }
             }
             else
             {
@@ -204,6 +218,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
 
         }
+        [CustomAuthorization("Admin,Physician", "Physician")]
         public async Task<IActionResult> ResetPassword(int Physicianid, string Password)
         {
             ViewBag.RegionComboBox = await _combobox.RegionComboBox();
@@ -212,17 +227,32 @@ namespace HelloDocAdmin.Controllers.AdminSite
             if (data)
             {
                 _notyf.Success("Password Change");
-                return RedirectToAction("PhysicianProfile", new { id = Physicianid });
+                if (CV.LoggedUserRole() == "Admin")
+                {
+                    return RedirectToAction("PhysicianProfile", new { id = Physicianid });
+                }
+                else
+                {
+                    return RedirectToAction("GetPhysicianProfile");
+                }
+
             }
             else
             {
                 _notyf.Error("some problem");
-                return RedirectToAction("PhysicianProfile", new { id = Physicianid });
+                if (CV.LoggedUserRole() == "Admin")
+                {
+                    return RedirectToAction("PhysicianProfile", new { id = Physicianid });
+                }
+                else
+                {
+                    return RedirectToAction("GetPhysicianProfile");
+                }
             }
 
 
         }
-
+        [CustomAuthorization("Admin", "Physician")]
         public async Task<IActionResult> EditAdminInfo(PhysiciansViewModel physicians)
         {
             ViewBag.RegionComboBox = await _combobox.RegionComboBox();
@@ -232,17 +262,28 @@ namespace HelloDocAdmin.Controllers.AdminSite
             if (data)
             {
                 _notyf.Success("admin Info Updated Successfully...");
-                return RedirectToAction("PhysicianProfile", new { id = physicians.Physicianid });
+                if (CV.LoggedUserRole() == "Admin")
+                {
+                    return RedirectToAction("PhysicianProfile", new { id = physicians.Physicianid });
+                }
+                else
+                {
+                    return RedirectToAction("GetPhysicianProfile");
+                }
             }
             else
             {
                 _notyf.Error("some problem");
+
                 return View("../AdminSite/Physician/PhysicianAddEdit", physicians);
+
+
             }
 
 
 
         }
+        [CustomAuthorization("Admin", "Physician")]
         public async Task<IActionResult> EditMailBilling(PhysiciansViewModel physicians)
         {
             ViewBag.RegionComboBox = await _combobox.RegionComboBox();
@@ -252,7 +293,14 @@ namespace HelloDocAdmin.Controllers.AdminSite
             if (data)
             {
                 _notyf.Success("mail and billing Info Updated Successfully...");
-                return RedirectToAction("PhysicianProfile", new { id = physicians.Physicianid });
+                if (CV.LoggedUserRole() == "Admin")
+                {
+                    return RedirectToAction("PhysicianProfile", new { id = physicians.Physicianid });
+                }
+                else
+                {
+                    return RedirectToAction("GetPhysicianProfile");
+                }
             }
             else
             {
@@ -263,6 +311,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
 
         }
+        [CustomAuthorization("Admin", "Physician")]
         public async Task<IActionResult> EditProviderProfile(PhysiciansViewModel physicians)
         {
             ViewBag.RegionComboBox = await _combobox.RegionComboBox();
@@ -272,7 +321,14 @@ namespace HelloDocAdmin.Controllers.AdminSite
             if (data)
             {
                 _notyf.Success("mail and billing Info Updated Successfully...");
-                return RedirectToAction("PhysicianProfile", new { id = physicians.Physicianid });
+                if (CV.LoggedUserRole() == "Admin")
+                {
+                    return RedirectToAction("PhysicianProfile", new { id = physicians.Physicianid });
+                }
+                else
+                {
+                    return RedirectToAction("GetPhysicianProfile");
+                }
             }
             else
             {
@@ -283,6 +339,22 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
 
         }
+        [CustomAuthorization("Admin", "Physician")]
+        public async Task<IActionResult> EditProviderOnbording(Physicians physicians)
+        {
+            bool data = await _phyrepo.EditProviderOnbording(physicians, CV.LoggedUserID());
+            if (data)
+            {
+                _notyf.Success("Updated Onboarding Successfully...");
+                return RedirectToAction("PhysicianProfile", new { id = physicians.Physicianid });
+            }
+            else
+            {
+                TempData["Status"] = "some problem";
+                return RedirectToAction("PhysicianProfile", new { id = physicians.Physicianid });
+            }
+        }
+        [CustomAuthorization("Admin", "Physician")]
         public async Task<IActionResult> DeletePhysician(int PhysicianID)
         {
             ViewBag.RegionComboBox = await _combobox.RegionComboBox();
@@ -303,13 +375,15 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
 
         }
+
         #endregion
         #endregion
 
-        [CustomAuthorization("Admin")]
+
 
         #region Scheduling
         #region _CreateShift
+        [CustomAuthorization("Admin,Physician", "Scheduling")]
         public async Task<IActionResult> _CreateShift()
         {
             ViewBag.RegionComboBox = await _combobox.RegionComboBox();
@@ -318,6 +392,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
         #endregion
         #region _EditShift
+        [CustomAuthorization("Admin,Physician", "Scheduling")]
         public async Task<IActionResult> _EditShift(int id)
         {
             ViewBag.RegionComboBox = await _combobox.RegionComboBox();
@@ -328,6 +403,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
             return PartialView("../AdminSite/Physician/_EditShift", schedule);
         }
+        [CustomAuthorization("Admin", "Scheduling")]
         public async Task<IActionResult> ProviderOncall(int? regionId)
         {
             TempData["Status"] = TempData["Status"];
@@ -347,6 +423,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
         #region _CreateShiftPost
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [CustomAuthorization("Admin,Physician", "Scheduling")]
         public async Task<IActionResult> _CreateShiftPost(Schedule v)
         {
             if (await _phyrepo.CreateShift(v, CV.LoggedUserID()))
@@ -360,16 +437,17 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
 
         #endregion
-        [CustomAuthorization("Admin,Physician")]
-        public async Task<IActionResult> GetShiftForMonth(int? month)
+        [CustomAuthorization("Admin,Physician", "Scheduling")]
+        public async Task<IActionResult> GetShiftForMonth(int? month, int? regionId)
         {
-            var v = await _phyrepo.GetShift((int)month);
+            var v = await _phyrepo.GetShift((int)month, CV.LoggedUserID(), (int)regionId);
             return Json(v);
         }
 
         #region _EditShiftPost
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [CustomAuthorization("Admin,Physician", "Scheduling")]
         public async Task<IActionResult> _EditShiftPost(Schedule v, string submittt)
         {
             if (submittt == "Return" && await _phyrepo.UpdateStatusShift("" + v.Shiftid, CV.LoggedUserID()))
@@ -389,11 +467,11 @@ namespace HelloDocAdmin.Controllers.AdminSite
                 }
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Scheduling");
         }
         #endregion
         #region _DeleteShiftPost
-
+        [CustomAuthorization("Admin,Physician", "Scheduling")]
         public async Task<IActionResult> _DeleteShiftPost(int id)
         {
             if (await _phyrepo.DeleteShift("" + id, CV.LoggedUserID()))
@@ -409,28 +487,31 @@ namespace HelloDocAdmin.Controllers.AdminSite
         }
         #endregion
         #region PhysicianAll
-        public async Task<IActionResult> PhysicianAll(int? region)
+        [CustomAuthorization("Admin,Physician", "Scheduling")]
+        public async Task<IActionResult> PhysicianAll(int? regionId)
         {
 
 
             var v = await _phyrepo.PhysicianAll1();
 
-            //if (region != null)
-            //{
-            //    v = await _schedulingRepository.PhysicianByRegion(region);
+            if (regionId != null)
+            {
+                v = await _phyrepo.PhysicianByRegion1(regionId);
 
-            //}
+            }
 
             return Json(v);
         }
         #endregion
         #region Provider_on_call
+        [CustomAuthorization("Admin,Physician", "Scheduling")]
         public async Task<IActionResult> RequestedShift(int? regionId)
         {
             ViewBag.RegionComboBox = await _combobox.RegionComboBox();
 
             return View("../AdminSite/Physician/RequestedShift");
         }
+        [CustomAuthorization("Admin,Physician", "Scheduling")]
         public async Task<IActionResult> RequestedShiftData(int Region, int pagesize = 5, int currentpage = 1)
         {
             ViewBag.RegionComboBox = await _combobox.RegionComboBox();
@@ -439,6 +520,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
             return PartialView("../AdminSite/Physician/_RequestedshiftsList", data);
         }
         #endregion
+        [CustomAuthorization("Admin", "Scheduling")]
         public async Task<IActionResult> ApproveAll(string selectedids)
         {
             if (selectedids == null)
@@ -460,6 +542,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
                 return RedirectToAction("RequestedShift");
             }
         }
+        [CustomAuthorization("Admin", "Scheduling")]
         public async Task<IActionResult> DeleteAll(string selectedids)
         {
             if (selectedids == null)
@@ -482,5 +565,24 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
             return RedirectToAction("RequestedShift");
         }
+        #region PhysicianProfile
+        [CustomAuthorization("Admin,Physician", "Scheduling")]
+        public async Task<IActionResult> GetPhysicianProfile()
+        {
+
+            ViewBag.RegionComboBox = await _combobox.RegionComboBox();
+            ViewBag.userrolecombobox = await _combobox.RolelistProvider();
+
+            ViewData["PhysicianAccount"] = "Edit";
+
+            PhysiciansViewModel v = await _phyrepo.GetPhysicianByuserId(CV.LoggedUserID());
+            return View("../AdminSite/Physician/PhysicianAddEdit", v);
+
+
+
+
+        }
+        #endregion
+
     }
 }

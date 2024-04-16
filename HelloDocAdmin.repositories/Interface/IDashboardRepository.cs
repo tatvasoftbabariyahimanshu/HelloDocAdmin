@@ -20,8 +20,8 @@ namespace HelloDocAdmin.Repositories.Interface
         public bool SendLink(string firstname, string lastname, string email, string phonenumber);
         public bool CancelCase(int RequestID, string Note, string CaseTag, string id);
         public bool BlockCase(int RequestID, string Note);
-        public Task<Dashboarddatamodel> GetRequestsbyfilter(string Status, string search = "", int region = 0, int requesttype = 0, int currentpage = 1, int pagezise = 5);
-        public Task<Dashboarddatamodel> GetRequestsbyfilterForPhy(string Status, string PhyUserID, string search = "", int region = 0, int requesttype = 0, int currentpage = 1, int pagezise = 5);
+        public Task<Dashboarddatamodel> GetRequestsbyfilter(string Status, string search = "", int region = 0, int requesttype = 0, int currentpage = 1, int pagezise = 10);
+        public Task<Dashboarddatamodel> GetRequestsbyfilterForPhy(string Status, string PhyUserID, string search = "", int region = 0, int requesttype = 0, int currentpage = 1, int pagezise = 10);
 
     }
 }

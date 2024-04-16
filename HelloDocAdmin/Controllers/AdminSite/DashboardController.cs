@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HelloDocAdmin.Controllers.AdminSite
 {
-    [CustomAuthorization("Admin,Physician")]
+    [CustomAuthorization("Admin,Physician", "Dashboard")]
     public class DashboardController : Controller
     {
         private IDashboardRepository _dashboardrepo;
@@ -48,7 +48,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
         #endregion
 
 
-        public async Task<IActionResult> _SearchResult(string? Status, int currentpage = 1, int region = 0, int requesttype = 0, string search = "", int pagesize = 5)
+        public async Task<IActionResult> _SearchResult(string? Status, int currentpage = 1, int region = 0, int requesttype = 0, string search = "", int pagesize = 10)
         {
             ViewBag.RegionComboBox = await _combobox.RegionComboBox();
 

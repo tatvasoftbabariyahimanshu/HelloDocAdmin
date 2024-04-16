@@ -5,7 +5,9 @@
     form {
         height:300px;
     }
+
 </style>
+
 @model HelloDocAdmin.Entity.ViewModels.Authentication.LoginViewModel
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <div class="bg-image-dash"></div>
@@ -32,11 +34,11 @@
         <span asp-validation-for="Password" class="err-msg"></span>
     </div>
         <div class="d-grid mb-3">
-        <button class="btn button-login btn-primary border-0" type="submit" >Log in</button>
+        <button class="btn button-login btn-primary border-0 submit" id="submit" type="submit">Log in</button>
 
         </div>
         <a asp-action="ForgotPassword" asp-controller="Login" class="px-2 forgot-text">forgot password?</a>
-    <a asp-action="Index" asp-controller="Home" class="px-2  forgot-text text-end "><i class="fa fa-angle-double-left" aria-hidden="true"></i> Back</a>
+    <a asp-action="Index" asp-controller="Home" class="px-2  forgot-text text-end submit"><i class="fa fa-angle-double-left" aria-hidden="true"></i> Back</a>
     </form>
 <script>
     function Toggle1() {
@@ -53,4 +55,6 @@
             toggle.classList.add('fa-eye');
         }
     }
+   
+   
 </script>

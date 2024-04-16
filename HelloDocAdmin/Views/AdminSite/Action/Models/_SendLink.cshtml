@@ -5,7 +5,7 @@
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Send Mail To  Patient for Submitting request</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form asp-action="SendLink" asp-controller="Action" onsubmit="return onsmt_send()">
+            <form asp-action="SendLink" asp-controller="Action" onsubmit="return onsmt_send()" class="needs-validation" novalidate>
                 <div class="modal-body">
                     <div class="inputs-control ">
                         <input placeholder=" " name="firstname" id="firstname_send" class="input-outline w-100 inp edit-frm" type="text" >
@@ -27,7 +27,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class=" btn btn-info text-white">Confirm</button>
+                    <button type="submit" class=" btn btn-info text-white submit">Confirm</button>
                     <button type="button" class="btn btn-outline-info" data-bs-dismiss="modal">Close</button>
                 </div>
             </form>
@@ -77,10 +77,20 @@
             let errorMessage = "phone  is required.";
             displayErrorMessage(phone4, errorMessage);
             isValid = false;
+           
+        } if (Number.isNaN(phone4.value)) {
+            let errorMessage = " Plese Enter Valid Number";
+            displayErrorMessage(phone4, errorMessage);
+            isValid = false;
         }
+     
+        var validRegex = @Html.Raw("/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$/");
+
         let email_send = document.getElementById("email_send");
-        if (!email_send.value) {
-            let errorMessage = "Email is required.";
+        
+        
+            if (!email_send.value.match(validRegex)) {
+            let errorMessage = "Enter Valid Email  .";
             displayErrorMessage(email_send, errorMessage);
             isValid = false;
         }

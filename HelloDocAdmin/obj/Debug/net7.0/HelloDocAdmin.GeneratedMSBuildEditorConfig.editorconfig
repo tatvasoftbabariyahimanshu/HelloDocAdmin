@@ -32,6 +32,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5TaXRlXEFjY2Vzc1xVc2VyQWNjZXNzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Projects/Hello Doc Admin/HelloDocAdmin/Views/AdminSite/Access/_UserAccessList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5TaXRlXEFjY2Vzc1xfVXNlckFjY2Vzc0xpc3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Projects/Hello Doc Admin/HelloDocAdmin/Views/AdminSite/Action/CloseCase.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5TaXRlXEFjdGlvblxDbG9zZUNhc2UuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -184,8 +188,16 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5TaXRlXFBhcnRuZXJcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Projects/Hello Doc Admin/HelloDocAdmin/Views/AdminSite/Partner/_VendorList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5TaXRlXFBhcnRuZXJcX1ZlbmRvckxpc3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Projects/Hello Doc Admin/HelloDocAdmin/Views/AdminSite/Physician/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5TaXRlXFBoeXNpY2lhblxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/Hello Doc Admin/HelloDocAdmin/Views/AdminSite/Physician/PhysicianAdd.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5TaXRlXFBoeXNpY2lhblxQaHlzaWNpYW5BZGQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Projects/Hello Doc Admin/HelloDocAdmin/Views/AdminSite/Physician/PhysicianAddEdit.cshtml]
@@ -210,6 +222,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/Projects/Hello Doc Admin/HelloDocAdmin/Views/AdminSite/Physician/_EditShift.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5TaXRlXFBoeXNpY2lhblxfRWRpdFNoaWZ0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/Hello Doc Admin/HelloDocAdmin/Views/AdminSite/Physician/_PhysicianList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5TaXRlXFBoeXNpY2lhblxfUGh5c2ljaWFuTGlzdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Projects/Hello Doc Admin/HelloDocAdmin/Views/AdminSite/Physician/_RequestedshiftsList.cshtml]
@@ -252,6 +268,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5TaXRlXFJlY29yZHNcX2VtYWlsbG9nc2xpc3QuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Projects/Hello Doc Admin/HelloDocAdmin/Views/AdminSite/Records/_PatientRecordsList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5TaXRlXFJlY29yZHNcX1BhdGllbnRSZWNvcmRzTGlzdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Projects/Hello Doc Admin/HelloDocAdmin/Views/AdminSite/Records/_PatientsPartials.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5TaXRlXFJlY29yZHNcX1BhdGllbnRzUGFydGlhbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -266,6 +286,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/Projects/Hello Doc Admin/HelloDocAdmin/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/Hello Doc Admin/HelloDocAdmin/Views/Home/PageNotFound.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQYWdlTm90Rm91bmQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Projects/Hello Doc Admin/HelloDocAdmin/Views/Home/Privacy.cshtml]
@@ -290,6 +314,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/Projects/Hello Doc Admin/HelloDocAdmin/Views/PatientSite/PatientDashboard/_DashboardRequest.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF0aWVudFNpdGVcUGF0aWVudERhc2hib2FyZFxfRGFzaGJvYXJkUmVxdWVzdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/Hello Doc Admin/HelloDocAdmin/Views/PatientSite/PatientDashboard/_patientDashboardList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF0aWVudFNpdGVcUGF0aWVudERhc2hib2FyZFxfcGF0aWVudERhc2hib2FyZExpc3QuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Projects/Hello Doc Admin/HelloDocAdmin/Views/PatientSite/PatientDashboard/_ProfileDashboard.cshtml]
@@ -318,6 +346,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/Projects/Hello Doc Admin/HelloDocAdmin/Views/SendAgreement/Agreement.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VuZEFncmVlbWVudFxBZ3JlZW1lbnQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/Hello Doc Admin/HelloDocAdmin/Views/Shared/EncounterPDF.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVuY291bnRlclBERi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Projects/Hello Doc Admin/HelloDocAdmin/Views/Shared/Error.cshtml]

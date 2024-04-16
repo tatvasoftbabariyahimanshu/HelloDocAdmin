@@ -23,7 +23,7 @@
 
             </div>
             <div class="text-end">
-                <a asp-controller="Access" asp-action="Index"
+                <a onclick="history.back()"
                    class="btn btn-outline-info btn-back">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                          fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
@@ -41,7 +41,7 @@
                
                 <h6> <b>Details</b></h6>
             </div>
-             <form asp-action="PostRoleMenu" asp-controller="Access" id="resetpass" method="post" class="row g-3 mx-2 my-3 ">
+             <form asp-action="PostRoleMenu" asp-controller="Access" method="post"   class="row g-3 mx-2 my-3 ">
             <div class="row">
                 <div class="col-md-6 mt-2">
                     <div class=" mb-2">
@@ -72,15 +72,14 @@
                     </div>
 
                 </div>
-                    @if (ViewData["Page"] == null)
-                    {
+                   
 
-                        ViewData["Page"] = "save";
-                    }
-    
+                        
+                   
+
                                     </div>
             <div class="card-footer border-0 bg-transparent text-end">
-                    <button type="submit" class="btn btn-info text-white">@ViewData["Page"]</button>
+                    <button type="submit" class="btn btn-info text-white">Save</button>
                     <button type="reset" class="btn btn-danger btn-cancel">
                     cancel
                 </button>

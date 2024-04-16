@@ -23,7 +23,7 @@ namespace HelloDocAdmin.Repositories
             _email = email;
         }
         #region DashboardData
-        public ViewDashboardDataModel DashboardData(string UserID)
+        public ViewDashboardDataModel DashboardData(string UserID, int pagesize = 10, int currentpage = 1)
         {
             BitArray bt = new BitArray(1);
             bt.Set(0, false);
@@ -49,7 +49,21 @@ namespace HelloDocAdmin.Repositories
                 model.BirthDate = birthDate;
 
             }
+
+            IQueryable<Request> data = (from Req in _context.Requests
+
+                                        where Req.Userid == UserIDForRequest.Userid
+                                        select new Request()
+                                               );
+
+            model.TotalPage = (int)Math.Ceiling((double)data.Count() / pagesize);
+            data = data.Skip((currentpage - 1) * pagesize).Take(pagesize);
+
+
+
             List<Request> Request = _context.Requests.Where(r => r.Userid == UserIDForRequest.Userid).ToList();
+            model.pageSize = pagesize;
+            model.CurrentPage = currentpage;
             model.requests = Request;
             Dictionary<int, int> list = new Dictionary<int, int>();
             foreach (Request request in Request)
@@ -557,7 +571,6 @@ namespace HelloDocAdmin.Repositories
                     userToUpdate.Firstname = u.Firstname;
                     userToUpdate.Lastname = u.Lastname;
                     userToUpdate.Mobile = u.Mobile;
-                    userToUpdate.Email = u.Email;
                     userToUpdate.State = u.State;
                     userToUpdate.Street = u.Street;
                     userToUpdate.City = u.City;

@@ -99,7 +99,9 @@
                             <input placeholder=" " class="input-outline w-100 inp" type="text" id="ConfirmPassword">
                             <label class="inputs-lable">Confirm Password</label>
                         </div>
+                        <span class="err-msg2 err-msg"></span>
                     </div>
+                   
 
                 </div>
                 <h6 class="form-title mt-3">Patient Location</h6>
@@ -173,7 +175,7 @@
 
                 </div>
                 <div class="card-footer border-0 bg-transparent text-end">
-                    <button type="submit" class="btn btn-outline-info btn-submit">
+                        <button type="submit" id="save" class="btn btn-outline-info btn-submit submit">
                         submit
                     </button>
                         <button class="btn btn-outline-danger btn-cancel " type="reset">
@@ -186,7 +188,27 @@
     </div>
 
 </div>
+<script>
+    function checkPasswords() {
+        var password = document.getElementById("Password").value;
+        var confirmPassword = document.getElementById("ConfirmPassword").value;
+        var save = document.getElementById("save").value;
 
+        // Check if passwords match
+        if (password !== confirmPassword) {
+            save.disabled = true;
+            // Show error message
+            document.querySelector('.err-msg2').textContent = "Passwords do not match";
+        } else {
+            // Remove any existing error message
+            document.querySelector('.err-msg2').textContent = "";
+            save.disabled = false;
+        }
+    }
+
+    // Event listener to check passwords on input change
+    document.getElementById("ConfirmPassword").addEventListener("input", checkPasswords);
+</script>
 @*---ajax---*@
 
 <script>

@@ -6,10 +6,11 @@ using HelloDocAdmin.Entity.ViewModels;
 using HelloDocAdmin.Entity.ViewModels.AdminSite;
 using HelloDocAdmin.Repositories.Interface;
 using Microsoft.AspNetCore.Mvc;
+using Rotativa.AspNetCore;
 
 namespace HelloDocAdmin.Controllers.AdminSite
 {
-    [CustomAuthorization("Admin,Physician")]
+    [CustomAuthorization("Admin,Physician", "Dashboard")]
     public class ActionController : Controller
     {
         private IActionRepository _actionrepo;
@@ -68,6 +69,23 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
             return RedirectToAction("ViewDocuments", new { id });
         }
+        public IActionResult UploadDocumentsCC(int id, IFormFile? UploadFile)
+        {
+
+            bool sm = _dashboardrepo.UploadDoc(id, UploadFile);
+            if (sm)
+            {
+
+                _notyf.Success("Document Uploaded Successfully");
+            }
+            else
+            {
+                _notyf.Error("Document not Uploaded");
+
+            }
+
+            return RedirectToAction("ConcludeCare", new { requestID = id });
+        }
 
 
         public IActionResult EditCase(ViewCaseModel sm)
@@ -120,6 +138,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
 
         #region AssignProvider
+        [CustomAuthorization("Admin", "Dashboard")]
         public async Task<IActionResult> AssignProvider(int requestid, int ProviderId, string Notes)
         {
             if (await _dashboardrepo.AssignProvider(requestid, ProviderId, Notes, CV.LoggedUserID()))
@@ -135,6 +154,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
         }
         #endregion
         #region TransferProvider
+        [CustomAuthorization("Admin", "Dashboard")]
         public async Task<IActionResult> TransferProvider(int requestid, int ProviderId, string Notes)
         {
             if (await _actionrepo.TransferProvider(requestid, ProviderId, Notes, CV.LoggedUserID()))
@@ -150,6 +170,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
         }
         #endregion
         #region TransferProvider
+        [CustomAuthorization("Physician", "Dashboard")]
         public async Task<IActionResult> TransferToAdmin(int requestid, string Notes)
         {
             if (await _actionrepo.TransferToAdmin(requestid, Notes, CV.LoggedUserID()))
@@ -195,6 +216,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
         }
         #endregion
         #region _CancelCase
+        [CustomAuthorization("Admin", "Dashboard")]
         public IActionResult CancelCase(int RequestId, string Note, string CaseTag)
         {
 
@@ -214,6 +236,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
             return RedirectToAction("Index", "Dashboard");
 
         }
+        [CustomAuthorization("Admin", "Dashboard")]
         public IActionResult BlockCase(int RequestID, string Note)
         {
 
@@ -323,6 +346,26 @@ namespace HelloDocAdmin.Controllers.AdminSite
             return RedirectToAction("ViewDocuments", new { id = RequestID });
 
         }
+        public IActionResult DeleteDocCC(int RequestWiseFileID, int RequestID, string path)
+        {
+
+
+
+            bool data = _actionrepo.DeleteDoc(RequestWiseFileID);
+            if (data)
+            {
+
+
+                _notyf.Success("Documet Deleted Successfully");
+            }
+            else
+            {
+                _notyf.Error("Documet Not Deleted");
+            }
+
+            return RedirectToAction("ConcludeCare", new { requestID = RequestID });
+
+        }
         #endregion
         #region Delete Doc CloseCase
         public IActionResult DeleteDocCloseCase(int RequestWiseFileID, int RequestID)
@@ -344,6 +387,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
         }
         #endregion
         #region order_action
+        [CustomAuthorization("Admin,Physician", "SendOrder")]
         public async Task<IActionResult> Order(int id)
         {
 
@@ -363,6 +407,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
             return Task.FromResult<IActionResult>(Json(v));
         }
 
+
         public Task<IActionResult> SelectProfessionalByID(int VendorID)
         {
 
@@ -370,7 +415,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
             return Task.FromResult<IActionResult>(Json(v));
         }
 
-
+        [CustomAuthorization("Admin,Physician", "SendOrder")]
         public IActionResult SendOrder(ViewSendOrderModel sm)
         {
             if (ModelState.IsValid)
@@ -399,6 +444,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
         #endregion
         #region Clear_case
+        [CustomAuthorization("Admin", "Dashboard")]
         public IActionResult ClearCase(int RequestID)
         {
             bool sm = _actionrepo.ClearCase(RequestID, CV.LoggedUserID());
@@ -417,13 +463,14 @@ namespace HelloDocAdmin.Controllers.AdminSite
         #endregion
         #region Close Case
 
-
+        [CustomAuthorization("Admin", "Dashboard")]
         public IActionResult CloseCase(int RequestID)
         {
 
             ViewCloseCaseModel vc = _actionrepo.CloseCaseData(RequestID);
             return View("../AdminSite/Action/CloseCase", vc);
         }
+        [CustomAuthorization("Admin", "Dashboard")]
         public IActionResult CloseCaseUnpaid(int RequestID)
         {
             bool sm = _actionrepo.CloseCase(RequestID);
@@ -445,7 +492,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
         #region Accept Case
 
 
-
+        [CustomAuthorization("Physician", "Dashboard")]
         public IActionResult AcceptRequest(int requestID)
         {
             bool sm = _actionrepo.AcceptCase(requestID);
@@ -499,27 +546,36 @@ namespace HelloDocAdmin.Controllers.AdminSite
         #region ACTION-FINALIZE
         public IActionResult Finalize(EncounterViewModel model)
         {
-            bool data = _actionrepo.EditEncounterDetails(model, CV.LoggedUserID());
-            if (data)
+            if (ModelState.IsValid)
             {
-                bool final = _actionrepo.CaseFinalized(model, CV.LoggedUserID());
-                if (final)
+                bool data = _actionrepo.EditEncounterDetails(model, CV.LoggedUserID());
+                if (data)
                 {
-                    _notyf.Success("Case Is Finalized");
-                    return RedirectToAction("Index", "Dashboard", new { Status = "6" });
+                    bool final = _actionrepo.CaseFinalized(model, CV.LoggedUserID());
+                    if (final)
+                    {
+                        _notyf.Success("Case Is Finalized");
+                        return RedirectToAction("Index", "Dashboard", new { Status = "6" });
+                    }
+                    else
+                    {
+                        _notyf.Success("Case Is not Finalized");
+                        return View("../AdminSite/Action/Encounter", model);
+                    }
+
                 }
                 else
                 {
-                    _notyf.Success("Case Is not Finalized");
+                    _notyf.Error("Case Is not Finalized");
                     return View("../AdminSite/Action/Encounter", model);
                 }
-
             }
             else
             {
-                _notyf.Success("Case Is not Finalized");
+                _notyf.Error("Enter Valid data");
                 return View("../AdminSite/Action/Encounter", model);
             }
+
 
         }
         #endregion
@@ -558,6 +614,8 @@ namespace HelloDocAdmin.Controllers.AdminSite
         #endregion
 
 
+
+        [CustomAuthorization("Physician", "Dashboard")]
         public IActionResult HouseCall(int requestID)
         {
 
@@ -574,6 +632,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
             return RedirectToAction("Index", "Dashboard");
         }
+        [CustomAuthorization("Physician", "Dashboard")]
         public IActionResult Consult(int requestID)
         {
 
@@ -590,8 +649,59 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
             return RedirectToAction("Index", "Dashboard");
         }
+        public IActionResult ConcludeCare(int requestID)
+        {
 
 
 
+            ViewDocumentsModel sm = _dashboardrepo.ViewDocument(requestID);
+            return View("../AdminSite/Action/ConcludeCare", sm);
+
+
+        }
+        public IActionResult ConcludeCarePost(int RequestID, string Notes)
+        {
+            if (_actionrepo.IsCaseFinialized(RequestID))
+            {
+                _notyf.Error("Case Not Finalized , please finalized ...");
+                return RedirectToAction("ConcludeCare", new { requestID = RequestID });
+            }
+            else
+            {
+                bool data = _actionrepo.ConcludeCarePost(RequestID, Notes);
+                if (data)
+                {
+                    _notyf.Success("Case Concluded...");
+                }
+                else
+                {
+                    _notyf.Error("Case Not Concluded...");
+
+                }
+
+                return RedirectToAction("Index", "Dashboard");
+            }
+
+
+
+
+
+
+        }
+
+
+        public IActionResult GeneratePdf(int RequestID)
+        {
+
+            EncounterViewModel model = _actionrepo.GetEncounterDetailsByRequestID(RequestID);
+
+
+            return new ViewAsPdf("../Shared/EncounterPDF", model)
+            {
+                FileName = "EncounterReport.pdf",
+                PageSize = Rotativa.AspNetCore.Options.Size.A4,
+                PageMargins = { Left = 20, Right = 20 }
+            };
+        }
     }
 }

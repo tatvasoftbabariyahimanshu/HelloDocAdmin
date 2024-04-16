@@ -27,7 +27,7 @@
         }
         public enum AdminStatus
         {
-            Pending = 1, Active, NotActive
+            Pending = 2, Active = 1, NotActive = 3
 
         }
         public enum AccountType

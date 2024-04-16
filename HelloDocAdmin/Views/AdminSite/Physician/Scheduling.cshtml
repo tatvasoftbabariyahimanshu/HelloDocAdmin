@@ -1,4 +1,5 @@
 ﻿@using static HelloDocAdmin.Entity.ViewModels.AdminSite.Constant;
+@using HelloDocAdmin.Controllers.Authenticate;
 @{
     Layout = "~/Views/Shared/_DashboardLayout.cshtml";
     var enumData = from AdminStatus e in Enum.GetValues(typeof(AdminStatus))
@@ -52,7 +53,7 @@
     .sch-div-day {
         font-size: 1rem;
         text-align: center;
-        margin-top: 1px;
+      
       
         
         border: 0.5px solid #e6e6e6;
@@ -113,15 +114,22 @@
         </div>
 
         <div class="card-body">
-            <div class="d-flex justify-content-between">
+            <div class="d-flex justify-content-between align-items-center">
+              
                 <div class="dropdown text-start ">
-
-                    <select class="input-outline input-outline-select " name="region" data-allow-clear="true" tabindex="-1" onchange="myFunction()" id="Region" @*asp-items="@(new SelectList(ViewBag.RegionComboBox,"RegionId","RegionName"))"*@ data-control="select2" data-placeholder="Select Level">
-                        <option value="0">All Region</option>
-                    </select>
+                    <div class="input-control w-100 ">
+                        <select class="input-outline input-outline-select inp asp  inp-dis" onchange="MyChange()" id="fregion" data-allow-clear="true" tabindex="-1" asp-items="@(new SelectList(ViewBag.RegionComboBox, "RegionId", "RegionName"))" data-control="select2" data-placeholder="Select Level">
+                            <option value="0">Select Region</option>
+                        </select>
+                    </div>
+                 
+                       
+                   
                 </div>
-                <div class="text-end d-flex">
-
+                <div class="text-end d-flex ">
+                 @if(CV.LoggedUserRole()=="Admin")
+                    {
+                        
                     <a class="btn mx-2  btn-info text-white" asp-action="ProviderOncall" asp-controller="Physician">
                         <span class="addnewlg">
                             Provider on call
@@ -142,8 +150,9 @@
                             </svg>
                         </span>
                     </a>
+                    }
                     <a class="btn btn-info text-white js-stkModal-btn mx-2"
-                       data-form-id="formEdit_UMS"
+                       data-form-id="formEdit_UMS" data-modal-size="lg"
                        data-url='@Url.Action("_CreateShift", "Physician")'
                       >Add New Shift  </a>
 
@@ -190,18 +199,40 @@
                 <div class="d-flex">
                     <nav class="container-fluid pt-2">
                         <div class="nav  nav-underline text-white" id="nav-tab" role="tablist">
-                            <button class="btn btn-outline-info" id="day" data-bs-toggle="tab" onclick="showDaybutton()" data-bs-target="#nav-day"
-                                    type="button" role="tab" aria-controls="nav-home" aria-selected="false" tabindex="-1">
-                                Day
-                            </button>
-                            <button class="btn btn-outline-info " id="week" onclick="showweekbutton()" data-bs-toggle="tab" data-bs-target="#nav-week" type="button"
-                                    role="tab" aria-controls="nav-profile" aria-selected="false" tabindex="-1">
-                                Week
-                            </button>
-                            <button onclick="showmonthbutton()" class="btn btn-outline-info active " id="month" data-bs-toggle="tab" data-bs-target="#nav-month" type="button"
+                            @if (CV.LoggedUserRole() == "Admin")
+                            {
+                                <button class="btn btn-outline-info" id="day" data-bs-toggle="tab" onclick="showDaybutton()" data-bs-target="#nav-day"
+                                type="button" role="tab" aria-controls="nav-home" aria-selected="false" tabindex="-1">
+                                    Day
+                                </button>
+                                <button class="btn btn-outline-info " id="week" onclick="showweekbutton()" data-bs-toggle="tab" data-bs-target="#nav-week" type="button"
+                                role="tab" aria-controls="nav-profile" aria-selected="false" tabindex="-1">
+                                    Week
+                                </button>
+                                <button onclick="showmonthbutton()" class="btn btn-outline-info active " id="month" data-bs-toggle="tab" data-bs-target="#nav-month" type="button"
+                                role="tab" aria-controls="nav-month" aria-selected="true">
+                                    month
+                                </button>
+                            }
+                        else
+                            {
+                                <button class="btn btn-outline-info" id="day" data-bs-toggle="tab" style="opacity:0" disabled onclick="showDaybutton()" data-bs-target="#nav-day"
+                                type="button" role="tab" aria-controls="nav-home" aria-selected="false" tabindex="-1">
+                                    Day
+                                </button>
+                                <button class="btn btn-outline-info " id="week" onclick="showweekbutton()" disabled style="opacity:0" data-bs-toggle="tab" data-bs-target="#nav-week" type="button"
+                                role="tab" aria-controls="nav-profile" aria-selected="false" tabindex="-1">
+                                    Week
+                                </button>
+                                <button onclick="showmonthbutton()" class="btn btn-outline-info active "  style="opacity:0" id="month" data-bs-toggle="tab" data-bs-target="#nav-month" type="button"
                                     role="tab" aria-controls="nav-month" aria-selected="true">
                                 month
                             </button>
+                            }
+
+
+                           
+                           
 
                         </div>
                     </nav>
@@ -230,7 +261,18 @@
                 </div>
 
             </div>
-            <div class="tab-content mt-5 " id="nav-tabContent">
+            <div class="tab-content mt-5 position-relative " id="nav-tabContent">
+                 <div class="middle loding-div position-absolute  top-50" style="left:50%;z-index:99">
+                    <div class="bar bar1"></div>
+                    <div class="bar bar2"></div>
+                    <div class="bar bar3"></div>
+                    <div class="bar bar4"></div>
+                    <div class="bar bar5"></div>
+                    <div class="bar bar6"></div>
+                    <div class="bar bar7"></div>
+                    <div class="bar bar8"></div>
+                </div>
+
                 <div class="tab-pane fade  " id="nav-day" role="tabpanel" aria-labelledby="nav-day-tab">
                     <div id="daycontainer">
                         <div class="schedule">
@@ -399,21 +441,39 @@
         $('#Month_year').html(`<h3>${monthName} ${year}</h3>`);
     
     });
+
+
+   
     </script>
 
 <script>
+    var x=1;
+
+    const calendarDiv = document.getElementById('calendar');
+    const month_year = document.getElementById('Month_year');
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    getProviderList();
+    let currentDate1 = new Date();
+    const month1 = currentDate1.getMonth();
+
+    GetShiftForMonth(currentDate1.getFullYear(), month1 + 1);
+    document.getElementById("month").addEventListener("click", () => {
+        x = 1;
+    });
     var currentYear, currentMonth;
     let extractedDataArray = [];
     var providerList = [];
     function getProviderList() {
-        //var regionId = $('#fregion').val();
-        //if (regionId === '-1') {
-        var regionId = null; // Set regionId to null if the selected value is -1
-        //}
+        var regionId = $('#fregion').val();
+        if (regionId === '0') {
+            regionId = null; // Set regionId to null if the selected value is -1
+        }
+        console.log(regionId);
+        $(".loding-div").show();
         $.ajax({
             type: "GET",
             url: '@Url.Action("PhysicianAll", "Physician")',
-
+            data: { regionId: regionId },
             dataType: "json",
             success: function (response) {
 
@@ -466,12 +526,13 @@
                     providerList.push(providerObj);
                 });
 
-                //if (x == 2) {
-                //    $('#week').click();
+                if (x == 2) {
+                    $('#week').click();
 
-                //} else if (x == 3) {
-                //    $('#day').click();
-                //}
+                } else if (x == 3) {
+                    $('#day').click();
+                }
+                setTimeout(function () { $(".loding-div").hide() }, 500);
             },
             error: function () {
                 // Handle error
@@ -479,20 +540,18 @@
             }
         });
     }
-    getProviderList();
-    const calendarDiv = document.getElementById('calendar');
-    const month_year = document.getElementById('Month_year');
-    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-
-
-
+    
     function GetShiftForMonth(year, month) {
-
+        var regionId = $('#fregion').val();
+        $(".loding-div").show();
+        if (regionId === '-1') {
+            regionId = null; // Set regionId to null if the selected value is -1
+        }
 
         $.ajax({
             type: "GET",
             url: '@Url.Action("GetShiftForMonth", "Physician")',
-            data: { month: month },
+            data: { month: month, regionId: regionId },
             dataType: "json",
             success: function (response) {
                 extractedDataArray = []; // Clear the array
@@ -527,6 +586,8 @@
                         extractedDataArray.push(extractedData);
                     });
                     initializeCalendar(currentYear, currentMonth);
+                    x=1;
+                    setTimeout(function () { $(".loding-div").hide() }, 500);
                 } else {
                     generateCalendar(currentYear, currentMonth)
                     console.log("Response is null or empty.");
@@ -538,12 +599,27 @@
             }
         });
     }
+   
 
+
+
+    function MyChange() {
+       
+        
+        if (x == 2 || x == 3) {
+
+            getProviderList();
+        }else{
+
+        GetShiftForMonth(currentYear, currentMonth + 1);
+        }
+    }
+  
     document.getElementById("week").addEventListener("click", () => {
         x = 2;
-
+       
         $('#weekviewcontainer').show();
-
+       
 
         // Show week view
         // You can implement the week view logic here
@@ -818,13 +894,13 @@
 
 
     document.getElementById("day").addEventListener("click", () => {
-
-       
+        x = 3;
+    
 
         $('#daycontainer').show();
         $('#weekviewcontainer').hide();
 
-        x = 3;
+      
         // Define variables for current date and month
         let currentDate = new Date();
 
@@ -1013,12 +1089,12 @@
         // Update the employee schedules table
         updateEmployeeSchedules();
     });
+        
+ 
+
 
    
-    let currentDate1 = new Date();
-    const month1 = currentDate1.getMonth();
-
-    GetShiftForMonth(currentDate1.getFullYear(), month1 + 1);
+  
     function generateCalendar(year, month) {
         const monthName = months[month];
         $('#Month_year').html(`<h3>${monthName} ${year}</h3>`);
@@ -1030,7 +1106,7 @@
         // Clear previous calendar HTML
         calendarDiv.innerHTML = "";
 
-        let calendarHTML = `<div class="table-responsive"><table class="table table-bordered"><thead class="text-center"><tr>`;
+        let calendarHTML = `<div class="table-responsive"><table class="table table-bordered"><thead class="text-center m-0 p-0"><tr>`;
         calendarHTML += `<th scope="col" class="day-box">SUN</th><th scope="col" class="day-box">MON</th><th scope="col" class="day-box">TUE</th><th scope="col"  class="day-box">WED</th>`;
         calendarHTML += `<th scope="col" class="day-box">THU</th><th scope="col" class="day-box">FRI</th><th scope="col" class="day-box">SAT</th></tr></thead><tbody><tr>`;
         let dayCount = 0;
@@ -1081,8 +1157,8 @@
                 calendarHTML += `</tr><tr>`;
                 dayCount = 0;
             }
-            calendarHTML += `<td class="table-text  p-1">
-                            <div class="m-1 ${isToday} sch-div-day-month text-center">
+            calendarHTML += `<td class="table-text p-0 m-0">
+                            <div class=" ${isToday} sch-div-day-month text-center">
                             ${day}
                         </div>
                                 <div class="sch-div-month m-1 p-1 ">
@@ -1156,6 +1232,7 @@
             currentMonth = 11;
             currentYear -= 1;
         }
+     
         updateCalendar();
     });
 
@@ -1165,6 +1242,7 @@
             currentMonth = 0;
             currentYear += 1;
         }
+       
         updateCalendar();
     });
     $(document).on('click', '.view-all-btn', function () {

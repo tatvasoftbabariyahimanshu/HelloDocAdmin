@@ -27,5 +27,7 @@ namespace HelloDocAdmin.Repositories.Interface
 
         public Task<bool> TransferToAdmin(int RequestId, string notes, string id);
         public bool CreateNewRequestPost(ViewPatientRequest model, string id);
+        public bool ConcludeCarePost(int RequestID, string Notes);
+        public bool IsCaseFinialized(int RequestID);
     }
 }

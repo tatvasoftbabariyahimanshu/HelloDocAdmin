@@ -178,13 +178,13 @@
                     <div class="col-md-6">
                         <div class="mb-3 mt-2  d-flex">
                             <div class="inputs-control w-100 ">
-                                <input id="phone" asp-for="PhoneNumber" placeholder="Mobile" type="text" readonly class=" telephone input-outline w-100 inp align-items-center edit-frm" style="font-size: .9rem;height:4rem" />
+                                <input id="phone" asp-for="PhoneNumber" placeholder="Mobile" type="text" readonly class=" telephone input-outline w-100 inp align-items-center " style="font-size: .9rem;height:4rem" />
                                 <span asp-validation-for="PhoneNumber" class="err-msg"></span>
                             </div>
                           
-                            <button class="btn btn-outline-info mx-2 " style="height:4rem;width:4rem">
+                            <a class="btn btn-outline-info mx-2 " style="height:4rem;width:4rem">
                                 <i class="bi bi-telephone-fill"></i>
-                            </button>
+                            </a>
                            
                         </div>
 
@@ -193,7 +193,7 @@
                     <div class="col-md-6">
                         <div class=" mb-3 mt-2">
                             <div class="inputs-control ">
-                                <input placeholder=" " asp-for="Email" class="input-outline w-100 inp edit-frm" readonly type="text">
+                                <input placeholder=" " asp-for="Email" class="input-outline w-100 inp " readonly type="text">
                                 <label class="inputs-lable">Email</label>
                             </div>
                             <span asp-validation-for="Email" class="err-msg"></span>

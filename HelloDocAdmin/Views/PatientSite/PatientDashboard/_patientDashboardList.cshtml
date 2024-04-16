@@ -1,0 +1,175 @@
+﻿@using HelloDocAdmin.Entity.ViewModels.PatientSite
+@model ViewDashboardDataModel
+<div class="table-responsive dashboardTable">
+
+    <table class="table p-1" id="myTable">
+        <thead class="border-0">
+            <tr class="table-secondary">
+
+                <th scope="col" class="table-text-header px-3">
+                    Created
+                    Date
+                </th>
+                <th scope="col" class="table-text-header  px-3">Current Status</th>
+                <th scope="col" class="table-text-header   text-center">Document</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.requests)
+            {
+                <tr>
+                    <td class="table-text px-3">@item.Createddate</td>
+                    @if (@item.Status == 1)
+                    {
+                        <td class="table-text  px-3">New</td>
+                    }
+                    else if (@item.Status == 2)
+                    {
+                        <td class="table-text  px-3">Pending</td>
+                    }
+                    else if (@item.Status == 4 || @item.Status == 5)
+                    {
+                        <td class="table-text  px-3">Active</td>
+                    }
+                    else if (@item.Status == 6)
+                    {
+                        <td class="table-text  px-3">Conclude</td>
+                    }
+                    else if (@item.Status == 3 || @item.Status == 7 || @item.Status == 8)
+                    {
+                        <td class="table-text  px-3">To Close</td>
+                    }
+                    else
+                    {
+                        <td class="table-text  px-3">Unpaid</td>
+                    }
+
+
+                    <td class="table-text text-center ">
+                        @{
+                            if (Model.ids.ContainsKey(item.Requestid))
+                            {
+                                <a asp-action="Documents" asp-controller="PatientDashboard" asp-route-RequestID="@item.Requestid" class="btn btn-outline-info btn-sm document-button">
+                                    (@Model.ids[item.Requestid])
+
+                                    Document
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor"
+                                         class="bi bi-arrow-down-circle mx-1" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd"
+                                              d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293z" />
+                                    </svg>
+                                </a>
+                            }
+                            else
+                            {
+                                <a asp-action="Documents" asp-controller="PatientDashboard" asp-route-RequestID="@item.Requestid" class="btn btn-outline-info btn-sm document-button">
+                                    (0)
+
+                                    Document
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor"
+                                         class="bi bi-arrow-down-circle mx-1" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd"
+                                              d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293z" />
+                                    </svg>
+                                </a>
+                            }
+                        }
+                    </td>
+                </tr>
+            }
+
+
+
+
+        </tbody>
+    </table>
+</div>
+@if (Model.requests != null)
+{
+    <div class="accordion" id="accordionExample">
+        @foreach (var item in Model.requests)
+        {
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingOne">
+
+                    <button onclick="asp()" class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        <img src="~/images/icons/watch.svg" /> Created date:@item.Createddate
+                    </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                    <div class="accordion-body d-flex flex-column justify-content-between">
+                        <div class="mb-1"><img src="~/images/icons/person-badge.svg" />  Provider :</div>
+                        <div class="mb-2"><img src="~/images/icons/check-circle.svg" />  CurrentStatus : @item.Status</div>
+                        <div class="row justify-content-center">
+                            @{
+                                if (Model.ids.ContainsKey(item.Requestid))
+                                {
+                                    <a asp-action="Documents" asp-controller="PatientDashboard" asp-route-RequestID="@item.Requestid" class="btn btn-outline-info btn-sm document-button">
+                                        (@Model.ids[item.Requestid]) Document
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor"
+                                             class="bi bi-arrow-down-circle mx-1" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd"
+                                                  d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293z" />
+                                        </svg>
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a asp-action="Documents" asp-controller="PatientDashboard" asp-route-RequestID="@item.Requestid" class="btn btn-outline-info btn-sm document-button">
+                                        (0)
+
+                                        Document
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor"
+                                             class="bi bi-arrow-down-circle mx-1" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd"
+                                                  d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293z" />
+                                        </svg>
+                                    </a>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        }
+    </div>
+}
+<input type="hidden" id="crt-page" value="1" />
+<div class="d-flex justify-content-between">
+    <div class="text-start">
+
+        <select id="SizeSelect" asp-for="pageSize" onchange="getfilterdata()" class="form-select">
+            <option value="5" >5</option>
+            <option value="10" selected>10</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
+        </select>
+    </div>
+    <div class="text-center">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                @if (Model.CurrentPage > 1)
+                {
+                    <li class="page-item"><a class="page-link" onclick="getpage(@Model.CurrentPage-1); getfilterdata();">Previous</a></li>
+                }
+
+                @for (int i = Math.Max(1, (byte)Model.CurrentPage - 2); i <= Math.Min((byte)Model.TotalPage, (byte)Model.CurrentPage + 3); i++)
+                {
+                    <li class="page-item"><a class="page-link @(i == Model.CurrentPage ? "active" : "")" onclick="getpage(@i); getfilterdata();">@i</a></li>
+                }
+
+                @if (Model.CurrentPage < Model.TotalPage - 5)
+                {
+                    <li class="page-item disabled"><span class="page-link">...</span></li>
+                    <li class="page-item"><a class="page-link" onclick="getpage(@Model.TotalPage); getfilterdata();">@Model.TotalPage</a></li>
+                }
+                @if (Model.CurrentPage < Model.TotalPage)
+                {
+                    <li class="page-item"><a class="page-link" onclick="getpage(@Model.CurrentPage+1); getfilterdata();">Next</a></li>
+                }
+            </ul>
+        </nav>
+    </div>
+
+</div>

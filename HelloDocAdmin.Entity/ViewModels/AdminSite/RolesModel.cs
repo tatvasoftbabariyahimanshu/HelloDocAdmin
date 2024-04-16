@@ -17,6 +17,9 @@ namespace HelloDocAdmin.Entity.ViewModels.AdminSite
         public string? Createdby { get; set; } = null!;
 
 
+
+
+
         public DateTime? Createddate { get; set; }
 
 
@@ -26,7 +29,7 @@ namespace HelloDocAdmin.Entity.ViewModels.AdminSite
 
 
         public BitArray? Isdeleted { get; set; } = null!;
-        public List<Menu>? Menus { get; set; }
+
 
         public class Menu
         {

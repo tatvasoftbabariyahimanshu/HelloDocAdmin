@@ -49,7 +49,7 @@ namespace HelloDocAdmin.Entity.Data
             try
             {
                 var accountSid = "ACac095573552e7e6fbe9a93fe96518063";
-                var authToken = "184384da7e93841bf814c33c6d93f1dc";
+                var authToken = "da6e77815f28c427d0b7a9d57a26aeed";
                 TwilioClient.Init(accountSid, authToken);
 
                 var to = new PhoneNumber("+91" + tophone);

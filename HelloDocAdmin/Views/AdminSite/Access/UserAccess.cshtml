@@ -24,7 +24,7 @@
 
             </div>
             <div class="text-end">
-                <a asp-controller="Dashboard" asp-action="Index"
+                <a onclick="history.back()"
                    class="btn btn-outline-info btn-back">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                          fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
@@ -38,10 +38,12 @@
         <div class="card-body rounded shadow">
             <div class="d-flex justify-content-between">
                 <div class="dropdown text-start ">
-
-                    <select class="input-outline input-outline-select " data-allow-clear="true" tabindex="-1" id="accounttype" asp-items="@(new SelectList(enumData,"ID","Name"))" data-control="select2" data-placeholder="Select Level">
-                       
-                    </select>
+                    <div class="input-control w-100 ">
+                        <select class="input-outline input-outline-select inp asp  inp-dis" onchange="getfilterdata()" id="accounttype" data-allow-clear="true" tabindex="-1" asp-items="@(new SelectList(enumData,"ID","Name"))" data-control="select2" data-placeholder="Select Level">
+                            <option value="0">Account Type</option>
+                        </select>
+                    </div>
+                   
                 </div>
                 <div class="text-end d-flex">
 
@@ -71,59 +73,30 @@
                     
                 </div>
             </div>
-            <div class="middle loding-div position-absolute  top-20" style="left:50%;">
-                <div class="bar bar1"></div>
-                <div class="bar bar2"></div>
-                <div class="bar bar3"></div>
-                <div class="bar bar4"></div>
-                <div class="bar bar5"></div>
-                <div class="bar bar6"></div>
-                <div class="bar bar7"></div>
-                <div class="bar bar8"></div>
+            <div class="position-relative ">
+
+
+
+
+                <div class="middle loding-div position-absolute  top-50" style="left:50%;z-index:99">
+                    <div class="bar bar1"></div>
+                    <div class="bar bar2"></div>
+                    <div class="bar bar3"></div>
+                    <div class="bar bar4"></div>
+                    <div class="bar bar5"></div>
+                    <div class="bar bar6"></div>
+                    <div class="bar bar7"></div>
+                    <div class="bar bar8"></div>
+                </div>
+
+
+                <div id="SearchResult">
+                </div>
+
+
             </div>
 
-            <div class="table-responsive">
-                <table id="myTable" class="table table-responsive mt-3 p-3">
-                    <thead class=" text-start tablehead">
-                        <tr>
-                            <th scope="col">Account Type</th>
-                            <th scope="col">Account POC</th>
-                            <th scope="col">Phone</th>
-                            <th scope="col">Open Request</th>
-                            <th scope="col">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody class="table-group-divider mx-5">
-                       
-                        @foreach (var item in Model)
-                        {
-                            <tr class="@Enum.GetName(typeof(AccountType), item.accounttype)">
-                                <td class="mobile-hide table-text" data-label="Current Status"> @Enum.GetName(typeof(AccountType), item.accounttype)</td>
-                                <td scope="row" data-label="Created Date" class="table-text"> @item.FirstName</td>
-                                <td scope="row" data-label="Created Date" class="table-text"> @item.Mobile</td>
-                               @* <td scope="row" data-label="Created Date">  @Enum.GetName(typeof(AdminStatus), item.status)</td>*@
-                                <td scope="row" data-label="Created Date" class="table-text"> @item.status Request</td>
-                                <td class="mobile-hide" data-label="Document">
-                                    @if (item.isAdmin)
-                                    {
-                                        <a asp-action="AdminProfile" asp-controller="Access" asp-route-id="@item.aspnetuserid" class="btn btn-outline-info btn-sm document-button mx-1">
-                                            Edit 
-                                        </a>
-                                    }
-                                    else
-                                    {
-                                        <a asp-action="PhysicianProfile" asp-controller="Physician" asp-route-id="@item.UserID" class="btn btn-outline-info btn-sm document-button mx-1">
-                                            Edit 
-                                        </a>
-                                    }
-
-                                </td>
-                            </tr>
-                        }
-
-                    </tbody>
-                </table>
-            </div>
+          
         </div>
     </div>
 
@@ -131,15 +104,7 @@
 <script>
     setTimeout(function () { $(".loding-div").hide() }, 500);
 </script>
-<script>
-    $(document).ready(function () {
-        $('#myTable')
-            .dataTable({
-                "responsive": true,
 
-            });
-    });
-</script>
 <script type="text/javascript">
 
     $('#accounttype').on('change', function () {
@@ -170,4 +135,50 @@
     
 
    
+</script>
+<script>
+    $(function () {
+
+        getfilterdata();
+
+
+    });
+</script>
+<script>
+
+    function getfilterdata() {
+        $(".loding-div").show();
+        var accounttype = $('#accounttype').val();
+      
+
+        var pagesize = $('#SizeSelect').val();
+        var currentpage = $('#crt-page').val();
+
+        $.ajax({
+            url: "/Access/AccessList",
+            type: "GET",
+            data: {
+               
+                accounttype: accounttype,
+                currentpage: currentpage,
+                pagesize: pagesize
+            },
+            success: function (response) {
+                console.log(response);
+                setTimeout(function () { $(".loding-div").hide() }, 500);
+                $('#SearchResult').html(response);
+            },
+            error: function () {
+                $(".loding-div").hide();
+                alert("error");
+            }
+        });
+    }
+
+    function getpage(index) {
+        $("#crt-page").val(index);
+
+    }
+
+
 </script>

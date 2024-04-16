@@ -72,7 +72,7 @@ namespace HelloDocAdmin.Repositories
                 else
                 {
 
-                    Admin DataForChange = _context.Admins.FirstOrDefault(e => e.Aspnetuserid == "787a81c3-1917-41d9-abc6-2e3536b8906c");
+                    Admin DataForChange = _context.Admins.FirstOrDefault(e => e.Aspnetuserid == id);
 
                     if (DataForChange != null)
                     {
@@ -131,7 +131,7 @@ namespace HelloDocAdmin.Repositories
                 else
                 {
 
-                    Admin DataForChange = _context.Admins.FirstOrDefault(e => e.Aspnetuserid == "787a81c3-1917-41d9-abc6-2e3536b8906c");
+                    Admin DataForChange = _context.Admins.FirstOrDefault(e => e.Aspnetuserid == id);
 
                     if (DataForChange != null)
                     {
@@ -170,7 +170,7 @@ namespace HelloDocAdmin.Repositories
 
             string hashedPassword = hasher.HashPassword(null, password);
 
-            var aspnetuser = _context.Aspnetusers.FirstOrDefault(e => e.Id == "787a81c3-1917-41d9-abc6-2e3536b8906c");
+            var aspnetuser = _context.Aspnetusers.FirstOrDefault(e => e.Id == id);
 
             if (aspnetuser != null)
             {

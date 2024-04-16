@@ -114,8 +114,8 @@
                                 }
                                 @if (loginRepository.isAccessGranted((int)CV.LoggedUserRoleID(), "PatientRecord"))
                                 {
-                                    
-                                <li><a class="dropdown-item @(path.EndsWith("/PatientRecord") ? "active" : "") " asp-action="PatientRecord" asp-controller="Records"> Patient Recoard </a></li>
+
+                                    <li><a class="dropdown-item @(path.EndsWith("/PatientRecord") || path.EndsWith("/PatientRecords")  ? "active" : "") " asp-action="PatientRecord" asp-controller="Records"> Patient Recoard </a></li>
                                 }
                                 @if (loginRepository.isAccessGranted((int)CV.LoggedUserRoleID(), "SMSLogs"))
                                 {
@@ -142,34 +142,41 @@
         {
 
 
-               <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="nav navbar-nav nav-underline" id="nav-tab">
 
-                
-                    <li class="nav-item">
-                        <a class="nav-link   @(path.Equals("/Dashboard") || path.StartsWith("/Action")  ? "active" : "" )" asp-action="Index" asp-controller="Dashboard">
-                            Dashboard
-                        </a>
-                    </li>
+                    @if (loginRepository.isAccessGranted((int)CV.LoggedUserRoleID(), "Dashboard"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link   @(path.Equals("/Dashboard") || path.StartsWith("/Action")  ? "active" : "" )" asp-action="Index" asp-controller="Dashboard">
+                                Dashboard
+                            </a>
+                        </li>
+                    }
                     @if (loginRepository.isAccessGranted((int)CV.LoggedUserRoleID(), "Invoicing"))
                     {
                         <li class="nav-item">
-                            <a class="nav-link @(path.EndsWith("/MyProfile") ? "active" : "")" asp-action="Index" asp-controller="MyProfile">
+                            <a class="nav-link @(path.EndsWith("Invoicing") ? "active" : "")" asp-action="Index" asp-controller="MyProfile">
                                 Invoicing
                             </a>
                         </li>
                     }
-
-                    <li class="nav-item">
-                        <a class="nav-link @(path.StartsWith("/Vendor") ? "active" : "")" asp-action="Index" asp-controller="Vendor">
-                            My Profile
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link @(path.StartsWith("/Vendor") ? "active" : "")" asp-action="Index" asp-controller="Vendor">
-                            My Scheduling
-                        </a>
-                    </li>
+                    @if (loginRepository.isAccessGranted((int)CV.LoggedUserRoleID(), "MyProfile"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link @(path.EndsWith("/GetPhysicianProfile") ? "active" : "")" asp-action="GetPhysicianProfile" asp-controller="Physician">
+                                My Profile
+                            </a>
+                        </li>
+                    }
+                    @if (loginRepository.isAccessGranted((int)CV.LoggedUserRoleID(), "Scheduling"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link @(path.EndsWith("/Scheduling") ? "active" : "")" asp-action="Scheduling" asp-controller="Physician">
+                                My Scheduling
+                            </a>
+                        </li>
+                    }
 
 
                 </ul>

@@ -6,6 +6,7 @@ using HelloDocAdmin.Entity.ViewModels.AdminSite;
 using HelloDocAdmin.Repositories.Interface;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using System.Collections;
 
 namespace HelloDocAdmin.Repositories
@@ -22,42 +23,62 @@ namespace HelloDocAdmin.Repositories
         }
         #region Index List
 
-        public async Task<List<PhysiciansViewModel>> PhysicianAll()
+        public async Task<PhysiciansData> PhysicianAll(string? ProviderName, int? RegionID, int pagesize = 5, int currentpage = 1)
         {
             BitArray bt = new BitArray(1);
             bt.Set(0, false);
-            List<PhysiciansViewModel> pl = (from r in _context.Physicians
-                                            join Notifications in _context.Physiciannotifications
-                                            on r.Physicianid equals Notifications.Physicianid into aspGroup
-                                            from nof in aspGroup.DefaultIfEmpty()
-                                            join role in _context.Roles
-                                            on r.Roleid equals role.Roleid into roleGroup
-                                            from roles in roleGroup.DefaultIfEmpty()
-                                            where r.Isdeleted == bt
-                                            select new PhysiciansViewModel
-                                            {
-                                                notificationid = nof.Id,
-                                                Createddate = r.Createddate,
-                                                Physicianid = r.Physicianid,
-                                                Address1 = r.Address1,
-                                                Address2 = r.Address2,
-                                                Adminnotes = r.Adminnotes,
-                                                Altphone = r.Altphone,
-                                                Businessname = r.Businessname,
-                                                Businesswebsite = r.Businesswebsite,
-                                                City = r.City,
+            PhysiciansData dm = new PhysiciansData();
+            IQueryable<PhysiciansViewModel> data = (from r in _context.Physicians
+                                                    join Notifications in _context.Physiciannotifications
+                                                    on r.Physicianid equals Notifications.Physicianid into aspGroup
+                                                    from nof in aspGroup.DefaultIfEmpty()
+                                                    join role in _context.Roles
+                                                    on r.Roleid equals role.Roleid into roleGroup
+                                                    from roles in roleGroup.DefaultIfEmpty()
+                                                    where r.Isdeleted == bt
+                                                    select new PhysiciansViewModel
+                                                    {
+                                                        notificationid = nof.Id,
+                                                        Createddate = r.Createddate,
+                                                        Physicianid = r.Physicianid,
+                                                        Address1 = r.Address1,
+                                                        Address2 = r.Address2,
+                                                        Adminnotes = r.Adminnotes,
+                                                        Altphone = r.Altphone,
+                                                        Businessname = r.Businessname,
+                                                        Businesswebsite = r.Businesswebsite,
+                                                        City = r.City,
+                                                        Regionid = (int)r.Regionid,
 
-                                                Firstname = r.Firstname,
-                                                Lastname = r.Lastname,
-                                                notification = nof.Isnotificationstopped,
-                                                role = roles.Name,
-                                                Status = r.Status,
-                                                Email = r.Email
+                                                        Firstname = r.Firstname,
+                                                        Lastname = r.Lastname,
+                                                        notification = nof.Isnotificationstopped,
+                                                        role = roles.Name,
+                                                        Status = r.Status,
+                                                        Email = r.Email
 
-                                            })
-                                        .ToList();
+                                                    });
 
-            return pl;
+
+            if (RegionID != 0)
+            {
+                data = data.Where(r => r.Regionid == RegionID);
+            }
+            if (!ProviderName.IsNullOrEmpty())
+
+            {
+                data = data.Where(r => r.Firstname.ToLower().Contains(ProviderName.ToLower()));
+            }
+            dm.TotalPage = (int)Math.Ceiling((double)data.Count() / pagesize);
+            data = data.Skip((currentpage - 1) * pagesize).Take(pagesize);
+
+
+            dm.List = data.ToList();
+            dm.pageSize = pagesize;
+            dm.CurrentPage = currentpage;
+            return dm;
+
+
 
         }
         #endregion
@@ -418,13 +439,13 @@ namespace HelloDocAdmin.Repositories
                         if (vm.PhotoFile != null)
                         {
                             DataForChange.Photo = vm.PhotoFile != null ? vm.Firstname + "-" + DateTime.Now.ToString("yyyyMMddhhmm") + "-Photo." + Path.GetExtension(vm.PhotoFile.FileName).Trim('.') : null;
-                            CM.UploadProviderDoc(vm.PhotoFile, vm.Physicianid, vm.Firstname + "-" + DateTime.Now.ToString("yyyyMMddhhmm") + "-Photo." + Path.GetExtension(vm.PhotoFile.FileName).Trim('.'));
+                            CM.UploadProviderDoc(vm.PhotoFile, (int)vm.Physicianid, vm.Firstname + "-" + DateTime.Now.ToString("yyyyMMddhhmm") + "-Photo." + Path.GetExtension(vm.PhotoFile.FileName).Trim('.'));
 
                         }
                         if (vm.SignatureFile != null)
                         {
                             DataForChange.Signature = vm.SignatureFile != null ? vm.Firstname + "-" + DateTime.Now.ToString("yyyyMMddhhmm") + "-Signature.png" : null;
-                            CM.UploadProviderDoc(vm.SignatureFile, vm.Physicianid, vm.Firstname + "-" + DateTime.Now.ToString("yyyyMMddhhmm") + "-Signature.png");
+                            CM.UploadProviderDoc(vm.SignatureFile, (int)vm.Physicianid, vm.Firstname + "-" + DateTime.Now.ToString("yyyyMMddhhmm") + "-Signature.png");
                         }
 
 
@@ -473,7 +494,7 @@ namespace HelloDocAdmin.Repositories
 
 
                     BitArray bt = new BitArray(1);
-                    bt.Set(0, true);
+                    bt.Set(0, false);
 
 
 
@@ -514,8 +535,12 @@ namespace HelloDocAdmin.Repositories
                     Physician.Adminnotes = physiciandata.Adminnotes;
                     Physician.Status = physiciandata.Status;
 
+                    if (physiciandata.PhotoFile != null)
+                    {
 
-                    Physician.Photo = physiciandata.PhotoFile != null ? Physician.Firstname + "-" + DateTime.Now.ToString("yyyyMMddhhmm") + "-Photo." + Path.GetExtension(physiciandata.PhotoFile.FileName).Trim('.') : null;
+                        Physician.Photo = physiciandata.PhotoFile != null ? Physician.Firstname + "-" + DateTime.Now.ToString("yyyyMMddhhmm") + "-Photo." + Path.GetExtension(physiciandata.PhotoFile.FileName).Trim('.') : null;
+                    }
+
                     Physician.Signature = physiciandata.SignatureFile != null ? Physician.Firstname + "-" + DateTime.Now.ToString("yyyyMMddhhmm") + "-Signature.png" : null;
 
 
@@ -663,13 +688,97 @@ namespace HelloDocAdmin.Repositories
 
         }
         #endregion
+        #region PhysicianByRegion
+        public async Task<List<Schedule>> PhysicianByRegion1(int? region)
+        {
 
+            List<Schedule> ScheduleDetails = new List<Schedule>();
+            List<Physicians> pl = await (
+                                        from pr in _context.Physicianregions
+
+                                        join ph in _context.Physicians
+                                         on pr.Physicianid equals ph.Physicianid into rGroup
+                                        from r in rGroup.DefaultIfEmpty()
+
+                                        join Notifications in _context.Physiciannotifications
+                                         on r.Physicianid equals Notifications.Physicianid into aspGroup
+                                        from nof in aspGroup.DefaultIfEmpty()
+
+                                        join role in _context.Roles
+                                        on r.Roleid equals role.Roleid into roleGroup
+                                        from roles in roleGroup.DefaultIfEmpty()
+
+                                        where pr.Regionid == region && r.Isdeleted == new BitArray(1)
+                                        select new Physicians
+                                        {
+                                            Createddate = r.Createddate,
+                                            Physicianid = r.Physicianid,
+                                            Address1 = r.Address1,
+                                            Address2 = r.Address2,
+                                            Adminnotes = r.Adminnotes,
+                                            Altphone = r.Altphone,
+                                            Businessname = r.Businessname,
+                                            Businesswebsite = r.Businesswebsite,
+                                            City = r.City,
+                                            Firstname = r.Firstname,
+                                            Lastname = r.Lastname,
+                                            notification = nof.Isnotificationstopped,
+                                            role = roles.Name,
+                                            Status = r.Status,
+                                            Email = r.Email,
+                                            Photo = r.Photo
+
+                                        })
+                                        .ToListAsync();
+
+
+            foreach (Physicians schedule in pl)
+            {
+                List<Schedule> ss = await (from s in _context.Shifts
+                                           join pd in _context.Physicians
+                                           on s.Physicianid equals pd.Physicianid
+                                           join sd in _context.Shiftdetails
+                                           on s.Shiftid equals sd.Shiftid into shiftGroup
+                                           from sd in shiftGroup.DefaultIfEmpty()
+                                           join rg in _context.Regions
+                                           on sd.Regionid equals rg.Regionid
+                                           where s.Physicianid == schedule.Physicianid && sd.Isdeleted == new BitArray(1) && sd.Regionid == region
+                                           select new Schedule
+                                           {
+                                               RegionName = rg.Abbreviation,
+                                               Shiftid = sd.Shiftdetailid,
+                                               Status = sd.Status,
+                                               Starttime = sd.Starttime,
+                                               ShiftDate = sd.Shiftdate,
+                                               Endtime = sd.Endtime,
+                                               PhysicianName = pd.Firstname + ' ' + pd.Lastname,
+                                           })
+                                             .ToListAsync();
+
+                Schedule temp = new Schedule();
+                temp.PhysicianName = schedule.Firstname + ' ' + schedule.Lastname;
+                temp.PhysicianPhoto = schedule.Photo;
+                temp.Physicianid = (int)schedule.Physicianid;
+                temp.DayList = ss;
+                ScheduleDetails.Add(temp);
+            }
+
+            return ScheduleDetails;
+
+        }
+        #endregion
 
         #region Create Shift
         public async Task<bool> CreateShift(Schedule s, string id)
         {
             try
             {
+                if (_context.Physicians.Any(e => e.Aspnetuserid == id))
+                {
+                    s.Physicianid = _context.Physicians.FirstOrDefault(e => e.Aspnetuserid == id).Physicianid;
+                }
+
+
                 Shift shift = new Shift();
                 shift.Physicianid = s.Physicianid;
                 shift.Repeatupto = s.Repeatupto;
@@ -682,17 +791,6 @@ namespace HelloDocAdmin.Repositories
                 _context.SaveChanges();
 
 
-                Shiftdetail sd = new Shiftdetail();
-                sd.Shiftid = shift.Shiftid;
-                sd.Shiftdate = new DateTime(s.Startdate.Year, s.Startdate.Month, s.Startdate.Day);
-                sd.Starttime = s.Starttime;
-                sd.Endtime = s.Endtime;
-                sd.Regionid = s.Regionid;
-                sd.Status = s.Status;
-                sd.Isdeleted = new BitArray(1);
-                sd.Isdeleted[0] = false;
-                _context.Shiftdetails.Add(sd);
-                _context.SaveChanges();
                 if (s.checkWeekday != null)
                 {
 
@@ -736,7 +834,23 @@ namespace HelloDocAdmin.Repositories
                     }
 
                 }
+                else
+                {
 
+
+
+                    Shiftdetail sd = new Shiftdetail();
+                    sd.Shiftid = shift.Shiftid;
+                    sd.Shiftdate = new DateTime(s.Startdate.Year, s.Startdate.Month, s.Startdate.Day);
+                    sd.Starttime = s.Starttime;
+                    sd.Endtime = s.Endtime;
+                    sd.Regionid = s.Regionid;
+                    sd.Status = s.Status;
+                    sd.Isdeleted = new BitArray(1);
+                    sd.Isdeleted[0] = false;
+                    _context.Shiftdetails.Add(sd);
+                    _context.SaveChanges();
+                }
 
                 return true;
             }
@@ -750,42 +864,75 @@ namespace HelloDocAdmin.Repositories
 
 
         #region Get Shift By Month
-        public async Task<List<Schedule>> GetShift(int month)
+        public async Task<List<Schedule>> GetShift(int month, string id, int regionId = 3)
         {
             BitArray bt = new BitArray(1);
             bt.Set(0, false);
+            var data = _context.Physicians.FirstOrDefault(E => E.Aspnetuserid == id);
+
+
             List<Schedule> ScheduleDetails = new List<Schedule>();
             var uniqueDates = await _context.Shiftdetails
-                            .Where(sd => sd.Shiftdate.Month == month)
+                            .Where(sd => sd.Shiftdate.Month == month && sd.Isdeleted == new BitArray(1) && (regionId == 0 || regionId == -1 || sd.Regionid == regionId))
                             .Select(sd => sd.Shiftdate.Date)
                             .Distinct()
                             .ToListAsync();
             foreach (DateTime schedule in uniqueDates)
             {
 
+                if (data == null)
+                {
+                    List<Schedule> ss = await (from s in _context.Shifts
+                                               join pd in _context.Physicians
+                                               on s.Physicianid equals pd.Physicianid
+                                               join sd in _context.Shiftdetails
+                                               on s.Shiftid equals sd.Shiftid into shiftGroup
+                                               from sd in shiftGroup.DefaultIfEmpty()
+                                               where sd.Shiftdate == schedule && sd.Isdeleted == bt && sd.Shiftdate.Month == month
 
 
-                List<Schedule> ss = await (from s in _context.Shifts
-                                           join pd in _context.Physicians
-                                           on s.Physicianid equals pd.Physicianid
-                                           join sd in _context.Shiftdetails
-                                           on s.Shiftid equals sd.Shiftid into shiftGroup
-                                           from sd in shiftGroup.DefaultIfEmpty()
-                                           where sd.Shiftdate == schedule && sd.Isdeleted == bt && sd.Shiftdate.Month == month
-                                           select new Schedule
-                                           {
-                                               Shiftid = sd.Shiftdetailid,
-                                               Status = sd.Status,
-                                               Starttime = sd.Starttime,
-                                               Endtime = sd.Endtime,
-                                               PhysicianName = pd.Firstname + ' ' + pd.Lastname,
-                                           })
-                                              .ToListAsync();
+                                               select new Schedule
+                                               {
+                                                   Shiftid = sd.Shiftdetailid,
+                                                   Status = sd.Status,
+                                                   Starttime = sd.Starttime,
+                                                   Endtime = sd.Endtime,
+                                                   PhysicianName = pd.Firstname + ' ' + pd.Lastname,
+                                               })
+                                             .ToListAsync();
+                    Schedule temp = new Schedule();
+                    temp.ShiftDate = schedule;
+                    temp.DayList = ss;
+                    ScheduleDetails.Add(temp);
+                }
+                else
+                {
+                    List<Schedule> ss = await (from s in _context.Shifts
+                                               join pd in _context.Physicians
+                                               on s.Physicianid equals pd.Physicianid
+                                               join sd in _context.Shiftdetails
+                                               on s.Shiftid equals sd.Shiftid into shiftGroup
+                                               from sd in shiftGroup.DefaultIfEmpty()
+                                               where sd.Shiftdate == schedule && sd.Isdeleted == bt && sd.Shiftdate.Month == month && pd.Aspnetuserid == id
 
-                Schedule temp = new Schedule();
-                temp.ShiftDate = schedule;
-                temp.DayList = ss;
-                ScheduleDetails.Add(temp);
+
+                                               select new Schedule
+                                               {
+                                                   Shiftid = sd.Shiftdetailid,
+                                                   Status = sd.Status,
+                                                   Starttime = sd.Starttime,
+                                                   Endtime = sd.Endtime,
+                                                   PhysicianName = pd.Firstname + ' ' + pd.Lastname,
+                                               })
+                                             .ToListAsync();
+                    Schedule temp = new Schedule();
+                    temp.ShiftDate = schedule;
+                    temp.DayList = ss;
+                    ScheduleDetails.Add(temp);
+                }
+
+
+
             }
 
 
@@ -1156,5 +1303,150 @@ namespace HelloDocAdmin.Repositories
 
             return dm;
         }
+        #region GetPhysicianById
+        public async Task<PhysiciansViewModel> GetPhysicianByuserId(string id)
+        {
+
+
+            PhysiciansViewModel pl = await (from r in _context.Physicians
+                                            join Aspnetuser in _context.Aspnetusers
+                                            on r.Aspnetuserid equals Aspnetuser.Id into aspGroup
+                                            from asp in aspGroup.DefaultIfEmpty()
+
+                                            join Notifications in _context.Physiciannotifications
+                                    on r.Physicianid equals Notifications.Physicianid into PhyNGroup
+                                            from nof in PhyNGroup.DefaultIfEmpty()
+                                            join role in _context.Roles
+                                            on r.Roleid equals role.Roleid into roleGroup
+                                            from roles in roleGroup.DefaultIfEmpty()
+                                            where r.Aspnetuserid == id
+
+                                            select new PhysiciansViewModel
+                                            {
+                                                UserName = asp.Username,
+                                                Roleid = (int)r.Roleid,
+                                                Status = r.Status,
+                                                notificationid = nof.Id,
+                                                Createddate = r.Createddate,
+                                                Physicianid = r.Physicianid,
+                                                Address1 = r.Address1,
+                                                Address2 = r.Address2,
+                                                Adminnotes = r.Adminnotes,
+                                                Altphone = r.Altphone,
+                                                Businessname = r.Businessname,
+                                                Businesswebsite = r.Businesswebsite,
+                                                City = r.City,
+                                                Regionid = (int)r.Regionid,
+                                                Mobile = r.Mobile,
+                                                Zipcode = r.Zip,
+                                                Medicallicense = r.Medicallicense,
+                                                Npinumber = r.Npinumber,
+                                                Syncemailaddress = r.Syncemailaddress,
+
+
+                                                Firstname = r.Firstname,
+                                                Lastname = r.Lastname,
+                                                notification = nof.Isnotificationstopped,
+                                                role = roles.Name,
+                                                Email = r.Email,
+                                                Photo = r.Photo,
+                                                Signature = r.Signature,
+                                                Isagreementdoc = r.Isagreementdoc[0],
+                                                Isnondisclosuredoc = r.Isnondisclosuredoc[0],
+                                                Isbackgrounddoc = r.Isbackgrounddoc[0],
+                                                Islicensedoc = r.Islicensedoc[0],
+                                                Istrainingdoc = r.Istrainingdoc[0]
+
+                                            })
+                                   .FirstOrDefaultAsync();
+
+            List<PhysiciansViewModel.Regions> regions = new List<PhysiciansViewModel.Regions>();
+
+            regions = _context.Physicianregions
+                  .Where(r => r.Physicianid == pl.Physicianid)
+                  .Select(req => new PhysiciansViewModel.Regions()
+                  {
+                      regionid = req.Regionid
+                  })
+                  .ToList();
+            if (regions != null)
+            {
+                pl.Regionids = regions;
+            }
+
+
+            return pl;
+
+        }
+        #endregion
+        #region EditProviderOnbording
+        public async Task<bool> EditProviderOnbording(Physicians vm, string AdminId)
+        {
+            try
+            {
+                if (vm == null)
+                {
+                    return false;
+                }
+                else
+                {
+                    var DataForChange = await _context.Physicians
+                        .Where(W => W.Physicianid == vm.Physicianid)
+                        .FirstOrDefaultAsync();
+
+
+                    if (DataForChange != null)
+                    {
+
+
+                        CM.UploadProviderDoc(vm.Agreementdoc, (int)vm.Physicianid, "Agreementdoc.pdf");
+                        CM.UploadProviderDoc(vm.BackGrounddoc, (int)vm.Physicianid, "BackGrounddoc.pdf");
+                        CM.UploadProviderDoc(vm.NonDisclosuredoc, (int)vm.Physicianid, "NonDisclosuredoc.pdf");
+                        CM.UploadProviderDoc(vm.Licensedoc, (int)vm.Physicianid, "Agreementdoc.pdf");
+                        CM.UploadProviderDoc(vm.Trainingdoc, (int)vm.Physicianid, "Trainingdoc.pdf");
+
+                        DataForChange.Isagreementdoc = new BitArray(1);
+                        DataForChange.Isbackgrounddoc = new BitArray(1);
+                        DataForChange.Isnondisclosuredoc = new BitArray(1);
+                        DataForChange.Islicensedoc = new BitArray(1);
+                        DataForChange.Istrainingdoc = new BitArray(1);
+
+                        DataForChange.Isagreementdoc[0] = vm.Isagreementdoc;
+                        DataForChange.Isbackgrounddoc[0] = vm.Isbackgrounddoc;
+                        DataForChange.Isnondisclosuredoc[0] = vm.Isnondisclosuredoc;
+                        DataForChange.Islicensedoc[0] = vm.Islicensedoc;
+                        DataForChange.Istrainingdoc[0] = vm.Istrainingdoc;
+                        DataForChange.Modifiedby = AdminId;
+                        DataForChange.Modifieddate = DateTime.Now;
+
+                        _context.Physicians.Update(DataForChange);
+
+                        _context.SaveChanges();
+
+
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+        #endregion
+
+        #region check email exist
+        public int isEmailExist(string Email)
+        {
+            int data = _context.Physicians.Count(e => e.Email.ToLower().Equals(Email.ToLower()));
+            return data;
+        }
+        #endregion
+
     }
 }

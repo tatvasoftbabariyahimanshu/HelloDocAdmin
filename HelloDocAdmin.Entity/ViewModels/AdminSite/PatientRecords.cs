@@ -13,5 +13,8 @@
         public DateTime? Modifieddate { get; set; }
 
 
+        public bool? isfinal { get; set; }
+
+
     }
 }

@@ -5,24 +5,20 @@ using HelloDocAdmin.Entity.ViewModel;
 using HelloDocAdmin.Entity.ViewModels;
 using HelloDocAdmin.Repositories.Interface;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Collections;
 
 namespace HelloDocAdmin.Repositories
 {
     public class Combobox : ICombobox
     {
         private readonly ApplicationDbContext _context;
-      
+
         public Combobox(ApplicationDbContext context)
         {
             _context = context;
-            
+
         }
-        public async Task< List<HealthprofessionaltypeCombobox>> healthprofessionaltype()
+        public async Task<List<HealthprofessionaltypeCombobox>> healthprofessionaltype()
         {
             return await _context.Healthprofessionaltypes.Select(req => new HealthprofessionaltypeCombobox()
             {
@@ -60,10 +56,10 @@ namespace HelloDocAdmin.Repositories
         }
         public async Task<List<RoleComboBox>> RolelistAdmin()
         {
-            return await _context.Roles.Where(e=>e.Accounttype==2).Select(req => new RoleComboBox()
+            return await _context.Roles.Where(e => e.Accounttype == 2).Select(req => new RoleComboBox()
             {
                 RoleID = req.Roleid,
-               Name = req.Name
+                Name = req.Name
             })
                 .ToListAsync();
         }
@@ -86,10 +82,12 @@ namespace HelloDocAdmin.Repositories
                 .ToListAsync();
         }
         #region Provider_By_Region
-        public  List<Physician> ProviderbyRegion(int? regionid)
+        public List<Physician> ProviderbyRegion(int? regionid)
         {
-            var result =  _context.Physicians
-                        .Where(r => r.Regionid == regionid)
+            BitArray bt = new BitArray(1);
+            bt.Set(0, false);
+            var result = _context.Physicians
+                        .Where(r => r.Regionid == regionid && r.Isdeleted == bt)
                         .OrderByDescending(x => x.Createddate)
                         .ToList();
 
@@ -99,9 +97,11 @@ namespace HelloDocAdmin.Repositories
 
         public List<HealthprofessionalCombobox> ProfessionalByType(int? HealthprofessionalID)
         {
+            BitArray bt = new BitArray(1);
+            bt.Set(0, false);
             var result = _context.Healthprofessionals
-                        .Where(r => r.Profession == HealthprofessionalID)
-       
+                        .Where(r => r.Profession == HealthprofessionalID && r.Isdeleted == bt)
+
                         .Select(req => new HealthprofessionalCombobox()
                         {
                             VendorID = req.Vendorid,

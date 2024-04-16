@@ -24,8 +24,8 @@
 
 
 
-                            <select class="input-outline input-outline-search h-100 " style="color:#ADADAD" id="region" data-allow-clear="true" aria-expanded="false" tabindex="-1" onchange="getfilterdata()" asp-items="@(new SelectList(ViewBag.RegionComboBox,"RegionId","RegionName"))" data-control="select2" data-placeholder="Select Level">
-                                <option value="0">All Region</option>
+                            <select class="input-outline input-outline-search h-100 " style="border-color:#ADADAD" id="region" data-allow-clear="true" aria-expanded="false" tabindex="-1" onchange="getfilterdata()" asp-items="@(new SelectList(ViewBag.RegionComboBox,"RegionId","RegionName"))" data-control="select2" data-placeholder="Select Level">
+                                <option value="0" style="color:#ADADAD">All Region</option>
                             </select>
 
                         </div>

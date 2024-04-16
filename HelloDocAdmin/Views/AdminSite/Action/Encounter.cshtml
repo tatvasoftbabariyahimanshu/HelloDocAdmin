@@ -22,7 +22,7 @@
 
             </div>
             <div class="text-end">
-                <a asp-controller="Dashboard" asp-action="Index"
+                <a onclick="history.back()"
                    class="btn btn-outline-info btn-back">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                          fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
@@ -178,7 +178,7 @@
                                 <label class="inputs-lable-textarea">Allergies</label>
                             </div>
 
-
+                            <span asp-validation-for="Allergies" class="err-msg"></span>
                         </div>
 
                     </div>
@@ -452,9 +452,9 @@
 
                 <div class="card-footer border-0 bg-transparent text-end">
                     <button type="submit" class="btn btn-outline-info">Save Changes</button>
-
+                    @using HelloDocAdmin.Controllers.Authenticate;
                     @{
-                        if (!Model.Isfinalize)
+                        if (!Model.Isfinalize && CV.LoggedUserRole()=="Physician")
                         {
                             <button type="submit" asp-action="Finalize" asp-controller="Action" asp class="btn btn-danger btn-cancel ">Finalize</button>
                         }

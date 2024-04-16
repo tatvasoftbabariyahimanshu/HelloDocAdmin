@@ -1,19 +1,13 @@
-﻿using HelloDocAdmin.Entity.Models;
-using HelloDocAdmin.Entity.ViewModel.PatientSite;
+﻿using HelloDocAdmin.Entity.ViewModel.PatientSite;
 using HelloDocAdmin.Entity.ViewModels.AdminSite;
 using HelloDocAdmin.Entity.ViewModels.PatientSite;
 using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HelloDocAdmin.Repositories.PatientInterface
 {
-    public  interface IPatientDashboardRepository
+    public interface IPatientDashboardRepository
     {
-        public ViewDashboardDataModel DashboardData(string UserID);
+        public ViewDashboardDataModel DashboardData(string UserID, int pagesize = 10, int currentpage = 1);
         public ViewDocumentsModel ViewDocument(int RequestID);
         public bool UploadDoc(int Requestid, IFormFile? UploadFile);
         public bool DeleteDoc(int RequestWiseFileID);

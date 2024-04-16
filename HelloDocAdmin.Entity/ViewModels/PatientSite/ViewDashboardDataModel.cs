@@ -1,10 +1,5 @@
 ﻿using HelloDocAdmin.Entity.Models;
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HelloDocAdmin.Entity.ViewModels.PatientSite
 {
@@ -13,7 +8,11 @@ namespace HelloDocAdmin.Entity.ViewModels.PatientSite
         public Dictionary<int, int> ids = new Dictionary<int, int>();
 
         public List<Request> requests = new List<Request>();
+        public int TotalPage { get; set; }
+        public int UserID { get; set; }
+        public int CurrentPage { get; set; }
 
+        public int pageSize { get; set; }
         public int Userid { get; set; }
 
         public string? Aspnetuserid { get; set; }
