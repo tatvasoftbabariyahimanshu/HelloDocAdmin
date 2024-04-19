@@ -1,5 +1,5 @@
 ﻿﻿<div class="modal fade" id="TransferCase" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header  bg-info text-white">
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Transfer Request</h1>
@@ -82,29 +82,18 @@
             element.textContent = ""; // Clear any existing error messages
         });
 
-        // Validation flag
+    
         let isValid = true;
 
-        // Validate Startdate
-        //let region3 = document.getElementById("region3");
-        //if (!region2.value) {
-        //    let errorMessage = "region is required.";
-        //    displayErrorMessage(region3, errorMessage);
-        //    isValid = false;
-        //}
-
-        // Validate Starttime
-        //let changenote = document.getElementById("changenote");
-        //if (!changenote.value) {
-        //    let errorMessage = "changenote  is required.";
-        //    displayErrorMessage(changenote, errorMessage);
-        //    isValid = false;
-        //}
+      
         let provider2 = document.getElementById("provider2");
         if (!provider2.value) {
             let errorMessage = "provider  is required.";
             displayErrorMessage(provider2, errorMessage);
             isValid = false;
+        }
+        else{
+            displayErrorMessage(provider2, "");
         }
         let changenote_ac = document.getElementById("changenote_tc");
         if (!changenote_ac.value) {
@@ -112,7 +101,9 @@
             displayErrorMessage(changenote_ac, errorMessage);
             isValid = false;
         }
-
+        else {
+            displayErrorMessage(changenote_ac, "");
+        }
         if (isValid) {
 
 

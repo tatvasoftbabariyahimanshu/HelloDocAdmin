@@ -128,14 +128,17 @@
                     </div>
                     <div class="col-md-6 d-flex justify-content-around align-items-center">
                         <div class="inputs-control w-100 ">
-                            <input placeholder=" " asp-for="ZipCode" readonly id="zipcode" class="input-outline  w-100 inp" type="text">
+                            <input placeholder=" " asp-for="ZipCode" readonly id="zipcode" class="input-outline  w-100 inp" type="number">
                             <label class="inputs-lable">Zipper Code</label>
                         </div>
+                       
                         <a class="btn btn-outline-info mx-2 text-info map-btn " id="map-button">
                             <i class="bi bi-geo-alt-fill"></i>
                         </a>
 
+                        
                     </div>
+                    <span asp-validation-for="ZipCode" class="err-msg"></span>
                 </div>
                 <div class="row mt-1">
                     <div class="col-md-6">

@@ -1,28 +1,28 @@
 ﻿﻿<div class="modal fade" id="sendlink" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header  bg-info text-white">
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Send Mail To  Patient for Submitting request</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form asp-action="SendLink" asp-controller="Action" onsubmit="return onsmt_send()" class="needs-validation" novalidate>
+            <form asp-action="SendLink" asp-controller="Action" onsubmit="return onsmt_send()"  novalidate>
                 <div class="modal-body">
                     <div class="inputs-control ">
-                        <input placeholder=" " name="firstname" id="firstname_send" class="input-outline w-100 inp edit-frm" type="text" >
+                        <input placeholder=" " name="firstname" id="firstname_send" class="input-outline  w-100 inp edit-frm" type="text">
                         <label class="inputs-lable">First name</label>
                     </div>
                     <div class="inputs-control mt-2 ">
-                        <input placeholder=" " name="lastname" id="lastname_send" class="input-outline w-100 inp edit-frm" type="text" >
+                        <input placeholder=" " name="lastname" id="lastname_send" class="input-outline w-100 inp edit-frm" type="text">
                         <label class="inputs-lable">Last name</label>
                     </div>
                     <div class="inputs-control mt-2 ">
                     <div class=" form-floating mt-2">
-                        <input id="phone4" placeholder="Mobile"  name="phonenumber" type="tel" class=" telephone input-outline w-100 inp align-items-center edit-frm"  />
+                            <input id="phone4" placeholder="Mobile" name="phonenumber" type="tel" class=" telephone  input-outline w-100 inp align-items-center edit-frm" />
 
                     </div>
                     </div>
                     <div class="inputs-control mt-2 ">
-                        <input placeholder=" " name="email" id="email_send" class="input-outline w-100 inp edit-frm" type="email" >
+                        <input placeholder=" " name="email" id="email_send" class="input-outline w-100 inp  edit-frm" type="email">
                         <label class="inputs-lable">Email</label>
                     </div>
                 </div>
@@ -61,9 +61,12 @@
         
         let firstname_send = document.getElementById("firstname_send");
         if (!firstname_send.value) {
-            let errorMessage = "Email is required.";
+            let errorMessage = "first name is required.";
             displayErrorMessage(firstname_send, errorMessage);
             isValid = false;
+        }
+        else{
+            displayErrorMessage(firstname_send, "");
         }
 
         let lastname_send = document.getElementById("lastname_send");
@@ -72,16 +75,18 @@
             displayErrorMessage(lastname_send, errorMessage);
             isValid = false;
         }
+        else {
+            displayErrorMessage(lastname_send, "");
+        }
         let phone4 = document.getElementById("phone4");
-        if (!phone4.value) {
-            let errorMessage = "phone  is required.";
-            displayErrorMessage(phone4, errorMessage);
-            isValid = false;
-           
-        } if (Number.isNaN(phone4.value)) {
+       
+        if (Number.isNaN(phone4.value) || !phone4.value) {
             let errorMessage = " Plese Enter Valid Number";
             displayErrorMessage(phone4, errorMessage);
             isValid = false;
+        }
+        else {
+            displayErrorMessage(phone4, "");
         }
      
         var validRegex = @Html.Raw("/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$/");
@@ -93,6 +98,9 @@
             let errorMessage = "Enter Valid Email  .";
             displayErrorMessage(email_send, errorMessage);
             isValid = false;
+        }
+        else {
+            displayErrorMessage(email_send, "");
         }
 
         if (isValid) {

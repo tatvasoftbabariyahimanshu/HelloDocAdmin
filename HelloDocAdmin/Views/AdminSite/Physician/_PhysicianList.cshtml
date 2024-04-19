@@ -62,12 +62,12 @@
         <h2 class="accordion-header btn-i " id="flush-heading-@item.Physicianid">
             <div class="p-3 collapsed border-bottom" type="button" data-bs-toggle="collapse" data-bs-target="#flush-@item.Physicianid" aria-expanded="false" aria-controls="collapse_@item.Physicianid">
                 <div class="d-flex text-dark align-items-center justify-content-between w-100">
-                    <div class="text-start mb-3 h6">
+                    <div class="text-start d-flex mb-3 h6">
 
                         @{
                             var check = item.notification[0];
-                            <input class="form-check-input form-check-inputs" id="@item.notificationid" type="checkbox" value="" @(check ? "checked" : "")>
-                        } <small mx-2>@item.Firstname  @item.Lastname</small>
+                            <input class="form-check-input form-check-inputs mx-2" id="@item.notificationid" type="checkbox" value="" @(check ? "checked" : "")>
+                        } <h6 mx-2>@item.Firstname  @item.Lastname</h6>
                     </div>
 
 
@@ -86,8 +86,8 @@
 
             <div class="accordion-body container-fluid">
 
-                <p> <i class="fa fa-envelope border border-info rounded-pill p-1 me-2"></i><b>Role :</b>  @item.role</p>
-                <p> <i class="fa fa-phone border  border-info rounded-pill p-1 me-2"></i><b> Status : </b>@Enum.GetName(typeof(AdminStatus), item.Status)</p>
+                <p> <i class="fa fa-user-circle  border border-info rounded-pill p-1 me-2"></i><b>Role :</b>  @item.role</p>
+                <p> <i class="fa fa-code-fork border border-info rounded-pill p-1 me-2"></i><b> Status : </b>@Enum.GetName(typeof(AdminStatus), item.Status)</p>
 
 
 

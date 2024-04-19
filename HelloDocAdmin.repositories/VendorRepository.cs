@@ -27,6 +27,7 @@ namespace HelloDocAdmin.Repositories
                                                join type in _context.Healthprofessionaltypes
                                                on Vendor.Profession equals type.Healthprofessionalid
                                                where Vendor.Isdeleted == bt
+                                               orderby Vendor.Modifieddate descending
                                                select new VendorListView
                                                {
                                                    VendorID = Vendor.Vendorid,

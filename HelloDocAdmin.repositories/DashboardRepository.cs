@@ -237,7 +237,7 @@ namespace HelloDocAdmin.Repositories
                                                         on rc.Regionid equals reg.Regionid into RegGroup
                                                          from rg in RegGroup.DefaultIfEmpty()
                                                          where priceList.Contains(req.Status)
-                                                         orderby req.Createddate descending
+                                                         orderby req.Modifieddate descending
                                                          select new DashboardRequestModel
                                                          {
                                                              RequestID = req.Requestid,
@@ -278,7 +278,7 @@ namespace HelloDocAdmin.Repositories
             int i = 0;
             foreach (var item in dm.requestList)
             {
-                item.Notes = item.Notes ?? new List<string>(); // Initialize Notes if null
+                item.Notes = item.Notes ?? new List<string>();
                 var rsa = (from rs in _context.Requeststatuslogs
                            join py in _context.Physicians on rs.Physicianid equals py.Physicianid into pyGroup
                            from py in pyGroup.DefaultIfEmpty()
@@ -286,7 +286,7 @@ namespace HelloDocAdmin.Repositories
                            from p in pGroup.DefaultIfEmpty()
                            join a in _context.Admins on rs.Adminid equals a.Adminid into aGroup
                            from a in aGroup.DefaultIfEmpty()
-                           where rs.Requestid == item.RequestID /*&& (rs.Transtoadmin != null || rs.Transtophysicianid != null || rs.Status == 2)*/
+                           where rs.Requestid == item.RequestID && (rs.Transtoadmin != null || rs.Transtophysicianid != null || rs.Status == 2)
                            select rs.Notes).ToList();
 
                 foreach (var slt in rsa)
@@ -326,7 +326,7 @@ namespace HelloDocAdmin.Repositories
                                                         on rc.Regionid equals reg.Regionid into RegGroup
                                                          from rg in RegGroup.DefaultIfEmpty()
                                                          where priceList.Contains(req.Status) && req.Physicianid == _context.Physicians.FirstOrDefault(e => e.Aspnetuserid == PhyUserID).Physicianid
-                                                         orderby req.Createddate descending
+                                                         orderby req.Modifieddate descending
                                                          select new DashboardRequestModel
                                                          {
                                                              RequestID = req.Requestid,
@@ -368,7 +368,7 @@ namespace HelloDocAdmin.Repositories
             int i = 0;
             foreach (var item in dm.requestList)
             {
-                item.Notes = item.Notes ?? new List<string>(); // Initialize Notes if null
+                item.Notes = item.Notes ?? new List<string>();
                 var rsa = (from rs in _context.Requeststatuslogs
                            join py in _context.Physicians on rs.Physicianid equals py.Physicianid into pyGroup
                            from py in pyGroup.DefaultIfEmpty()

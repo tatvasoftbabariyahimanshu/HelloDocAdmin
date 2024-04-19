@@ -28,6 +28,8 @@ namespace HelloDocAdmin.Entity.ViewModel.PatientSite
         public string Street { get; set; }
         public string City { get; set; }
         public string State { get; set; }
+        [RegularExpression(@"^\d{6}$",
+                 ErrorMessage = "Entered Valid Zip Code.")]
         public string ZipCode { get; set; }
         public string? RoomSite { get; set; }
         public IFormFile? UploadFile { get; set; }

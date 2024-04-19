@@ -126,7 +126,7 @@
                                 <input placeholder=" " asp-for="RC_FirstName" class="input-outline w-100 inp  edit-frm" type="text" readonly>
                             <label class="inputs-lable">First name</label>
                         </div>
-                        <span  class="err-msg"></span>
+                            <span asp-validation-for="RC_FirstName" class="err-msg"></span>
                     </div>
                 </div>
               
@@ -136,7 +136,8 @@
                                 <input placeholder=" " asp-for="RC_LastName" class="input-outline w-100 inp  edit-frm" type="text" readonly>
                             <label class="inputs-lable">Last name</label>
                         </div>
-                        <span  class="err-msg"></span>
+                            <span asp-validation-for="RC_FirstName" class="err-msg"></span>
+
 
 
                     </div>
@@ -150,7 +151,7 @@
                             <label class="inputs-lable-dob">Date of Birth</label>
 
                         </div>
-                        <span  class="err-msg"></span>
+                            <span asp-validation-for="RC_Dob" class="err-msg"></span>
 
 
                     </div>
@@ -168,7 +169,10 @@
                             <i class="bi bi-telephone-fill"></i>
                         </button>
 
+
                     </div>
+                        <span asp-validation-for="RC_PhoneNumber" class="err-msg"></span>
+
 
                 </div>
 
@@ -178,7 +182,8 @@
                             <input placeholder=" " asp-for="RC_Email"  class="input-outline w-100 inp " readonly type="text">
                             <label class="inputs-lable">Email</label>
                         </div>
-                        <span  class="err-msg"></span>
+                            <span asp-validation-for="RC_Email" class="err-msg"></span>
+
                     </div>
                 </div>
                

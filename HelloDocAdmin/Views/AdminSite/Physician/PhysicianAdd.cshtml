@@ -79,7 +79,7 @@
                     <div class="col-md-4 mt-2">
                         <div class=" mb-2">
                             <div class="inputs-control ">
-                                <input placeholder=" " asp-for="UserName" class="input-outline inp-dis w-100 inp asp" type="text">
+                                <input placeholder=" " asp-for="UserName" readonly id="username" class="input-outline inp-dis w-100 inp asp" type="text">
                                 <label class="inputs-lable">UserName</label>
                             </div>
                             <span asp-validation-for="UserName" class="err-msg"></span>
@@ -120,7 +120,7 @@
                     <div class="col-md-6 mt-2">
                         <div class=" mb-3">
                             <div class="inputs-control ">
-                                <input placeholder=" " asp-for="Firstname" class="input-outline w-100 inp admin-input " type="text">
+                                <input placeholder=" " asp-for="Firstname" onkeyup="filluser()" id="firstname" class="input-outline w-100 inp admin-input " type="text">
                                 <label class="inputs-lable">FirstName</label>
                             </div>
                             <span class="err-msg" asp-validation-for="Firstname"></span>
@@ -131,7 +131,7 @@
                     <div class="col-md-6 mt-2">
                         <div class=" mb-3">
                             <div class="inputs-control ">
-                                <input placeholder=" " asp-for="Lastname" class="input-outline w-100 inp admin-input " type="text">
+                                <input placeholder=" " asp-for="Lastname" id="lastname" onkeyup="filluser()" class="input-outline w-100 inp admin-input " type="text">
                                 <label class="inputs-lable">LastName</label>
                             </div>
                             <span class="err-msg" asp-validation-for="Lastname"></span>
@@ -139,6 +139,20 @@
 
                         </div>
                     </div>
+                    <script>
+                        function filluser()
+                        {
+
+                        var firstName = document.getElementById('firstname').value;
+                        var lastName = document.getElementById('lastname').value;
+
+                        // Concatenate first name and last name to create the username
+                            var username = firstName.toLowerCase() + "_" + lastName.toLowerCase();
+
+                        // Assuming you have a username field with id "username"
+                        document.getElementById('username').value = username;
+                        }
+                        </script>
                     <div class="col-md-6 mt-2">
                         <div class=" mb-3">
                             <div class="inputs-control ">

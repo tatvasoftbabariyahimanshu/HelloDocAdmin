@@ -25,14 +25,20 @@
             <div class="text-end">
                 <a onclick="getExelData()"
                    class="btn btn-info btn-back">
-                    <i class="fa-solid fa-share mx-2"></i>Export Data To Excel
+                    <span class="addnewlg">
+                        Export Data To Excel <i class="fa fa-file-excel-o mx-2" aria-hidden="true"></i>
+                    </span>
+                    <span class="addnewsm">
+                        <i class="fa fa-file-excel-o mx-2" aria-hidden="true"></i>
+                    </span>
+                    
                 </a>
             </div>
         </div>
 
         <div class="card-body rounded shadow">
             <div class="row mt-3">
-                <div class="col-md-3 ">
+                <div class="col-md-3  mt-2">
                     
                         <div class="input-control w-100 ">
                             <select class="input-outline input-outline-select inp asp  inp-dis" id="status"  data-allow-clear="true" tabindex="-1" asp-items="@(new SelectList(enumData, "ID", "Name"))" data-control="select2" data-placeholder="Select Level">
@@ -41,7 +47,7 @@
                         </div>
                     
                 </div>
-                <div class="col-md-3 ">
+                <div class="col-md-3  mt-2">
                     
                         <div class="inputs-control ">
                             <input placeholder=" " id="patientname" class="input-outline w-100 inp admin-input " type="text">
@@ -50,7 +56,7 @@
 
                    
                 </div>
-                <div class="col-md-3 ">
+                <div class="col-md-3  mt-2">
 
                     <div class="input-control w-100 ">
                         <select class="input-outline input-outline-select inp asp  inp-dis" id="requesttype" data-allow-clear="true" tabindex="-1" asp-items="@(new SelectList(reqtype, "ID", "Name"))" data-control="select2" data-placeholder="Select Level">
@@ -59,7 +65,7 @@
                     </div>
 
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-3 mt-2">
                   
                         <div class="inputs-control  ">
 
@@ -74,8 +80,8 @@
                
                
             </div>
-            <div class="row mt-3">
-                <div class="col-md-3">
+            <div class="row ">
+                <div class="col-md-3 mt-2">
 
                     <div class="inputs-control  ">
 
@@ -87,7 +93,7 @@
 
 
                 </div>
-                <div class="col-md-3 ">
+                <div class="col-md-3  mt-2">
 
                     <div class="inputs-control ">
                         <input placeholder=" " id="providername" class="input-outline w-100 inp admin-input " type="text">
@@ -96,7 +102,7 @@
 
 
                 </div>
-                <div class="col-md-3 ">
+                <div class="col-md-3 mt-2 ">
 
                     <div class="inputs-control ">
                         <input placeholder=" " id="email" class="input-outline w-100 inp admin-input " type="text">
@@ -105,7 +111,7 @@
 
 
                 </div>
-                <div class="col-md-3 ">
+                <div class="col-md-3 mt-2 ">
 
                     <div class="inputs-control ">
                         <input placeholder=" " id="phonenumber" class="input-outline w-100 inp admin-input " type="text">

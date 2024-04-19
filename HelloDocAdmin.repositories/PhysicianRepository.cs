@@ -36,6 +36,7 @@ namespace HelloDocAdmin.Repositories
                                                     on r.Roleid equals role.Roleid into roleGroup
                                                     from roles in roleGroup.DefaultIfEmpty()
                                                     where r.Isdeleted == bt
+                                                    orderby r.Modifieddate descending
                                                     select new PhysiciansViewModel
                                                     {
                                                         notificationid = nof.Id,
@@ -173,11 +174,11 @@ namespace HelloDocAdmin.Repositories
                     .Where(W => W.Physicianid == Physicianid)
                         .FirstOrDefaultAsync();
 
-
+                string hashedPassword = hasher.HashPassword(null, Password);
                 if (req != null)
                 {
                     var U = await _context.Aspnetusers.Where(m => m.Id == req.Aspnetuserid).FirstOrDefaultAsync();
-                    U.Passwordhash = hasher.HashPassword(null, Password);
+                    U.Passwordhash = hashedPassword;
                     U.Modifieddate = DateTime.Now;
 
                     _context.Aspnetusers.Update(U);
@@ -1024,12 +1025,19 @@ namespace HelloDocAdmin.Repositories
         {
             try
             {
+
+
                 Shiftdetail sd = _context.Shiftdetails.FirstOrDefault(sd => sd.Shiftdetailid == s.Shiftid);
                 if (sd != null)
                 {
                     sd.Shiftdate = (DateTime)s.ShiftDate;
                     sd.Starttime = s.Starttime;
                     sd.Endtime = s.Endtime;
+                    if (_context.Physicians.Any(e => e.Aspnetuserid == AdminID))
+                    {
+                        sd.Status = 0;
+                    }
+
                     sd.Modifiedby = AdminID;
                     sd.Modifieddate = DateTime.Now;
                     _context.Shiftdetails.Update(sd);
@@ -1175,6 +1183,7 @@ namespace HelloDocAdmin.Repositories
                                          {
                                              Createddate = r.Createddate,
                                              Physicianid = r.Physicianid,
+                                             Regionid = r.Regionid,
                                              Address1 = r.Address1,
                                              Address2 = r.Address2,
                                              Adminnotes = r.Adminnotes,
@@ -1280,6 +1289,7 @@ namespace HelloDocAdmin.Repositories
                                                     Starttime = shift.Starttime,
                                                     Shiftdate = shift.Shiftdate,
                                                     Shiftid = shift.Shiftid,
+                                                    RegionName = _context.Regions.FirstOrDefault(e => e.Regionid == shift.Regionid).Name,
                                                     Shiftdetailid = shift.Shiftdetailid,
                                                     PhysicianName = _context.Physicians.FirstOrDefault(e => e.Physicianid == _context.Shifts.FirstOrDefault(j => j.Shiftid == shift.Shiftid).Physicianid).Firstname,
 

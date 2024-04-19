@@ -1,17 +1,10 @@
 ﻿using HelloDocAdmin.Entity.Data;
-using HelloDocAdmin.Entity.Models;
 using HelloDocAdmin.Entity.ViewModels.AdminSite;
 using HelloDocAdmin.Repositories.Interface;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Xsl;
 
 namespace HelloDocAdmin.Repositories
 {
-    public class ProviderLocation:IProviderLocation
+    public class ProviderLocation : IProviderLocation
     {
         private readonly ApplicationDbContext _context;
         private readonly EmailConfiguration _email;
@@ -24,20 +17,24 @@ namespace HelloDocAdmin.Repositories
 
         public List<AllProviderLocation> GetAllProviderAddress()
         {
-           var data=_context.Physicianlocations.ToList();
+            var data = _context.Physicianlocations.ToList();
 
-            List<AllProviderLocation> lst=new List<AllProviderLocation>();
+            List<AllProviderLocation> lst = new List<AllProviderLocation>();
 
             foreach (var item in data)
             {
                 lst.Add(new AllProviderLocation
                 {
-                    Name=item.Physicianname,
-                    Latitude=item.Latitude,
-                    Longitude=item.Longitude,
-                    Address=item.Address,
-                    ImgPath=_context.Physicians.FirstOrDefault(e=>e.Physicianid==item.Physicianid).Photo,
-                    PhysicianID=item.Physicianid
+                    Name = item.Physicianname,
+                    Latitude = item.Latitude,
+                    Longitude = item.Longitude,
+                    Address = item.Address,
+                    ImgPath = _context.Physicians.FirstOrDefault(e => e.Physicianid == item.Physicianid).Photo,
+                    PhysicianID = item.Physicianid,
+                    PhoneNumber = item.Physician.Mobile,
+                    Created = (DateTime)item.Createddate,
+
+
 
                 });
             }

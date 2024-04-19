@@ -25,11 +25,15 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
         }
 
+        #region Index
         public IActionResult Index()
         {
 
             return View();
         }
+        #endregion
+
+        #region DownloadExcel
         public IActionResult DownloadExcel(string status)
         {
             try
@@ -83,6 +87,9 @@ namespace HelloDocAdmin.Controllers.AdminSite
                 throw;
             }
         }
+        #endregion
+
+        #region getExelData
         public IActionResult getExelData(short? status, string? patientname, int? requesttype, DateTime startdate, DateTime enddate, string? physicianname, string? email, string? phonenumber)
         {
             try
@@ -136,5 +143,6 @@ namespace HelloDocAdmin.Controllers.AdminSite
                 throw;
             }
         }
+        #endregion
     }
 }

@@ -1,5 +1,5 @@
 ﻿﻿<div class="modal fade" id="Assigncase" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header  bg-info text-white">
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Assign Physician </h1>
@@ -93,24 +93,26 @@
             isValid = false;
         }
 
-        // Validate Starttime
-        //let changenote = document.getElementById("changenote");
-        //if (!changenote.value) {
-        //    let errorMessage = "changenote  is required.";
-        //    displayErrorMessage(changenote, errorMessage);
-        //    isValid = false;
-        //}
+        else {
+            displayErrorMessage(region2, "");
+        }
         let provider = document.getElementById("provider");
         if (!provider.value) {
             let errorMessage = "Please Select Provider.";
             displayErrorMessage(provider, errorMessage);
             isValid = false;
         }
+        else {
+            displayErrorMessage(provider, "");
+        }
         let changenote_ac = document.getElementById("changenote_ac");
         if (!changenote_ac.value) {
             let errorMessage = "Notes is required.";
             displayErrorMessage(changenote_ac, errorMessage);
             isValid = false;
+        }
+        else {
+            displayErrorMessage(changenote_ac, "");
         }
       
         if (isValid) {

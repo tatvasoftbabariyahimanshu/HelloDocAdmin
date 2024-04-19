@@ -15,8 +15,8 @@
 
     .marker-img {
         background-size: cover;
-        width: 55px;
-        height: 55px;
+        width: 45px;
+        height: 45px;
         border-radius: 50%;
     }
 </style>
@@ -40,6 +40,9 @@
         </div>
 
         <div class="card-body rounded shadow ">
+            <div class="text-end">
+                <span class="text-danger" style="font-size:0.8rem"><i class="fa fa-hand-o-right mx-2" aria-hidden="true"></i>Click on Marker Icon To show physicain Details!!</span>
+            </div>
             <div class="position-relative ">
             <div class="middle z-2 loding-div position-absolute  top-50" style="left:50%;">
                 <div class="bar bar1"></div>
@@ -51,7 +54,7 @@
                 <div class="bar bar7"></div>
                 <div class="bar bar8"></div>
             </div>
-            <div class="card w-100 " id="mapAreash">
+            <div class="card w-100 mt-3" id="mapAreash">
                 
 
 
@@ -68,21 +71,14 @@
 <script>
     const APIKey = "bmULYKyU2sYwUF1NFjiJ6Fdc3OrqHyWo";
 
-    var Lagos = { lat: 23.0225, lng: 72.5714 };
+    var Lagos = { lat: 20.5937, lng: 78.9629 };
 
     var map = tt.map({
         key: APIKey,
         container: "mapAreash",
         center: Lagos,
-        zoom: 6
+        zoom: 4
     });
-
-
-
-    var sourcearray = null;
-
-
-
 
     var sites = [
     ];
@@ -96,39 +92,79 @@
                 lng: @location.Longitude,
                 name: '@location.Name',
                 photo: '/Upload/Physician/@location.PhysicianID/@location.ImgPath',
+            address: '@location.Address',
+            phonenumber:'@location.PhoneNumber',
+            created:'@location.Created',
            
             physicianid: @location.PhysicianID,
             });
             </text>
         }
         setTimeout(function () { $(".loding-div").hide() }, 1000);
-        sites.forEach(function (site) {
-        var element = document.createElement("div")
+   
+    function openModal(site) {
+        // Set the content in the modal
+        $('#modalName').text(site.name);
+        $('#PhoneNumber').text(site.phonenumber);
+        $('#Created').text(site.created)
+        $('#modalAddress').text(site.address);
+        $('#modalPic').attr('src', site.photo);
+        // Open the modal
+        $('#markerModal').modal('show');
+    }
+
+    setTimeout(function () { $(".loding-div").hide() }, 1000);
+
+    sites.forEach(function (site) {
+        var element = document.createElement("div");
         element.id = "marker" + site.physicianid;
         element.style.backgroundImage = 'url("' + site.photo + '")';
         element.classList.add('marker-img');
+
         var marker = new tt.Marker({ element: element }).setLngLat([site.lng, site.lat]).addTo(map);
         var popup = new tt.Popup({ anchor: 'top' }).setHTML("<b>" + site.name + "</b>");
-            marker.setPopup(popup).togglePopup();
-        });
 
-    function moveMapTo(newLoc) {
-        map.flyTo({
-            center: newLoc,
-            zoom: 15
-        });
-    }
+        marker.setPopup(popup);
 
-    async function fetchshreyansLoc() {
-        const response = await tt.services.fuzzySearch({
-            key: APIKey,
-            query: document.querySelector("#query").value
+     
+        marker.getElement().addEventListener('click', function () {
+          
+            openModal(site);
         });
-       
-        if (response.results) {
-            moveMapTo(response.results[0].position);
-           
-        }
-    }
+    });
+
+   
+
+   
 
 </script>
+<!-- Bootstrap Modal -->
+<div class="modal fade" id="markerModal" tabindex="-1" aria-labelledby="markerModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="markerModalLabel">Physician Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <img id="modalPic" height="230px" width="230px" src="" alt="Physician Picture">
+                    </div>
+                    <div class="col-md-6">
+                        <h5><b class=" text-info">Name: </b><span id="modalName"></span></h5>
+                        <p class="mt-3"><b class=" text-info">Address:</b> <span id="modalAddress"></span></p>
+                        <p class="mt-1 "><b class=" text-info">Phone Number:</b> <span id="PhoneNumber"></span></p>
+                        <p class="mt-1 "><b class=" text-info">Last Login Time:</b> <span id="Created"></span></p>
+                    </div>
+                    </div>
+
+                
+               
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info text-white" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

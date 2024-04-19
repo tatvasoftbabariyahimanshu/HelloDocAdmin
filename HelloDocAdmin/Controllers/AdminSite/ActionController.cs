@@ -5,6 +5,7 @@ using HelloDocAdmin.Entity.ViewModel.PatientSite;
 using HelloDocAdmin.Entity.ViewModels;
 using HelloDocAdmin.Entity.ViewModels.AdminSite;
 using HelloDocAdmin.Repositories.Interface;
+using HelloDocAdmin.Repositories.PatientInterface;
 using Microsoft.AspNetCore.Mvc;
 using Rotativa.AspNetCore;
 
@@ -13,13 +14,14 @@ namespace HelloDocAdmin.Controllers.AdminSite
     [CustomAuthorization("Admin,Physician", "Dashboard")]
     public class ActionController : Controller
     {
+        private IPatientRequestRepository _patientrequestrepo;
         private IActionRepository _actionrepo;
         private IDashboardRepository _dashboardrepo;
         private ICombobox _combobox;
         private readonly ILogger<DashboardController> _logger;
         private readonly INotyfService _notyf;
         private readonly EmailConfiguration _email;
-        public ActionController(ILogger<DashboardController> logger, IDashboardRepository dashboardRepository, ICombobox combobox, IActionRepository actionrepo, INotyfService notyf, EmailConfiguration email)
+        public ActionController(ILogger<DashboardController> logger, IPatientRequestRepository patientrequestrepo, IDashboardRepository dashboardRepository, ICombobox combobox, IActionRepository actionrepo, INotyfService notyf, EmailConfiguration email)
         {
             _logger = logger;
             _combobox = combobox;
@@ -27,7 +29,10 @@ namespace HelloDocAdmin.Controllers.AdminSite
             _actionrepo = actionrepo;
             _notyf = notyf;
             _email = email;
+            this._patientrequestrepo = patientrequestrepo;
         }
+
+        #region ViewCase
         public async Task<IActionResult> ViewCase(int id)
         {
             ViewBag.RegionComboBox = await _combobox.RegionComboBox();
@@ -36,12 +41,18 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
             return View("../AdminSite/Action/ViewCase", sm);
         }
+        #endregion
+
+        #region ViewNotes
         public IActionResult ViewNotes(int id)
         {
 
             ViewNotesModel sm = _dashboardrepo.getNotesByID(id);
             return View("../AdminSite/Action/ViewNotes", sm);
         }
+        #endregion
+
+        #region ViewDocuments
         public IActionResult ViewDocuments(int id)
         {
             if (TempData["Mail"] != null)
@@ -52,6 +63,9 @@ namespace HelloDocAdmin.Controllers.AdminSite
             ViewDocumentsModel sm = _dashboardrepo.ViewDocument(id);
             return View("../AdminSite/Action/ViewDocuments", sm);
         }
+        #endregion
+
+        #region UploadDocuments
         public IActionResult UploadDocuments(int id, IFormFile? UploadFile)
         {
 
@@ -69,6 +83,9 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
             return RedirectToAction("ViewDocuments", new { id });
         }
+        #endregion
+
+        #region UploadDocumentsCC
         public IActionResult UploadDocumentsCC(int id, IFormFile? UploadFile)
         {
 
@@ -86,8 +103,9 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
             return RedirectToAction("ConcludeCare", new { requestID = id });
         }
+        #endregion
 
-
+        #region EditCase
         public IActionResult EditCase(ViewCaseModel sm)
         {
             bool result = _dashboardrepo.EditCase(sm);
@@ -104,7 +122,9 @@ namespace HelloDocAdmin.Controllers.AdminSite
             }
 
         }
+        #endregion
 
+        #region EditForCloseCase
         public IActionResult EditForCloseCase(ViewCloseCaseModel sm)
         {
             bool result = _actionrepo.EditForCloseCase(sm);
@@ -121,6 +141,9 @@ namespace HelloDocAdmin.Controllers.AdminSite
             }
 
         }
+        #endregion
+
+        #region SendLink
         public IActionResult SendLink(string firstname, string lastname, string email, string phonenumber)
         {
             if (_dashboardrepo.SendLink(firstname, lastname, email, phonenumber))
@@ -134,7 +157,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
             }
             return RedirectToAction("Index", "Dashboard");
         }
-
+        #endregion
 
 
         #region AssignProvider
@@ -153,6 +176,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
             return RedirectToAction("Index", "Dashboard");
         }
         #endregion
+
         #region TransferProvider
         [CustomAuthorization("Admin", "Dashboard")]
         public async Task<IActionResult> TransferProvider(int requestid, int ProviderId, string Notes)
@@ -169,6 +193,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
             return RedirectToAction("Index", "Dashboard");
         }
         #endregion
+
         #region TransferProvider
         [CustomAuthorization("Physician", "Dashboard")]
         public async Task<IActionResult> TransferToAdmin(int requestid, string Notes)
@@ -185,6 +210,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
             return RedirectToAction("Index", "Dashboard");
         }
         #endregion
+
         #region ChangeNotes
         [HttpPost]
         public IActionResult ChangeNotes(int RequestID, string? adminnotes, string? physiciannotes)
@@ -215,6 +241,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
         }
         #endregion
+
         #region _CancelCase
         [CustomAuthorization("Admin", "Dashboard")]
         public IActionResult CancelCase(int RequestId, string Note, string CaseTag)
@@ -257,6 +284,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
         }
         #endregion
+
         #region Delete Doc
 
         public IActionResult DeleteallDoc(string path, int RequestID)
@@ -367,6 +395,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
         }
         #endregion
+
         #region Delete Doc CloseCase
         public IActionResult DeleteDocCloseCase(int RequestWiseFileID, int RequestID)
         {
@@ -386,6 +415,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
         }
         #endregion
+
         #region order_action
         [CustomAuthorization("Admin,Physician", "SendOrder")]
         public async Task<IActionResult> Order(int id)
@@ -443,6 +473,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
 
         #endregion
+
         #region Clear_case
         [CustomAuthorization("Admin", "Dashboard")]
         public IActionResult ClearCase(int RequestID)
@@ -461,6 +492,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
         }
 
         #endregion
+
         #region Close Case
 
         [CustomAuthorization("Admin", "Dashboard")]
@@ -489,6 +521,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
 
         #endregion
+
         #region Accept Case
 
 
@@ -511,6 +544,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
 
         #endregion
+
         #region Encounter
 
         #region ACTION-ENCOUNTER VIEW
@@ -581,6 +615,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
         #endregion
 
         #endregion
+
         #region Create New Request
 
         public IActionResult CreateNewRequest()
@@ -591,6 +626,14 @@ namespace HelloDocAdmin.Controllers.AdminSite
         {
             if (ModelState.IsValid)
             {
+
+                bool region = _patientrequestrepo.CkeckRegion(data.State);
+                if (region)
+                {
+                    _notyf.Information("There are No services In this region");
+                    ModelState.AddModelError("State", "There are No services In this region");
+                    return View("../AdminSite/Action/CreateNewRequest", data);
+                }
                 bool apr = _actionrepo.CreateNewRequestPost(data, CV.LoggedUserID());
                 if (apr)
                 {
@@ -613,8 +656,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
         #endregion
 
-
-
+        #region HouseCall
         [CustomAuthorization("Physician", "Dashboard")]
         public IActionResult HouseCall(int requestID)
         {
@@ -632,6 +674,9 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
             return RedirectToAction("Index", "Dashboard");
         }
+        #endregion
+
+        #region Consult
         [CustomAuthorization("Physician", "Dashboard")]
         public IActionResult Consult(int requestID)
         {
@@ -649,6 +694,9 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
             return RedirectToAction("Index", "Dashboard");
         }
+        #endregion
+
+        #region ConcludeCare
         public IActionResult ConcludeCare(int requestID)
         {
 
@@ -659,6 +707,9 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
 
         }
+        #endregion
+
+        #region ConcludeCarePost
         public IActionResult ConcludeCarePost(int RequestID, string Notes)
         {
             if (_actionrepo.IsCaseFinialized(RequestID))
@@ -688,8 +739,9 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
 
         }
+        #endregion
 
-
+        #region GeneratePdf
         public IActionResult GeneratePdf(int RequestID)
         {
 
@@ -703,5 +755,6 @@ namespace HelloDocAdmin.Controllers.AdminSite
                 PageMargins = { Left = 20, Right = 20 }
             };
         }
+        #endregion
     }
 }

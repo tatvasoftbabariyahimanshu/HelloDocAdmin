@@ -135,14 +135,25 @@
                             Provider on call
                         </span>
                         <span class="addnewsm">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2" />
-                            </svg>
+                                <i class="fa fa-phone-square" aria-hidden="true"></i>
                         </span>
                     </a>
                     <a class="btn mx-2 btn-info text-white" asp-action="RequestedShift" asp-controller="Physician">
                         <span class="addnewlg">
-                            Shift for review
+                            Requested Shifts
+                        </span>
+                        <span class="addnewsm">
+                                <i class="fa fa-hourglass-end" aria-hidden="true"></i>
+                        </span>
+                    </a>
+                    }
+                    <a class="btn btn-info text-white js-stkModal-btn mx-2"
+                       data-form-id="formEdit_UMS" data-modal-size="lg"
+                       data-url='@Url.Action("_CreateShift", "Physician")'
+                      >
+
+                        <span class="addnewlg">
+                            Add New Shift
                         </span>
                         <span class="addnewsm">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
@@ -150,31 +161,26 @@
                             </svg>
                         </span>
                     </a>
-                    }
-                    <a class="btn btn-info text-white js-stkModal-btn mx-2"
-                       data-form-id="formEdit_UMS" data-modal-size="lg"
-                       data-url='@Url.Action("_CreateShift", "Physician")'
-                      >Add New Shift  </a>
 
                 </div>
             </div>
-            <div class="d-flex mt-4 justify-content-between">
-
-                <div id="Month_year"></div>
-                <div class="d-flex">
-                    <div>
-
+            <div class="d-flex justify-content-between flex-wrap mt-4">
+                <div id="Month_year" class="col-md-auto"></div> <!-- Adjust the column width as needed -->
+                <div class="d-flex flex-wrap justify-content-end col-md-auto">
+                    <!-- Adjust the column width as needed -->
+                    <div class="me-3 mb-2">
                         <svg class="bd-placeholder-img rounded me-2" width="20" height="20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#f4c894"></rect></svg>
-                        Pendding Shift
+                        <span>Pending Shift</span>
                     </div>
-                    <div class="mx-2">
-
+                    <div class="me-3 mb-2">
                         <svg class="bd-placeholder-img rounded me-2" width="20" height="20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#ceedce"></rect></svg>
-                        Approved Shift
+                        <span>Approved Shift</span>
                     </div>
-
                 </div>
             </div>
+
+
+
             <div class="d-flex justify-content-between mt-3">
 
 
@@ -274,7 +280,7 @@
                 </div>
 
                 <div class="tab-pane fade  " id="nav-day" role="tabpanel" aria-labelledby="nav-day-tab">
-                    <div id="daycontainer">
+                    <div id="daycontainer" class="table-responsive">
                         <div class="schedule">
                             <table style="width:100%;" class="table employee-schedules">
                                 <thead class="employee-schedules-thead">
@@ -362,7 +368,7 @@
 
                 </div>
                 <div class="tab-pane fade  " id="nav-week" role="tabpanel" aria-labelledby="nav-week-tab">
-                    <div id="weekviewcontainer" class="active">
+                    <div id="weekviewcontainer" class="table-responsive">
 
                         <table style="width:100%;" class="table">
                             <thead>
@@ -466,7 +472,7 @@
     function getProviderList() {
         var regionId = $('#fregion').val();
         if (regionId === '0') {
-            regionId = null; // Set regionId to null if the selected value is -1
+            regionId = null;
         }
         console.log(regionId);
         $(".loding-div").show();
@@ -757,17 +763,37 @@
                             cell.classList.add("border-1");
                             cell.classList.add("text-start");
                             cell.classList.add("mx-2");
+                         
+                          
                             cell.classList.add("table-text");
                             if (j === 0) {
+                                var cell = document.createElement('td');
+                                cell.classList.add("border-1");
+                                cell.classList.add("text-start");
+                                cell.classList.add("mx-2");
+                                cell.classList.add("table-text");
+
+                                // Create a div to contain the image and text
+                                var contentWrapper = document.createElement('div');
+                                contentWrapper.classList.add("d-flex");
+                                contentWrapper.classList.add("align-items-center"); // Align items vertically
+
+                                var imageWrapper = document.createElement('div');
+                                imageWrapper.classList.add("me-2"); // Add margin to the right for spacing
+
                                 var image = document.createElement('img');
                                 image.classList.add("img-fluid");
-                                image.classList.add("mx-2");
                                 image.classList.add("rounded");
-                                image.style.height = "30px";
+                                image.style.height = "40px";
                                 image.src = '/Upload/Physician/' + providerList[i].id + '/' + providerList[i].photo;
                                 image.alt = providerList[i].name;
-                                cell.appendChild(image);
-                                cell.appendChild(document.createTextNode(providerList[i].name));
+
+                                imageWrapper.appendChild(image);
+                                contentWrapper.appendChild(imageWrapper);
+
+                                var textNode = document.createTextNode(providerList[i].name);
+                                contentWrapper.appendChild(textNode);
+                                cell.appendChild(contentWrapper);
 
 
                             } else {
@@ -788,14 +814,14 @@
                                             cell.classList.add('p-0');
 
 
-                                            cell.innerHTML += `<a data-form-id="formEdit_UMS" data-url="@Url.Action("_EditShift", "Physician")?id=${item.shiftid}" class="m-1 d-block text-dark rounded text-center  table-text js-stkModal-btn Status-${item.status}">${item.starttime} - ${item.endtime}</a>`;
+                                            cell.innerHTML += `<a data-form-id="formEdit_UMS" data-url="@Url.Action("_EditShift", "Physician")?id=${item.shiftid}" class="m-1 d-block text-dark rounded text-center  table-text js-stkModal-btn Status-${item.status}">${item.starttime} - ${item.endtime}/ ${providerList[i].name}</a>`;
                                         });
                                     } else {
                                         let buttonId = `viewAllButton_${i}${j}`;
                                         for (let i = 0; i < 2; i++) {
                                             const item = matchingDates[i];
                                             cell.classList.add('p-0');
-                                            cell.innerHTML += `<a data-form-id="formEdit_UMS" data-url="@Url.Action("_EditShift", "Physician")?id=${item.shiftid}" class="m-1 d-block text-dark rounded table-text  text-center js-stkModal-btn Status-${item.status}">${item.starttime} - ${item.endtime}</a>`;
+                                            cell.innerHTML += `<a data-form-id="formEdit_UMS" data-url="@Url.Action("_EditShift", "Physician")?id=${item.shiftid}" class="m-1 d-block text-dark rounded table-text  text-center js-stkModal-btn Status-${item.status}">${item.starttime} - ${item.endtime}/ ${providerList[i].name}</a></a>`;
                                         }
                                         const newdate = new Date(fdweek.getFullYear(), fdweek.getMonth() + 1, fdweek.getDate() + j - 2);
 
@@ -1010,6 +1036,9 @@
                     if (parseInt(endParts[1]) != 0) {
                         endHour = endHour+1;
                    }
+                    if (endHour === 24) {
+                        endHour = 23; // Set it to 23 instead of incrementing to 24
+                    }
                     console.log(endParts);
                     console.log(endHour);
                     // Determine the value to store based on status
@@ -1064,11 +1093,15 @@
                             endTime++;
                         }
                         const colspan = endTime - startTime + 1;
+                        const status = providerList[index].status;
+
+                        // Determine the class based on status
+                        const shiftClass = status === 1 ? "Status-1" : "Status-0";
                         timeSlot.colSpan = colspan;
 
                         (hoursArray[i] == 0.5) ? hoursArray[i] = 0 : hoursArray[i]; // just for color of the shift change the class name for that !
 
-                        timeSlot.innerHTML += `<a data-form-id="formEdit_UMS" data-url="@Url.Action("_EditShift", "Physician")?id=${shiftidArray[i]}"  class="mt-1 d-block  text-dark js-stkModal-btn table-text text-center  Status-1">${gettime[i]} To ${gettime[colspan+(i-1)]} </a>`;
+                        timeSlot.innerHTML += `<a data-form-id="formEdit_UMS" data-url="@Url.Action("_EditShift", "Physician")?id=${shiftidArray[i]}"  class="mt-1 d-block  text-dark js-stkModal-btn table-text text-center  Status-1">${gettime[i]} To ${gettime[colspan + (i - 1)]}/ ${employee.name} </a>`;
                         timeSlot.classList.add('p-3');
                         (hoursArray[i] == 0) ? hoursArray[i] = 0.5 : hoursArray[i];
                         // Skip the next cells as they are merged

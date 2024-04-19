@@ -20,7 +20,7 @@
 
             </div>
             <div class="text-end">
-                <a asp-controller="Dashboard" asp-action="Index"
+                <a asp-controller="Physician" asp-action="Scheduling"
                    class="btn btn-outline-info btn-back">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                          fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
@@ -34,7 +34,7 @@
             <div class="d-flex mt-4 justify-content-between">
                 <div class="dropdown text-start ">
 
-                    <select class="input-outline input-outline-select " name="region" data-allow-clear="true" tabindex="-1" onchange="myFunction()" id="Region" asp-items="@(new SelectList(ViewBag.RegionComboBox,"RegionId","RegionName"))" data-control="select2" data-placeholder="Select Level">
+                    <select class="input-outline input-outline-select " onchange="filterByRegion()" name="region" data-allow-clear="true" tabindex="-1" id="Region" asp-items="@(new SelectList(ViewBag.RegionComboBox,"RegionId","RegionName"))" data-control="select2" data-placeholder="Select Level">
                         <option value="0">All Region</option>
                     </select>
                 </div>
@@ -73,7 +73,7 @@
                             {
                                 @if (item.onCallStatus == 1)
                                 {
-                                    <div class="col-md-4 mt-3">
+                                <div class="col-md-4 mt-3 physician-card" data-region-id="@item.Regionid">
                                         <img src="/Upload/Physician/@item.Physicianid/@item.Photo" style="height: 50px;">
                                         <span> @item.Firstname @item.Lastname</span>
                                     </div>
@@ -91,7 +91,7 @@
                             {
                                 @if (item.onCallStatus == 0)
                                 {
-                                <div class="col-md-4 mt-3">
+                                <div class="col-md-4 mt-3 physician-card" data-region-id="@item.Regionid">
                                         <img src="/Upload/Physician/@item.Physicianid/@item.Photo" style="height: 50px;">
                                         @item.Firstname @item.Lastname
                                     </div>
@@ -108,3 +108,15 @@
     </div>
 
 
+<script>
+    function filterByRegion() {
+        var selectedRegionId = $("#Region").val(); // Get the selected region ID
+        $(".physician-card").hide(); // Hide all physician cards
+        console.log(selectedRegionId);
+        if (selectedRegionId === "0") {
+            $(".physician-card").show(); // Show all physician cards if "All Regions" is selected
+        } else {
+            $(".physician-card[data-region-id='" + selectedRegionId + "']").show(); // Show physician cards for the selected region
+        }
+    }
+    </script>

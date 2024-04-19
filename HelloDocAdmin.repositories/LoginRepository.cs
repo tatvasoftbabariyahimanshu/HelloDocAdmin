@@ -82,12 +82,18 @@ namespace HelloDocAdmin.Repositories
 
                                     string[] coordinates = ipInfo.loc.ToString().Split(',');
 
-
+                                    string city = ipInfo.city.ToString();
+                                    string region = ipInfo.region.ToString();
+                                    string country = ipInfo.country.ToString();
+                                    string postal = ipInfo.postal.ToString();
+                                    string address = $"{city}, {region}, {country} {postal}";
 
                                     var data2 = _context.Physicianlocations.FirstOrDefault(e => e.Physicianid == admindata.Physicianid);
 
                                     data2.Longitude = Convert.ToDecimal(coordinates[1]);
                                     data2.Latitude = Convert.ToDecimal(coordinates[0]);
+                                    data2.Address = address;
+                                    data2.Createddate = DateTime.Now;
                                     _context.Physicianlocations.Update(data2);
                                     _context.SaveChanges();
                                     return admin;

@@ -9,7 +9,6 @@ using Rotativa.AspNetCore;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSession();
-// Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>();
 builder.Services.AddScoped<IDashboardRepository, DashboardRepository>();
@@ -19,22 +18,22 @@ builder.Services.AddScoped<IPatientRequestRepository, PatientRequestRepository>(
 builder.Services.AddScoped<IProviderLocation, ProviderLocation>();
 builder.Services.AddScoped<ILoginRepository, LoginRepository>();
 builder.Services.AddScoped<IPatientDashboardRepository, PatientDashboardRepository>();
-builder.Services.AddScoped<IJWTService, JWTService>();
+builder.Services.AddTransient<IJWTService, JWTService>();
 builder.Services.AddScoped<IPhysicianRepository, PhysicianRepository>();
 builder.Services.AddScoped<IAccessRepository, AccessRepository>();
 builder.Services.AddScoped<IAdminProfile, AdminProfile>();
 builder.Services.AddScoped<ISearchRecords, SearchRecords>();
 builder.Services.AddScoped<IVendorRepository, VendorRepository>();
+var emailConfig = builder.Configuration
+        .GetSection("EmailConfiguration")
+        .Get<EmailConfiguration>();
+builder.Services.AddSingleton(emailConfig);
 
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 
 builder.Services.AddNotyf(config => { config.DurationInSeconds = 10; config.IsDismissable = true; config.Position = NotyfPosition.TopRight; });
-var emailConfig = builder.Configuration
-        .GetSection("EmailConfiguration")
-        .Get<EmailConfiguration>();
 
-builder.Services.AddSingleton(emailConfig);
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

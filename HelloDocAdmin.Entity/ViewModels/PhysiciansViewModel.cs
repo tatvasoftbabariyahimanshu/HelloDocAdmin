@@ -10,7 +10,7 @@ namespace HelloDocAdmin.Entity.ViewModels
         public BitArray? notification { get; set; }
         public string? role { get; set; }
         public int? Physicianid { get; set; }
-
+        public string? OnCallStatus { get; set; }
         public string? Aspnetuserid { get; set; }
         [Required(ErrorMessage = "Enter UserName")]
         public string UserName { get; set; }

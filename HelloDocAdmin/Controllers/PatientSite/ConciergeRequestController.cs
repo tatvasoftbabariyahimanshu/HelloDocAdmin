@@ -26,11 +26,11 @@ namespace HelloDocAdmin.Controllers.PatientSite
         {
             if (ModelState.IsValid)
             {
-                var region = _patientrequestrepo.CkeckRegion(viewdata.CON_State);
-                if (region == null)
+                bool region = _patientrequestrepo.CkeckRegion(viewdata.CON_State);
+                if (region)
                 {
                     _notyf.Information("Currently we are not serving in this region");
-                    ModelState.AddModelError("State", "Currently we are not serving in this region");
+                    ModelState.AddModelError("CON_State", "Currently we are not serving in this region");
                     return View("../PatientSite/Request/ConcierageRequestForm", viewdata);
                 }
                 else

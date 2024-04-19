@@ -23,13 +23,19 @@ namespace HelloDocAdmin.Controllers.AdminSite
             _notyf = notyf;
         }
 
+
+        #region IndexAsync
         public async Task<IActionResult> IndexAsync()
         {
-            ViewBag.userrolecombobox = await _combobox.UserRole();
+
             ViewBag.RegionComboBox = await _combobox.RegionComboBox();
+            ViewBag.userrolecombobox = await _combobox.RolelistAdmin();
             ViewAdminProfileModel vm = _adminProfile.GetDetailsForAdminProfile(CV.LoggedUserID());
             return View("../AdminSite/MyProfile/Index", vm);
         }
+        #endregion
+
+        #region SaveAdministrationinfo
         [HttpPost]
         public IActionResult SaveAdministrationinfo(ViewAdminProfileModel vm)
         {
@@ -53,7 +59,9 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
             return RedirectToAction("Index");
         }
+        #endregion
 
+        #region EditBillingInfo
         public IActionResult EditBillingInfo(ViewAdminProfileModel vm)
         {
             bool data = _adminProfile.Edit_Billing_Info(vm, CV.LoggedUserID());
@@ -68,7 +76,9 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
             return RedirectToAction("Index");
         }
+        #endregion
 
+        #region ResetPassAdmin
         public IActionResult ResetPassAdmin(string password)
         {
 
@@ -86,5 +96,6 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
             return RedirectToAction("Index");
         }
+        #endregion
     }
 }

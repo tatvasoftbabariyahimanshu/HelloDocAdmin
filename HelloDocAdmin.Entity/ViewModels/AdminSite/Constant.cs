@@ -32,8 +32,8 @@
         }
         public enum AccountType
         {
-            All = 1, Admin, Physician,
-            Patient
+            Admin = 2, Physician,
+
         }
         public enum Action1
         {

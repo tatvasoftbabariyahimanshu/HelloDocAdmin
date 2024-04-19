@@ -894,11 +894,11 @@ th:nth-child(6) {
         margin-left: .4rem;
     }
 
-    .cir-Business {
+    .cir-business {
         margin-left: .4rem;
     }
 
-    .cir-Concierge {
+    .cir-concierge {
         margin-left: .4rem;
     }
 
@@ -960,14 +960,14 @@ th:nth-child(6) {
     border-radius: 50%;
 }
 
-.cir-Business {
+.cir-business {
     height: 12px;
     width: 12px;
     background-color: #007fc6;
     border-radius: 50%;
 }
 
-.cir-Concierge {
+.cir-concierge {
     height: 12px;
     width: 12px;
     background-color: #E0627E;

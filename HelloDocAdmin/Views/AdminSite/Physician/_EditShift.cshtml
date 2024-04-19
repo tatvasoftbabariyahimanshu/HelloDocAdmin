@@ -106,6 +106,8 @@
             let errorMessage = "Start Date is required.";
             displayErrorMessage(StartDate, errorMessage);
             isValid = false;
+        }else{
+            displayErrorMessage(StartDate, "");
         }
 
         // Validate Starttime
@@ -114,6 +116,8 @@
             let errorMessage = "Start Time is required.";
             displayErrorMessage(StartTime, errorMessage);
             isValid = false;
+        } else {
+            displayErrorMessage(StartTime, "");
         }
 
         // Validate Endtime
@@ -123,12 +127,13 @@
             displayErrorMessage(EndTime, errorMessage);
             isValid = false;
         }
-
+       
         if (EndTime.value < StartTime.value) {
             let errorMessage = "End Time is alway grater than  Start Time.";
             displayErrorMessage(EndTime, errorMessage);
             isValid = false;
         }
+      
 
         var diff = EndTime.value - StartTime.value;
         let startTime = new Date("1970-01-01T" + StartTime.value);
@@ -146,6 +151,7 @@
             displayErrorMessage(EndTime, errorMessage);
             isValid = false;
         }
+       
 
       
         // If all validations pass, submit the form
@@ -169,6 +175,15 @@
         let errorMessageElement = document.createElement("span");
         errorMessageElement.className = "err-msg";
         errorMessageElement.textContent = message;
+        if (message == "") {
+            inputElement.classList.add("is-valid");
+            inputElement.classList.remove("is-invalid");
+            inputElement.classList.add("form-control");
+        } else {
+            inputElement.classList.add("is-invalid");
+            inputElement.classList.remove("is-valid");
+            inputElement.classList.add("form-control");
+        }
 
         // Append error message to the parent div
         parentDiv.appendChild(errorMessageElement);
@@ -258,15 +273,13 @@
         var save = document.getElementById('save');
         var edit = document.getElementById('edit');
 
-        if (StartDate.disabled) {
-       
+        if (StartDate.disabled) {       
             save.style.display = 'inline-block';
             edit.style.display = 'none';
             StartDate.disabled = false;
             StartTime.disabled = false;
             EndTime.disabled = false;
-        } else {
-          
+        } else {          
             edit.style.display = 'inline-block';
             save.style.display = 'none';
             StartDate.disabled = true;
@@ -274,6 +287,5 @@
             EndTime.disabled = true;
         }
     }
-   
 </script>
 

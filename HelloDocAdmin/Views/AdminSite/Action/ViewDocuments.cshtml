@@ -80,7 +80,7 @@
                     </div>
                 </div>
                 <div class="table-responsive mt-3 ">
-                    <table class="table">
+                    <table class="table" id="tbl">
                         <thead class="border-0">
                             <tr class="table-secondary">
                                 <th scope="col" class="table-text-header px-3">
@@ -140,7 +140,57 @@
                         </tbody>
                     </table>
                 </div>
+                @foreach (var item in Model.documentslist)
+                {
+                    <div class="accordion-item text-secondary mt-2 " style="position:relative;" id="Acordiantable">
+                        <h2 class="accordion-header btn-i " id="flush-heading-@item.RequestWiseFileID">
+                            <div class="p-3 collapsed border-bottom" type="button" data-bs-toggle="collapse" data-bs-target="#flush-@item.RequestWiseFileID" aria-expanded="false" aria-controls="collapse_@item.RequestWiseFileID">
+                                <div class="d-flex text-dark align-items-center justify-content-between w-100">
+                                    <div class="text-start d-flex mb-3 h6">
+                                        <div class="form-check mx-1">
+                                            <input class="form-check-input doc-checkbox" type="checkbox" value="" onclick="statusselectall()">
+                                        </div>
+                                        <small mx-2 mt-2 class="flnamae">@item.Filename</small>
+                                    </div>
 
+
+                                </div>
+
+
+                            </div>
+                        </h2>
+
+                        <div id="flush-@item.RequestWiseFileID" class="accordion-collapse text-dark  position-relative  btn-i p-2 collapse mb-3 border-top" data-bs-parent="#accordionExample">
+
+                            <div class="accordion-body container-fluid">
+                                <p> <i class="fa fa-user  border border-info rounded-pill p-1 me-2" aria-hidden="true"></i><b>Uploader :</b>  @item.Uploader</p>
+
+                                <p> <i class="fa fa-calendar border border-info rounded-pill p-1 me-2"></i><b>Date :</b>  @item.Createddate</p>
+
+
+
+
+
+
+
+                                <div class="text-end d-md-flex justify-content-md-end">
+
+                                    <a class="btn btn-outline-info  download-link text-info me-md-2 mb-2" download href="/Upload/req_@Model.RequestID/@item.Filename">
+                                        <i class="fa fa-download" aria-hidden="true"></i>
+                                    </a>
+                                    <a class="btn btn-outline-info  text-info me-md-2 mb-2" target="_blank" href="/Upload/req_@Model.RequestID/@item.Filename">
+                                        <i class="fa-solid fa-eye"></i>
+                                    </a>
+                                    <a class="btn btn-outline-info  text-info me-md-2 mb-2 dlt-link" data="@Model.RequestWiseFileID"  asp-action="DeleteDoc" asp-controller="Action" asp-route-path="/Upload/req_@Model.RequestID/@item.Filename" asp-route-RequestWiseFileID="@item.RequestWiseFileID" asp-route-RequestID="@Model.RequestID">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </a>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                }
             </div>
         </div>
 

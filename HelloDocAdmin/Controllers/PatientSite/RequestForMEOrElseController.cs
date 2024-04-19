@@ -34,8 +34,8 @@ namespace HelloDocAdmin.Controllers.PatientSite
         {
             if (ModelState.IsValid)
             {
-                var region = _patientrequestrepo.CkeckRegion(viewdata.State);
-                if (region == null)
+                bool region = _patientrequestrepo.CkeckRegion(viewdata.State);
+                if (region)
                 {
                     _notyf.Information("Currently we are not serving in this region");
                     ModelState.AddModelError("State", "Currently we are not serving in this region");
@@ -77,8 +77,8 @@ namespace HelloDocAdmin.Controllers.PatientSite
         {
             if (ModelState.IsValid)
             {
-                var region = _patientrequestrepo.CkeckRegion(viewdata.State);
-                if (region == null)
+                bool region = _patientrequestrepo.CkeckRegion(viewdata.State);
+                if (region)
                 {
                     _notyf.Information("Currently we are not serving in this region");
                     ModelState.AddModelError("State", "Currently we are not serving in this region");

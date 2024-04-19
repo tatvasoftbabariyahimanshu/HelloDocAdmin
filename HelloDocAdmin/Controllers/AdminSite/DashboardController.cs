@@ -20,9 +20,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
         }
 
 
-
-
-
+        #region Index
         public async Task<IActionResult> Index()
         {
 
@@ -39,6 +37,8 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
             return View("../AdminSite/Dashboard/Index", model);
         }
+        #endregion
+
         #region providerbyregion
         public IActionResult ProviderbyRegion(int? Regionid)
         {
@@ -47,7 +47,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
         }
         #endregion
 
-
+        #region _SearchResult
         public async Task<IActionResult> _SearchResult(string? Status, int currentpage = 1, int region = 0, int requesttype = 0, string search = "", int pagesize = 10)
         {
             ViewBag.RegionComboBox = await _combobox.RegionComboBox();
@@ -111,7 +111,9 @@ namespace HelloDocAdmin.Controllers.AdminSite
                     return PartialView("../AdminSite/Dashboard/nodata", dm);
             }
         }
+        #endregion
 
+        #region GetStatusName
         private string GetStatusName(string status)
         {
             return status switch
@@ -125,6 +127,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
                 _ => "Unknown",
             };
         }
+        #endregion
 
     }
 }

@@ -221,6 +221,7 @@ namespace HelloDocAdmin.Repositories
                                          join physician in _context.Physicians on user.Id equals physician.Aspnetuserid into physicianGroup
                                          from physician in physicianGroup.DefaultIfEmpty()
                                          where admin != null || physician != null
+                                         orderby user.Modifieddate descending
                                          select new ViewUserAccess
                                          {
                                              UserName = user.Username,

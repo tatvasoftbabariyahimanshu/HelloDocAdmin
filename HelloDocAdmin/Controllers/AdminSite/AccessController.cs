@@ -7,21 +7,21 @@ using HelloDocAdmin.Entity.ViewModels.AdminSite;
 using HelloDocAdmin.Repositories.Interface;
 using Microsoft.AspNetCore.Mvc;
 
-
 namespace HelloDocAdmin.Controllers.AdminSite
 {
     [CustomAuthorization("Admin", "Access")]
     public class AccessController : Controller
     {
-        private IActionRepository _actionrepo;
-        private IAccessRepository _accesrepo;
-        private IDashboardRepository _dashboardrepo;
-        private ICombobox _combobox;
+        private readonly IActionRepository _actionrepo;
+        private readonly IAccessRepository _accesrepo;
+        private readonly IDashboardRepository _dashboardrepo;
+        private readonly ICombobox _combobox;
         private readonly ILogger<DashboardController> _logger;
         private readonly INotyfService _notyf;
         private readonly EmailConfiguration _email;
         private readonly IPhysicianRepository _phyrepo;
         private readonly IAdminProfile _admin;
+
         public AccessController(ILogger<DashboardController> logger, IPhysicianRepository physician, IAdminProfile adminProfile, IDashboardRepository dashboardRepository, ICombobox combobox, IActionRepository actionrepo, INotyfService notyf, EmailConfiguration email, IAccessRepository accesrepo)
         {
             _logger = logger;
@@ -35,12 +35,15 @@ namespace HelloDocAdmin.Controllers.AdminSite
             _admin = adminProfile;
         }
 
-
+        #region Index
         public IActionResult Index()
         {
             List<Role> v = _accesrepo.GetRoleAccessDetails();
             return View("../AdminSite/Access/Index", v);
         }
+        #endregion
+
+        #region CreateAccess
         public IActionResult CreateAccess(int id)
         {
             if (id != 0)
@@ -52,7 +55,9 @@ namespace HelloDocAdmin.Controllers.AdminSite
             ViewData["Page"] = "Create";
             return View("../AdminSite/Access/CreateAccess");
         }
+        #endregion
 
+        #region GetMenusByAccount
         public async Task<IActionResult> GetMenusByAccount(short Accounttype, int roleid)
         {
             List<Menu> v = await _accesrepo.GetMenusByAccount(Accounttype);
@@ -82,7 +87,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
             return Json(v);
         }
-
+        #endregion
 
         #region PostRoleMenu
         [HttpPost]
@@ -127,18 +132,21 @@ namespace HelloDocAdmin.Controllers.AdminSite
         #region User_Access
         public async Task<IActionResult> UserAccess()
         {
-
             return View("../AdminSite/Access/UserAccess");
         }
         #endregion
+
+        #region AccessList
         public async Task<IActionResult> AccessList(int? accounttype, int pagesize = 10, int currentpage = 1)
         {
             UserAccessData sr = await _accesrepo.GetAllUserDetails(accounttype, pagesize, currentpage);
             return PartialView("../AdminSite/Access/_UserAccessList", sr);
         }
+        #endregion
+
+        #region PhysicianProfile
         public async Task<IActionResult> PhysicianProfile(int? id)
         {
-            //TempData["Status"] = TempData["Status"];
             ViewBag.RegionComboBox = await _combobox.RegionComboBox();
             ViewBag.userrolecombobox = await _combobox.RolelistProvider();
             if (id == null)
@@ -151,19 +159,16 @@ namespace HelloDocAdmin.Controllers.AdminSite
                 ViewData["PhysicianAccount"] = "Edit";
                 PhysiciansViewModel v = await _phyrepo.GetPhysicianById((int)id);
                 return View("../AdminSite/Physician/PhysicianAddEdit", v);
-
-
             }
-
         }
+        #endregion
+
         #region PhysicianAddEdit
         [HttpPost]
         public async Task<IActionResult> PhysicianAddEdit(PhysiciansViewModel physicians)
         {
-            //TempData["Status"] = TempData["Status"];
             ViewBag.RegionComboBox = await _combobox.RegionComboBox();
             ViewBag.userrolecombobox = await _combobox.UserRole();
-            // bool b = physicians.Isagreementdoc[0];
 
             if (ModelState.IsValid)
             {
@@ -178,24 +183,16 @@ namespace HelloDocAdmin.Controllers.AdminSite
                     _notyf.Error("Physician Not Added...");
                     return View("../AdminSite/Physician/PhysicianAddEdit", physicians);
                 }
-
             }
             else
             {
                 _notyf.Error("Physician Data not Valid...");
                 return View("../AdminSite/Physician/PhysicianAddEdit", physicians);
             }
-
-
         }
-
-
-
-
-
         #endregion
-        #region adminaddedit
 
+        #region AdminProfile
         public async Task<IActionResult> AdminProfile(string? id)
         {
             ViewBag.userrolecombobox = await _combobox.RolelistAdmin();
@@ -215,7 +212,6 @@ namespace HelloDocAdmin.Controllers.AdminSite
             if (ModelState.IsValid)
             {
                 model.AdminReqionList = Request.Form["SelectedRegions"].Select(int.Parse).ToList();
-
 
                 if (model.AspnetUserID == null)
                 {
@@ -245,21 +241,16 @@ namespace HelloDocAdmin.Controllers.AdminSite
                         return View("../AdminSite/Access/AdminAddEdit", model);
                     }
                 }
-
-
-
             }
             else
             {
                 _notyf.Error("Enter valid data ");
                 return View("../AdminSite/Access/AdminAddEdit", model);
             }
-
-
-
         }
+        #endregion
 
-
+        #region DeleteAccess
         public async Task<IActionResult> DeleteAccess(int id)
         {
             if (_accesrepo.DeleteAccess(id))
@@ -273,14 +264,5 @@ namespace HelloDocAdmin.Controllers.AdminSite
             return RedirectToAction("Index");
         }
         #endregion
-
-
-        //public List<string> getManuByID(int RoleID)
-        //{
-        //    List<string> str = _accesrepo.getManuByID(RoleID);
-        //    return str;
-        //}
-
-
     }
 }

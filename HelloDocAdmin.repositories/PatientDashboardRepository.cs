@@ -54,6 +54,32 @@ namespace HelloDocAdmin.Repositories
 
                                         where Req.Userid == UserIDForRequest.Userid
                                         select new Request()
+                                        {
+                                            Relationname = Req.Relationname,
+                                            Requestid = Req.Requestid,
+                                            Status = Req.Status,
+                                            Accepteddate = Req.Accepteddate,
+                                            Calltype = Req.Calltype,
+                                            Casenumber = Req.Casenumber,
+                                            Casetag = Req.Casetag,
+                                            Casetagphysician = Req.Casetagphysician,
+                                            Completedbyphysician = Req.Completedbyphysician,
+                                            Confirmationnumber = Req.Confirmationnumber,
+                                            Createddate = Req.Createddate,
+                                            Createduserid = Req.Createduserid,
+                                            Declinedby = _context.Physicians.FirstOrDefault(e => e.Physicianid == Req.Physicianid).Firstname,
+                                            Email = Req.Email,
+                                            Firstname = Req.Firstname,
+                                            Lastname = Req.Lastname,
+                                            Physicianid = Req.Physicianid,
+                                            Isdeleted = Req.Isdeleted,
+                                            Modifieddate = Req.Modifieddate,
+                                            Phonenumber = Req.Phonenumber,
+                                            Ismobile = Req.Ismobile,
+                                            Physician = _context.Physicians.FirstOrDefault(e => e.Physicianid == Req.Physicianid),
+
+                                        }
+
                                                );
 
             model.TotalPage = (int)Math.Ceiling((double)data.Count() / pagesize);
@@ -61,7 +87,7 @@ namespace HelloDocAdmin.Repositories
 
 
 
-            List<Request> Request = _context.Requests.Where(r => r.Userid == UserIDForRequest.Userid).ToList();
+            List<Request> Request = data.ToList();
             model.pageSize = pagesize;
             model.CurrentPage = currentpage;
             model.requests = Request;

@@ -109,17 +109,17 @@
 
                 <p> <i class="fa fa-envelope border border-info rounded-pill p-1 me-2"></i><b>Requestor :</b>  @Enum.GetName(typeof(RequestType), item.RequestTypeID)</p>
                 <p> <i class="fa fa-calendar border border-info rounded-pill p-1 me-2" aria-hidden="true"></i><b>DateOfService:</b> @item.DateOfService</p>
-                <p> <i class="fa fa-envelope border border-info rounded-pill p-1 me-2"></i><b>Email :</b>  @item.Email</p>
+                <p> <i class="fa fa-envelope border border-info rounded-pill p-1 me-2" aria-hidden="true"></i><b>Email :</b>  @item.Email</p>
                 <p> <i class="fa fa-phone border  border-info rounded-pill p-1 me-2"></i><b> Patient : </b>@item.PhoneNumber</p>
-                <p> <i class="fa fa-phone border  border-info rounded-pill p-1 me-2"></i><b> Address : </b>@item.Address</p>
-                      <p> <i class="fa fa-phone border  border-info rounded-pill p-1 me-2"></i><b> ZipCode : </b>@item.Zip</p>
-                <p> <i class="fa fa-phone border  border-info rounded-pill p-1 me-2"></i><b> Request Status : </b>@item.Status</p>
-                <p> <i class="fa fa-phone border  border-info rounded-pill p-1 me-2"></i><b> Provider : </b>@item.PhysicianName</p>
-                <p> <i class="fa fa-phone border  border-info rounded-pill p-1 me-2"></i><b> Provider Note : </b>@item.PhysicianNote</p>
-                <p> <i class="fa fa-phone border  border-info rounded-pill p-1 me-2"></i><b> Cancel By ProviderNote : </b>@item.CancelByProviderNote</p>
-                  <p> <i class="fa fa-phone border  border-info rounded-pill p-1 me-2"></i><b> Admin Note : </b>@item.AdminNote</p>
-                <p> <i class="fa fa-phone border  border-info rounded-pill p-1 me-2"></i><b> close Case Date : </b>@item.CloseCaseDate</p>
-                    <p> <i class="fa fa-phone border  border-info rounded-pill p-1 me-2"></i><b> Patient Notes : </b>@item.PatientNote</p>
+                <p> <i class="fa fa-map-marker border border-info rounded-pill p-1 me-2"></i><b> Address : </b>@item.Address</p>
+                <p> <i class="fa fa-address-card-o border  border-info rounded-pill p-1 me-2"></i><b> ZipCode : </b>@item.Zip</p>
+                <p> <i class="fa fa-code-fork border  border-info rounded-pill p-1 me-2"></i><b> Request Status : </b>@item.Status</p>
+                <p> <i class="fa fa-user-md border  border-info rounded-pill p-1 me-2"></i><b> Provider : </b>@item.PhysicianName</p>
+                <p> <i class="fa fa-commenting border  border-info rounded-pill p-1 me-2"></i><b> Provider Note : </b>@item.PhysicianNote</p>
+                <p> <i class="fa fa-ban border  border-info rounded-pill p-1 me-2"></i><b> Cancel By ProviderNote : </b>@item.CancelByProviderNote</p>
+                <p> <i class="fa fa-comments-o border  border-info rounded-pill p-1 me-2"></i><b> Admin Note : </b>@item.AdminNote</p>
+                <p> <i class="fa fa-window-close border  border-info rounded-pill p-1 me-2"></i><b> close Case Date : </b>@item.CloseCaseDate</p>
+                <p> <i class="fa fa-commenting border  border-info rounded-pill p-1 me-2"></i><b> Patient Notes : </b>@item.PatientNote</p>
                
 
 
@@ -156,7 +156,7 @@
                     <li class="page-item"><a class="page-link" onclick="getpage(@Model.CurrentPage-1); getfilterdata();">Previous</a></li>
                 }
 
-                @for (int i = Math.Max(1, (byte)Model.CurrentPage - 2); i <= Math.Min((byte)Model.TotalPage, (byte)Model.CurrentPage + 3); i++)
+                @for (int i = Math.Max(1, (byte)Model.CurrentPage - 2); i <= Math.Min((byte)Model.TotalPage, (byte)Model.CurrentPage + 2); i++)
                 {
                     <li class="page-item"><a class="page-link @(i == Model.CurrentPage ? "active" : "")" onclick="getpage(@i); getfilterdata();">@i</a></li>
                 }

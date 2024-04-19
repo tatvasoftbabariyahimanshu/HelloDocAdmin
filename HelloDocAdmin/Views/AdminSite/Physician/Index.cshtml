@@ -35,13 +35,13 @@
                 <div class="d-flex">
                     <div class="dropdown text-start ">
 
-                        <div class="input-control w-100 ">
+                        <div class="input-control w-100 col-md-6 ">
                             <select class="input-outline input-outline-select inp asp  inp-dis" onchange="getfilterdata()" id="RegionID" data-allow-clear="true" tabindex="-1" asp-items="@(new SelectList(ViewBag.RegionComboBox, "RegionId", "RegionName"))" data-control="select2" data-placeholder="Select Level">
                                 <option value="0">Select Region</option>
                             </select>
                         </div>
                     </div>
-                        <div class="inputs-control mx-2">
+                    <div class="inputs-control mx-2 col-md-6">
                             <input placeholder=" " id="ProviderName" onkeyup="getfilterdata()" class="input-outline w-100 inp admin-input" type="text">
                             <label class="inputs-lable">ProviderName</label>
                         </div>
@@ -51,17 +51,25 @@
                 <div class="text-end d-flex">
                     <form asp-action="ChangeNotificationPhysician" class="mx-2" id="saveChangesForm" asp-controller="Physician">
                         <input type="hidden" id="changedValuesInput" name="changedValues">
-                        <button class="btn btn-outline-info " style="display:none;" type="submit" id="saveChangesButton"> Save Changes </button>
+                        <button class="btn btn-info text-white" style="display:none;" type="submit" id="saveChangesButton">
+                            <span>
+                                <span class="addnewlg">
+                                    Save Changes <i class="fa fa-floppy-o" aria-hidden="true"></i>
+
+                                </span>
+                                <span class="addnewsm">
+                                    <i class="fa fa-floppy-o" aria-hidden="true"></i>
+                                </span>
+                            </span>
+                        </button>
                     </form>
                     <a class="btn btn-info text-white h6" asp-action="PhysicianProfile" asp-controller="Physician">
                         <span >
                             <span class="addnewlg">
-                                Add Provider
+                                Add Provider <i class="fa fa-address-book-o" aria-hidden="true"></i>
                             </span>
                             <span class="addnewsm">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2" />
-                                </svg>
+                                <i class="fa fa-address-book-o" aria-hidden="true"></i>
                             </span>
                     </span>
                     
@@ -109,7 +117,7 @@
                     <input type="hidden" name="id" id="phyid" />
                     <div class="mb-4 mx-3">
                         <div class="form-check p-2 ">
-                            <input class="form-check-input" value="1" type="radio" name="way" id="flexRadioDefault1">
+                            <input class="form-check-input " value="1" type="radio" name="way" id="flexRadioDefault1">
                             <label class="form-check-label" for="flexRadioDefault1">
                                 Sms
                             </label>

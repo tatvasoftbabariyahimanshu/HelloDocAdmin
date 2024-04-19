@@ -1,6 +1,6 @@
 ﻿@using static HelloDocAdmin.Entity.ViewModels.AdminSite.Constant;
 ﻿<div class="modal fade" id="SendAgreement" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header  bg-info text-white">
                 <h1 class="modal-title fs-5" id="exampleModalLabel">send agreement</h1>
@@ -64,6 +64,9 @@
             displayErrorMessage(Phonenumber_sendAgreement, errorMessage);
             isValid = false;
         }
+        else {
+            displayErrorMessage(Phonenumber_sendAgreement, "");
+        }
 
         let Email_sendAgreement = document.getElementById("Email_sendAgreement");
         if (!Email_sendAgreement.value) {
@@ -71,7 +74,9 @@
             displayErrorMessage(Email_sendAgreement, errorMessage);
             isValid = false;
         }
-      
+      else{
+            displayErrorMessage(Email_sendAgreement, "");
+      }
 
         if (isValid) {
 

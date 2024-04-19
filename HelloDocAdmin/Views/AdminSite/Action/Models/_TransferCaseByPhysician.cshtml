@@ -1,5 +1,5 @@
 ﻿﻿<div class="modal fade" id="TransferCasebyPhy" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header  bg-info text-white">
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Transfer Request</h1>
@@ -67,6 +67,9 @@
             let errorMessage = "Write Description";
             displayErrorMessage(trfr_By_phyNotes, errorMessage);
             isValid = false;
+        }
+        else {
+            displayErrorMessage(trfr_By_phyNotes, "");
         }
         if (isValid) {
             return true;

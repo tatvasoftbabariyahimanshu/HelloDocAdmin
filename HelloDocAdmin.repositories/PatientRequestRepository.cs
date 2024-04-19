@@ -741,9 +741,9 @@ namespace HelloDocAdmin.Repositories
             var region = _context.Regions.FirstOrDefault(u => u.Name == State.ToLower().Replace(" ", ""));
             if (region != null)
             {
-                return true;
+                return false;
             }
-            return false;
+            return true;
 
             #endregion
         }

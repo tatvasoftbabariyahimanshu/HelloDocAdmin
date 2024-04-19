@@ -1,7 +1,7 @@
 ﻿@{
     Layout = "~/Views/Shared/_DashboardLayout.cshtml";
 }
-
+@using HelloDocAdmin.Controllers.Authenticate;
 
 @using HelloDocAdmin.Entity.ViewModels.AdminSite
 @model ViewNotesModel
@@ -135,9 +135,19 @@
                 <div class="col-md-12 shadow rounded ">
                     <div class="card-body ">
                         <div class="inputs-control w-100 mt-2">
-                            <textarea id="changenote" placeholder=" " rows="5" name="" class="input-outline w-100 fs-6 " type="text" ></textarea>
-                            
-                            <label class="inputs-lable inputs-lable-textarea fs-6" id="notedata" >Notes</label>
+                            @if(CV.LoggedUserRole()=="Admin")
+                            {
+
+                                <textarea id="changenote" placeholder=" " name="adminnotes" rows="5"  class="input-outline w-100 fs-6 " type="text"></textarea>
+
+                                <label class="inputs-lable inputs-lable-textarea fs-6" id="notedata" >Notes</label>
+                            }
+                            else
+                            {
+                                <textarea id="changenote" placeholder=" " rows="5" name="physiciannotes" class="input-outline w-100 fs-6 " type="text"></textarea>
+
+                            <label class="inputs-lable inputs-lable-textarea fs-6" id="notedata">Notes</label>
+                            }
                         </div>
                         <input type="hidden" name="RequestID" value="@Model.Requestid"/>
                         @if (TempData["Errormassage"] != null)
@@ -168,21 +178,6 @@
 <script>
     $(document).ready(function () {
    
-        $("#phynotes").click(function () {
-            var text = $('#phynotetext').html().trim();
-            console.log(text);
-            $("#changenote").val(text);
-           
-            $("#changenote").attr("name", "physiciannotes");
-            $("#notedata").html("Physician Note");
-        })
-        $("#adminnotes").click(function () {
-            var text = $('#adminnotestext').html().trim();
-            console.log(text);
-            $("#changenote").val(text);
-            $("#changenote").attr("name", "adminnotes");
-            $("#notedata").html("Admin Note");
-        })
     });
 
 

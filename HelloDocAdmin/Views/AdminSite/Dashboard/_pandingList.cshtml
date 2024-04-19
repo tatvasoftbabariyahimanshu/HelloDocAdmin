@@ -17,14 +17,14 @@
             <thead class=" text-start tablehead">
                 <tr>
                     <th scope="col">Name</th>
-                    <th scope="col">Date</th>
+                    <th scope="col">Date Of Birth</th>
                     <th scope="col">Rqequestor</th>
                     <th scope="col">Physician Name</th>
                     <th scope="col">Request Date</th>
                     <th scope="col">Phone</th>
                     <th scope="col">Address</th>
                     <th scope="col">Notes</th>
-                    <th scope="col">Chat With</th>
+                   
                     <th scope="col">Actions</th>
                 </tr>
             </thead>
@@ -95,7 +95,7 @@
                         <td scope="col">@item.RequestedDate</td>
                         <td scope="col">
                             <a href=" tel:+@item.PhoneNumber" class="text-white">
-                                <div class="border border-1 p-1 rounded-2 text-center  w-75 py-1"><i class="bi bi-telephone"></i> @item.PhoneNumber </div>
+                                <div class="border border-1 p-1 rounded-2 text-center   py-1"><i class="bi bi-telephone"></i> @item.PhoneNumber </div>
 
                             </a>
                             <span>
@@ -106,7 +106,7 @@
                                 if (item.RequestTypeID == 2)
                                 {
                                     <a href=" tel:+@item.PhoneNumber" class="text-white">
-                                        <div class="border border-1 p-1 rounded-2 text-center  w-75 py-1"><i class="bi bi-telephone"></i> @item.RequestorPhoneNumber </div>
+                                        <div class="border border-1 p-1 rounded-2 text-center   py-1"><i class="bi bi-telephone"></i> @item.RequestorPhoneNumber </div>
                                     </a>  <span>
                                         (Family/Friend)
                                     </span>
@@ -114,7 +114,7 @@
                                 else if (item.RequestTypeID == 4)
                                 {
                                     <a href=" tel:+@item.PhoneNumber" class="text-white">
-                                        <div class="border border-1 p-1 rounded-2 text-center w-75 py-1"><i class="bi bi-telephone"></i> @item.RequestorPhoneNumber </div>
+                                        <div class="border border-1 p-1 rounded-2 text-center  py-1"><i class="bi bi-telephone"></i> @item.RequestorPhoneNumber </div>
                                     </a> <span>
                                         (Concierge)
                                     </span>
@@ -122,7 +122,7 @@
                                 else if (item.RequestTypeID == 3)
                                 {
                                     <a href=" tel:+@item.PhoneNumber" class="text-white">
-                                        <div class="border border-1 p-1 rounded-2 text-center  w-75 py-1"><i class="bi bi-telephone"></i> @item.RequestorPhoneNumber </div>
+                                        <div class="border border-1 p-1 rounded-2 text-center   py-1"><i class="bi bi-telephone"></i> @item.RequestorPhoneNumber </div>
                                     </a> <span>
                                         (Business Partner)
                                     </span>
@@ -151,20 +151,7 @@
                             }
 
                         </td>
-                        <td scope="col" style="flex:auto">
-                            <div class="border border-1 p-1 rounded-2 text-center w-75 py-1">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-workspace" viewBox="0 0 16 16">
-                                    <path d="M4 16s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1zm4-5.95a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5" />
-                                    <path d="M2 1a2 2 0 0 0-2 2v9.5A1.5 1.5 0 0 0 1.5 14h.653a5.4 5.4 0 0 1 1.066-2H1V3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v9h-2.219c.554.654.89 1.373 1.066 2h.653a1.5 1.5 0 0 0 1.5-1.5V3a2 2 0 0 0-2-2z" />
-                                </svg> Provider
-                            </div>
-                            <div class="border border-1 p-1 rounded-2 text-center w-75 py-1">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
-                                    <path d="M4 16s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1zm4-5.95a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5" />
-                                    <path d="M2 1a2 2 0 0 0-2 2v9.5A1.5 1.5 0 0 0 1.5 14h.653a5.4 5.4 0 0 1 1.066-2H1V3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v9h-2.219c.554.654.89 1.373 1.066 2h.653a1.5 1.5 0 0 0 1.5-1.5V3a2 2 0 0 0-2-2z" />
-                                </svg> Patient
-                            </div>
-                        </td>
+                       
                         <td scope="col">
                             <div class="border act-btn  border-1 p-1 rounded-2 text-center  py-1" data-bs-toggle="dropdown" aria-expanded="false">Actions </div>
 
@@ -345,7 +332,7 @@
                         {
                             foreach (var not in item.Notes)
                             {
-                                <span> -Transfred To Physician:<b>@item.ProviderName</b><br /> Notes:<b>@not</b>  </span>
+                                <span class="m-1"> -Transfred To Physician:<b>@item.ProviderName</b><br /> Notes:<b>@not</b>  </span>
 
                                 <br />
 

@@ -1,6 +1,6 @@
 ﻿
 ﻿<div class="modal fade" id="Cancelcase" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header  bg-info text-white">
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Confirm Concellation</h1>
@@ -56,11 +56,17 @@
             displayErrorMessage(CaseReasonId, errorMessage);
             isValid = false;
         }
+        else {
+            displayErrorMessage(CaseReasonId, "");
+        }
         let changenotes_bc = document.getElementById("changenotes_bc");
         if (!CaseReasonId.value) {
             let errorMessage = "write some Notes !!!";
             displayErrorMessage(changenotes_bc, errorMessage);
             isValid = false;
+        }
+        else {
+            displayErrorMessage(changenotes_bc, "");
         }
   
 

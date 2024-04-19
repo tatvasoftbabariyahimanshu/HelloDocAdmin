@@ -28,10 +28,14 @@ namespace HelloDocAdmin.Controllers.AdminSite
             _patientRequestRepository = patientRequestRepository;
         }
 
+        #region Index
         public IActionResult Index()
         {
             return View("../AdminSite/Login/Index");
         }
+        #endregion
+
+        #region CheckAccessLogin
         public async Task<IActionResult> CheckAccessLogin(LoginViewModel vm)
         {
 
@@ -69,11 +73,10 @@ namespace HelloDocAdmin.Controllers.AdminSite
             {
                 return View("../AdminSite/Login/Index", vm);
             }
-
-
-
         }
+        #endregion
 
+        #region ResetEmail
         public async Task<IActionResult> ResetEmail(ForgotPassword fp)
         {
             if (ModelState.IsValid)
@@ -104,6 +107,9 @@ namespace HelloDocAdmin.Controllers.AdminSite
             }
 
         }
+        #endregion
+
+        #region SavePassword
         public IActionResult SavePassword(ChangePassModel cpm)
         {
             if (ModelState.IsValid)
@@ -129,16 +135,24 @@ namespace HelloDocAdmin.Controllers.AdminSite
                 return View("../AdminSite/Login/Changepass", cpm);
             }
         }
+        #endregion
 
-
+        #region AccessDenide
         public async Task<IActionResult> AccessDenide()
         {
             return View("../AdminSite/Login/AccessDenide");
         }
+        #endregion
+
+        #region ForgotPassword
         public async Task<IActionResult> ForgotPassword()
         {
             return View("../AdminSite/Login/ForgotPassword");
         }
+        #endregion
+
+
+        #region ChangePassword
         [HttpGet]
         public async Task<IActionResult> ChangePassword(string email, string datetime)
         {
@@ -167,6 +181,9 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
 
         }
+        #endregion
+
+        #region NewRegsiter
         public async Task<IActionResult> NewRegsiter(string mail, string datetime)
         {
             ENC sn = new ENC();
@@ -189,6 +206,9 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
 
         }
+        #endregion
+
+        #region Logout
         public async Task<IActionResult> Logout()
         {
             Response.Cookies.Delete("jwt");
@@ -196,6 +216,9 @@ namespace HelloDocAdmin.Controllers.AdminSite
             Response.Cookies.Delete("UserName");
             return RedirectToAction("Index", "Dashboard");
         }
+        #endregion
+
+        #region SaveUser
         public IActionResult SaveUser(NewRegistration cpm)
         {
             if (ModelState.IsValid)
@@ -225,8 +248,10 @@ namespace HelloDocAdmin.Controllers.AdminSite
                 return View("../AdminSite/Login/RegisterNew", cpm);
             }
         }
+        #endregion
 
 
+        #region isAccessGranted
         public bool isAccessGranted(string manuname)
         {
             if (_loginRepository.isAccessGranted((int)CV.LoggedUserRoleID(), manuname))
@@ -238,6 +263,6 @@ namespace HelloDocAdmin.Controllers.AdminSite
                 return false;
             }
         }
-
+        #endregion
     }
 }

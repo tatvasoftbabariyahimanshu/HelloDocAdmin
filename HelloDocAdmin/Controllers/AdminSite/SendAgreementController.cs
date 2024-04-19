@@ -24,13 +24,16 @@ namespace HelloDocAdmin.Controllers.AdminSite
             return View();
         }
 
+        #region agreement
         public IActionResult SendAgreement(int requestid, string email)
         {
-            email = "tatva.dotnet.himanshubabariya@outlook.com";
-
             var res = _context.Requests.FirstOrDefault(e => e.Requestid == requestid);
 
-            var agreementUrl = Url.Action("Agreement", "SendAgreement", new { area = "", RequestID = requestid }, Request.Scheme);
+            // Encode RequestID to Base64
+            byte[] idBytes = BitConverter.GetBytes(requestid);
+            string base64String = Convert.ToBase64String(idBytes);
+
+            var agreementUrl = Url.Action("Agreement", "SendAgreement", new { area = "", RequestID = base64String }, Request.Scheme);
 
             if (_email.SendMail(email, "Agreement for your request", $"<a href='{agreementUrl}'>Agree/Disagree</a>"))
             {
@@ -42,20 +45,35 @@ namespace HelloDocAdmin.Controllers.AdminSite
                 _notyf.Error("Check Valid Data for send Agreement...");
                 return RedirectToAction("Index", "Dashboard");
             }
-
-
-
-
         }
-        #region agreement
 
-        public IActionResult agreement(int RequestID)
+        public IActionResult Agreement(string RequestID)
         {
-            var request = _context.Requests.Find(RequestID);
-            TempData["RequestID"] = RequestID;
-            TempData["PatientName"] = request.Firstname + " " + request.Lastname;
-            return View("Agreement");
+            try
+            {
+                // Decode Base64 back to byte array
+                byte[] decodedBytes = Convert.FromBase64String(RequestID);
+
+                if (decodedBytes.Length != 4) // Ensure the length of the byte array is exactly 4
+                {
+                    // Handle error, maybe return a BadRequest or log it
+                    return BadRequest("Invalid RequestID");
+                }
+
+                int decodedRequestID = BitConverter.ToInt32(decodedBytes, 0);
+
+                var request = _context.Requests.Find(decodedRequestID);
+                TempData["RequestID"] = decodedRequestID;
+                TempData["PatientName"] = request.Firstname + " " + request.Lastname;
+                return View("Agreement");
+            }
+            catch (FormatException)
+            {
+                // Handle invalid Base64 string error
+                return BadRequest("Invalid Base64 encoded RequestID");
+            }
         }
+
         public IActionResult accept(int RequestID)
         {
             var request = _context.Requests.Find(RequestID);

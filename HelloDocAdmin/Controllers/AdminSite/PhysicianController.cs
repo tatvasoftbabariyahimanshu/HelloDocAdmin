@@ -31,7 +31,13 @@ namespace HelloDocAdmin.Controllers.AdminSite
             _notyf = notyf;
             _context = _apdb;
         }
+
+
+
+
         #region Info Provider
+
+        #region Index
         [CustomAuthorization("Admin", "Physician")]
         public async Task<IActionResult> Index()
         {
@@ -40,18 +46,27 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
             return View("../AdminSite/Physician/Index");
         }
+        #endregion
+
+        #region PhysicianList
         [CustomAuthorization("Admin,Physician", "Physician")]
         public async Task<IActionResult> PhysicianList(string? ProviderName, int? RegionID, int pagesize = 5, int currentpage = 1)
         {
             PhysiciansData sr = await _phyrepo.PhysicianAll(ProviderName, RegionID, pagesize, currentpage);
             return PartialView("../AdminSite/Physician/_physicianList", sr);
         }
+
+        #endregion
+
+        #region Scheduling
         [CustomAuthorization("Admin,Physician", "Scheduling")]
         public async Task<IActionResult> Scheduling()
         {
             ViewBag.RegionComboBox = await _combobox.RegionComboBox();
             return View("../AdminSite/Physician/Scheduling");
         }
+        #endregion
+
         #region SendMessage
         [CustomAuthorization("Admin", "Physician")]
         public async Task<IActionResult> SendMessage(int id, string? email, int? way, string? msg)
@@ -107,6 +122,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
             return RedirectToAction("Index");
         }
         #endregion
+
         #region ChangeNotificationPhysician
         [CustomAuthorization("Admin", "Physician")]
         public async Task<IActionResult> ChangeNotificationPhysician(string changedValues)
@@ -126,6 +142,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
             return RedirectToAction("Index");
         }
         #endregion
+
         #region PhysicianProfile
         [CustomAuthorization("Admin,Physician", "Physician")]
         public async Task<IActionResult> PhysicianProfile(int? id)
@@ -150,6 +167,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
         }
         #endregion
+
         #region PhysicianAddEdit
         [HttpPost]
         [CustomAuthorization("Admin", "Physician")]
@@ -175,6 +193,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
                 else
                 {
                     _notyf.Error("Physician Not Added...");
+                    ModelState.AddModelError("Address1", "Please Check Your Address");
                     return View("../AdminSite/Physician/PhysicianAdd", physicians);
                 }
 
@@ -320,7 +339,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
             bool data = await _phyrepo.EditProviderProfile(physicians, CV.LoggedUserID());
             if (data)
             {
-                _notyf.Success("mail and billing Info Updated Successfully...");
+                _notyf.Success("Provider Info Updated Successfully...");
                 if (CV.LoggedUserRole() == "Admin")
                 {
                     return RedirectToAction("PhysicianProfile", new { id = physicians.Physicianid });
@@ -391,6 +410,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
         }
 
         #endregion
+
         #region _EditShift
         [CustomAuthorization("Admin,Physician", "Scheduling")]
         public async Task<IActionResult> _EditShift(int id)
@@ -420,6 +440,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
         }
 
         #endregion
+
         #region _CreateShiftPost
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -435,14 +456,14 @@ namespace HelloDocAdmin.Controllers.AdminSite
         }
         #endregion
 
-
-        #endregion
+        #region GetShiftForMonth
         [CustomAuthorization("Admin,Physician", "Scheduling")]
         public async Task<IActionResult> GetShiftForMonth(int? month, int? regionId)
         {
             var v = await _phyrepo.GetShift((int)month, CV.LoggedUserID(), (int)regionId);
             return Json(v);
         }
+        #endregion
 
         #region _EditShiftPost
         [HttpPost]
@@ -450,6 +471,12 @@ namespace HelloDocAdmin.Controllers.AdminSite
         [CustomAuthorization("Admin,Physician", "Scheduling")]
         public async Task<IActionResult> _EditShiftPost(Schedule v, string submittt)
         {
+            if (v.ShiftDate < DateTime.Now)
+            {
+                _notyf.Warning("You can Not Update Shift of Past Time!!");
+                return RedirectToAction("Scheduling");
+            }
+
             if (submittt == "Return" && await _phyrepo.UpdateStatusShift("" + v.Shiftid, CV.LoggedUserID()))
             {
                 _notyf.Success("Shift Updated successfully..");
@@ -520,6 +547,8 @@ namespace HelloDocAdmin.Controllers.AdminSite
             return PartialView("../AdminSite/Physician/_RequestedshiftsList", data);
         }
         #endregion
+
+        #region ApproveAll
         [CustomAuthorization("Admin", "Scheduling")]
         public async Task<IActionResult> ApproveAll(string selectedids)
         {
@@ -542,6 +571,9 @@ namespace HelloDocAdmin.Controllers.AdminSite
                 return RedirectToAction("RequestedShift");
             }
         }
+        #endregion
+
+        #region DeleteAll
         [CustomAuthorization("Admin", "Scheduling")]
         public async Task<IActionResult> DeleteAll(string selectedids)
         {
@@ -565,6 +597,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
             return RedirectToAction("RequestedShift");
         }
+        #endregion
         #region PhysicianProfile
         [CustomAuthorization("Admin,Physician", "Scheduling")]
         public async Task<IActionResult> GetPhysicianProfile()
@@ -583,6 +616,10 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
         }
         #endregion
+        #endregion
+
+
+
 
     }
 }

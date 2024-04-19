@@ -74,7 +74,7 @@
                 </div>
             }
             
-                 <form id="addedit" class="row g-3"  enctype="multipart/form-data" >
+                 <form id="addedit" class="row g-3" method="post"  enctype="multipart/form-data" >
             <div class="mt-4 ">
                     <input id="123" type="hidden"  asp-for="Physicianid" />
                 <h6> <b>Account Information</b></h6>
@@ -101,16 +101,19 @@
                     </div>
                  
                     <input asp-for="Status" value="1" type="hidden"/>
-                    <div class="col-md-4 mt-2">
-                        <div class=" mb-2">
-                            <div class="input-control w-100">
-                                <select class="input-outline input-outline-select inp  asp inp-dis " asp-for="Roleid" required data-allow-clear="true" tabindex="-1" onchange="myFunction_prof()"  asp-items="@(new SelectList(ViewBag.userrolecombobox,"RoleID","Name"))" data-control="select2" data-placeholder="Select Level">
-                                    <option value="">Role</option>
-                                </select>
+                        @if (CV.LoggedUserRole() == "Admin")
+                    {
+                        <div class="col-md-4 mt-2">
+                            <div class=" mb-2">
+                                <div class="input-control w-100">
+                                    <select class="input-outline input-outline-select inp  asp inp-dis " asp-for="Roleid" required data-allow-clear="true" tabindex="-1" onchange="myFunction_prof()"  asp-items="@(new SelectList(ViewBag.userrolecombobox,"RoleID","Name"))" data-control="select2" data-placeholder="Select Level">
+                                        <option value="">Role</option>
+                                    </select>
+                                </div>
+                                <span class="err-msg" asp-validation-for="Roleid"></span>
                             </div>
-                            <span class="err-msg" asp-validation-for="Roleid"></span>
                         </div>
-                    </div>
+                    }
                 </div>
                  <div class="text-end editable" style="display:none">
                     @if (CV.LoggedUserRole() == "Admin")
@@ -446,7 +449,7 @@
                             </div>
 
                            
-                            <a class="btn btn-info mx-2 text-white provider-prof" id="create-signature-button">Create</a>
+                            <input type="button" class="btn btn-info mx-2 text-white provider-prof" value="Create" style="color: white;" id="create-signature-button">
                         </div>
                       
                     </div>

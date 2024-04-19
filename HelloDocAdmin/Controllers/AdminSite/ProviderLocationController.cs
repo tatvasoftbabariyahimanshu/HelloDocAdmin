@@ -20,11 +20,13 @@ namespace HelloDocAdmin.Controllers.AdminSite
             _notyf = notyf;
             _iploc = iploc;
         }
-
+        #region Index
         public IActionResult Index()
         {
             var list = _iploc.GetAllProviderAddress();
             return View("../AdminSite/ProviderLocation/Index", list);
         }
+        #endregion
+
     }
 }

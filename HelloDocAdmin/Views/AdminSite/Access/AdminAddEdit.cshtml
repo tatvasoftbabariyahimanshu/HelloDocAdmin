@@ -50,7 +50,7 @@
                     <div class="col-md-4 mt-2">
                         <div class=" mb-2">
                             <div class="inputs-control ">
-                                <input placeholder=" " asp-for="ASP_UserName" class="input-outline w-100 inp "  type="text">
+                                <input placeholder=" " asp-for="ASP_UserName" id="username" readonly class="input-outline w-100 inp "  type="text">
                                 <label class="inputs-lable">UserName</label>
                             </div>
                             <span asp-validation-for="ASP_UserName" class="err-msg">
@@ -84,12 +84,11 @@
                     <div class="col-md-4 mt-2">
                         <div class=" mb-2">
                             <div class="input-control w-100 ">
-                                <select class="input-outline input-outline-select inp  " asp-for="ASP_RoleID"   data-allow-clear="true" tabindex="-1" onchange="myFunction_prof()" id="ProfessionType" asp-items="@(new SelectList(ViewBag.userrolecombobox,"RoleID","Name"))" data-control="select2" data-placeholder="Select Level">
+                                <select class="input-outline input-outline-select inp" asp-for="ASP_RoleID"   data-allow-clear="true" tabindex="-1" onchange="myFunction_prof()" id="ProfessionType" asp-items="@(new SelectList(ViewBag.userrolecombobox,"RoleID","Name"))" data-control="select2" data-placeholder="Select Level">
                                     <option value="">Role</option>
                                 </select>
                             </div>
                             <span asp-validation-for="ASP_RoleID" class="err-msg">
-
                             </span>
                         </div>
                     </div>
@@ -107,7 +106,7 @@
                     <div class="col-md-6 mt-2">
                         <div class=" mb-3">
                             <div class="inputs-control ">
-                                <input placeholder=" " asp-for="User_FirtName" class="input-outline w-100 inp admin-input " type="text">
+                                <input placeholder=" " asp-for="User_FirtName" onkeyup="filluser()" id="firstname" class="input-outline w-100 inp admin-input " type="text">
                                 <label class="inputs-lable">FirstName</label>
                             </div>
                             <span asp-validation-for="User_FirtName" class="err-msg">
@@ -119,7 +118,7 @@
                     <div class="col-md-6 mt-2">
                         <div class=" mb-3">
                             <div class="inputs-control ">
-                                <input placeholder=" " asp-for="User_LastName" class="input-outline w-100 inp admin-input " type="text">
+                                <input placeholder=" " asp-for="User_LastName" onkeyup="filluser()" id="lastname" class="input-outline w-100 inp admin-input " type="text">
                                 <label class="inputs-lable">LastName</label>
                             </div>
                             <span asp-validation-for="User_LastName" class="err-msg">
@@ -127,6 +126,16 @@
                             </span>
                         </div>
                     </div>
+                    <script>
+                    function filluser()
+                    {
+
+                    var firstName = document.getElementById('firstname').value;
+                    var lastName = document.getElementById('lastname').value;                   
+                    var username = firstName.toLowerCase() +"_"+ lastName.toLowerCase();
+                    document.getElementById('username').value = username;
+                    }
+                        </script>
                     <div class="col-md-6 mt-2">
                         <div class=" mb-3">
                             <div class="inputs-control ">
