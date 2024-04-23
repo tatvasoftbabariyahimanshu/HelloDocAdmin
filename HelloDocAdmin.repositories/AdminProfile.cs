@@ -18,7 +18,13 @@ namespace HelloDocAdmin.Repositories
             _email = email;
         }
 
-
+        #region check email exist
+        public int isEmailExist(string Email)
+        {
+            int data = _context.Admins.Count(e => e.Email.ToLower().Equals(Email.ToLower()));
+            return data;
+        }
+        #endregion
         public ViewAdminProfileModel GetDetailsForAdminProfile(string id)
         {
 

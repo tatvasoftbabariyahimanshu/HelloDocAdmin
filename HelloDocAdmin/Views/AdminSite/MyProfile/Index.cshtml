@@ -165,8 +165,10 @@
                         <div class=" mb-3">
                             <div class="inputs-control w-100 ">
                                 <input id="phone" asp-for="User_PhoneNumber" placeholder="Mobile" type="text" class=" telephone input-outline admin-input w-100 inp align-items-center " />
-                                <span class="err-msg"></span>
+                             
                             </div>
+                            <span id="error-msg" class="err-msg"></span>
+
                             <span asp-validation-for="User_PhoneNumber" class="err-msg"></span>
                         </div>
                     </div>
@@ -277,9 +279,10 @@
                     <div class="col-md-6 mt-2">
                         <div class=" mb-3">
                             <div class="inputs-control w-100 ">
-                                <input id="phone2" asp-for="User_PhoneNumber" placeholder="Mobile" type="tel" class=" telephone input-outline mail-billing-imp w-100 inp align-items-center " />
+                                <input id="phone1" asp-for="User_PhoneNumber" placeholder="Mobile" type="tel" class=" telephone input-outline mail-billing-imp w-100 inp align-items-center " />
                                 <span class="err-msg"></span>
                             </div>
+                            <span id="error-msg1" class="err-msg"></span>
                             <span asp-validation-for="User_PhoneNumber" class="err-msg"></span>
 
                         </div>
@@ -319,7 +322,7 @@
     </div>
 
 </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+
 <script>
 
     $(document).ready(function () {
@@ -340,15 +343,8 @@
         $("#confirmemail").on("input", toggleSaveButton);
     });
 
-
-    const phoneInputField = document.querySelector("#phone");
-    const phoneInput = window.intlTelInput(phoneInputField, {
-    utilsScript:
-            "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
-    });
-    const phoneInputField2 = document.querySelector("#phone2");
-    const phoneInput2 = window.intlTelInput(phoneInputField2, {
-    utilsScript:
-            "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+    $(document).ready(function () {
+        phoneforadmindataadmin();
+        phoneformainbillingadmin();
     });
 </script>

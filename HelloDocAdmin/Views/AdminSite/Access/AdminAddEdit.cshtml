@@ -165,6 +165,7 @@
                                 <input id="phone" asp-for="User_PhoneNumber" placeholder="Mobile" type="text" class=" telephone input-outline admin-input w-100 inp align-items-center " />
                                 <span class="err-msg"></span>
                             </div>
+                            <span id="error-msg" class="err-msg"></span>
                             <span asp-validation-for="User_PhoneNumber" class="err-msg">
 
                             </span>
@@ -253,14 +254,17 @@
                                 <input placeholder=" " asp-for="zip" class="input-outline w-100 inp  mail-billing-imp" type="text">
                                 <label class="inputs-lable">Zip</label>
                             </div>
+                            <span asp-validation-for="zip" class="err-msg"></span>
+
                         </div>
                     </div>
                     <div class="col-md-6 mt-2">
                         <div class=" mb-3">
                             <div class="inputs-control w-100 ">
-                                <input id="phone2" asp-for="User_PhoneNumber" placeholder="Mobile" type="tel" class=" telephone input-outline mail-billing-imp w-100 inp align-items-center " />
+                                <input id="phone1" asp-for="User_PhoneNumber" placeholder="Mobile" type="tel" class=" telephone input-outline mail-billing-imp w-100 inp align-items-center " />
                                 <span class="err-msg"></span>
                             </div>
+                            <span id="error-msg1" class="err-msg"></span>
                             <span asp-validation-for="User_PhoneNumber" class="err-msg">
 
                             </span>
@@ -268,7 +272,7 @@
                     </div>
                 </div>
                 <div class="text-end">                  
-                    <button type="submit" id="save"  class="btn  btn-outline-info btn-submit mx-2 ">
+                    <button type="submit" id="submit"  class="btn  btn-outline-info btn-submit mx-2 ">
                         save
                     </button>
                     <a id="cancel1" class="btn btn-outline-danger " asp-action="UserAccess" asp-controller="Access">
@@ -295,28 +299,19 @@
             var email = $("#email").val();
             var confirmEmail = $("#confirmemail").val();
             if (email === confirmEmail) {
-                $("#save").prop("disabled", false);
+                $("#submit").prop("disabled", false);
                 $('#confirm-check').html("");
             } else {
                 $('#confirm-check').html("Email and Confirm Email should be same");
-                $("#save").prop("disabled", true);
+                $("#sasubmitve").prop("disabled", true);
             }
         }
 
         // Call toggleSaveButton when confirm email field changes
         $("#confirmemail").on("input", toggleSaveButton);
     });
-    const phoneInputField = document.querySelector("#phone");
-
-    const phoneInput = window.intlTelInput(phoneInputField, {
-        utilsScript:
-            "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
-    });
-    const phoneInputField2 = document.querySelector("#phone2");
-
-    const phoneInput2 = window.intlTelInput(phoneInputField2, {
-        utilsScript:
-            "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+    $(document).ready(function () {
+        phone2();
     });
 
 </script>

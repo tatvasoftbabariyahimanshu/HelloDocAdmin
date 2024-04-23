@@ -74,7 +74,17 @@
                                 @if (item.onCallStatus == 1)
                                 {
                                 <div class="col-md-4 mt-3 physician-card" data-region-id="@item.Regionid">
+                                    @if(item.Photo!=null)
+                                    {
+                                        
                                         <img src="/Upload/Physician/@item.Physicianid/@item.Photo" style="height: 50px;">
+                                    }
+                                    else
+                                    {
+                                        <img src="https://t4.ftcdn.net/jpg/02/29/75/83/360_F_229758328_7x8jwCwjtBMmC6rgFzLFhZoEpLobB6L8.jpg" style="height: 50px;">
+                                        
+                                        }
+
                                         <span> @item.Firstname @item.Lastname</span>
                                     </div>
                                 }
@@ -92,7 +102,16 @@
                                 @if (item.onCallStatus == 0)
                                 {
                                 <div class="col-md-4 mt-3 physician-card" data-region-id="@item.Regionid">
+                                    @if (item.Photo != null)
+                                    {
+
                                         <img src="/Upload/Physician/@item.Physicianid/@item.Photo" style="height: 50px;">
+                                    }
+                                    else
+                                    {
+                                        <img src="https://t4.ftcdn.net/jpg/02/29/75/83/360_F_229758328_7x8jwCwjtBMmC6rgFzLFhZoEpLobB6L8.jpg" style="height: 50px;">
+
+                                    }
                                         @item.Firstname @item.Lastname
                                     </div>
                                 }

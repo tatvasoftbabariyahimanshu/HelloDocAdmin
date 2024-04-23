@@ -93,6 +93,8 @@
                             <input id="phone" placeholder="Mobile" asp-for="Mobile" type="tel" class=" telephone input-outline w-100 inp" style="font-size: .7rem;" />
 
                         </div>
+                        <span id="error-msg" class="err-msg"></span>
+
                     </div>
                     <div class="col-md-5 password-hide">
                         <div class="inputs-control  mb-3">
@@ -185,7 +187,7 @@
     </div>
 
 </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+
 <script>
 
     function enable_disable() {
@@ -202,16 +204,8 @@
         $("input").css("background-color", "transparent");
         $("select").css("background-color", "transparent");
     }
-    const phoneInputField = document.querySelector("#phone");
-    const phoneInput = window.intlTelInput(phoneInputField, {
-        utilsScript:
-
-            "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
-    });
-    const phoneInputField2 = document.querySelector("#phone2");
-    const phoneInput2 = window.intlTelInput(phoneInputField2, {
-        utilsScript:
-            "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+    $(document).ready(function () {
+        phone1();
     });
 </script>
 <script>

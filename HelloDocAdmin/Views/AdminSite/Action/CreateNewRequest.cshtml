@@ -52,9 +52,11 @@
                     <div class="col-md-6">
                         <div class="mb-3">
                             <div class="inputs-control  ">
-                                <input id="phone" asp-for="PhoneNumber" placeholder="Mobile" type="text" class=" telephone input-outline w-100 inp" style="font-size: .7rem;" />
+                          
+                                <input id="phone" asp-for="PhoneNumber" placeholder="Mobile" type="text" class=" telephone input-outline admin-input w-100 inp  " />
 
                             </div>
+                            <span id="error-msg" class="err-msg"></span>
                             <span asp-validation-for="PhoneNumber" class="err-msg"></span>
                         </div>
 
@@ -189,6 +191,9 @@
 
 
 <script>
+    $(document).ready(function () {
+        phone1();
+    });
     var modal = document.getElementById("myModal");
 
     var btn = document.getElementById("map-button");
@@ -235,4 +240,5 @@
         }
     }
 </script>
+
 

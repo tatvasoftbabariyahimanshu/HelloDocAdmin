@@ -11,17 +11,18 @@ namespace HelloDocAdmin.Entity.ViewModels.AdminSite
 
         public short ASP_Status { get; set; }
         public int ASP_RoleID { get; set; }
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Use letters only please")]
         [Display(Name = "First Name")]
         public string User_FirtName { get; set; }
         [Display(Name = "Last Name")]
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Use letters only please")]
         public string User_LastName { get; set; }
         [Display(Name = "Email")]
         [EmailAddress]
         public string User_Email { get; set; }
         [Display(Name = "Phone Number")]
         [Required(ErrorMessage = "Phone Number Required!")]
-        [RegularExpression(@"^\d{10}$",
-                   ErrorMessage = "Entered phone format is not valid.")]
+
         public string User_PhoneNumber { get; set; }
 
 

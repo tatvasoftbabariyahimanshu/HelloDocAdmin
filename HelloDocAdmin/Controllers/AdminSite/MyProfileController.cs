@@ -45,6 +45,13 @@ namespace HelloDocAdmin.Controllers.AdminSite
                 _notyf.Error("Select at least one region!");
                 return RedirectToAction("Index");
             }
+            if (_adminProfile.isEmailExist(vm.User_Email) > 1)
+            {
+
+
+                ModelState.AddModelError("User_Email", "Email is alredy exist");
+                return View("../AdminSite/MyProfile/Index", vm);
+            }
 
             bool isProfileEdited = _adminProfile.Edit_Admin_Profile(vm, CV.LoggedUserID());
 

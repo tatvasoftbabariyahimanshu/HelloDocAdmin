@@ -81,6 +81,7 @@
                                 <input id="phone" asp-for="PhoneNumber" placeholder="Mobile" type="text" class=" telephone input-outline w-100 inp" style="font-size: .7rem;" />
 
                             </div>
+                            <span id="error-msg" class="err-msg"></span>
                             <span asp-validation-for="PhoneNumber" class="err-msg"></span>
                         </div>
                      
@@ -175,7 +176,7 @@
 
                 </div>
                 <div class="card-footer border-0 bg-transparent text-end">
-                        <button type="submit" id="save" class="btn btn-outline-info btn-submit submit">
+                        <button id="submit" type="submit"  class="btn btn-outline-info btn-submit submit">
                         submit
                     </button>
                     <button class="btn btn-outline-danger btn-cancel " type="reset">
@@ -189,10 +190,13 @@
 
 </div>
 <script>
+    $(document).ready(function () {
+        phone1();
+    });
     function checkPasswords() {
         var password = document.getElementById("Password").value;
         var confirmPassword = document.getElementById("ConfirmPassword").value;
-        var save = document.getElementById("save").value;
+        var save = document.getElementById("submit").value;
 
         // Check if passwords match
         if (password !== confirmPassword) {
@@ -239,16 +243,8 @@
         });
     });
 
-
+ 
 
    </script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
-<script>
-    const phoneInputField = document.querySelector("#phone");
-  
-    const phoneInput = window.intlTelInput(phoneInputField, {
-        utilsScript:
-            "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
-    });
-</script>
+

@@ -594,6 +594,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
                     else
                     {
                         _notyf.Success("Case Is not Finalized");
+                        _notyf.Warning("You Have to Save Changes First!");
                         return View("../AdminSite/Action/Encounter", model);
                     }
 

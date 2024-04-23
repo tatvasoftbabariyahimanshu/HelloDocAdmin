@@ -169,8 +169,10 @@
                         <div class=" mb-3">
                             <div class="inputs-control w-100 ">
                                 <input id="phone" asp-for="Mobile" placeholder="Mobile" type="text" class=" telephone input-outline admin-input w-100 inp  " />
-                                <span class="err-msg" asp-validation-for="Mobile"></span>
+
                             </div>
+                            <span id="error-msg" class="err-msg"></span>
+                                <span class="err-msg" asp-validation-for="Mobile"></span>
                         </div>
                     </div>
                     <div class="col-md-6 mt-2">
@@ -341,10 +343,11 @@
                     <div class="col-md-6 mt-2">
                         <div class=" mb-3">
                             <div class="inputs-control w-100 ">
-                                <input id="phone2" asp-for="Altphone" placeholder="Mobile" type="tel" class="mail-billing-imp telephone input-outline mail-billing-imp w-100 inp align-items-center " />
-                                <span class="err-msg"></span>
+                                <input id="phone1" asp-for="Altphone" placeholder="Mobile" type="text" class=" telephone input-outline mail-billing-imp w-100 inp  " />
+                           
 
                             </div>
+                            <span id="error-msg1" class="err-msg"></span>
                             <span class="err-msg" asp-validation-for="Altphone"></span>
 
                         </div>
@@ -771,9 +774,13 @@
 </div>
 @section Scripts
     {
-      
+   
 
     <script type="text/javascript">
+        $(document).ready(function () {
+           phoneforadmindataProvider();
+            phoneforMailAndBillingProvider();
+        });
         function confirmDelete(Physicianid) {
             Swal.fire({
                 title: "Delete Physician ?",

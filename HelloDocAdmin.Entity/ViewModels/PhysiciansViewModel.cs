@@ -16,17 +16,18 @@ namespace HelloDocAdmin.Entity.ViewModels
         public string UserName { get; set; }
         public string? PassWord { get; set; }
         public string? Regionsid { get; set; }
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Use letters only please")]
 
         [Required(ErrorMessage = "Enter First Name")]
         public string Firstname { get; set; }
         [Required(ErrorMessage = "Enter Last Name")]
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Use letters only please")]
         public string Lastname { get; set; }
         [Required(ErrorMessage = "Enter Valid Email")]
         [EmailAddress]
         public string Email { get; set; }
         [Required(ErrorMessage = "Phone Number Required!")]
-        [RegularExpression(@"^\d{10}$",
-                  ErrorMessage = "Entered phone format is not valid.")]
+
         public string Mobile { get; set; }
 
         public string? State { get; set; }

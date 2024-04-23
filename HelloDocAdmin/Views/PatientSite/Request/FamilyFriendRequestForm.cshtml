@@ -51,7 +51,7 @@
                                 <input id="phone" type="tel" asp-for="FF_PhoneNumber" placeholder="Mobile" class=" telephone input-outline w-100 inp" />
                             </div>
                             <span asp-validation-for="FF_PhoneNumber" class="err-msg"></span>
-
+                            <span id="error-msg" class="err-msg"></span>
                         </div>
                        
                     </div>
@@ -137,8 +137,9 @@
                     <div class="col-md-6">
                         <div class="mb-3">
                             <div class="inputs-control  ">
-                                <input id="phone2" placeholder="Mobile" asp-for="PhoneNumber" type="tel" class=" telephone input-outline w-100 inp" />
+                                <input id="phone1" placeholder="Mobile" asp-for="PhoneNumber" type="tel" class=" telephone input-outline w-100 inp" />
                             </div>
+                            <span id="error-msg1" class="err-msg"></span>
                             <span asp-validation-for="PhoneNumber" class="err-msg"></span>
                         </div>
                        
@@ -224,7 +225,7 @@
 
                 </div>
                 <div class="card-footer border-0 bg-transparent text-end">
-                    <button type="submit" class="btn btn-outline-info btn-submit submit">
+                    <button id="submit" type="submit" class="btn btn-outline-info btn-submit submit">
                         submit
                     </button>
                     <button type="button"  data-bs-toggle="modal" data-bs-target="#staticBackdrop" id="infobutton">
@@ -270,20 +271,10 @@
         $("#infobutton").hide();
 
     });
+    $(document).ready(function () {
+        phone2();
+    });
 </script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
-<script>
-    const phoneInputField = document.querySelector("#phone");
-    const phoneInput = window.intlTelInput(phoneInputField, {
-        utilsScript:
-        
-            "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
-    });
-    const phoneInputField2 = document.querySelector("#phone2");
-    const phoneInput2 = window.intlTelInput(phoneInputField2, {
-        utilsScript:
-            "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
-    });
-</script>
+
 

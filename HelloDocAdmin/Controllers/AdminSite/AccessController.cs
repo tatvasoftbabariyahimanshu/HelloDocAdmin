@@ -211,6 +211,14 @@ namespace HelloDocAdmin.Controllers.AdminSite
             ViewBag.RegionComboBox = await _combobox.RegionComboBox();
             if (ModelState.IsValid)
             {
+
+                if (_admin.isEmailExist(model.User_Email) > 0)
+                {
+                 
+                
+                    ModelState.AddModelError("User_Email", "Email is alredy exist");
+                    return View("../AdminSite/Access/AdminAddEdit", model);
+                }
                 model.AdminReqionList = Request.Form["SelectedRegions"].Select(int.Parse).ToList();
 
                 if (model.AspnetUserID == null)

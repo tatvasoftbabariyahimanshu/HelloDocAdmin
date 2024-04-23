@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HelloDocAdmin.Repositories
+﻿namespace HelloDocAdmin.Repositories
 {
     public class ENC
     {
@@ -14,8 +8,11 @@ namespace HelloDocAdmin.Repositories
             string decrypted;
             try
             {
+
+
                 b = Convert.FromBase64String(encrString);
                 decrypted = System.Text.ASCIIEncoding.ASCII.GetString(b);
+
             }
             catch (FormatException fe)
             {

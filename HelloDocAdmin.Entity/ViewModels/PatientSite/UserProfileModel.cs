@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.ComponentModel.DataAnnotations;
 
 namespace HelloDocAdmin.Entity.Models
 {
@@ -28,6 +29,8 @@ namespace HelloDocAdmin.Entity.Models
 
         public int? Regionid { get; set; }
 
+        [RegularExpression(@"^\d{6}$",
+           ErrorMessage = "Entered Valid Zip Code.")]
         public string? Zipcode { get; set; }
 
         public string Strmonth { get; set; }

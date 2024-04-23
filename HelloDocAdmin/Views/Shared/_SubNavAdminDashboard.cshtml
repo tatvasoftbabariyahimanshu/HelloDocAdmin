@@ -156,7 +156,7 @@
                     @if (loginRepository.isAccessGranted((int)CV.LoggedUserRoleID(), "Invoicing"))
                     {
                         <li class="nav-item">
-                            <a class="nav-link @(path.EndsWith("Invoicing") ? "active" : "")" asp-action="Index" asp-controller="MyProfile">
+                            <a class="nav-link @(path.EndsWith("Invoicing") ? "active" : "")" asp-action="Index" asp-controller="Invoicing">
                                 Invoicing
                             </a>
                         </li>

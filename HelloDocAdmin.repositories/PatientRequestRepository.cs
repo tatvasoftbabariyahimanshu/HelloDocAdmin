@@ -354,7 +354,7 @@ namespace HelloDocAdmin.Repositories
                 string encyptemail = encyptdecypt.EnryptString(viewdata.Email);
                 string encyptdatetime = encyptdecypt.EncryptDate(DateTime.Now);
 
-                string link = $"https://localhost:44376/Login/RegisterNew?email={encyptemail}&datetime={encyptdatetime}";
+                string link = $"https://localhost:44341/Login/NewRegsiter?email={encyptemail}&datetime={encyptdatetime}";
                 string emailContent = @"
         <!DOCTYPE html>
         <html lang=""en"">
@@ -370,7 +370,7 @@ namespace HelloDocAdmin.Repositories
         <p>Your request for a patient account has been successfully created. To complete your registration, please follow the steps below:</p>
         <ol>
             <li>Click the following link to register:</li>
-             <p><a href=""https://localhost:44376/Login/RegisterNew?email=" + encyptemail + "&datetime=" + encyptdatetime + @""">Patient Registration</a></p>
+             <p><a href=""https://localhost:44341/Login/NewRegsiter?mail=" + encyptemail + "&datetime=" + encyptdatetime + @""">Patient Registration</a></p>
             <li>Follow the on-screen instructions to complete the registration process.</li>
         </ol>
         <p>If you have any questions or need further assistance, please don't hesitate to contact us.</p>
@@ -509,7 +509,7 @@ namespace HelloDocAdmin.Repositories
                 string encyptemail = encyptdecypt.EnryptString(viewdata.Email);
                 string encyptdatetime = encyptdecypt.EncryptDate(DateTime.Now);
 
-                string link = $"https://localhost:44376/Login/RegisterNew?email={encyptemail}&datetime={encyptdatetime}";
+                string link = $"https://localhost:44341/Login/NewRegsiter?email={encyptemail}&datetime={encyptdatetime}";
                 string emailContent = @"
         <!DOCTYPE html>
         <html lang=""en"">
@@ -525,7 +525,7 @@ namespace HelloDocAdmin.Repositories
         <p>Your request for a patient account has been successfully created. To complete your registration, please follow the steps below:</p>
         <ol>
             <li>Click the following link to register:</li>
-             <p><a href=""https://localhost:44376/Login/RegisterNew?email=" + encyptemail + "&datetime=" + encyptdatetime + @""">Patient Registration</a></p>
+             <p><a href=""https://localhost:44341/Login/NewRegsiter?mail=" + encyptemail + "&datetime=" + encyptdatetime + @""">Patient Registration</a></p>
             <li>Follow the on-screen instructions to complete the registration process.</li>
         </ol>
         <p>If you have any questions or need further assistance, please don't hesitate to contact us.</p>
@@ -665,7 +665,7 @@ namespace HelloDocAdmin.Repositories
                 string encyptemail = encyptdecypt.EnryptString(viewdata.Email);
                 string encyptdatetime = encyptdecypt.EncryptDate(DateTime.Now);
 
-                string link = $"https://localhost:44376/Login/RegisterNew?email={encyptemail}&datetime={encyptdatetime}";
+                string link = $"https://localhost:44341/Login/NewRegsiter?mail={encyptemail}&datetime={encyptdatetime}";
                 string emailContent = @"
         <!DOCTYPE html>
         <html lang=""en"">
@@ -681,7 +681,7 @@ namespace HelloDocAdmin.Repositories
         <p>Your request for a patient account has been successfully created. To complete your registration, please follow the steps below:</p>
         <ol>
             <li>Click the following link to register:</li>
-             <p><a href=""https://localhost:44376/Login/RegisterNew?email=" + encyptemail + "&datetime=" + encyptdatetime + @""">Patient Registration</a></p>
+             <p><a href=""https://localhost:44341/Login/NewRegsiter?email=" + encyptemail + "&datetime=" + encyptdatetime + @""">Patient Registration</a></p>
             <li>Follow the on-screen instructions to complete the registration process.</li>
         </ol>
         <p>If you have any questions or need further assistance, please don't hesitate to contact us.</p>

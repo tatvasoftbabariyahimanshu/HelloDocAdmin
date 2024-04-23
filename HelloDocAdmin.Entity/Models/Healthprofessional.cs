@@ -6,6 +6,7 @@ namespace HelloDocAdmin.Entity.Models;
 public partial class Healthprofessional
 {
     public int? Vendorid { get; set; }
+    [RegularExpression(@"^[a-zA-Z ]+$", ErrorMessage = "Use letters and spaces only please")]
     [Required(ErrorMessage = "Enter Vendor Name!!")]
     public string Vendorname { get; set; } = null!;
 
@@ -15,11 +16,14 @@ public partial class Healthprofessional
     public string Faxnumber { get; set; } = null!;
 
     public string? Address { get; set; }
+    [RegularExpression(@"^[a-zA-Z ]+$", ErrorMessage = "Use letters and spaces only please")]
     [Required(ErrorMessage = "Enter City!!")]
     public string City { get; set; }
     [Required(ErrorMessage = "Enter State!!")]
     public string State { get; set; }
     [Required(ErrorMessage = "Enter Zip Code!!")]
+    [RegularExpression(@"^\d{6}$",
+              ErrorMessage = "Entered Valid Zip Code.")]
     public string Zip { get; set; }
 
     public int? Regionid { get; set; }

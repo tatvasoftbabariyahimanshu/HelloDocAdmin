@@ -184,6 +184,11 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
             if (ModelState.IsValid)
             {
+                if (_phyrepo.isEmailExist(physicians.Email) > 0)
+                {
+                    ModelState.AddModelError("Email", "Email is alredy exist");
+                    return View("../AdminSite/Physician/PhysicianAdd", physicians);
+                }
                 bool data = await _phyrepo.PhysicianAddEdit(physicians, CV.LoggedUserID());
                 if (data)
                 {
@@ -216,9 +221,15 @@ namespace HelloDocAdmin.Controllers.AdminSite
             ViewBag.RegionComboBox = await _combobox.RegionComboBox();
             ViewBag.userrolecombobox = await _combobox.RolelistProvider();
 
+            if (_phyrepo.isEmailExist(physicians.Email) > 1)
+            {
+                ModelState.AddModelError("Email", "Email is alredy exist");
+                return View("../AdminSite/Physician/PhysicianAdd", physicians);
+            }
             bool data = await _phyrepo.EditAccountInfo(physicians);
             if (data)
             {
+
                 _notyf.Success("Account Info Updated Successfully...");
                 if (CV.LoggedUserRole() == "Admin")
                 {
@@ -237,7 +248,7 @@ namespace HelloDocAdmin.Controllers.AdminSite
 
 
         }
-        [CustomAuthorization("Admin,Physician", "Physician")]
+        [CustomAuthorization("Admin,Physician", "Scheduling")]
         public async Task<IActionResult> ResetPassword(int Physicianid, string Password)
         {
             ViewBag.RegionComboBox = await _combobox.RegionComboBox();

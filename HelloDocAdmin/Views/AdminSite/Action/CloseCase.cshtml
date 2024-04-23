@@ -171,6 +171,7 @@
 
 
                     </div>
+                        <span id="error-msg" class="err-msg"></span>
                         <span asp-validation-for="RC_PhoneNumber" class="err-msg"></span>
 
 
@@ -215,6 +216,9 @@
 
 </div>
 <script type="text/javascript">
+    $(document).ready(function () {
+        phone1();
+    });
     function enable_disable() {
         $(".edit-frm").prop("readonly", false);
         $("#CloseCase").css("display", "none");

@@ -1,0 +1,371 @@
+﻿@{
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+    
+}
+<style>
+    .bootstrap-datetimepicker-widget .datepicker-days table tbody tr:hover {
+        background-color: #eee;
+    }
+</style>
+<div class="container">
+    <div class="card bg-transparent border-0">
+        <div class="card-header d-flex justify-content-between  border-0  bg-transparent p-1  mt-3 mb-2">
+            <div class="text-start d-flex align-items-center">
+                <h5 class="mt-2"><b> TimeSheet</b></h5>
+
+            </div>
+            <div class="text-end">
+                <a asp-controller="Dashboard" asp-action="Index"
+                   class="btn btn-outline-info btn-back">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                         fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                              d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5" />
+                    </svg>Back
+                </a>
+            </div>
+        </div>
+
+        <div class="card-body rounded shadow">
+            <div class="d-flex justify-content-between align-items-center">
+                
+                   
+                        <div class="col-sm-6 form-group">
+                            <div class="input-group" id="DateDemo">
+                                <input type='date' id='weeklyDatePicker' placeholder="Select Week" />
+                            </div>
+                        </div>
+                    
+               
+                <script>
+                    $(document).ready(function () {
+                        moment.locale('en', {
+                            week: { dow: 1 } // Monday is the first day of the week
+                        });
+
+                        //Initialize the datePicker(I have taken format as mm-dd-yyyy, you can     //have your owh)
+                        $("#weeklyDatePicker").datetimepicker({
+                            format: 'MM-DD-YYYY'
+                        });
+
+                        //Get the value of Start and End of Week
+                        $('#weeklyDatePicker').on('dp.change', function (e) {
+                            var value = $("#weeklyDatePicker").val();
+                            var firstDate = moment(value, "MM-DD-YYYY").day(0).format("MM-DD-YYYY");
+                            var lastDate = moment(value, "MM-DD-YYYY").day(6).format("MM-DD-YYYY");
+                            $("#weeklyDatePicker").val(firstDate + " - " + lastDate);
+                        });
+                    });
+                </script>
+                
+
+                <div class="text-end d-flex">
+                  
+                    <a class="btn btn-outline-info  h6" asp-action="PhysicianProfile" asp-controller="Physician">
+                        <span>
+                            <span class="addnewlg">
+                              Finalize Timesheet
+                            </span>
+                            <span class="addnewsm">
+                                <i class="fa fa-address-book-o" aria-hidden="true"></i>
+                            </span>
+                        </span>
+
+                    </a>
+                </div>
+            </div>
+
+            <div class="position-relative ">
+
+
+
+
+        @*        <div class="middle loding-div position-absolute  top-50" style="left:50%;z-index:99">
+                    <div class="bar bar1"></div>
+                    <div class="bar bar2"></div>
+                    <div class="bar bar3"></div>
+                    <div class="bar bar4"></div>
+                    <div class="bar bar5"></div>
+                    <div class="bar bar6"></div>
+                    <div class="bar bar7"></div>
+                    <div class="bar bar8"></div>
+                </div>*@
+
+                <div class="table-responsive  dashboard-tbl mt-3 " id="tbl">
+                    <table id="myTable" class="table table-responsive">
+                        <thead class=" text-start tablehead align-items-center">
+                            <tr>
+                                <th scope="col" >Shift Date</th>
+                                <th scope="col">Shift</th>
+                                <th scope="col">Night Shift Weekend</th>
+                                <th scope="col">House Call</th>
+                                <th scope="col">House Call  Weekend</th>
+                                <th scope="col">Phone Cunsults</th>
+                                <th scope="col">Phone Cunsults Night Weekend</th>
+                                <th scope="col">Batch Testing</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody class="">
+                            <tr>
+                                <td class="table-text">Mar 1,2024</td>
+                                <td class="table-text">3</td>
+                                <td class="table-text">0</td>
+
+                                <td class="table-text">0</td>
+
+                                <td class="table-text">0</td>
+
+                                <td class="table-text">0</td>
+
+                                <td class="table-text">0</td>
+                                <td class="table-text">1</td>
+                             
+                            </tr>
+                            <tr>
+                                <td class="table-text">Mar 1,2024</td>
+                                <td class="table-text">3</td>
+                                <td class="table-text">0</td>
+
+                                <td class="table-text">0</td>
+
+                                <td class="table-text">0</td>
+
+                                <td class="table-text">0</td>
+
+                                <td class="table-text">0</td>
+                                <td class="table-text">1</td>
+
+                            </tr>
+                             <tr>
+                                <td class="table-text">Mar 1,2024</td>
+                                <td class="table-text">3</td>
+                                <td class="table-text">0</td>
+
+                                <td class="table-text">0</td>
+
+                                <td class="table-text">0</td>
+
+                                <td class="table-text">0</td>
+
+                                <td class="table-text">0</td>
+                                <td class="table-text">1</td>
+                             
+                                 <tr>
+                                <td class="table-text">Mar 1,2024</td>
+                                <td class="table-text">3</td>
+                                <td class="table-text">0</td>
+
+                                <td class="table-text">0</td>
+
+                                <td class="table-text">0</td>
+
+                                <td class="table-text">0</td>
+
+                                <td class="table-text">0</td>
+                                <td class="table-text">1</td>
+                             
+                                 <tr>
+                                <td class="table-text">Mar 1,2024</td>
+                                <td class="table-text">3</td>
+                                <td class="table-text">0</td>
+
+                                <td class="table-text">0</td>
+
+                                <td class="table-text">0</td>
+
+                                <td class="table-text">0</td>
+
+                                <td class="table-text">0</td>
+                                <td class="table-text">1</td>
+                             
+                            </tr>
+                             <tr>
+                                <td class="table-text">Mar 1,2024</td>
+                                <td class="table-text">3</td>
+                                <td class="table-text">0</td>
+
+                                <td class="table-text">0</td>
+
+                                <td class="table-text">0</td>
+
+                                <td class="table-text">0</td>
+
+                                <td class="table-text">0</td>
+                                <td class="table-text">1</td>
+                             
+                            </tr>
+                             <tr>
+                                <td class="table-text">Mar 1,2024</td>
+                                <td class="table-text">3</td>
+                                <td class="table-text">0</td>
+
+                                <td class="table-text">0</td>
+
+                                <td class="table-text">0</td>
+
+                                <td class="table-text">0</td>
+
+                                <td class="table-text">0</td>
+                                <td class="table-text">1</td>
+                             
+                            </tr>
+                             <tr>
+                                <td class="table-text">Mar 1,2024</td>
+                                <td class="table-text">3</td>
+                                <td class="table-text">0</td>
+
+                                <td class="table-text">0</td>
+
+                                <td class="table-text">0</td>
+
+                                <td class="table-text">0</td>
+
+                                <td class="table-text">0</td>
+                                <td class="table-text">1</td>
+                             
+                            </tr>
+                             <tr>
+                                <td class="table-text">Mar 1,2024</td>
+                                <td class="table-text">3</td>
+                                <td class="table-text">0</td>
+
+                                <td class="table-text">0</td>
+
+                                <td class="table-text">0</td>
+
+                                <td class="table-text">0</td>
+
+                                <td class="table-text">0</td>
+                                <td class="table-text">1</td>
+                             
+                            </tr>
+                             <tr>
+                                <td class="table-text">Mar 1,2024</td>
+                                <td class="table-text">3</td>
+                                <td class="table-text">0</td>
+
+                                <td class="table-text">0</td>
+
+                                <td class="table-text">0</td>
+
+                                <td class="table-text">0</td>
+
+                                <td class="table-text">0</td>
+                                <td class="table-text">1</td>
+                             
+                            </tr>
+                             <tr>
+                                <td class="table-text">Mar 1,2024</td>
+                                <td class="table-text">3</td>
+                                <td class="table-text">0</td>
+
+                                <td class="table-text">0</td>
+
+                                <td class="table-text">0</td>
+
+                                <td class="table-text">0</td>
+
+                                <td class="table-text">0</td>
+                                <td class="table-text">1</td>
+                             
+                            </tr>
+                            <tr>
+                                <td class="table-text">Mar 1,2024</td>
+                                <td class="table-text">3</td>
+                                <td class="table-text">0</td>
+
+                                <td class="table-text">0</td>
+
+                                <td class="table-text">0</td>
+
+                                <td class="table-text">0</td>
+
+                                <td class="table-text">0</td>
+                                <td class="table-text">1</td>
+
+                            </tr>
+=
+                        
+
+
+
+                        </tbody>
+                    </table>
+                </div>
+
+               
+
+            </div>
+        </div>
+
+
+        <div class="card-body rounded shadow">
+            <div class="d-flex justify-content-between align-items-center">
+
+
+                <div class="col-sm-6 ">
+                    <h6 class="mt-2"><b> TimeSheet Reimbursement </b></h6>
+                </div>
+
+
+
+               
+            </div>
+
+            <div class="position-relative ">
+
+
+
+
+                @*        <div class="middle loding-div position-absolute  top-50" style="left:50%;z-index:99">
+                <div class="bar bar1"></div>
+                <div class="bar bar2"></div>
+                <div class="bar bar3"></div>
+                <div class="bar bar4"></div>
+                <div class="bar bar5"></div>
+                <div class="bar bar6"></div>
+                <div class="bar bar7"></div>
+                <div class="bar bar8"></div>
+                </div>*@
+
+                <div class="table-responsive  dashboard-tbl mt-3 " id="tbl">
+                    <table id="myTable" class="table table-responsive">
+                        <thead class=" text-start tablehead align-items-center">
+                            <tr>
+                                <th scope="col"> Date</th>
+                                <th scope="col">Item</th>
+                                <th scope="col">Amount</th>
+                                <th scope="col">Bill</th>
+                               
+                                <th scope="col" class="text-center">Action</th>
+
+                            </tr>
+                        </thead>
+                        <tbody class="">
+                            <tr>
+                                <td class="table-text">Mar 1,2024</td>
+                                <td class="table-text">3</td>
+                                <td class="table-text">5000/-</td>
+
+                                <td class="table-text">Pfd</td>
+
+                                <td class="text-center"><button class="btn btn-sm btn-outline-info">View</button></td>
+
+                            </tr>
+                           
+                        
+
+
+
+                        </tbody>
+                    </table>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+
+</div>

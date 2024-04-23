@@ -179,8 +179,10 @@
                         <div class="mb-3 mt-2  d-flex">
                             <div class="inputs-control w-100 ">
                                 <input id="phone" asp-for="PhoneNumber" placeholder="Mobile" type="text" readonly class=" telephone input-outline w-100 inp align-items-center " style="font-size: .9rem;height:4rem" />
-                                <span asp-validation-for="PhoneNumber" class="err-msg"></span>
+                           
                             </div>
+                            <span id="error-msg" class="err-msg"></span>
+
                           
                             <a class="btn btn-outline-info mx-2 " style="height:4rem;width:4rem">
                                 <i class="bi bi-telephone-fill"></i>
@@ -296,19 +298,12 @@
             console.log(modeldata[id])
         document.getElementById('RequestID_Input_ModelAssignCase').value = modeldata[0].requestID;
     }
-
-</script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
-<script>
-    const phoneInputField3 = document.querySelector("#phone");
-
-    const phoneInput2 = window.intlTelInput(phoneInputField3, {
-        utilsScript:
-            "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+    $(document).ready(function () {
+        phone1();
     });
-
 </script>
+
+
 <script>
 
     function enable_disable() {

@@ -92,10 +92,10 @@ namespace HelloDocAdmin.Repositories
             List<PhysiciansViewModel> pl = await (
                                         from pr in _context.Physicianregions
                                         join ph in _context.Physicians
-                                         on pr.Physicianid equals ph.Physicianid into rGroup
+                                        on pr.Physicianid equals ph.Physicianid into rGroup
                                         from r in rGroup.DefaultIfEmpty()
                                         join Notifications in _context.Physiciannotifications
-                                         on r.Physicianid equals Notifications.Physicianid into aspGroup
+                                        on r.Physicianid equals Notifications.Physicianid into aspGroup
                                         from nof in aspGroup.DefaultIfEmpty()
                                         join role in _context.Roles
                                         on r.Roleid equals role.Roleid into roleGroup
@@ -384,6 +384,7 @@ namespace HelloDocAdmin.Repositories
 
 
                         DataForChange.Address1 = vm.Address1;
+                        DataForChange.Address2 = vm.Address2;
                         DataForChange.City = vm.City;
                         DataForChange.Regionid = vm.Regionid;
                         DataForChange.Zip = vm.Zipcode;
@@ -564,7 +565,11 @@ namespace HelloDocAdmin.Repositories
                     CM.UploadProviderDoc(physiciandata.Trainingdoc, Physician.Physicianid, "Trainingdoc.pdf");
 
                     CM.UploadProviderDoc(physiciandata.SignatureFile, Physician.Physicianid, Physician.Firstname + "-" + DateTime.Now.ToString("yyyyMMddhhmm") + "-Signature.png");
-                    CM.UploadProviderDoc(physiciandata.PhotoFile, Physician.Physicianid, Physician.Firstname + "-" + DateTime.Now.ToString("yyyyMMddhhmm") + "-Photo." + Path.GetExtension(physiciandata.PhotoFile.FileName).Trim('.'));
+                    if (physiciandata.PhotoFile != null)
+                    {
+
+                        CM.UploadProviderDoc(physiciandata.PhotoFile, Physician.Physicianid, Physician.Firstname + "-" + DateTime.Now.ToString("yyyyMMddhhmm") + "-Photo." + Path.GetExtension(physiciandata.PhotoFile.FileName).Trim('.'));
+                    }
 
                     List<int> priceList = physiciandata.Regionsid.Split(',').Select(int.Parse).ToList();
                     foreach (var item in priceList)
