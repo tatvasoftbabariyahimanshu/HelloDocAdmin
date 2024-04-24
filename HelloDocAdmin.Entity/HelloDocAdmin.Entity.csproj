@@ -23,4 +23,8 @@
     <PackageReference Include="Twilio" Version="7.0.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ModelGoodToHave\" />
+  </ItemGroup>
+
 </Project>

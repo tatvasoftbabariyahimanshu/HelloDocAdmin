@@ -1,0 +1,190 @@
+﻿<div class="d-flex justify-content-between " style="background-color:#70A4CE">
+    <div>
+    </div>
+    <div class=" mx-3  ">
+        <a onclick=" openmodel()" data-bs-toggle="modal" id="openmmodel" data-bs-target="#Assigncase" class="btn btn-light m-2">
+            <small>Add Patient</small>
+        </a>
+    </div>
+        </div>
+<div class="container-fluid">
+        
+
+    
+    <div class="card bg-transparent border-0 mt-3">
+      
+
+        <div class="card-body rounded shadow">
+         
+              
+                   
+
+                    <div class="inputs-control mx-2">
+                        <input placeholder=" " id="PatientName" onkeyup="getfilterdata()" class="input-outline w-100 inp admin-input" type="text">
+                        <label class="inputs-lable">PatientName</label>
+                    </div>
+               
+            
+               
+            
+            <div class="position-relative ">
+
+
+
+
+                <div class="middle loding-div position-absolute  top-50" style="left:50%;z-index:99">
+                    <div class="bar bar1"></div>
+                    <div class="bar bar2"></div>
+                    <div class="bar bar3"></div>
+                    <div class="bar bar4"></div>
+                    <div class="bar bar5"></div>
+                    <div class="bar bar6"></div>
+                    <div class="bar bar7"></div>
+                    <div class="bar bar8"></div>
+                </div>
+
+
+                <div id="SearchResult">
+                </div>
+
+
+            </div>
+            
+        </div>
+    </div>
+
+</div>
+
+<partial name="_AddPatient.cshtml" />
+
+
+<script>
+    setTimeout(function () { $(".loding-div").hide() }, 500);
+</script>
+<div id="modeladd">
+
+</div>
+
+<script>
+
+    function openmodel()
+    {
+
+        $('#FirstName').val('')
+        $('#LastName').val('')
+        $('#Email').val('')
+        $('#Id').val('')
+        $('#DoctorID').val('')
+        $('#PhoneNo').val('')
+        $('#Disease').val('')
+        $('#Age').val('')
+       
+
+    }
+
+    function confirmDelete(vendorId) {
+        Swal.fire({
+            title: "Delete Patient ?",
+            showDenyButton: false,
+            showCancelButton: true,
+            confirmButtonText: "Yes",
+            denyButtonText: `Don't delete`
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = '/Patient/DeletePatient?PatientID=' + vendorId;
+            }
+          
+
+            
+        });
+    }
+</script>
+
+<script>
+    $(function () {
+
+        getfilterdata();
+
+
+    });
+
+
+    function OpenModel(i) {
+      
+        $.ajax({
+            url: "/Patient/_EditPatient",
+     
+            data: {
+                PatientID: i,
+
+               
+            },
+            success: function (response) {
+
+                $('#FirstName').val(response.firstName)
+                $('#LastName').val(response.lastName)
+                $('#Email').val(response.email)
+ $('#Id').val(response.id)
+ $('#DoctorId').val(response.doctorId)
+                $('#PhoneNo').val(response.phoneNo)
+                $('#Disease').val(response.disease)
+                $('#Age').val(response.age)
+                if (response.gender===1)
+                {
+                    $("#inlineRadio1").prop("checked", true);
+                }
+                else if (response.gender === 2) {
+                    $("#inlineRadio2").prop("checked", true);
+                }else{
+                    $("#inlineRadio3").prop("checked", true);
+                }
+               
+           
+               
+             
+            },
+            error: function () {
+          
+                alert("error");
+            }
+        });
+    }
+</script>
+<script>
+
+    function getfilterdata() {
+        $(".loding-div").show();
+        var PatientName = $('#PatientName').val();
+        
+       
+        var pagesize = $('#SizeSelect').val();
+        var currentpage = $('#crt-page').val();
+
+        $.ajax({
+            url: "/Patient/List",
+            type: "GET",
+            data: {
+                PatientName: PatientName,
+
+                currentpage: currentpage,
+                pagesize: pagesize
+            },
+            success: function (response) {
+                setTimeout(function () { $(".loding-div").hide() }, 500);
+                $('#SearchResult').html(response);
+            },
+            error: function () {
+                $(".loding-div").hide();
+                alert("error");
+            }
+        });
+    }
+
+    function getpage(index) {
+        $("#crt-page").val(index);
+
+    }
+   
+  
+
+</script>

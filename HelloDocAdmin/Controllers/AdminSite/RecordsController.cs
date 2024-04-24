@@ -93,7 +93,6 @@ namespace HelloDocAdmin.Controllers.AdminSite
         }
         #endregion
 
-
         #region EmailLogsData
         [CustomAuthorization("Admin", "EmailLogs")]
 

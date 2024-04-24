@@ -44,12 +44,7 @@
 
 
 <script type="text/javascript">
-  
-    function myFunction1() {
-      
-
-        var region = $("#region2").val();
-      
+    $(document).ready(function () {
         $.ajax({
             type: "POST",
             url: '@Url.Action("ProviderbyRegion","Dashboard")?Regionid=' + region,
@@ -67,6 +62,18 @@
                 alert("Error while checking email.");
             }
         });
+    });
+
+    function finished(result) {
+        $('#current_page').append(result);
+    };
+  
+    function myFunction1() {
+      
+
+        var region = $("#region2").val();
+      
+      
     }
 
 </script>

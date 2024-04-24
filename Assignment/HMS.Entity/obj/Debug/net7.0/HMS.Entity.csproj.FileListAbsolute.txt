@@ -1,0 +1,14 @@
+D:\Projects\Hello Doc Admin\Assignment\HMS.Entity\bin\Debug\net7.0\HMS.Entity.deps.json
+D:\Projects\Hello Doc Admin\Assignment\HMS.Entity\bin\Debug\net7.0\HMS.Entity.runtimeconfig.json
+D:\Projects\Hello Doc Admin\Assignment\HMS.Entity\bin\Debug\net7.0\HMS.Entity.dll
+D:\Projects\Hello Doc Admin\Assignment\HMS.Entity\bin\Debug\net7.0\HMS.Entity.pdb
+D:\Projects\Hello Doc Admin\Assignment\HMS.Entity\obj\Debug\net7.0\HMS.Entity.csproj.AssemblyReference.cache
+D:\Projects\Hello Doc Admin\Assignment\HMS.Entity\obj\Debug\net7.0\HMS.Entity.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projects\Hello Doc Admin\Assignment\HMS.Entity\obj\Debug\net7.0\HMS.Entity.AssemblyInfoInputs.cache
+D:\Projects\Hello Doc Admin\Assignment\HMS.Entity\obj\Debug\net7.0\HMS.Entity.AssemblyInfo.cs
+D:\Projects\Hello Doc Admin\Assignment\HMS.Entity\obj\Debug\net7.0\HMS.Entity.csproj.CoreCompileInputs.cache
+D:\Projects\Hello Doc Admin\Assignment\HMS.Entity\obj\Debug\net7.0\HMS.Entity.dll
+D:\Projects\Hello Doc Admin\Assignment\HMS.Entity\obj\Debug\net7.0\refint\HMS.Entity.dll
+D:\Projects\Hello Doc Admin\Assignment\HMS.Entity\obj\Debug\net7.0\HMS.Entity.pdb
+D:\Projects\Hello Doc Admin\Assignment\HMS.Entity\obj\Debug\net7.0\HMS.Entity.genruntimeconfig.cache
+D:\Projects\Hello Doc Admin\Assignment\HMS.Entity\obj\Debug\net7.0\ref\HMS.Entity.dll

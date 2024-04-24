@@ -1,0 +1,262 @@
+﻿@model HMS.Entity.Models.Patient
+<div class="modal fade" id="Assigncase" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header   text-white" style="background-color:#70A4CE">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Patient Form </h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+           
+            </div>
+            <div class="modal-body">
+             
+
+                <form method="post" asp-action="Save" onsubmit="return onsmt()" asp-controller="Patient" enctype="multipart/form-data">
+                    <input type="hidden" asp-for="Id" id="Id" />
+                    <div class="row mt-2">
+
+                        <div class="col-md-6 mt-2">
+                            <div class=" mb-3">
+                                <div class="inputs-control">
+                                    <input placeholder=" " id="FirstName" asp-for="FirstName" class="input-outline w-100 inp " type="text">
+                                    <label class="inputs-lable">FirstName</label>
+                                </div>
+                                <span asp-validation-for="FirstName" class="err-msg"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mt-2">
+                            <div class=" mb-3">
+                                <div class="inputs-control ">
+                                    <input placeholder=" " id="LastName" asp-for="LastName" class="input-outline w-100 inp " type="text">
+                                    <label class="inputs-lable">LastName</label>
+                                </div>
+                                <span asp-validation-for="LastName" class="err-msg"></span>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-6 mt-2">
+                            <div class=" mb-3">
+                                <div class="inputs-control ">
+                                    <input placeholder=" " id="Email" asp-for="Email" class="input-outline w-100 inp " type="email">
+                                    <label class="inputs-lable">Email</label>
+                                </div>
+                                <span asp-validation-for="Email" class="err-msg"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mt-2">
+                            <div class=" mb-3">
+                                <div class="inputs-control ">
+                                    <input placeholder=" " id="Age" asp-for="Age" class="input-outline w-100 inp " type="text">
+                                    <label class="inputs-lable">Age</label>
+                                </div>
+                                <span asp-validation-for="Age" class="err-msg"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mt-2">
+                            <div class=" mb-3 ">
+                                <label> Gender:</label>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input"  type="radio" asp-for="Gender" id="inlineRadio1" value="1">
+                                    <label class="form-check-label" for="inlineRadio1">Male</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" asp-for="Gender" id="inlineRadio2" value="2">
+                                    <label class="form-check-label" for="inlineRadio2">femeal</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" asp-for="Gender" id="inlineRadio3" value="3">
+                                    <label class="form-check-label" for="inlineRadio3">other</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mt-2">
+                            <div class=" mb-3">
+                                <div class="inputs-control ">
+                                    <input placeholder=" " id="PhoneNo" asp-for="PhoneNo" class="input-outline w-100 inp " type="text">
+                                    <label class="inputs-lable">PhoneNo</label>
+                                </div>
+                                <span asp-validation-for="PhoneNo" class="err-msg"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mt-2">
+                            <div class="dropdown text-start ">
+                                <div class="input-control w-100 ">
+                                    <select class="input-outline input-outline-select inp asp  inp-dis" id="Disease" asp-for="Disease"  data-allow-clear="true" tabindex="-1" data-control="select2" data-placeholder="Select Level">
+                                        <option value="">Disease</option>
+                                        <option value="cancer">Disease</option>
+                                        <option value="mathu">Mathu</option>
+                                    </select>
+                                </div>
+
+
+
+                            </div>
+                        </div>
+                      
+                        <div class="col-md-6 mt-2">
+                            <div class="dropdown text-start ">
+                                <div class="input-control w-100 ">
+
+                                    <select class="input-outline input-outline-select  inp" id="DoctorId" asp-for="DoctorId" data-allow-clear="true" tabindex="-1"  asp-items="@(new SelectList(ViewBag.RegionComboBox,"DoctorId","Specialist"))" data-control="select2" data-placeholder="Select Level">
+                                            <option value="">Specialist</option>
+                                        </select>
+                                </div>
+
+
+
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="row mt-2">
+                        <div class="col-md-6">
+                            <button type="submit" class="btn btn-sm w-100  text-white m-0" style="background-color:#70A4CE">Save</button>
+
+                        </div>
+                        <div class="col-md-6">
+                            <button type="reset" class="btn btn-sm m-0 w-100 btn-danger btn-cancel ">
+                                cancel
+                            </button>
+                        </div>
+
+                       
+                    </div>
+
+                </form>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+
+    function onsmt() {
+
+
+        // Prevent default form submission
+
+        // Reset error messages
+        let errorMessages = document.querySelectorAll(".err-msg");
+        errorMessages.forEach(function (element) {
+            element.textContent = ""; // Clear any existing error messages
+        });
+
+        // Validation flag
+        let isValid = true;
+
+        // Validate Startdate
+        let FirstName = document.getElementById("FirstName");
+        if (!FirstName.value) {
+            let errorMessage = "Enter Firstname";
+            displayErrorMessage(FirstName, errorMessage);
+            isValid = false;
+        }
+
+        else {
+            displayErrorMessage(FirstName, "");
+        }
+        let LastName = document.getElementById("LastName");
+        if (!LastName.value) {
+            let errorMessage = "Enter LastName";
+            displayErrorMessage(LastName, errorMessage);
+            isValid = false;
+        }
+
+        else {
+            displayErrorMessage(LastName, "");
+        }
+        let Email = document.getElementById("Email");
+        if (!Email.value) {
+            let errorMessage = "Enter Email";
+            displayErrorMessage(Email, errorMessage);
+            isValid = false;
+        }
+
+        else {
+            displayErrorMessage(Email, "");
+        }
+        let Age = document.getElementById("Age");
+        if (!Age.value ) {
+            let errorMessage = "Enter valid  Age";
+            displayErrorMessage(Age, errorMessage);
+            isValid = false;
+        }
+
+        else {
+            displayErrorMessage(Age, "");
+        }
+        let PhoneNo = document.getElementById("PhoneNo");
+        if (!PhoneNo.value ) {
+            let errorMessage = "Please enter PhoneNo.";
+            displayErrorMessage(PhoneNo, errorMessage);
+            isValid = false;
+        }
+        else {
+            displayErrorMessage(PhoneNo, "");
+        }
+        let DoctorId = document.getElementById("DoctorId");
+        if (!DoctorId.value) {
+            let errorMessage = "Please select specialist.";
+            displayErrorMessage(DoctorId, errorMessage);
+            isValid = false;
+        }
+        else {
+            displayErrorMessage(DoctorId, "");
+        }
+        let Disease = document.getElementById("Disease");
+        if (!Age.value) {
+            let errorMessage = "Please select Disease.";
+            displayErrorMessage(Disease, errorMessage);
+            isValid = false;
+        }
+        else {
+            displayErrorMessage(Disease, "");
+        }
+      
+        if (isValid) {
+
+
+            return true;
+        }
+        else {
+
+
+            return false;
+        }
+    }
+
+    function displayErrorMessage(inputElement, message) {
+        // Find the parent div of the input
+        let parentDiv = inputElement.closest(".inputs-control") || inputElement.closest(".input-control");
+
+        // Create a span element for the error message
+        let errorMessageElement = document.createElement("span");
+        errorMessageElement.className = "err-msg";
+        errorMessageElement.textContent = message;
+        if (message == "") {
+            inputElement.classList.add("is-valid");
+            inputElement.classList.remove("is-invalid");
+            inputElement.classList.add("form-control");
+        } else {
+            inputElement.classList.add("is-invalid");
+            inputElement.classList.remove("is-valid");
+            inputElement.classList.add("form-control");
+        }
+
+
+        // Append error message to the parent div
+        parentDiv.after(errorMessageElement);
+
+
+    }
+
+
+   
+</script>

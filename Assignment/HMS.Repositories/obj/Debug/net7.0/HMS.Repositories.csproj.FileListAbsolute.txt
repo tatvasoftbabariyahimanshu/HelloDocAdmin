@@ -1,0 +1,15 @@
+D:\Projects\Hello Doc Admin\Assignment\HMS.Repositories\bin\Debug\net7.0\HMS.Repositories.deps.json
+D:\Projects\Hello Doc Admin\Assignment\HMS.Repositories\bin\Debug\net7.0\HMS.Repositories.dll
+D:\Projects\Hello Doc Admin\Assignment\HMS.Repositories\bin\Debug\net7.0\HMS.Repositories.pdb
+D:\Projects\Hello Doc Admin\Assignment\HMS.Repositories\obj\Debug\net7.0\HMS.Repositories.csproj.AssemblyReference.cache
+D:\Projects\Hello Doc Admin\Assignment\HMS.Repositories\obj\Debug\net7.0\HMS.Repositories.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projects\Hello Doc Admin\Assignment\HMS.Repositories\obj\Debug\net7.0\HMS.Repositories.AssemblyInfoInputs.cache
+D:\Projects\Hello Doc Admin\Assignment\HMS.Repositories\obj\Debug\net7.0\HMS.Repositories.AssemblyInfo.cs
+D:\Projects\Hello Doc Admin\Assignment\HMS.Repositories\obj\Debug\net7.0\HMS.Repositories.csproj.CoreCompileInputs.cache
+D:\Projects\Hello Doc Admin\Assignment\HMS.Repositories\obj\Debug\net7.0\HMS.Repositories.dll
+D:\Projects\Hello Doc Admin\Assignment\HMS.Repositories\obj\Debug\net7.0\refint\HMS.Repositories.dll
+D:\Projects\Hello Doc Admin\Assignment\HMS.Repositories\obj\Debug\net7.0\HMS.Repositories.pdb
+D:\Projects\Hello Doc Admin\Assignment\HMS.Repositories\obj\Debug\net7.0\ref\HMS.Repositories.dll
+D:\Projects\Hello Doc Admin\Assignment\HMS.Repositories\bin\Debug\net7.0\HMS.Entity.dll
+D:\Projects\Hello Doc Admin\Assignment\HMS.Repositories\bin\Debug\net7.0\HMS.Entity.pdb
+D:\Projects\Hello Doc Admin\Assignment\HMS.Repositories\obj\Debug\net7.0\HMS.Repositories.csproj.CopyComplete
